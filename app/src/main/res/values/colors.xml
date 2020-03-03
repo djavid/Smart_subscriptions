@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region common-->
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <!--endregion-->
+
+    <!--region home-->
+    <color name="colorNero">#2A2A2A</color>
+    <color name="colorGray">#808080</color>
+    <color name="colorMantis">#88E34D</color>
+    <color name="colorGainsboro">#D8D8D8</color>
+    <!--endregion-->
+
+    <!--region create-->
+
+    <!--endregion-->
+
 </resources>

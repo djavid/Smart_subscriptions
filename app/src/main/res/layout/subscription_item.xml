@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/gillsans"
+        android:maxLines="2"
+        android:textColor="@color/colorNero"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/sub_price"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Apple music" />
+
+    <TextView
+        android:id="@+id/sub_periodEnd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gillsans"
+        android:textColor="@color/colorGray"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/sub_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sub_title"
+        tools:text="до 23 мая 2020" />
+
+    <TextView
+        android:id="@+id/sub_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="7dp"
+        android:fontFamily="@font/gillsans_semibold"
+        android:textColor="@color/colorNero"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@id/sub_pricePeriod"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="69 руб" />
+
+    <TextView
+        android:id="@+id/sub_pricePeriod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gillsans"
+        android:textColor="@color/colorGray"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/sub_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="/месяц" />
+
+    <TextView
+        android:id="@+id/sub_periodLeft"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/gillsans"
+        android:gravity="center"
+        android:textColor="@color/colorGray"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sub_periodEnd"
+        tools:text="истекает через 15 дней" />
+
+    <ProgressBar
+        android:id="@+id/sub_progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="16dp"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/progress_drawable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sub_periodLeft"
+        tools:progress="73" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
