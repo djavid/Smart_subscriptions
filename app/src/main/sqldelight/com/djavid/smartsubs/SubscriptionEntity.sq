@@ -1,0 +1,27 @@
+CREATE TABLE subscriptionEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0,
+    title TEXT NOT NULL,
+    priceRubles REAL NOT NULL,
+    period TEXT NOT NULL,
+    periodStart INTEGER,
+    periodEnd INTEGER,
+    comment TEXT
+);
+
+getSubscriptions:
+SELECT * FROM subscriptionEntity;
+
+insert:
+INSERT OR REPLACE INTO subscriptionEntity(
+    id,
+    title,
+    priceRubles,
+    period,
+    periodStart,
+    periodEnd,
+    comment
+)
+VALUES ?;
+
+getSubscriptionById:
+SELECT * FROM subscriptionEntity WHERE id = ?;
