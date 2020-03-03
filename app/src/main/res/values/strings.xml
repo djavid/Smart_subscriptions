@@ -1,3 +1,34 @@
 <resources>
+
+    <!--region common-->
     <string name="app_name">SmartSubs</string>
+    <!--endregion-->
+
+    <!--region masks-->
+    <string name="mask_sub_period">/%s</string>
+    <string name="mask_sub_left_period">до %d %s %d</string>
+    <string name="mask_rub">%.2f руб</string>
+    <string name="mask_subs_count">%d %s</string>
+    <!--endregion-->
+
+    <!--region home-->
+    <string name="title_day">день</string>
+    <string name="title_month">месяц</string>
+    <string name="title_year">год</string>
+    <string name="expires_in_days">истекает через %d %s</string>
+    <string name="add_sub">Добавить подписку</string>
+
+    <plurals name="plural_days" >
+        <item quantity="one">день</item>
+        <item quantity="two">дня</item>
+        <item quantity="other">дней</item>
+    </plurals>
+
+    <plurals name="plural_subs" >
+        <item quantity="one">подписка</item>
+        <item quantity="two">подписки</item>
+        <item quantity="other">подписок</item>
+    </plurals>
+    <!--endregion-->
+
 </resources>

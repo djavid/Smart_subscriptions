@@ -10,12 +10,16 @@ import org.kodein.di.generic.singleton
 
 class DatabaseModule {
     val kodein = Kodein.Module("database_module") {
+
         bind<SqlDriver>() with singleton {
             AndroidSqliteDriver(Database.Schema, instance(), "database.db")
         }
 
+        bind<Database>() with singleton { Database.invoke(instance()) }
+
         //queries
         bind<SubscriptionEntityQueries>() with singleton {
+            Database
             instance<Database>().subscriptionEntityQueries
         }
 

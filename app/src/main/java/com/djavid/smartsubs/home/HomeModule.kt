@@ -11,15 +11,11 @@ import org.kodein.di.generic.singleton
 class HomeModule(fragment: Fragment) {
     val kodein = Kodein.Module("home_module") {
         bind<HomeContract.View>() with singleton {
-            HomeView(
-                instance()
-            )
+            HomeView(instance())
         }
         bind<View>() with singleton { fragment.homeFragment }
         bind<HomeContract.Presenter>() with singleton {
-            HomePresenter(
-                instance()
-            )
+            HomePresenter(instance(), instance(), instance(), instance())
         }
     }
 }

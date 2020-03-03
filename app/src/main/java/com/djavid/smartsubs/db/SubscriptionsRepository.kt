@@ -2,7 +2,7 @@ package com.djavid.smartsubs.db
 
 import com.djavid.smartsubs.SubscriptionEntityQueries
 import com.djavid.smartsubs.mappers.SubscriptionMapper
-import com.djavid.smartsubs.models.Subscription
+import com.djavid.smartsubs.models.SubscriptionDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -13,13 +13,13 @@ class SubscriptionsRepository(
     coroutineScope: CoroutineScope
 ) : CoroutineScope by coroutineScope {
 
-    suspend fun getSubs(): List<Subscription> = withContext(Dispatchers.IO) {
+    suspend fun getSubs(): List<SubscriptionDao> = withContext(Dispatchers.IO) {
         queries.getSubscriptions().executeAsList().map {
             mapper.fromEntity(it)
         }
     }
 
-    suspend fun getSubById(id: Long): Subscription? = withContext(Dispatchers.IO) {
+    suspend fun getSubById(id: Long): SubscriptionDao? = withContext(Dispatchers.IO) {
         val entity = queries.getSubscriptionById(id).executeAsOneOrNull()
 
         entity?.let {
@@ -27,7 +27,7 @@ class SubscriptionsRepository(
         }
     }
 
-    suspend fun saveSub(model: Subscription) = withContext(Dispatchers.IO) {
+    suspend fun saveSub(model: SubscriptionDao) = withContext(Dispatchers.IO) {
         val entity = mapper.toEntity(model)
         queries.insert(entity)
     }

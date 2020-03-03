@@ -2,10 +2,14 @@ package com.djavid.smartsubs.mappers
 
 import com.djavid.smartsubs.SubscriptionEntity
 import com.djavid.smartsubs.models.Subscription
+import com.djavid.smartsubs.models.SubscriptionDao
+import com.djavid.smartsubs.models.SubscriptionPeriod
+import com.djavid.smartsubs.models.SubscriptionPeriodType
+import com.djavid.smartsubs.utils.Instant
 
 class SubscriptionMapper {
 
-    fun toEntity(model: Subscription): SubscriptionEntity {
+    fun toEntity(model: SubscriptionDao): SubscriptionEntity {
         return SubscriptionEntity.Impl(
             model.id,
             model.title,
@@ -17,8 +21,8 @@ class SubscriptionMapper {
         )
     }
 
-    fun fromEntity(entity: SubscriptionEntity): Subscription {
-        return Subscription(
+    fun fromEntity(entity: SubscriptionEntity): SubscriptionDao {
+        return SubscriptionDao(
             entity.id,
             entity.title,
             entity.priceRubles,
@@ -28,5 +32,20 @@ class SubscriptionMapper {
             entity.comment
         )
     }
+
+    fun fromDao(dao: SubscriptionDao): Subscription { //todo
+        return Subscription(
+            "Apple Music",
+            69.0,
+            SubscriptionPeriod(SubscriptionPeriodType.MONTH),
+            Instant(System.currentTimeMillis()),
+            15,
+            50
+        )
+    }
+
+//    fun toDao(model: Subscription): SubscriptionDao { todo
+//
+//    }
 
 }
