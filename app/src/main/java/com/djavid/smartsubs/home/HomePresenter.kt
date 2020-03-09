@@ -1,8 +1,9 @@
 package com.djavid.smartsubs.home
 
+import android.view.View
+import com.djavid.smartsubs.create.CreateContract
 import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.mappers.SubscriptionMapper
-import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import kotlinx.coroutines.CoroutineScope
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 class HomePresenter(
     private val view: HomeContract.View,
     private val repository: SubscriptionsRepository,
+    private val createNavigator: CreateContract.Navigator,
     private val mapper: SubscriptionMapper,
     coroutineScope: CoroutineScope
 ) : HomeContract.Presenter, CoroutineScope by coroutineScope {
@@ -21,13 +23,13 @@ class HomePresenter(
         view.init(this)
 
         launch {
-//            val subs = repository.getSubs().map { mapper.fromDao(it) } todo
+            //            val subs = repository.getSubs().map { mapper.fromDao(it) } todo
             val subs = listOf<SubscriptionDao>(
-                SubscriptionDao(0, "", 23.0,  "", null, null, null),
-                SubscriptionDao(0, "", 23.0,  "", null, null, null),
-                SubscriptionDao(0, "", 23.0,  "", null, null, null),
-                SubscriptionDao(0, "", 23.0,  "", null, null, null),
-                SubscriptionDao(0, "", 23.0,  "", null, null, null)
+                SubscriptionDao(0, "", 23.0, "", null, null, null),
+                SubscriptionDao(0, "", 23.0, "", null, null, null),
+                SubscriptionDao(0, "", 23.0, "", null, null, null),
+                SubscriptionDao(0, "", 23.0, "", null, null, null),
+                SubscriptionDao(0, "", 23.0, "", null, null, null)
             ).map { mapper.fromDao(it) }
             view.showSubs(subs)
             view.setSubsPeriod(selectedSubPeriod)
@@ -36,9 +38,8 @@ class HomePresenter(
         }
     }
 
-    override fun onAddSubPressed() {
-        //todo
-        println("onAddSubPressed")
+    override fun onAddSubPressed(addBtn: View) {
+        createNavigator.goToCreateScreen(addBtn)
     }
 
     override fun onPeriodPressed() {

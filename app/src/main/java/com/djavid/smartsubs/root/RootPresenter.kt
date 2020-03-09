@@ -13,7 +13,7 @@ class RootPresenter(
     }
 
     override fun goToHomeScreen() {
-        homeNavigator.goToHome()
+        homeNavigator.goToHomeScreen()
     }
 
 }

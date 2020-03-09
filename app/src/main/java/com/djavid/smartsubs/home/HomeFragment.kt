@@ -1,6 +1,7 @@
 package com.djavid.smartsubs.home
 
 import android.os.Bundle
+import android.transition.AutoTransition
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,8 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         kodein = (activity?.application as Application).homeComponent(this)
         presenter.init()
+//        sharedElementEnterTransition = AutoTransition()
+//        sharedElementReturnTransition = AutoTransition()
     }
 
 }

@@ -2,6 +2,7 @@ package com.djavid.smartsubs.home
 
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -15,7 +16,8 @@ class HomeModule(fragment: Fragment) {
         }
         bind<View>() with singleton { fragment.homeFragment }
         bind<HomeContract.Presenter>() with singleton {
-            HomePresenter(instance(), instance(), instance(), instance())
+            HomePresenter(instance(), instance(), instance(), instance(), instance())
         }
+        bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
     }
 }

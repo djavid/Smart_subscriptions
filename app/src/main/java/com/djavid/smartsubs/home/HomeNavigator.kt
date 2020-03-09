@@ -7,12 +7,10 @@ class HomeNavigator(
     private val fragmentManager: FragmentManager
 ) : HomeContract.Navigator {
 
-    override fun goToHome() {
+    override fun goToHomeScreen() {
         fragmentManager
             .beginTransaction()
-            .replace(R.id.fragmentContainer,
-                HomeFragment()
-            )
+            .add(R.id.fragmentContainer, HomeFragment())
             .commit()
     }
 

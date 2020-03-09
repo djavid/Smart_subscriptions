@@ -31,4 +31,8 @@
     </plurals>
     <!--endregion-->
 
+    <!--region create-->
+    <string name="title_cancel">Отмена</string>
+    <!--endregion-->
+
 </resources>

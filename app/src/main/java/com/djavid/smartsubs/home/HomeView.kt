@@ -18,7 +18,7 @@ class HomeView(
         this.presenter = presenter
 
         viewRoot.home_periodSelector.setOnClickListener { presenter.onPeriodPressed() }
-        viewRoot.home_addBtn.setOnClickListener { presenter.onAddSubPressed() }
+        viewRoot.home_addBtn.setOnClickListener { presenter.onAddSubPressed(it) }
     }
 
     override fun showSubs(subs: List<Subscription>) {

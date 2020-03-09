@@ -7,7 +7,7 @@ interface HomeContract {
 
     interface Presenter {
         fun init()
-        fun onAddSubPressed()
+        fun onAddSubPressed(addBtn: android.view.View)
         fun onPeriodPressed()
     }
 
@@ -20,7 +20,7 @@ interface HomeContract {
     }
 
     interface Navigator {
-        fun goToHome()
+        fun goToHomeScreen()
     }
 
 }

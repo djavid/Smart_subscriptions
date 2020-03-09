@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.djavid.smartsubs.coroutines.CoroutineModule
+import com.djavid.smartsubs.create.CreateModule
+import com.djavid.smartsubs.create.CreateNavigatorModule
 import com.djavid.smartsubs.db.DatabaseModule
 import com.djavid.smartsubs.home.HomeModule
 import com.djavid.smartsubs.home.HomeNavigatorModule
@@ -37,6 +39,12 @@ class Application: Application(), KodeinAware {
     fun homeComponent(fragment: Fragment) = Kodein {
         extend(kodein)
         import(HomeModule(fragment).kodein)
+        import(CreateNavigatorModule().kodein)
+    }
+
+    fun createComponent(fragment: Fragment) = Kodein {
+        extend(kodein)
+        import(CreateModule(fragment).kodein)
     }
 
 }
