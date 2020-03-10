@@ -28,8 +28,6 @@ class CreateFragment : Fragment(), KodeinAware {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         kodein = (activity?.application as Application).createComponent(this)
         presenter.init()
-        sharedElementEnterTransition = AutoTransition()
-        sharedElementReturnTransition = AutoTransition()
     }
 
 }

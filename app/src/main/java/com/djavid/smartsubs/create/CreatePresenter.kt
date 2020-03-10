@@ -8,4 +8,8 @@ class CreatePresenter(
         view.init(this)
     }
 
+    override fun onCancelPressed() {
+        //todo cancel
+    }
+
 }

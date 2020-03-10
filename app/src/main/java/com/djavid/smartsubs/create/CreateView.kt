@@ -10,6 +10,8 @@ class CreateView(
 
     override fun init(presenter: CreateContract.Presenter) {
         this.presenter = presenter
+
+        //viewRoot.create_cancelBtn
     }
 
 }

@@ -10,7 +10,9 @@ class HomeNavigator(
     override fun goToHomeScreen() {
         fragmentManager
             .beginTransaction()
-            .add(R.id.fragmentContainer, HomeFragment())
+            .addToBackStack(null)
+            .setReorderingAllowed(true)
+            .add(R.id.fragmentContainer, HomeFragment(), HomeFragment::class.java.simpleName)
             .commit()
     }
 

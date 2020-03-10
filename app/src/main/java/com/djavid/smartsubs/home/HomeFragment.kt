@@ -1,31 +1,36 @@
 package com.djavid.smartsubs.home
 
 import android.os.Bundle
-import android.transition.AutoTransition
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.djavid.smartsubs.R
 import com.djavid.smartsubs.Application
+import com.djavid.smartsubs.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.direct
 import org.kodein.di.generic.instance
 
-class HomeFragment : Fragment(), KodeinAware {
+class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
 
-    private val presenter: HomeContract.Presenter by instance()
+    private val coroutineScope: CoroutineScope by instance()
+
+    private lateinit var presenter: HomeContract.Presenter
+
     override lateinit var kodein: Kodein
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         kodein = (activity?.application as Application).homeComponent(this)
+        presenter = kodein.direct.instance()
+
         presenter.init()
-//        sharedElementEnterTransition = AutoTransition()
-//        sharedElementReturnTransition = AutoTransition()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        coroutineScope.cancel()
     }
 
 }

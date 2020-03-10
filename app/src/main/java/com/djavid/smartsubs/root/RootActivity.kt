@@ -20,11 +20,12 @@ class RootActivity: AppCompatActivity(), KodeinAware {
         presenter.init()
     }
 
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStack()
-        } else {
-            super.onBackPressed()
-        }
-    }
+//    override fun onBackPressed() {
+//        if (supportFragmentManager.backStackEntryCount > 0) {
+//            supportFragmentManager.popBackStack()
+//        } else {
+//            super.onBackPressed()
+//        }
+//    }
+
 }

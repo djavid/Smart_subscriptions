@@ -22,7 +22,7 @@ class HomePresenter(
     override fun init() {
         view.init(this)
 
-        launch {
+//        launch {
             //            val subs = repository.getSubs().map { mapper.fromDao(it) } todo
             val subs = listOf<SubscriptionDao>(
                 SubscriptionDao(0, "", 23.0, "", null, null, null),
@@ -35,7 +35,7 @@ class HomePresenter(
             view.setSubsPeriod(selectedSubPeriod)
             view.setSubsCount(subs.count())
             view.setSubsPrice(subs.sumByDouble { it.price })
-        }
+//        }
     }
 
     override fun onAddSubPressed(addBtn: View) {

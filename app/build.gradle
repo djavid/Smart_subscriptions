@@ -60,6 +60,7 @@ dependencies {
 
     //kodein
     implementation 'org.kodein.di:kodein-di-generic-jvm:6.5.0'
+    implementation 'org.kodein.di:kodein-di-framework-android-x:6.5.0'
 
     //sqldelight
     implementation "com.squareup.sqldelight:android-driver:1.2.1"

@@ -30,19 +30,19 @@ class Application: Application(), KodeinAware {
         import(CoroutineModule().kodein)
     }
 
-    fun rootComponent(activity: AppCompatActivity) = Kodein {
+    fun rootComponent(activity: AppCompatActivity) = Kodein.lazy {
         extend(kodein)
         import(RootModule(activity).kodein)
         import(HomeNavigatorModule().kodein)
     }
 
-    fun homeComponent(fragment: Fragment) = Kodein {
+    fun homeComponent(fragment: Fragment) = Kodein.lazy {
         extend(kodein)
         import(HomeModule(fragment).kodein)
         import(CreateNavigatorModule().kodein)
     }
 
-    fun createComponent(fragment: Fragment) = Kodein {
+    fun createComponent(fragment: Fragment) = Kodein.lazy {
         extend(kodein)
         import(CreateModule(fragment).kodein)
     }

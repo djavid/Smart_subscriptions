@@ -16,7 +16,8 @@ class CreateNavigator(
             .replace(R.id.fragmentContainer, CreateFragment().apply {
                 sharedElementEnterTransition = AutoTransition()
                 sharedElementReturnTransition = AutoTransition()
-            })
+            },  CreateFragment::class.java.simpleName)
+            .setReorderingAllowed(true)
             .addToBackStack(null)
             .commit()
     }

@@ -4,6 +4,7 @@ interface CreateContract {
 
     interface Presenter {
         fun init()
+        fun onCancelPressed()
     }
 
     interface View {
