@@ -11,6 +11,7 @@ import com.djavid.smartsubs.home.HomeModule
 import com.djavid.smartsubs.home.HomeNavigatorModule
 import com.djavid.smartsubs.mappers.MappersModule
 import com.djavid.smartsubs.root.RootModule
+import net.danlew.android.joda.JodaTimeAndroid
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
@@ -20,6 +21,7 @@ class Application: Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
+        JodaTimeAndroid.init(this)
     }
 
     override val kodein = Kodein.lazy {

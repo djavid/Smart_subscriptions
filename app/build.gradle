@@ -70,4 +70,7 @@ dependencies {
 
     //pretty time
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+
+    //joda time
+    implementation 'net.danlew:android.joda:2.10.3'
 }

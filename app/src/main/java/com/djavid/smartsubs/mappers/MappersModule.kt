@@ -6,6 +6,7 @@ import org.kodein.di.generic.singleton
 
 class MappersModule {
     val kodein = Kodein.Module("mappers_module") {
-        bind<SubscriptionMapper>() with singleton { SubscriptionMapper() }
+        bind<SubscriptionEntityMapper>() with singleton { SubscriptionEntityMapper() }
+        bind<SubscriptionModelMapper>() with singleton { SubscriptionModelMapper() }
     }
 }

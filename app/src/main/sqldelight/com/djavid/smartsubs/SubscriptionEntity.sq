@@ -1,10 +1,11 @@
 CREATE TABLE subscriptionEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0,
     title TEXT NOT NULL,
-    priceRubles REAL NOT NULL,
+    price REAL NOT NULL,
+    currency TEXT NOT NULL,
+    periodQuantity INTEGER NOT NULL,
     period TEXT NOT NULL,
     periodStart INTEGER,
-    periodEnd INTEGER,
     comment TEXT
 );
 
@@ -15,10 +16,11 @@ insert:
 INSERT OR REPLACE INTO subscriptionEntity(
     id,
     title,
-    priceRubles,
+    price,
+    currency,
+    periodQuantity,
     period,
     periodStart,
-    periodEnd,
     comment
 )
 VALUES ?;

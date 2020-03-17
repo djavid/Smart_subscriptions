@@ -1,5 +1,6 @@
 package com.djavid.smartsubs.home
 
+import com.djavid.smartsubs.models.Currency
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 
@@ -15,7 +16,7 @@ interface HomeContract {
         fun init(presenter: Presenter)
         fun showSubs(subs: List<Subscription>)
         fun setSubsCount(count: Int)
-        fun setSubsPrice(price: Double)
+        fun setSubsPrice(price: Double, currency: Currency)
         fun setSubsPeriod(period: SubscriptionPeriodType)
     }
 

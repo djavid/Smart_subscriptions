@@ -3,10 +3,9 @@ package com.djavid.smartsubs.home
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.djavid.smartsubs.R
-import com.djavid.smartsubs.models.Subscription
-import com.djavid.smartsubs.models.SubscriptionPeriodType
-import com.djavid.smartsubs.models.getSubPeriodString
+import com.djavid.smartsubs.models.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import java.text.DecimalFormat
 
 class HomeView(
     private val viewRoot: View
@@ -32,8 +31,12 @@ class HomeView(
             viewRoot.context.getString(R.string.mask_subs_count, count, plural)
     }
 
-    override fun setSubsPrice(price: Double) {
-        viewRoot.home_subsPrice.text = viewRoot.context.getString(R.string.mask_rub, price)
+    override fun setSubsPrice(price: Double, currency: Currency) {
+        val currencySymbol = viewRoot.context.getSymbolForCurrency(currency)
+        val df = DecimalFormat("0.##")
+
+        viewRoot.home_subsPrice.text =
+            viewRoot.context.getString(R.string.mask_price, df.format(price), currencySymbol)
     }
 
     override fun setSubsPeriod(period: SubscriptionPeriodType) {

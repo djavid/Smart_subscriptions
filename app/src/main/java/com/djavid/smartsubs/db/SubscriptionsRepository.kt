@@ -1,7 +1,7 @@
 package com.djavid.smartsubs.db
 
 import com.djavid.smartsubs.SubscriptionEntityQueries
-import com.djavid.smartsubs.mappers.SubscriptionMapper
+import com.djavid.smartsubs.mappers.SubscriptionEntityMapper
 import com.djavid.smartsubs.models.SubscriptionDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -9,13 +9,13 @@ import kotlinx.coroutines.withContext
 
 class SubscriptionsRepository(
     private val queries: SubscriptionEntityQueries,
-    private val mapper: SubscriptionMapper,
+    private val entityMapper: SubscriptionEntityMapper,
     coroutineScope: CoroutineScope
 ) : CoroutineScope by coroutineScope {
 
     suspend fun getSubs(): List<SubscriptionDao> = withContext(Dispatchers.IO) {
         queries.getSubscriptions().executeAsList().map {
-            mapper.fromEntity(it)
+            entityMapper.fromEntity(it)
         }
     }
 
@@ -23,12 +23,12 @@ class SubscriptionsRepository(
         val entity = queries.getSubscriptionById(id).executeAsOneOrNull()
 
         entity?.let {
-            mapper.fromEntity(entity)
+            entityMapper.fromEntity(entity)
         }
     }
 
     suspend fun saveSub(model: SubscriptionDao) = withContext(Dispatchers.IO) {
-        val entity = mapper.toEntity(model)
+        val entity = entityMapper.toEntity(model)
         queries.insert(entity)
     }
 

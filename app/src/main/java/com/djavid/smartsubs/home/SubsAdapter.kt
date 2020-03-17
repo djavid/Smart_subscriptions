@@ -9,8 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.Subscription
-import com.djavid.smartsubs.models.getSubPeriodString
+import com.djavid.smartsubs.models.getSymbolForCurrency
+import com.djavid.smartsubs.utils.show
 import kotlinx.android.synthetic.main.subscription_item.view.*
+import java.text.DecimalFormat
 
 class SubsAdapter(
     private val context: Context,
@@ -26,26 +28,28 @@ class SubsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sub = subs[position]
+        val currencySymbol = context.getSymbolForCurrency(sub.currency)
+        val df = DecimalFormat("0.##")
 
         holder.title.text = sub.title
-        holder.periodEnd.text = "до 23 мая 2020" //todo PrettyTime().format(Date(sub.periodEnd.utcEpochTime))
-        holder.price.text = context.getString(R.string.mask_rub, sub.price)
-        holder.pricePeriod.text = context.getString(
-            R.string.mask_sub_period,
-            context.getSubPeriodString(sub.period.type)
-        )
-        val plural = context.resources.getQuantityString(R.plurals.plural_days, sub.daysLeft)
-        holder.periodLeft.text = context.getString(R.string.expires_in_days, sub.daysLeft, plural)
-        holder.progressBar.progress = sub.progress
+        holder.price.text =
+            context.getString(R.string.mask_price, df.format(sub.price), currencySymbol)
+
+        sub.progress?.let {
+            holder.progressBar.show(true)
+            holder.periodLeft.show(true)
+
+            val pluralDays = context.resources.getQuantityString(R.plurals.plural_days, it.daysLeft)
+            holder.periodLeft.text = context.getString(R.string.mask_days_until, it.daysLeft, pluralDays)
+            holder.progressBar.progress = (it.progress * 100).toInt()
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.sub_title
-        val periodEnd: TextView = itemView.sub_periodEnd
         val price: TextView = itemView.sub_price
-        val pricePeriod: TextView = itemView.sub_pricePeriod
-        val periodLeft: TextView = itemView.sub_periodLeft
         val progressBar: ProgressBar = itemView.sub_progressBar
+        val periodLeft: TextView = itemView.sub_periodLeft
     }
 
 }
