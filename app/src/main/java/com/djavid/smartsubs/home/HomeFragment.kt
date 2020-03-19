@@ -20,11 +20,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
 
     override lateinit var kodein: Kodein
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         kodein = (activity?.application as Application).homeComponent(this)
         presenter = kodein.direct.instance()
-
         presenter.init()
     }
 

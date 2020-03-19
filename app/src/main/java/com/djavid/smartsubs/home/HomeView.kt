@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import java.text.DecimalFormat
 
@@ -18,6 +19,13 @@ class HomeView(
 
         viewRoot.home_periodSelector.setOnClickListener { presenter.onPeriodPressed() }
         viewRoot.home_addBtn.setOnClickListener { presenter.onAddSubPressed(it) }
+    }
+
+    override fun slidePanelToTop() {
+        viewRoot.post {
+            val behavior = BottomSheetBehavior.from(viewRoot.home_sheetContainer)
+            behavior.setPeekHeight(viewRoot.height, true)
+        }
     }
 
     override fun showSubs(subs: List<Subscription>) {

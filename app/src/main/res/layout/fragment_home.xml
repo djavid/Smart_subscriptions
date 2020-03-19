@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homeFragment"
@@ -8,54 +8,66 @@
     android:background="@android:color/white"
     tools:ignore="contentDescription">
 
-    <TextView
-        android:id="@+id/home_subsPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/helvetica_bold"
-        android:textColor="@color/colorNightRider"
-        android:textSize="28sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="1868 ₽" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/home_periodSelector"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/period_drawable"
-        android:fontFamily="@font/helvetica_medium"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/home_subsPrice"
-        app:layout_constraintStart_toEndOf="@id/home_subsPrice"
-        app:layout_constraintTop_toTopOf="@id/home_subsPrice"
-        tools:text="месяц" />
+        <TextView
+            android:id="@+id/home_subsPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/helvetica_bold"
+            android:textColor="@color/colorNightRider"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1868 ₽" />
 
-    <ImageView
-        android:id="@+id/home_addBtn"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="25dp"
-        android:tint="@color/colorOrange"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add_24px" />
+        <TextView
+            android:id="@+id/home_periodSelector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/period_drawable"
+            android:fontFamily="@font/helvetica_medium"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/home_subsPrice"
+            app:layout_constraintStart_toEndOf="@id/home_subsPrice"
+            app:layout_constraintTop_toTopOf="@id/home_subsPrice"
+            tools:text="месяц" />
+
+        <ImageView
+            android:id="@+id/home_addBtn"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="25dp"
+            android:tint="@color/colorOrange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_add_24px" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/home_listContainer"
+        android:id="@+id/home_sheetContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
         android:background="@drawable/home_list_container_drawable"
         android:elevation="15dp"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_subsPrice">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:behavior_peekHeight="800dp">
 
         <TextView
             android:id="@+id/home_subsCount"
@@ -88,10 +100,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/home_subsCount"
             tools:listitem="@layout/subscription_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

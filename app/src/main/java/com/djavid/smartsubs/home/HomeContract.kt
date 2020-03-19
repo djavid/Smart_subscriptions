@@ -14,6 +14,7 @@ interface HomeContract {
 
     interface View {
         fun init(presenter: Presenter)
+        fun slidePanelToTop()
         fun showSubs(subs: List<Subscription>)
         fun setSubsCount(count: Int)
         fun setSubsPrice(price: Double, currency: Currency)

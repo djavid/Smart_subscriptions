@@ -26,31 +26,57 @@ class HomePresenter(
         view.init(this)
 
         launch {
-        //            val subs = repository.getSubs().map { mapper.fromDao(it) } todo
-        val subs = listOf<SubscriptionDao>(
-            SubscriptionDao(
-                0, "EA Access", 1799.0, Currency.RUB,
-                SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), DateTime().minusDays(13), null
-            ),
-            SubscriptionDao(
-                0, "EA Access", 1799.0, Currency.RUB,
-                SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), DateTime().minusDays(13), null
-            ), SubscriptionDao(
-                0, "EA Access", 1799.0, Currency.RUB,
-                SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), DateTime().minusDays(13), null
-            ), SubscriptionDao(
-                0, "EA Access", 1799.0, Currency.RUB,
-                SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), DateTime().minusDays(13), null
-            ), SubscriptionDao(
-                0, "EA Access", 1799.0, Currency.RUB,
-                SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), DateTime().minusDays(13), null
-            )
-        ).map { modelMapper.fromDao(it) }
+            //            val subs = repository.getSubs().map { mapper.fromDao(it) } todo
+            val subs = listOf<SubscriptionDao>(
+                SubscriptionDao(
+                    0,
+                    "EA Access",
+                    1799.0,
+                    Currency.RUB,
+                    SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
+                    DateTime().minusDays(13),
+                    null
+                ),
+                SubscriptionDao(
+                    0,
+                    "EA Access",
+                    1799.0,
+                    Currency.RUB,
+                    SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
+                    DateTime().minusDays(13),
+                    null
+                ), SubscriptionDao(
+                    0,
+                    "EA Access",
+                    1799.0,
+                    Currency.RUB,
+                    SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
+                    DateTime().minusDays(13),
+                    null
+                ), SubscriptionDao(
+                    0,
+                    "EA Access",
+                    1799.0,
+                    Currency.RUB,
+                    SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
+                    DateTime().minusDays(13),
+                    null
+                ), SubscriptionDao(
+                    0,
+                    "EA Access",
+                    1799.0,
+                    Currency.RUB,
+                    SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
+                    DateTime().minusDays(13),
+                    null
+                )
+            ).map { modelMapper.fromDao(it) }
 
-        view.showSubs(subs)
-        view.setSubsPeriod(selectedSubPeriod)
-        view.setSubsCount(subs.count())
-        view.setSubsPrice(subs.sumByDouble { it.price }, Currency.RUB) //todo currency
+            view.slidePanelToTop()
+            view.showSubs(subs)
+            view.setSubsPeriod(selectedSubPeriod)
+            view.setSubsCount(subs.count())
+            view.setSubsPrice(subs.sumByDouble { it.price }, Currency.RUB) //todo currency
         }
     }
 

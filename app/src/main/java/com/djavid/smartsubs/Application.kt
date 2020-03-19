@@ -27,9 +27,9 @@ class Application: Application(), KodeinAware {
     override val kodein = Kodein.lazy {
         bind<Application>() with singleton { this@Application }
 
+        import(CoroutineModule().kodein)
         import(DatabaseModule().kodein)
         import(MappersModule().kodein)
-        import(CoroutineModule().kodein)
     }
 
     fun rootComponent(activity: AppCompatActivity) = Kodein.lazy {
