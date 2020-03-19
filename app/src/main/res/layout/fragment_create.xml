@@ -14,9 +14,7 @@
         android:id="@+id/create_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        android:alpha="1"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:alpha="1">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/create_title"
@@ -38,6 +36,7 @@
             android:layout_gravity="end|center_vertical"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="25dp"
+            android:padding="3dp"
             android:tint="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -69,56 +68,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--    <androidx.cardview.widget.CardView-->
-    <!--        android:id="@+id/create_submitBtn"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:transitionName="add_transition"-->
-    <!--        android:layout_marginBottom="20dp"-->
-    <!--        app:cardBackgroundColor="@color/colorOrange"-->
-    <!--        app:cardCornerRadius="16dp"-->
-    <!--        app:cardElevation="7dp"-->
-    <!--        app:contentPaddingBottom="9dp"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:contentPaddingLeft="16dp"-->
-    <!--        app:contentPaddingRight="16dp"-->
-    <!--        app:contentPaddingTop="9dp"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/create_cancelBtn"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent">-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/create_submitBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/colorOrange"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="17dp"
+        app:contentPaddingBottom="9dp"
+        app:contentPaddingLeft="16dp"
+        app:contentPaddingRight="16dp"
+        app:contentPaddingTop="9dp"
+        tools:visibility="visible">
 
-    <!--        <TextView-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="center_vertical"-->
-    <!--            android:layout_marginEnd="34dp"-->
-    <!--            android:includeFontPadding="false"-->
-    <!--            android:text="@string/add_sub"-->
-    <!--            android:textColor="@android:color/white"-->
-    <!--            android:textSize="16sp" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="34dp"
+            android:fontFamily="@font/helvetica_bold"
+            android:includeFontPadding="true"
+            android:text="@string/add_sub"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
 
-    <!--        <ImageView-->
-    <!--            android:layout_width="24dp"-->
-    <!--            android:layout_height="24dp"-->
-    <!--            android:layout_gravity="end|center_vertical"-->
-    <!--            app:srcCompat="@drawable/ic_add_24px" />-->
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end|center_vertical"
+            app:srcCompat="@drawable/ic_add_24px" />
 
-    <!--    </androidx.cardview.widget.CardView>-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/create_cancelBtn"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginBottom="20dp"-->
-    <!--        android:visibility="gone"-->
-    <!--        android:text="@string/title_cancel"-->
-    <!--        android:textColor="@color/colorNero"-->
-    <!--        android:textSize="18sp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent" />-->
+    </androidx.cardview.widget.CardView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

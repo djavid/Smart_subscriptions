@@ -1,10 +1,7 @@
 package com.djavid.smartsubs.create
 
 import com.djavid.smartsubs.create.CreateView.Companion.SLIDE_DURATION
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.*
 
 class CreatePresenter(
     val view: CreateContract.View,
@@ -17,6 +14,11 @@ class CreatePresenter(
         view.expandPanel()
         view.setBackgroundTransparent(false, SLIDE_DURATION)
         view.showToolbar(true, SLIDE_DURATION)
+
+        launch {
+            withContext(Dispatchers.Default) { delay(SLIDE_DURATION) }
+            view.showSubmitBtn(true)
+        }
     }
 
     override fun onPanelExpanded() {
@@ -24,11 +26,20 @@ class CreatePresenter(
     }
 
     override fun onCancelPressed() {
+        finish()
+    }
+
+    override fun onBackPressed() {
+        finish()
+    }
+
+    private fun finish() {
         launch {
             view.collapsePanel()
+            view.showSubmitBtn(false)
             view.showToolbar(false, SLIDE_DURATION)
             view.setBackgroundTransparent(true, SLIDE_DURATION)
-            delay(SLIDE_DURATION)
+            withContext(Dispatchers.Default) { delay(SLIDE_DURATION) }
             view.goBack()
         }
     }

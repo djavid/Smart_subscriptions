@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.utils.animateAlpha
+import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_create.view.*
 
@@ -26,6 +27,10 @@ class CreateView(
         }
 
         override fun onStateChanged(bottomSheet: View, newState: Int) {
+            if (newState == BottomSheetBehavior.STATE_DRAGGING) { //disable dragging
+                this@CreateView.bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+
             if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                 presenter.onPanelExpanded()
             }
@@ -73,8 +78,17 @@ class CreateView(
         viewRoot.animateAlpha(fromAlpha, toAlpha, duration)
     }
 
+    override fun showSubmitBtn(show: Boolean) {
+        val fromAlpha = if (show) 0f else 1f
+        val toAlpha = if (show) 1f else 0f
+
+        if (show) viewRoot.create_submitBtn.show(true)
+        viewRoot.create_submitBtn.animateAlpha(fromAlpha, toAlpha, 200)
+        if (!show) viewRoot.create_submitBtn.show(false)
+    }
+
     override fun goBack() {
-        (viewRoot.context as? AppCompatActivity)?.onBackPressed()
+        (viewRoot.context as? AppCompatActivity)?.supportFragmentManager?.popBackStack()
     }
 
 }

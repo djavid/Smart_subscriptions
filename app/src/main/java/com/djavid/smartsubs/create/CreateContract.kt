@@ -6,6 +6,7 @@ interface CreateContract {
         fun init()
         fun onCancelPressed()
         fun onPanelExpanded()
+        fun onBackPressed()
     }
 
     interface View {
@@ -15,6 +16,7 @@ interface CreateContract {
         fun showToolbar(show: Boolean, duration: Long)
         fun setBackgroundTransparent(transparent: Boolean, duration: Long)
         fun goBack()
+        fun showSubmitBtn(show: Boolean)
     }
 
     interface Navigator {

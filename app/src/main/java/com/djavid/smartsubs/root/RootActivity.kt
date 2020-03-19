@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
+import com.djavid.smartsubs.common.BackPressListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.Kodein
@@ -27,6 +28,17 @@ class RootActivity : AppCompatActivity(), KodeinAware {
     override fun onDestroy() {
         super.onDestroy()
         coroutineScope.cancel()
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.fragments
+                .filterIsInstance(BackPressListener::class.java)
+                .last()
+                .onBackPressed()
+        } else {
+            super.onBackPressed()
+        }
     }
 
 }
