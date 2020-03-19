@@ -11,7 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/home_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@android:color/white"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -59,14 +60,12 @@
         android:id="@+id/home_sheetContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/home_list_container_drawable"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:background="@drawable/bg_bottom_sheet"
         android:elevation="15dp"
         app:behavior_hideable="false"
         app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:behavior_peekHeight="800dp">
 
         <TextView

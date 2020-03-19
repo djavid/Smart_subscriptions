@@ -80,8 +80,8 @@ class HomePresenter(
         }
     }
 
-    override fun onAddSubPressed(addBtn: View) {
-        createNavigator.goToCreateScreen(addBtn)
+    override fun onAddSubPressed() {
+        createNavigator.goToCreateScreen()
     }
 
     override fun onPeriodPressed() {

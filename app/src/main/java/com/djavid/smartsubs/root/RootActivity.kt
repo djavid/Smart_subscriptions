@@ -10,7 +10,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 
-class RootActivity: AppCompatActivity(), KodeinAware {
+class RootActivity : AppCompatActivity(), KodeinAware {
 
     private val coroutineScope: CoroutineScope by instance()
     private val presenter: RootContract.Presenter by instance()
@@ -28,13 +28,5 @@ class RootActivity: AppCompatActivity(), KodeinAware {
         super.onDestroy()
         coroutineScope.cancel()
     }
-
-    //    override fun onBackPressed() {
-//        if (supportFragmentManager.backStackEntryCount > 0) {
-//            supportFragmentManager.popBackStack()
-//        } else {
-//            super.onBackPressed()
-//        }
-//    }
 
 }

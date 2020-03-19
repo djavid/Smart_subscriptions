@@ -1,67 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/create_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:clickable="true"
+    android:focusable="true"
     tools:ignore="contentDescription">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create here"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/create_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:alpha="1"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:alpha="1">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/create_submitBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:transitionName="add_transition"
-        android:layout_marginBottom="20dp"
-        app:cardBackgroundColor="@color/colorOrange"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="7dp"
-        app:contentPaddingBottom="9dp"
-        app:contentPaddingLeft="16dp"
-        app:contentPaddingRight="16dp"
-        app:contentPaddingTop="9dp"
-        app:layout_constraintBottom_toTopOf="@id/create_cancelBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/create_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/helvetica_bold"
+            android:text="@string/title_add_sub"
+            android:textColor="@color/colorNero"
+            android:textSize="21sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/create_closeBtn"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="25dp"
+            android:tint="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close_24px" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/create_bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_bottom_sheet"
+        android:elevation="15dp"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        tools:behavior_peekHeight="800dp"
+        tools:layout_marginTop="@dimen/toolbar_height">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="34dp"
-            android:includeFontPadding="false"
-            android:text="@string/add_sub"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/helvetica_bold"
+            android:text="@string/title_sub_title"
+            android:textColor="@color/colorOrange"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="end|center_vertical"
-            app:srcCompat="@drawable/ic_add_24px" />
 
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/create_cancelBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="@string/title_cancel"
-        android:textColor="@color/colorNero"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:id="@+id/create_submitBtn"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:transitionName="add_transition"-->
+    <!--        android:layout_marginBottom="20dp"-->
+    <!--        app:cardBackgroundColor="@color/colorOrange"-->
+    <!--        app:cardCornerRadius="16dp"-->
+    <!--        app:cardElevation="7dp"-->
+    <!--        app:contentPaddingBottom="9dp"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:contentPaddingLeft="16dp"-->
+    <!--        app:contentPaddingRight="16dp"-->
+    <!--        app:contentPaddingTop="9dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/create_cancelBtn"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent">-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--        <TextView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center_vertical"-->
+    <!--            android:layout_marginEnd="34dp"-->
+    <!--            android:includeFontPadding="false"-->
+    <!--            android:text="@string/add_sub"-->
+    <!--            android:textColor="@android:color/white"-->
+    <!--            android:textSize="16sp" />-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="24dp"-->
+    <!--            android:layout_height="24dp"-->
+    <!--            android:layout_gravity="end|center_vertical"-->
+    <!--            app:srcCompat="@drawable/ic_add_24px" />-->
+
+    <!--    </androidx.cardview.widget.CardView>-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/create_cancelBtn"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginBottom="20dp"-->
+    <!--        android:visibility="gone"-->
+    <!--        android:text="@string/title_cancel"-->
+    <!--        android:textColor="@color/colorNero"-->
+    <!--        android:textSize="18sp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

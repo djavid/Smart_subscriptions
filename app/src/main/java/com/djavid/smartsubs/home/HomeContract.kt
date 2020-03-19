@@ -8,7 +8,7 @@ interface HomeContract {
 
     interface Presenter {
         fun init()
-        fun onAddSubPressed(addBtn: android.view.View)
+        fun onAddSubPressed()
         fun onPeriodPressed()
     }
 

@@ -11,7 +11,9 @@ import org.kodein.di.generic.singleton
 class CreateModule(fragment: Fragment) {
     val kodein = Kodein.Module("create_module") {
         bind<View>() with singleton { fragment.create_fragment }
-        bind<CreateContract.Presenter>() with singleton { CreatePresenter(instance()) }
+        bind<CreateContract.Presenter>() with singleton {
+            CreatePresenter(instance(), instance())
+        }
         bind<CreateContract.View>() with singleton { CreateView(instance()) }
     }
 }
