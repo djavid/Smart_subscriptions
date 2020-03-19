@@ -37,8 +37,15 @@
     <string name="title_cancel">Отмена</string>
     <string name="title_add_sub">Добавить подписку</string>
     <string name="title_sub_title">Название подписки</string>
-    <string name="title_pay">Оплата</string>
+    <string name="title_payment">Оплата</string>
     <string name="title_additional">Дополнительно</string>
+    <string name="hint_title">Например Apple music</string>
+    <string name="hint_price">0.00</string>
+    <string name="hint_quantity">1</string>
+    <string name="hint_first_pay">например, сегодня</string>
+    <string name="title_every">каждый</string>
+    <string name="desc_first_pay">Добавьте дату первого списания, чтобы видеть расходы, или дату следующего платежа, если не можете вспомнить (необязательно)</string>
+    <string name="title_note">Примечание</string>
     <!--endregion-->
 
 </resources>

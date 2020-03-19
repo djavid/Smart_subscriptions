@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="toolbar_height">70dp</dimen>
-
+    <dimen name="edittext_height">38dp</dimen>
+    <dimen name="create_submit_height">45dp</dimen>
+    <dimen name="create_form_bottom_space">77dp</dimen>
 </resources>

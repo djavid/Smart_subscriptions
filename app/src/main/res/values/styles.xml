@@ -1,11 +1,23 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorOrange</item>
+    </style>
+
+    <style name="InputTheme">
+        <item name="android:background">@drawable/bg_edittext</item>
+        <item name="android:fontFamily">@font/helvetica_regular</item>
+        <item name="android:textColor">@color/colorNero</item>
+        <item name="android:textColorHint">@color/colorGray_65</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="InputTitleTheme">
+        <item name="android:fontFamily">@font/helvetica_bold</item>
+        <item name="android:textColor">@color/colorOrange</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
 </resources>

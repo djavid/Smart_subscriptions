@@ -1,6 +1,7 @@
 package com.djavid.smartsubs.create
 
 import android.view.View
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.djavid.smartsubs.R
@@ -19,7 +20,7 @@ class CreateView(
     }
 
     private lateinit var presenter: CreateContract.Presenter
-    private lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
+    private lateinit var bottomSheet: BottomSheetBehavior<FrameLayout>
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -50,7 +51,7 @@ class CreateView(
         val offset = viewRoot.context.resources.getDimensionPixelOffset(R.dimen.toolbar_height)
         bottomSheet = BottomSheetBehavior.from(viewRoot.create_bottomSheet)
         bottomSheet.addBottomSheetCallback(bottomSheetCallback)
-        bottomSheet.isFitToContents = false
+        bottomSheet.isFitToContents = true
         bottomSheet.setExpandedOffset(offset)
     }
 
