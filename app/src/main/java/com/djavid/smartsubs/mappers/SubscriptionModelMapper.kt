@@ -4,6 +4,8 @@ import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionProgress
 import com.djavid.smartsubs.utils.addPeriod
+import com.djavid.smartsubs.utils.getFirstPeriodAfterNow
+import com.djavid.smartsubs.utils.getFirstPeriodBeforeNow
 import org.joda.time.DateTime
 import org.joda.time.Days
 
@@ -11,21 +13,19 @@ class SubscriptionModelMapper {
 
     fun fromDao(dao: SubscriptionDao): Subscription {
 
-        val subscriptionProgress = dao.periodStart?.let { periodStart ->
-            var nextPeriod = periodStart.addPeriod(dao.period)
+        val subscriptionProgress = dao.paymentDate?.let { paymentDate ->
+            val currentPeriodStart = paymentDate.getFirstPeriodBeforeNow(dao.period)
+            val currentPeriodEnd = currentPeriodStart.addPeriod(dao.period)
 
-            while (nextPeriod.isBeforeNow) {
-                nextPeriod = nextPeriod.addPeriod(dao.period)
-            }
-
-            val daysLeft = Days.daysBetween(DateTime(), nextPeriod).days
-            val lastPeriodDaysAmount = Days.daysBetween(periodStart, nextPeriod).days
-            val progress = daysLeft / lastPeriodDaysAmount.toDouble()
+            val daysLeft = Days.daysBetween(DateTime(), currentPeriodEnd).days
+            val lastPeriodDaysAmount = Days.daysBetween(currentPeriodStart, currentPeriodEnd).days
+            val progress = 1 - daysLeft / lastPeriodDaysAmount.toDouble()
 
             SubscriptionProgress(daysLeft, progress)
         }
 
         return Subscription(
+            dao.id,
             dao.title,
             dao.price,
             dao.currency,

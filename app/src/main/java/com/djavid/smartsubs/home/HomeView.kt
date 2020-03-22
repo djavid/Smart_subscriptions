@@ -2,12 +2,18 @@ package com.djavid.smartsubs.home
 
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.djavid.smartsubs.R
-import com.djavid.smartsubs.models.*
+import com.djavid.smartsubs.models.Subscription
+import com.djavid.smartsubs.models.SubscriptionPeriodType
+import com.djavid.smartsubs.models.getSubPeriodString
+import com.djavid.smartsubs.models.getSymbolForCurrency
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import java.text.DecimalFormat
+import java.util.*
 
 class HomeView(
     private val viewRoot: View
@@ -15,10 +21,28 @@ class HomeView(
 
     private lateinit var presenter: HomeContract.Presenter
     private lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
+    private lateinit var adapter: SubsAdapter
+
+    private val itemTouchHelper = ItemTouchHelper(
+        object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                presenter.onItemSwipedToLeft(position)
+            }
+        }
+    )
 
     override fun init(presenter: HomeContract.Presenter) {
         this.presenter = presenter
         setupBottomSheet()
+        setupRecycler()
 
         viewRoot.home_periodSelector.setOnClickListener { presenter.onPeriodPressed() }
         viewRoot.home_addBtn.setOnClickListener { presenter.onAddSubPressed() }
@@ -26,6 +50,13 @@ class HomeView(
 
     private fun setupBottomSheet() {
         bottomSheet = BottomSheetBehavior.from(viewRoot.home_sheetContainer)
+    }
+
+    private fun setupRecycler() {
+        adapter = SubsAdapter(viewRoot.context)
+        viewRoot.home_subsRecycler.layoutManager = LinearLayoutManager(viewRoot.context)
+        viewRoot.home_subsRecycler.adapter = adapter
+        itemTouchHelper.attachToRecyclerView(viewRoot.home_subsRecycler)
     }
 
     override fun slidePanelToTop() {
@@ -36,8 +67,7 @@ class HomeView(
     }
 
     override fun showSubs(subs: List<Subscription>) {
-        viewRoot.home_subsRecycler.layoutManager = LinearLayoutManager(viewRoot.context)
-        viewRoot.home_subsRecycler.adapter = SubsAdapter(viewRoot.context, subs)
+        adapter.showSubs(subs)
     }
 
     override fun setSubsCount(count: Int) {

@@ -193,13 +193,15 @@
                     app:layout_constraintTop_toBottomOf="@id/create_periodQuantityInput" />
 
                 <EditText
-                    android:id="@+id/create_firstPayInput"
+                    android:id="@+id/create_paymentDateInput"
                     style="@style/InputTheme"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:focusable="false"
+                    android:clickable="true"
                     android:hint="@string/hint_first_pay"
                     android:inputType="date"
                     app:layout_constraintTop_toBottomOf="@id/create_firstPayDescription" />
@@ -213,7 +215,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/title_additional"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/create_firstPayInput" />
+                    app:layout_constraintTop_toBottomOf="@id/create_paymentDateInput" />
 
                 <EditText
                     android:id="@+id/create_noteInput"

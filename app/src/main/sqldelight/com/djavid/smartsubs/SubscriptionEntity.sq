@@ -2,10 +2,10 @@ CREATE TABLE subscriptionEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0,
     title TEXT NOT NULL,
     price REAL NOT NULL,
-    currency TEXT NOT NULL,
+    currencyCode TEXT NOT NULL,
     periodQuantity INTEGER NOT NULL,
     period TEXT NOT NULL,
-    periodStart INTEGER,
+    paymentDate INTEGER,
     comment TEXT
 );
 
@@ -14,16 +14,21 @@ SELECT * FROM subscriptionEntity;
 
 insert:
 INSERT OR REPLACE INTO subscriptionEntity(
-    id,
     title,
     price,
-    currency,
+    currencyCode,
     periodQuantity,
     period,
-    periodStart,
+    paymentDate,
     comment
 )
 VALUES ?;
 
 getSubscriptionById:
 SELECT * FROM subscriptionEntity WHERE id = ?;
+
+deleteSubById:
+DELETE FROM subscriptionEntity WHERE id = ?;
+
+deleteAllSubs:
+DELETE FROM subscriptionEntity;

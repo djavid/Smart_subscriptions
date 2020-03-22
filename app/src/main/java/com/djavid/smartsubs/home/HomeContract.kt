@@ -1,15 +1,17 @@
 package com.djavid.smartsubs.home
 
-import com.djavid.smartsubs.models.Currency
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
+import java.util.*
 
 interface HomeContract {
 
     interface Presenter {
         fun init()
+        fun reloadSubs()
         fun onAddSubPressed()
         fun onPeriodPressed()
+        fun onItemSwipedToLeft(position: Int)
     }
 
     interface View {

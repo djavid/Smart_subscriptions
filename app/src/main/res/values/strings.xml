@@ -22,13 +22,15 @@
 
     <plurals name="plural_days" >
         <item quantity="one">день</item>
-        <item quantity="two">дня</item>
+        <item quantity="few">дня</item>
+        <item quantity="many">дней</item>
         <item quantity="other">дней</item>
     </plurals>
 
     <plurals name="plural_subs" >
         <item quantity="one">подписка</item>
-        <item quantity="two">подписки</item>
+        <item quantity="few">подписки</item>
+        <item quantity="many">подписок</item>
         <item quantity="other">подписок</item>
     </plurals>
     <!--endregion-->

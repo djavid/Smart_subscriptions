@@ -16,7 +16,9 @@ class HomeModule(fragment: Fragment) {
         }
         bind<View>() with singleton { fragment.homeFragment }
         bind<HomeContract.Presenter>() with singleton {
-            HomePresenter(instance(), instance(), instance(), instance(), instance())
+            HomePresenter(
+                instance(), instance(), instance(), instance(), instance(), instance()
+            )
         }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
     }

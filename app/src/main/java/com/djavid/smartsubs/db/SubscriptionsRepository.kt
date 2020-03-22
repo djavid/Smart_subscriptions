@@ -32,4 +32,12 @@ class SubscriptionsRepository(
         queries.insert(entity)
     }
 
+    suspend fun deleteSubById(id: Long) = withContext(Dispatchers.IO) {
+        queries.deleteSubById(id)
+    }
+
+    suspend fun deleteAllSubs() = withContext(Dispatchers.IO) {
+        queries.deleteAllSubs()
+    }
+
 }

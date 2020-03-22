@@ -2,8 +2,10 @@ package com.djavid.smartsubs.models
 
 import android.content.Context
 import com.djavid.smartsubs.R
+import java.util.Currency
 
 data class Subscription(
+    val id: Long,
     val title: String,
     val price: Double,
     val currency: Currency,

@@ -3,10 +3,15 @@ package com.djavid.smartsubs.models
 import android.content.Context
 import com.djavid.smartsubs.R
 
-enum class Currency(title: String) {
-    RUB("rub")
-}
+val supportedCurrencyCodes = listOf("RUB")
 
-fun Context.getSymbolForCurrency(currency: Currency) = when (currency) {
-    Currency.RUB -> getString(R.string.symbol_rub)
+fun Context.getSymbolForCurrency(currency: java.util.Currency): String {
+    return if (supportedCurrencyCodes.contains(currency.currencyCode)) {
+        when (currency.currencyCode) {
+            "RUB" -> getString(R.string.symbol_rub)
+            else -> currency.displayName
+        }
+    } else {
+        currency.displayName
+    }
 }

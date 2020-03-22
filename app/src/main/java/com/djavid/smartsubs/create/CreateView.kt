@@ -1,18 +1,26 @@
 package com.djavid.smartsubs.create
 
+import android.app.DatePickerDialog
+import android.content.Intent
+import android.text.SpannableStringBuilder
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getSubPeriodString
+import com.djavid.smartsubs.models.getSymbolForCurrency
+import com.djavid.smartsubs.utils.ACTION_REFRESH_LIST
 import com.djavid.smartsubs.utils.animateAlpha
 import com.djavid.smartsubs.utils.hideKeyboard
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_create.view.*
-
+import org.joda.time.DateTime
+import java.util.*
 
 class CreateView(
     private val viewRoot: View
@@ -28,10 +36,45 @@ class CreateView(
     override fun init(presenter: CreateContract.Presenter) {
         this.presenter = presenter
         setupBottomSheet()
+        setupFormInputs()
 
         viewRoot.create_closeBtn.setOnClickListener {
             presenter.onCancelPressed()
         }
+    }
+
+    private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+        val date = DateTime(year, month + 1, dayOfMonth, 0, 0)
+        presenter.onPaymentDateInputChanged(date)
+    }
+
+    private fun setupFormInputs() = with(viewRoot) {
+        create_titleInput.doAfterTextChanged {
+            presenter.onTitleInputChanged(it?.toString())
+        }
+        create_priceInput.doAfterTextChanged {
+            presenter.onPriceInputChanged(it?.toString()?.toDoubleOrNull())
+        }
+        create_periodQuantityInput.doAfterTextChanged {
+            presenter.onPeriodQuantityInputChanged(it?.toString()?.toIntOrNull())
+        }
+        create_noteInput.doAfterTextChanged {
+            presenter.onCommentInputChanged(it?.toString())
+        }
+        create_paymentDateInput.setOnClickListener {
+            presenter.onPaymentDateInputPressed()
+        }
+        create_submitBtn.setOnClickListener {
+            presenter.onSubmitPressed()
+        }
+    }
+
+    override fun openDatePicker(prevSelectedDate: DateTime?) {
+        val selectedDate = prevSelectedDate ?: DateTime()
+        DatePickerDialog(
+            viewRoot.context, dateSetListener, selectedDate.year,
+            selectedDate.monthOfYear - 1, selectedDate.dayOfMonth
+        ).show()
     }
 
     private fun setupBottomSheet() {
@@ -64,13 +107,21 @@ class CreateView(
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                presenter.onItemSelected(position)
+                presenter.onPeriodItemSelected(position)
             }
         }
     }
 
     override fun selectPeriodItem(position: Int) {
         viewRoot.create_periodSelector.setSelection(position, true)
+    }
+
+    override fun setDateInput(text: String) {
+        viewRoot.create_paymentDateInput.text = SpannableStringBuilder(text)
+    }
+
+    override fun setCurrencySymbol(currency: Currency) {
+        viewRoot.create_currencySymbol.text = viewRoot.context.getSymbolForCurrency(currency)
     }
 
     override fun showToolbar(show: Boolean, duration: Long) {
@@ -85,12 +136,13 @@ class CreateView(
         viewRoot.animateAlpha(fromAlpha, toAlpha, duration)
     }
 
-    override fun goBack() {
-        (viewRoot.context as? AppCompatActivity)?.supportFragmentManager?.popBackStack()
-    }
-
     override fun hideKeyboard() {
         (viewRoot.context as? AppCompatActivity).hideKeyboard()
+    }
+
+    override fun notifyToRefreshSubs() {
+        val intent = Intent(ACTION_REFRESH_LIST)
+        LocalBroadcastManager.getInstance(viewRoot.context).sendBroadcast(intent)
     }
 
 }

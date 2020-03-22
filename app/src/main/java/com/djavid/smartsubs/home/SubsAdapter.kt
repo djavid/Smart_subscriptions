@@ -15,19 +15,25 @@ import kotlinx.android.synthetic.main.subscription_item.view.*
 import java.text.DecimalFormat
 
 class SubsAdapter(
-    private val context: Context,
-    private val subs: List<Subscription>
+    private val context: Context
 ) : RecyclerView.Adapter<SubsAdapter.ViewHolder>() {
+
+    private var data = listOf<Subscription>()
+
+    fun showSubs(subs: List<Subscription>) {
+        data = subs
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.subscription_item, parent, false)
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = subs.count()
+    override fun getItemCount(): Int = data.count()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val sub = subs[position]
+        val sub = data[position]
         val currencySymbol = context.getSymbolForCurrency(sub.currency)
         val df = DecimalFormat("0.##")
 

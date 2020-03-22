@@ -28,7 +28,7 @@ class Application: Application(), KodeinAware {
         bind<Application>() with singleton { this@Application }
 
         import(CoroutineModule().kodein)
-        import(DatabaseModule().kodein)
+        import(DatabaseModule(applicationContext).kodein)
         import(MappersModule().kodein)
     }
 

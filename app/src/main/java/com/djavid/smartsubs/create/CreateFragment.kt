@@ -9,20 +9,14 @@ import androidx.fragment.app.Fragment
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BackPressListener
+import com.djavid.smartsubs.common.BaseFragment
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 
-class CreateFragment : Fragment(), BackPressListener, KodeinAware {
+class CreateFragment : BaseFragment(R.layout.fragment_create), BackPressListener {
 
     private val presenter: CreateContract.Presenter by instance()
-    override lateinit var kodein: Kodein
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_create, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
