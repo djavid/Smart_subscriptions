@@ -7,7 +7,7 @@ import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import kotlinx.coroutines.*
-import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import java.util.*
 
 class CreatePresenter(
@@ -91,7 +91,7 @@ class CreatePresenter(
         model = model.copy(period = model.period.copy(type = selectedPeriodType))
     }
 
-    override fun onPaymentDateInputChanged(input: DateTime) {
+    override fun onPaymentDateInputChanged(input: LocalDate) {
         model = model.copy(paymentDate = input)
         view.setDateInput(input.toString("dd.MM.yyyy"))
     }

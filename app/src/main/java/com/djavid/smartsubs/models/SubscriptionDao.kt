@@ -1,7 +1,7 @@
 package com.djavid.smartsubs.models
 
-import org.joda.time.DateTime
-import java.util.Currency
+import org.joda.time.LocalDate
+import java.util.*
 
 data class SubscriptionDao(
     val id: Long,
@@ -9,6 +9,6 @@ data class SubscriptionDao(
     val price: Double,
     val currency: Currency,
     val period: SubscriptionPeriod,
-    val paymentDate: DateTime?,
+    val paymentDate: LocalDate?,
     val comment: String?
 )

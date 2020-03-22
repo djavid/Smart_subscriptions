@@ -19,6 +19,7 @@
     <string name="title_month">месяц</string>
     <string name="title_year">год</string>
     <string name="add_sub">Добавить подписку</string>
+    <string name="title_today">Сегодня</string>
 
     <plurals name="plural_every" >
         <item quantity="one">каждый</item>

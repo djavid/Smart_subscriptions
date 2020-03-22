@@ -1,7 +1,7 @@
 package com.djavid.smartsubs.create
 
 import com.djavid.smartsubs.models.SubscriptionPeriodType
-import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import java.util.*
 
 interface CreateContract {
@@ -20,7 +20,7 @@ interface CreateContract {
         fun onPeriodItemSelected(position: Int)
 
         fun onPaymentDateInputPressed()
-        fun onPaymentDateInputChanged(input: DateTime)
+        fun onPaymentDateInputChanged(input: LocalDate)
 
         fun onCommentInputChanged(input: String?)
 
@@ -32,7 +32,7 @@ interface CreateContract {
         fun getPeriodString(period: SubscriptionPeriodType, quantity: Int): String
         fun setupSpinner(periods: List<String>)
         fun expandPanel()
-        fun openDatePicker(prevSelectedDate: DateTime?)
+        fun openDatePicker(prevSelectedDate: LocalDate?)
         fun collapsePanel()
         fun showToolbar(show: Boolean, duration: Long)
         fun setBackgroundTransparent(transparent: Boolean, duration: Long)

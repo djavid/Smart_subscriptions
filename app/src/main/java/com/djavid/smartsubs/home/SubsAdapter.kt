@@ -53,11 +53,16 @@ class SubsAdapter(
         holder.price.text = context.getString(R.string.mask_price, df.format(priceForPeriod), currencySymbol)
 
         sub.progress?.let {
-            holder.progressBar.show(true)
-            holder.periodLeft.show(true)
 
-            val pluralDays = context.resources.getQuantityString(R.plurals.plural_day, it.daysLeft)
-            holder.periodLeft.text = context.getString(R.string.mask_days_until, it.daysLeft, pluralDays)
+            holder.periodLeft.show(true)
+            if (it.daysLeft == 0) {
+                holder.periodLeft.text = context.getString(R.string.title_today)
+            } else {
+                val pluralDays = context.resources.getQuantityString(R.plurals.plural_day, it.daysLeft)
+                holder.periodLeft.text = context.getString(R.string.mask_days_until, it.daysLeft, pluralDays)
+            }
+
+            holder.progressBar.show(true)
             holder.progressBar.progress = (it.progress * 100).toInt()
             holder.progressBar.setProgressColor(1 - it.progress)
         }
@@ -65,13 +70,13 @@ class SubsAdapter(
 
     private fun ProgressBar.setProgressColor(leftProgress: Double) {
         when {
-            leftProgress > CONST_GREEN_PROGRESS_MIN_PERCENT -> {
+            leftProgress >= CONST_GREEN_PROGRESS_MIN_PERCENT -> {
                 progressDrawable = context.getDrawable(R.drawable.progress_green_drawable)
             }
-            leftProgress > CONST_ORANGE_PROGRESS_MIN_PERCENT -> {
+            leftProgress >= CONST_ORANGE_PROGRESS_MIN_PERCENT -> {
                 progressDrawable = context.getDrawable(R.drawable.progress_orange_drawable)
             }
-            leftProgress > CONST_RED_PROGRESS_MIN_PERCENT -> {
+            leftProgress >= CONST_RED_PROGRESS_MIN_PERCENT -> {
                 progressDrawable = context.getDrawable(R.drawable.progress_red_drawable)
             }
         }

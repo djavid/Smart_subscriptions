@@ -20,6 +20,8 @@ import com.djavid.smartsubs.utils.hideKeyboard
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_create.view.*
 import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
+import org.joda.time.LocalDate
 import java.util.*
 
 class CreateView(
@@ -44,7 +46,7 @@ class CreateView(
     }
 
     private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-        val date = DateTime(year, month + 1, dayOfMonth, 0, 0)
+        val date = LocalDate(year, month + 1, dayOfMonth)
         presenter.onPaymentDateInputChanged(date)
     }
 
@@ -69,8 +71,10 @@ class CreateView(
         }
     }
 
-    override fun openDatePicker(prevSelectedDate: DateTime?) {
-        val selectedDate = prevSelectedDate ?: DateTime()
+    override fun openDatePicker(prevSelectedDate: LocalDate?) {
+        val dateNow = LocalDate.now(DateTimeZone.forTimeZone(TimeZone.getDefault()))
+        val selectedDate = prevSelectedDate ?: dateNow
+
         DatePickerDialog(
             viewRoot.context, dateSetListener, selectedDate.year,
             selectedDate.monthOfYear - 1, selectedDate.dayOfMonth

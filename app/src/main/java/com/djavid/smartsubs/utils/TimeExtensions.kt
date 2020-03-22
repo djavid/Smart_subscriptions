@@ -2,42 +2,46 @@ package com.djavid.smartsubs.utils
 
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
-import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
+import org.joda.time.LocalDate
+import java.util.*
 
-fun DateTime.addPeriod(period: SubscriptionPeriod): DateTime = when (period.type) {
+fun LocalDate.addPeriod(period: SubscriptionPeriod): LocalDate = when (period.type) {
     SubscriptionPeriodType.DAY -> plusDays(period.quantity)
     SubscriptionPeriodType.MONTH -> plusMonths(period.quantity)
     SubscriptionPeriodType.YEAR -> plusYears(period.quantity)
 }
 
-fun DateTime.minusPeriod(period: SubscriptionPeriod): DateTime = when (period.type) {
+fun LocalDate.minusPeriod(period: SubscriptionPeriod): LocalDate = when (period.type) {
     SubscriptionPeriodType.DAY -> minusDays(period.quantity)
     SubscriptionPeriodType.MONTH -> minusMonths(period.quantity)
     SubscriptionPeriodType.YEAR -> minusYears(period.quantity)
 }
 
-fun DateTime.getFirstPeriodAfterNow(period: SubscriptionPeriod): DateTime {
+fun LocalDate.getFirstPeriodAfterNow(period: SubscriptionPeriod): LocalDate {
     var date = this
+    val dateNow = LocalDate.now(DateTimeZone.forTimeZone(TimeZone.getDefault()))
 
-    while (date.isAfterNow) {
+    while (date.isAfter(dateNow)) {
         date = date.minusPeriod(period)
     }
 
-    while (date.isBeforeNow) {
+    while (date.isBefore(dateNow)) {
         date = date.addPeriod(period)
     }
 
     return date
 }
 
-fun DateTime.getFirstPeriodBeforeNow(period: SubscriptionPeriod): DateTime {
+fun LocalDate.getFirstPeriodBeforeNow(period: SubscriptionPeriod): LocalDate {
     var date = this
+    val dateNow = LocalDate.now(DateTimeZone.forTimeZone(TimeZone.getDefault()))
 
-    while (date.isBeforeNow) {
+    while (date.isBefore(dateNow)) {
         date = date.addPeriod(period)
     }
 
-    while (date.isAfterNow) {
+    while (date.isAfter(dateNow)) {
         date = date.minusPeriod(period)
     }
 
