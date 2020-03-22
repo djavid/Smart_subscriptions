@@ -2,7 +2,8 @@ package com.djavid.smartsubs.models
 
 import android.content.Context
 import com.djavid.smartsubs.R
-import java.util.Currency
+import org.joda.time.DateTime
+import java.util.*
 
 data class Subscription(
     val id: Long,
@@ -31,4 +32,31 @@ fun Context.getSubPeriodString(type: SubscriptionPeriodType, quantity: Int = 1) 
     SubscriptionPeriodType.DAY -> resources.getQuantityString(R.plurals.plural_day, quantity)
     SubscriptionPeriodType.MONTH -> resources.getQuantityString(R.plurals.plural_month, quantity)
     SubscriptionPeriodType.YEAR -> resources.getQuantityString(R.plurals.plural_year, quantity)
+}
+
+fun Subscription.getPriceInPeriod(pricePeriod: SubscriptionPeriodType): Double {
+    val daysInMonth = DateTime().dayOfMonth().maximumValue
+    val daysInYear = DateTime().dayOfYear().maximumValue
+    val monthsInYear = DateTime().monthOfYear().maximumValue
+
+    val priceForOne = price / period.quantity
+
+    return when (pricePeriod) {
+        SubscriptionPeriodType.DAY -> when (period.type) {
+            SubscriptionPeriodType.DAY -> priceForOne
+            SubscriptionPeriodType.MONTH -> priceForOne / daysInMonth
+            SubscriptionPeriodType.YEAR -> priceForOne / daysInYear
+        }
+        SubscriptionPeriodType.MONTH -> when (period.type) {
+            SubscriptionPeriodType.DAY -> priceForOne * daysInMonth
+            SubscriptionPeriodType.MONTH -> priceForOne
+            SubscriptionPeriodType.YEAR -> priceForOne / monthsInYear
+        }
+        SubscriptionPeriodType.YEAR -> when (period.type) {
+            SubscriptionPeriodType.DAY -> priceForOne * daysInYear
+            SubscriptionPeriodType.MONTH -> priceForOne * monthsInYear
+            SubscriptionPeriodType.YEAR -> priceForOne
+        }
+    }
+
 }

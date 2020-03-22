@@ -66,8 +66,13 @@ class HomeView(
         }
     }
 
-    override fun showSubs(subs: List<Subscription>) {
+    override fun showSubs(subs: List<Subscription>, pricePeriod: SubscriptionPeriodType) {
+        adapter.pricePeriod = pricePeriod
         adapter.showSubs(subs)
+    }
+
+    override fun updateListPrices(pricePeriod: SubscriptionPeriodType) {
+        adapter.updatePricePeriod(pricePeriod)
     }
 
     override fun setSubsCount(count: Int) {

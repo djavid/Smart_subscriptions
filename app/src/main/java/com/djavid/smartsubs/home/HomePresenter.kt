@@ -5,10 +5,10 @@ import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
+import com.djavid.smartsubs.models.getPriceInPeriod
 import com.djavid.smartsubs.utils.SharedRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.util.*
 
 class HomePresenter(
     private val view: HomeContract.View,
@@ -20,24 +20,26 @@ class HomePresenter(
 ) : HomeContract.Presenter, CoroutineScope by coroutineScope {
 
     private var subs = mutableListOf<Subscription>()
-    private var selectedSubPeriod = SubscriptionPeriodType.MONTH //todo get from sharedPrefs
 
     override fun init() {
         view.init(this)
-
         view.slidePanelToTop()
-        view.setSubsPeriod(selectedSubPeriod)
+        view.setSubsPeriod(sharedPrefs.selectedSubsPeriod)
     }
 
     override fun reloadSubs() {
         launch {
-            val selectedCurrency = Currency.getInstance(sharedPrefs.selectedCurrencyCode)
             subs = repository.getSubs().map { modelMapper.fromDao(it) }.toMutableList()
 
             view.setSubsCount(subs.count())
-            view.showSubs(subs)
-            view.setSubsPrice(subs.sumByDouble { it.price }, selectedCurrency)
+            view.showSubs(subs, sharedPrefs.selectedSubsPeriod)
+            view.setSubsPrice(calculateSubsPrice(), sharedPrefs.selectedCurrency)
         }
+    }
+
+    private fun calculateSubsPrice(): Double {
+        val pricePeriod = sharedPrefs.selectedSubsPeriod
+        return subs.sumByDouble { it.getPriceInPeriod(pricePeriod) }
     }
 
     override fun onItemSwipedToLeft(position: Int) {
@@ -53,8 +55,13 @@ class HomePresenter(
     }
 
     override fun onPeriodPressed() {
-        //todo
-        println("onPeriodPressed")
+        val types = SubscriptionPeriodType.values()
+        val index = (types.indexOf(sharedPrefs.selectedSubsPeriod) + 1).rem(types.size)
+        sharedPrefs.selectedSubsPeriod = types[index]
+
+        view.setSubsPeriod(sharedPrefs.selectedSubsPeriod)
+        view.setSubsPrice(calculateSubsPrice(), sharedPrefs.selectedCurrency)
+        view.updateListPrices(sharedPrefs.selectedSubsPeriod)
     }
 
 }

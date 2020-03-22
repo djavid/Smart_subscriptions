@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.Subscription
+import com.djavid.smartsubs.models.SubscriptionPeriodType
+import com.djavid.smartsubs.models.getPriceInPeriod
 import com.djavid.smartsubs.models.getSymbolForCurrency
 import com.djavid.smartsubs.utils.CONST_GREEN_PROGRESS_MIN_PERCENT
 import com.djavid.smartsubs.utils.CONST_ORANGE_PROGRESS_MIN_PERCENT
@@ -22,9 +24,15 @@ class SubsAdapter(
 ) : RecyclerView.Adapter<SubsAdapter.ViewHolder>() {
 
     private var data = listOf<Subscription>()
+    lateinit var pricePeriod: SubscriptionPeriodType
 
     fun showSubs(subs: List<Subscription>) {
         data = subs
+        notifyDataSetChanged()
+    }
+
+    fun updatePricePeriod(pricePeriod: SubscriptionPeriodType) {
+        this.pricePeriod = pricePeriod
         notifyDataSetChanged()
     }
 
@@ -41,7 +49,8 @@ class SubsAdapter(
         val df = DecimalFormat("0.##")
 
         holder.title.text = sub.title
-        holder.price.text = context.getString(R.string.mask_price, df.format(sub.price), currencySymbol)
+        val priceForPeriod = sub.getPriceInPeriod(pricePeriod)
+        holder.price.text = context.getString(R.string.mask_price, df.format(priceForPeriod), currencySymbol)
 
         sub.progress?.let {
             holder.progressBar.show(true)
