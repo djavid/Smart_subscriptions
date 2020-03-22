@@ -29,7 +29,7 @@ interface CreateContract {
 
     interface View {
         fun init(presenter: Presenter)
-        fun getPeriodString(period: SubscriptionPeriodType): String
+        fun getPeriodString(period: SubscriptionPeriodType, quantity: Int): String
         fun setupSpinner(periods: List<String>)
         fun expandPanel()
         fun openDatePicker(prevSelectedDate: DateTime?)
@@ -41,6 +41,7 @@ interface CreateContract {
         fun setDateInput(text: String)
         fun setCurrencySymbol(currency: Currency)
         fun notifyToRefreshSubs()
+        fun setEveryPlural(quantity: Int)
     }
 
     interface Navigator {

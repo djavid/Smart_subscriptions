@@ -71,7 +71,7 @@ class HomeView(
     }
 
     override fun setSubsCount(count: Int) {
-        val plural = viewRoot.context.resources.getQuantityString(R.plurals.plural_subs, count)
+        val plural = viewRoot.context.resources.getQuantityString(R.plurals.plural_sub, count)
         viewRoot.home_subsCount.text = viewRoot.context.getString(R.string.mask_subs_count, count, plural)
     }
 

@@ -41,14 +41,13 @@ class SubsAdapter(
         val df = DecimalFormat("0.##")
 
         holder.title.text = sub.title
-        holder.price.text =
-            context.getString(R.string.mask_price, df.format(sub.price), currencySymbol)
+        holder.price.text = context.getString(R.string.mask_price, df.format(sub.price), currencySymbol)
 
         sub.progress?.let {
             holder.progressBar.show(true)
             holder.periodLeft.show(true)
 
-            val pluralDays = context.resources.getQuantityString(R.plurals.plural_days, it.daysLeft)
+            val pluralDays = context.resources.getQuantityString(R.plurals.plural_day, it.daysLeft)
             holder.periodLeft.text = context.getString(R.string.mask_days_until, it.daysLeft, pluralDays)
             holder.progressBar.progress = (it.progress * 100).toInt()
             holder.progressBar.setProgressColor(1 - it.progress)

@@ -20,18 +20,34 @@
     <string name="title_year">год</string>
     <string name="add_sub">Добавить подписку</string>
 
-    <plurals name="plural_days" >
+    <plurals name="plural_every" >
+        <item quantity="one">каждый</item>
+        <item quantity="few">каждые</item>
+        <item quantity="many">каждые</item>
+    </plurals>
+
+    <plurals name="plural_day" >
         <item quantity="one">день</item>
         <item quantity="few">дня</item>
         <item quantity="many">дней</item>
-        <item quantity="other">дней</item>
     </plurals>
 
-    <plurals name="plural_subs" >
+    <plurals name="plural_month" >
+        <item quantity="one">месяц</item>
+        <item quantity="few">месяца</item>
+        <item quantity="many">месяцев</item>
+    </plurals>
+
+    <plurals name="plural_year" >
+        <item quantity="one">год</item>
+        <item quantity="few">года</item>
+        <item quantity="many">лет</item>
+    </plurals>
+
+    <plurals name="plural_sub" >
         <item quantity="one">подписка</item>
         <item quantity="few">подписки</item>
         <item quantity="many">подписок</item>
-        <item quantity="other">подписок</item>
     </plurals>
     <!--endregion-->
 

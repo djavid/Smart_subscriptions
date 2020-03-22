@@ -27,8 +27,8 @@ enum class SubscriptionPeriodType {
     DAY, MONTH, YEAR
 }
 
-fun Context.getSubPeriodString(type: SubscriptionPeriodType) = when (type) {
-    SubscriptionPeriodType.DAY -> getString(R.string.title_day)
-    SubscriptionPeriodType.MONTH -> getString(R.string.title_month)
-    SubscriptionPeriodType.YEAR -> getString(R.string.title_year)
+fun Context.getSubPeriodString(type: SubscriptionPeriodType, quantity: Int = 1) = when (type) {
+    SubscriptionPeriodType.DAY -> resources.getQuantityString(R.plurals.plural_day, quantity)
+    SubscriptionPeriodType.MONTH -> resources.getQuantityString(R.plurals.plural_month, quantity)
+    SubscriptionPeriodType.YEAR -> resources.getQuantityString(R.plurals.plural_year, quantity)
 }

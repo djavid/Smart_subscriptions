@@ -28,14 +28,18 @@ class CreatePresenter(
             SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), null, null
         )
 
-        val periods = periodItems.map { view.getPeriodString(it) }
-        view.setupSpinner(periods)
-        view.selectPeriodItem(periodItems.indexOf(model.period.type))
+        updateSpinner()
         view.setCurrencySymbol(model.currency)
 
         view.expandPanel()
         view.setBackgroundTransparent(false, SLIDE_DURATION)
         view.showToolbar(true, SLIDE_DURATION)
+    }
+
+    private fun updateSpinner() {
+        val periods = periodItems.map { view.getPeriodString(it, model.period.quantity) }
+        view.setupSpinner(periods)
+        view.selectPeriodItem(periodItems.indexOf(model.period.type))
     }
 
     override fun onSubmitPressed() {
@@ -78,6 +82,8 @@ class CreatePresenter(
 
     override fun onPeriodQuantityInputChanged(input: Int?) {
         model = model.copy(period = model.period.copy(quantity = input ?: 1))
+        view.setEveryPlural(model.period.quantity)
+        updateSpinner()
     }
 
     override fun onPeriodItemSelected(position: Int) {

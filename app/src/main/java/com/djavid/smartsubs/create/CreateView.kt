@@ -94,8 +94,8 @@ class CreateView(
         }
     }
 
-    override fun getPeriodString(period: SubscriptionPeriodType): String {
-        return viewRoot.context.getSubPeriodString(period)
+    override fun getPeriodString(period: SubscriptionPeriodType, quantity: Int): String {
+        return viewRoot.context.getSubPeriodString(period, quantity)
     }
 
     override fun setupSpinner(periods: List<String>) {
@@ -122,6 +122,11 @@ class CreateView(
 
     override fun setCurrencySymbol(currency: Currency) {
         viewRoot.create_currencySymbol.text = viewRoot.context.getSymbolForCurrency(currency)
+    }
+
+    override fun setEveryPlural(quantity: Int) {
+        val text =  viewRoot.context.resources.getQuantityString(R.plurals.plural_every, quantity)
+        viewRoot.create_everyTextView.text = text
     }
 
     override fun showToolbar(show: Boolean, duration: Long) {
