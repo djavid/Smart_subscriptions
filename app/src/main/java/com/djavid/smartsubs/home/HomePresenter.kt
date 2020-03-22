@@ -69,6 +69,24 @@ class HomePresenter(
                     SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
                     DateTime().minusDays(13),
                     null
+                ),
+                SubscriptionDao(
+                    0,
+                    "EA Access",
+                    1799.0,
+                    Currency.RUB,
+                    SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
+                    DateTime().minusDays(13),
+                    null
+                ),
+                SubscriptionDao(
+                    0,
+                    "EA Access",
+                    1799.0,
+                    Currency.RUB,
+                    SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
+                    DateTime().minusDays(13),
+                    null
                 )
             ).map { modelMapper.fromDao(it) }
 

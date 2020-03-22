@@ -2,6 +2,7 @@ package com.djavid.smartsubs.home
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
@@ -24,6 +25,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
         kodein = (activity?.application as Application).homeComponent(this)
         presenter = kodein.direct.instance()
         presenter.init()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
     }
 
     override fun onStop() {

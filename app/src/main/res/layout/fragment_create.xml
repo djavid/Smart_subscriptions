@@ -48,7 +48,6 @@
         android:id="@+id/create_bottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/toolbar_height"
         android:background="@drawable/bg_bottom_sheet"
         android:elevation="15dp"
         android:paddingTop="20dp"
@@ -65,7 +64,8 @@
             android:layout_marginEnd="16dp"
             android:background="@color/colorWhisper" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/create_scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="never"
@@ -99,15 +99,6 @@
                     android:inputType="text"
                     app:layout_constraintTop_toBottomOf="@id/create_titleTextView" />
 
-                <View
-                    android:id="@+id/create_firstDivider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/colorWhisper"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/create_titleInput" />
-
                 <TextView
                     android:id="@+id/create_paymentTextView"
                     style="@style/InputTitleTheme"
@@ -117,7 +108,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/title_payment"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/create_firstDivider" />
+                    app:layout_constraintTop_toBottomOf="@id/create_titleInput" />
 
                 <EditText
                     android:id="@+id/create_priceInput"
@@ -129,7 +120,7 @@
                     android:layout_marginEnd="16dp"
                     android:gravity="center"
                     android:hint="@string/hint_price"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     app:layout_constraintEnd_toStartOf="@id/create_currencySymbol"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/create_paymentTextView" />
@@ -170,12 +161,12 @@
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
                     android:hint="@string/hint_quantity"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     app:layout_constraintEnd_toStartOf="@id/create_periodSelector"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/create_everyTextView" />
 
-                <FrameLayout
+                <Spinner
                     android:id="@+id/create_periodSelector"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edittext_height"
@@ -185,26 +176,7 @@
                     android:background="@drawable/bg_period_selector"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/create_periodQuantityInput"
-                    app:layout_constraintTop_toBottomOf="@id/create_everyTextView">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/helvetica_regular"
-                        android:textColor="@color/colorNero"
-                        android:textSize="17sp"
-                        tools:text="месяц" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="47dp"
-                        android:tint="@android:color/black"
-                        app:srcCompat="@drawable/ic_expand_more_24px" />
-
-                </FrameLayout>
+                    app:layout_constraintTop_toBottomOf="@id/create_everyTextView" />
 
                 <TextView
                     android:id="@+id/create_firstPayDescription"
@@ -232,15 +204,6 @@
                     android:inputType="date"
                     app:layout_constraintTop_toBottomOf="@id/create_firstPayDescription" />
 
-                <View
-                    android:id="@+id/create_secondDivider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/colorWhisper"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/create_firstPayInput" />
-
                 <TextView
                     android:id="@+id/create_noteTextView"
                     style="@style/InputTitleTheme"
@@ -250,7 +213,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/title_additional"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/create_secondDivider" />
+                    app:layout_constraintTop_toBottomOf="@id/create_firstPayInput" />
 
                 <EditText
                     android:id="@+id/create_noteInput"
@@ -270,7 +233,6 @@
                     android:layout_height="@dimen/create_submit_height"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:visibility="gone"
                     app:cardBackgroundColor="@color/colorOrange"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="5dp"
@@ -278,8 +240,7 @@
                     app:contentPaddingRight="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/create_noteInput"
-                    tools:visibility="visible">
+                    app:layout_constraintTop_toBottomOf="@id/create_noteInput">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -307,7 +268,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </FrameLayout>
 

@@ -60,7 +60,6 @@
         android:id="@+id/home_sheetContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/toolbar_height"
         android:background="@drawable/bg_bottom_sheet"
         android:elevation="15dp"
         app:behavior_hideable="false"
