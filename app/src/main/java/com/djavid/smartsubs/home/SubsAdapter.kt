@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.getSymbolForCurrency
+import com.djavid.smartsubs.utils.CONST_GREEN_PROGRESS_MIN_PERCENT
+import com.djavid.smartsubs.utils.CONST_ORANGE_PROGRESS_MIN_PERCENT
+import com.djavid.smartsubs.utils.CONST_RED_PROGRESS_MIN_PERCENT
 import com.djavid.smartsubs.utils.show
 import kotlinx.android.synthetic.main.subscription_item.view.*
 import java.text.DecimalFormat
@@ -48,6 +51,21 @@ class SubsAdapter(
             val pluralDays = context.resources.getQuantityString(R.plurals.plural_days, it.daysLeft)
             holder.periodLeft.text = context.getString(R.string.mask_days_until, it.daysLeft, pluralDays)
             holder.progressBar.progress = (it.progress * 100).toInt()
+            holder.progressBar.setProgressColor(1 - it.progress)
+        }
+    }
+
+    private fun ProgressBar.setProgressColor(leftProgress: Double) {
+        when {
+            leftProgress > CONST_GREEN_PROGRESS_MIN_PERCENT -> {
+                progressDrawable = context.getDrawable(R.drawable.progress_green_drawable)
+            }
+            leftProgress > CONST_ORANGE_PROGRESS_MIN_PERCENT -> {
+                progressDrawable = context.getDrawable(R.drawable.progress_orange_drawable)
+            }
+            leftProgress > CONST_RED_PROGRESS_MIN_PERCENT -> {
+                progressDrawable = context.getDrawable(R.drawable.progress_red_drawable)
+            }
         }
     }
 
