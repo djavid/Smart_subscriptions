@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "828497607720",
+    "firebase_url": "https://smartsubs-13aaf.firebaseio.com",
+    "project_id": "smartsubs-13aaf",
+    "storage_bucket": "smartsubs-13aaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828497607720:android:0263f8011443d2d981c91d",
+        "android_client_info": {
+          "package_name": "com.djavid.smartsubs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828497607720-5f6ibaqg027dd18he82h12qc7251tdfb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs82nciJGawDvEG12aJhn9le12uqYSNkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828497607720-5f6ibaqg027dd18he82h12qc7251tdfb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
