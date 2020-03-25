@@ -11,6 +11,8 @@ import com.djavid.smartsubs.home.HomeModule
 import com.djavid.smartsubs.home.HomeNavigatorModule
 import com.djavid.smartsubs.mappers.MappersModule
 import com.djavid.smartsubs.root.RootModule
+import com.djavid.smartsubs.subscription.SubscriptionModule
+import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
 import net.danlew.android.joda.JodaTimeAndroid
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -42,11 +44,17 @@ class Application: Application(), KodeinAware {
         extend(kodein)
         import(HomeModule(fragment).kodein)
         import(CreateNavigatorModule().kodein)
+        import(SubscriptionNavigatorModule().kodein)
     }
 
     fun createComponent(fragment: Fragment) = Kodein.lazy {
         extend(kodein)
         import(CreateModule(fragment).kodein)
+    }
+
+    fun subscription(fragment: Fragment) = Kodein.lazy {
+        extend(kodein)
+        import(SubscriptionModule(fragment).kodein)
     }
 
 }

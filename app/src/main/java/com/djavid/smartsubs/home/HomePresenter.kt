@@ -6,6 +6,7 @@ import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getPriceInPeriod
+import com.djavid.smartsubs.subscription.SubscriptionContract
 import com.djavid.smartsubs.utils.SharedRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -14,6 +15,7 @@ class HomePresenter(
     private val view: HomeContract.View,
     private val repository: SubscriptionsRepository,
     private val createNavigator: CreateContract.Navigator,
+    private val subNavigator: SubscriptionContract.Navigator,
     private val modelMapper: SubscriptionModelMapper,
     private val sharedPrefs: SharedRepository,
     coroutineScope: CoroutineScope
@@ -40,6 +42,10 @@ class HomePresenter(
     private fun calculateSubsPrice(): Double {
         val pricePeriod = sharedPrefs.selectedSubsPeriod
         return subs.sumByDouble { it.getPriceInPeriod(pricePeriod) }
+    }
+
+    override fun onItemClick(id: Long) {
+        subNavigator.goToSubscription(id)
     }
 
     override fun onItemSwipedToLeft(position: Int) {

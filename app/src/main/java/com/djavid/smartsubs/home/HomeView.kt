@@ -53,7 +53,7 @@ class HomeView(
     }
 
     private fun setupRecycler() {
-        adapter = SubsAdapter(viewRoot.context)
+        adapter = SubsAdapter(viewRoot.context, presenter::onItemClick)
         viewRoot.home_subsRecycler.layoutManager = LinearLayoutManager(viewRoot.context)
         viewRoot.home_subsRecycler.adapter = adapter
         itemTouchHelper.attachToRecyclerView(viewRoot.home_subsRecycler)

@@ -16,10 +16,10 @@ import com.djavid.smartsubs.models.getSymbolForCurrency
 import com.djavid.smartsubs.utils.*
 import kotlinx.android.synthetic.main.subscription_item.view.*
 import java.text.DecimalFormat
-import java.util.*
 
 class SubsAdapter(
-    private val context: Context
+    private val context: Context,
+    private val onClick: (Long) -> Unit
 ) : RecyclerView.Adapter<SubsAdapter.ViewHolder>() {
 
     private var data = listOf<Subscription>()
@@ -71,6 +71,8 @@ class SubsAdapter(
             holder.progressBar.progress = (it.progress * 100).toInt()
             holder.progressBar.setProgressColor(1 - it.progress)
         }
+
+        holder.itemView.setOnClickListener { onClick(sub.id) }
     }
 
     private fun ProgressBar.setProgressColor(leftProgress: Double) {
