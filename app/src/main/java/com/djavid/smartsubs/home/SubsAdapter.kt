@@ -13,12 +13,10 @@ import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getPriceInPeriod
 import com.djavid.smartsubs.models.getSymbolForCurrency
-import com.djavid.smartsubs.utils.CONST_GREEN_PROGRESS_MIN_PERCENT
-import com.djavid.smartsubs.utils.CONST_ORANGE_PROGRESS_MIN_PERCENT
-import com.djavid.smartsubs.utils.CONST_RED_PROGRESS_MIN_PERCENT
-import com.djavid.smartsubs.utils.show
+import com.djavid.smartsubs.utils.*
 import kotlinx.android.synthetic.main.subscription_item.view.*
 import java.text.DecimalFormat
+import java.util.*
 
 class SubsAdapter(
     private val context: Context
@@ -44,6 +42,7 @@ class SubsAdapter(
 
     override fun getItemCount(): Int = data.count()
 
+    @ExperimentalStdlibApi
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sub = data[position]
         val currencySymbol = context.getSymbolForCurrency(sub.currency)
@@ -62,7 +61,7 @@ class SubsAdapter(
             holder.periodLeft.show(true)
 
             if (it.daysLeft == 0) {
-                holder.periodLeft.text = context.getString(R.string.title_today).decapitalize() //todo add locale provider
+                holder.periodLeft.text = context.getString(R.string.title_today).decapitalize(context.getCurrentLocale())
             } else {
                 val pluralDays = context.resources.getQuantityString(R.plurals.plural_day, it.daysLeft)
                 holder.periodLeft.text = context.getString(R.string.mask_days_until, it.daysLeft, pluralDays)

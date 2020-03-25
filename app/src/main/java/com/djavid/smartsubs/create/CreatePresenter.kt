@@ -53,20 +53,24 @@ class CreatePresenter(
     }
 
     private fun validateForm(): Boolean {
-        //todo add error showing
+        var isValid = true
+
         if (model.title.isEmpty()) {
-            return false
+            view.showTitleError(true)
+            isValid = false
         }
 
         if (model.price <= 0) {
-            return false
+            view.showPriceError(true)
+            isValid = false
         }
 
         if (model.period.quantity <= 0) {
-            return false
+            view.showQuantityError(true)
+            isValid = false
         }
 
-        return true
+        return isValid
     }
 
     override fun onPaymentDateInputPressed() {
@@ -75,14 +79,17 @@ class CreatePresenter(
 
     override fun onTitleInputChanged(input: String?) {
         model = model.copy(title = input ?: "")
+        view.showTitleError(false)
     }
 
     override fun onPriceInputChanged(input: Double?) {
         model = model.copy(price = input ?: 0.0)
+        view.showPriceError(false)
     }
 
     override fun onPeriodQuantityInputChanged(input: Int?) {
         model = model.copy(period = model.period.copy(quantity = input ?: 1))
+        view.showQuantityError(false)
         view.setEveryPlural(model.period.quantity)
         updateSpinner()
     }

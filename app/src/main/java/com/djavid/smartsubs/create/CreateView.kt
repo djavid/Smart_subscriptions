@@ -19,7 +19,6 @@ import com.djavid.smartsubs.utils.animateAlpha
 import com.djavid.smartsubs.utils.hideKeyboard
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_create.view.*
-import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 import java.util.*
@@ -132,7 +131,7 @@ class CreateView(
     }
 
     override fun setEveryPlural(quantity: Int) {
-        val text =  viewRoot.context.resources.getQuantityString(R.plurals.plural_every, quantity)
+        val text = viewRoot.context.resources.getQuantityString(R.plurals.plural_every, quantity)
         viewRoot.create_everyTextView.text = text
     }
 
@@ -155,6 +154,21 @@ class CreateView(
     override fun notifyToRefreshSubs() {
         val intent = Intent(ACTION_REFRESH_LIST)
         LocalBroadcastManager.getInstance(viewRoot.context).sendBroadcast(intent)
+    }
+
+    override fun showTitleError(show: Boolean) {
+        val drawable = if (show) R.drawable.bg_edittext_error else R.drawable.bg_edittext
+        viewRoot.create_titleInput.background = viewRoot.context.getDrawable(drawable)
+    }
+
+    override fun showPriceError(show: Boolean) {
+        val drawable = if (show) R.drawable.bg_edittext_error else R.drawable.bg_edittext
+        viewRoot.create_priceInput.background = viewRoot.context.getDrawable(drawable)
+    }
+
+    override fun showQuantityError(show: Boolean) {
+        val drawable = if (show) R.drawable.bg_edittext_error else R.drawable.bg_edittext
+        viewRoot.create_periodQuantityInput.background = viewRoot.context.getDrawable(drawable)
     }
 
 }

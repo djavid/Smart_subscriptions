@@ -43,6 +43,9 @@ interface CreateContract {
         fun setCurrencySymbol(currency: Currency)
         fun notifyToRefreshSubs()
         fun setEveryPlural(quantity: Int)
+        fun showTitleError(show: Boolean)
+        fun showPriceError(show: Boolean)
+        fun showQuantityError(show: Boolean)
     }
 
     interface Navigator {
