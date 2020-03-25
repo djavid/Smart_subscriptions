@@ -1,11 +1,11 @@
 package com.djavid.smartsubs.create
 
 import com.djavid.smartsubs.common.CommonFragmentNavigator
-import com.djavid.smartsubs.create.CreateView.Companion.SLIDE_DURATION
 import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
+import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 import org.joda.time.LocalDate
 import java.util.*

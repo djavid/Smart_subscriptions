@@ -27,10 +27,6 @@ class CreateView(
     private val viewRoot: View
 ) : CreateContract.View {
 
-    companion object {
-        const val SLIDE_DURATION = 256L // ms
-    }
-
     private lateinit var presenter: CreateContract.Presenter
     private lateinit var bottomSheet: BottomSheetBehavior<FrameLayout>
 
