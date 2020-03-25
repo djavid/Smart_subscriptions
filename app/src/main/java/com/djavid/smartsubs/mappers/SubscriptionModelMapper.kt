@@ -37,7 +37,8 @@ class SubscriptionModelMapper {
             dao.price,
             dao.currency,
             dao.period,
-            subscriptionProgress
+            subscriptionProgress,
+            dao.category
         )
     }
 

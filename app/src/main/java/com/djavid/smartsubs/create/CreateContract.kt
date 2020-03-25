@@ -22,6 +22,7 @@ interface CreateContract {
         fun onPaymentDateInputPressed()
         fun onPaymentDateInputChanged(input: LocalDate)
 
+        fun onCategoryInputChanged(input: String?)
         fun onCommentInputChanged(input: String?)
 
         fun onSubmitPressed()

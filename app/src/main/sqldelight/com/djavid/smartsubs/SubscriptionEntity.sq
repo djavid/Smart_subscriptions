@@ -6,6 +6,7 @@ CREATE TABLE subscriptionEntity (
     periodQuantity INTEGER NOT NULL,
     period TEXT NOT NULL,
     paymentDate INTEGER,
+    category TEXT,
     comment TEXT
 );
 
@@ -20,12 +21,16 @@ INSERT OR REPLACE INTO subscriptionEntity(
     periodQuantity,
     period,
     paymentDate,
+    category,
     comment
 )
 VALUES ?;
 
 getSubscriptionById:
 SELECT * FROM subscriptionEntity WHERE id = ?;
+
+getCategories:
+SELECT DISTINCT category FROM subscriptionEntity;
 
 deleteSubById:
 DELETE FROM subscriptionEntity WHERE id = ?;

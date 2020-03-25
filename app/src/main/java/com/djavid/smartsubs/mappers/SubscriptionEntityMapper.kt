@@ -21,6 +21,7 @@ class SubscriptionEntityMapper {
             model.period.quantity.toLong(),
             model.period.type.name,
             model.paymentDate?.toDateTimeAtStartOfDay(timeZone)?.millis,
+            model.category,
             model.comment
         )
     }
@@ -35,6 +36,7 @@ class SubscriptionEntityMapper {
                 SubscriptionPeriodType.valueOf(entity.period), entity.periodQuantity.toInt()
             ),
             entity.paymentDate?.let { LocalDate(it, DateTimeZone.forTimeZone(TimeZone.getDefault())) },
+            entity.category,
             entity.comment
         )
     }

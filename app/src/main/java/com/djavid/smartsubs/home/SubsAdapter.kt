@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Space
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.djavid.smartsubs.R
@@ -52,11 +53,16 @@ class SubsAdapter(
         val priceForPeriod = sub.getPriceInPeriod(pricePeriod)
         holder.price.text = context.getString(R.string.mask_price, df.format(priceForPeriod), currencySymbol)
 
-        sub.progress?.let {
+        sub.category?.let {
+            holder.category.text = it
+            holder.categorySpace.show(true)
+        }
 
+        sub.progress?.let {
             holder.periodLeft.show(true)
+
             if (it.daysLeft == 0) {
-                holder.periodLeft.text = context.getString(R.string.title_today)
+                holder.periodLeft.text = context.getString(R.string.title_today).decapitalize() //todo add locale provider
             } else {
                 val pluralDays = context.resources.getQuantityString(R.plurals.plural_day, it.daysLeft)
                 holder.periodLeft.text = context.getString(R.string.mask_days_until, it.daysLeft, pluralDays)
@@ -87,6 +93,8 @@ class SubsAdapter(
         val price: TextView = itemView.sub_price
         val progressBar: ProgressBar = itemView.sub_progressBar
         val periodLeft: TextView = itemView.sub_periodLeft
+        val category: TextView = itemView.sub_category
+        val categorySpace: Space = itemView.sub_categorySpace
     }
 
 }

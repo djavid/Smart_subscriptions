@@ -10,5 +10,6 @@ data class SubscriptionDao(
     val currency: Currency,
     val period: SubscriptionPeriod,
     val paymentDate: LocalDate?,
+    val category: String?,
     val comment: String?
 )

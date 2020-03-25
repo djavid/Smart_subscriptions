@@ -200,8 +200,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:focusable="false"
                     android:clickable="true"
+                    android:focusable="false"
                     android:hint="@string/hint_first_pay"
                     android:inputType="date"
                     app:layout_constraintTop_toBottomOf="@id/create_firstPayDescription" />
@@ -218,16 +218,31 @@
                     app:layout_constraintTop_toBottomOf="@id/create_paymentDateInput" />
 
                 <EditText
-                    android:id="@+id/create_noteInput"
+                    android:id="@+id/create_categoryInput"
                     style="@style/InputTheme"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:hint="@string/title_note"
+                    android:hint="@string/title_category"
                     android:inputType="text"
                     app:layout_constraintTop_toBottomOf="@id/create_noteTextView" />
+
+                <EditText
+                    android:id="@+id/create_noteInput"
+                    style="@style/InputTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="@string/title_note"
+                    android:inputType="text"
+                    android:lines="2"
+                    android:paddingTop="9dp"
+                    android:paddingBottom="9dp"
+                    app:layout_constraintTop_toBottomOf="@id/create_categoryInput" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/create_submitBtn"

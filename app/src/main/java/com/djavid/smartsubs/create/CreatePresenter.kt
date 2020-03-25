@@ -25,7 +25,8 @@ class CreatePresenter(
 
         model = SubscriptionDao(
             0, "", 0.0, Currency.getInstance("RUB"),
-            SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), null, null
+            SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
+            null, null, null
         )
 
         updateSpinner()
@@ -94,6 +95,10 @@ class CreatePresenter(
     override fun onPaymentDateInputChanged(input: LocalDate) {
         model = model.copy(paymentDate = input)
         view.setDateInput(input.toString("dd.MM.yyyy"))
+    }
+
+    override fun onCategoryInputChanged(input: String?) {
+        model = model.copy(category = input)
     }
 
     override fun onCommentInputChanged(input: String?) {

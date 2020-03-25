@@ -70,6 +70,7 @@
     <string name="title_every">каждый</string>
     <string name="desc_first_pay">Добавьте дату первого списания, чтобы видеть расходы, или дату следующего платежа, если не можете вспомнить (необязательно)</string>
     <string name="title_note">Примечание</string>
+    <string name="title_category">Категория</string>
     <!--endregion-->
 
 </resources>

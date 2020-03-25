@@ -19,6 +19,10 @@ class SubscriptionsRepository(
         }
     }
 
+    suspend fun getCategories(): List<String> = withContext(Dispatchers.IO) {
+        queries.getCategories().executeAsList().mapNotNull { it.category }
+    }
+
     suspend fun getSubById(id: Long): SubscriptionDao? = withContext(Dispatchers.IO) {
         val entity = queries.getSubscriptionById(id).executeAsOneOrNull()
 

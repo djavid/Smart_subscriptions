@@ -23,6 +23,13 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="EA Access" />
 
+    <Space
+        android:id="@+id/sub_categorySpace"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/sub_title" />
+
     <TextView
         android:id="@+id/sub_price"
         android:layout_width="wrap_content"
@@ -33,6 +40,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="1799 ₽" />
+
+    <TextView
+        android:id="@+id/sub_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:fontFamily="@font/helvetica_medium"
+        android:textColor="@color/colorGray_65"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sub_title"
+        tools:text="Музыка" />
 
     <ProgressBar
         android:id="@+id/sub_progressBar"
@@ -46,7 +65,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@id/sub_periodLeft"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sub_title"
+        app:layout_constraintTop_toBottomOf="@id/sub_categorySpace"
         tools:progress="73"
         tools:visibility="visible" />
 

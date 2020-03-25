@@ -60,6 +60,9 @@ class CreateView(
         create_periodQuantityInput.doAfterTextChanged {
             presenter.onPeriodQuantityInputChanged(it?.toString()?.toIntOrNull())
         }
+        create_categoryInput.doAfterTextChanged {
+            presenter.onCategoryInputChanged(it?.toString())
+        }
         create_noteInput.doAfterTextChanged {
             presenter.onCommentInputChanged(it?.toString())
         }

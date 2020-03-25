@@ -11,7 +11,8 @@ data class Subscription(
     val price: Double,
     val currency: Currency,
     val period: SubscriptionPeriod,
-    val progress: SubscriptionProgress?
+    val progress: SubscriptionProgress?,
+    val category: String?
 )
 
 data class SubscriptionProgress(
