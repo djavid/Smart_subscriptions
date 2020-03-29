@@ -14,7 +14,7 @@ import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getSubPeriodString
 import com.djavid.smartsubs.models.getSymbolForCurrency
-import com.djavid.smartsubs.utils.ACTION_REFRESH_LIST
+import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.animateAlpha
 import com.djavid.smartsubs.utils.hideKeyboard
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -118,10 +118,6 @@ class CreateView(
         viewRoot.create_periodSelector.setSelection(position, true)
     }
 
-    override fun setDateInput(text: String) {
-        viewRoot.create_paymentDateInput.text = SpannableStringBuilder(text)
-    }
-
     override fun setCurrencySymbol(currency: Currency) {
         viewRoot.create_currencySymbol.text = viewRoot.context.getSymbolForCurrency(currency)
     }
@@ -147,8 +143,8 @@ class CreateView(
         (viewRoot.context as? AppCompatActivity).hideKeyboard()
     }
 
-    override fun notifyToRefreshSubs() {
-        val intent = Intent(ACTION_REFRESH_LIST)
+    override fun notifyToRefresh() {
+        val intent = Intent(ACTION_REFRESH)
         LocalBroadcastManager.getInstance(viewRoot.context).sendBroadcast(intent)
     }
 
@@ -165,6 +161,35 @@ class CreateView(
     override fun showQuantityError(show: Boolean) {
         val drawable = if (show) R.drawable.bg_edittext_error else R.drawable.bg_edittext
         viewRoot.create_periodQuantityInput.background = viewRoot.context.getDrawable(drawable)
+    }
+
+    override fun setTitle(title: String) {
+        viewRoot.create_titleInput.text = SpannableStringBuilder(title)
+    }
+
+    override fun setPrice(price: Double) {
+        viewRoot.create_priceInput.text = SpannableStringBuilder(price.toString())
+    }
+
+    override fun setQuantity(quantity: Int) {
+        viewRoot.create_periodQuantityInput.text = SpannableStringBuilder(quantity.toString())
+    }
+
+    override fun setDateInput(text: String) {
+        viewRoot.create_paymentDateInput.text = SpannableStringBuilder(text)
+    }
+
+    override fun setCategory(category: String) {
+        viewRoot.create_categoryInput.text = SpannableStringBuilder(category)
+    }
+
+    override fun setComment(note: String) {
+        viewRoot.create_noteInput.text = SpannableStringBuilder(note)
+    }
+
+    override fun switchTitlesToEditMode() {
+        viewRoot.create_submitBtnTitle.text = viewRoot.context.getString(R.string.title_save)
+        viewRoot.create_title.text = viewRoot.context.getString(R.string.title_save_sub)
     }
 
 }

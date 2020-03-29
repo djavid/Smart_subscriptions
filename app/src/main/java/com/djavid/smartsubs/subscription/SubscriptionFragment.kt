@@ -1,11 +1,17 @@
 package com.djavid.smartsubs.subscription
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.common.BaseFragment
+import com.djavid.smartsubs.common.BroadcastHandler
+import com.djavid.smartsubs.common.subscribeApplicationReceiver
+import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
@@ -18,14 +24,33 @@ class SubscriptionFragment : BaseFragment(R.layout.fragment_subscription), BackP
 
     private lateinit var presenter: SubscriptionContract.Presenter
 
+    private val broadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            intent?.let {
+                if (it.action == ACTION_REFRESH) {
+                    presenter.reload()
+                }
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        kodein = (activity?.application as Application).subscription(this)
+        kodein = (activity?.application as Application).subscriptionComponent(this)
         presenter = kodein.direct.instance()
 
         arguments?.let {
             val id = it.getLong(KEY_SUBSCRIPTION_ID)
             presenter.init(id)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        subscribeApplicationReceiver(
+            broadcastReceiver,
+            listOf(ACTION_REFRESH), BroadcastHandler.Unsubscribe.ON_PAUSE
+        )
     }
 
     override fun onBackPressed() {

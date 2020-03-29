@@ -13,7 +13,7 @@ interface SubscriptionContract {
         fun showToolbar(show: Boolean, duration: Long)
         fun setBackgroundTransparent(transparent: Boolean, duration: Long)
         fun hideKeyboard()
-        fun notifyToRefreshSubs()
+        fun notifyToRefresh()
         fun setTitle(title: String)
         fun setCategory(category: String)
         fun setPrice(period: SubscriptionPeriod, price: SubscriptionPrice)
@@ -23,8 +23,11 @@ interface SubscriptionContract {
 
     interface Presenter {
         fun init(id: Long)
+        fun reload()
         fun onBackPressed()
         fun onCloseBtnClicked()
+        fun onEditClicked()
+        fun onDeleteClicked()
     }
 
     interface Navigator {

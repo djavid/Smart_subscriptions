@@ -32,6 +32,8 @@ class SubscriptionView(
 
     private fun setupView() {
         viewRoot.sub_closeBtn.setOnClickListener { presenter.onCloseBtnClicked() }
+        viewRoot.sub_editBtn.setOnClickListener { presenter.onEditClicked() }
+        viewRoot.sub_deleteBtn.setOnClickListener { presenter.onDeleteClicked() }
     }
 
     private fun setupBottomSheet() {
@@ -73,8 +75,8 @@ class SubscriptionView(
         (viewRoot.context as? AppCompatActivity).hideKeyboard()
     }
 
-    override fun notifyToRefreshSubs() {
-        val intent = Intent(ACTION_REFRESH_LIST)
+    override fun notifyToRefresh() {
+        val intent = Intent(ACTION_REFRESH)
         LocalBroadcastManager.getInstance(viewRoot.context).sendBroadcast(intent)
     }
 

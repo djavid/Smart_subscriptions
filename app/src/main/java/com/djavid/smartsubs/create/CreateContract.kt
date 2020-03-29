@@ -7,7 +7,7 @@ import java.util.*
 interface CreateContract {
 
     interface Presenter {
-        fun init()
+        fun init(id: Long?)
         fun onCancelPressed()
         fun onBackPressed()
 
@@ -41,15 +41,21 @@ interface CreateContract {
         fun hideKeyboard()
         fun setDateInput(text: String)
         fun setCurrencySymbol(currency: Currency)
-        fun notifyToRefreshSubs()
+        fun notifyToRefresh()
         fun setEveryPlural(quantity: Int)
         fun showTitleError(show: Boolean)
         fun showPriceError(show: Boolean)
         fun showQuantityError(show: Boolean)
+        fun setTitle(title: String)
+        fun setPrice(price: Double)
+        fun setQuantity(quantity: Int)
+        fun setCategory(category: String)
+        fun setComment(note: String)
+        fun switchTitlesToEditMode()
     }
 
     interface Navigator {
-        fun goToCreateScreen()
+        fun goToCreateScreen(id: Long? = null)
     }
 
 }

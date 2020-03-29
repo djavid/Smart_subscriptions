@@ -125,14 +125,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="16dp"
                     android:indeterminate="false"
                     android:progressDrawable="@drawable/progress_green_drawable"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/sub_nextPayment"
-                    app:layout_goneMarginEnd="16dp"
-                    app:layout_goneMarginTop="20dp"
                     tools:progress="73"
                     tools:visibility="visible" />
 
@@ -170,6 +168,74 @@
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/sub_overallSpent"
                     tools:visibility="visible" />
+
+                <FrameLayout
+                    android:id="@+id/sub_editBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:padding="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/sub_spentDivider">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:tint="@color/colorBlue"
+                        app:srcCompat="@drawable/ic_edit_24px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="36dp"
+                        android:fontFamily="@font/helvetica_regular"
+                        android:gravity="center_horizontal"
+                        android:text="@string/title_edit"
+                        android:textColor="@color/colorNero"
+                        android:textSize="17sp" />
+
+                </FrameLayout>
+
+                <View
+                    android:id="@+id/sub_editDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorWhisper"
+                    app:layout_constraintTop_toBottomOf="@id/sub_editBtn" />
+
+                <FrameLayout
+                    android:id="@+id/sub_deleteBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:padding="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/sub_editDivider">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:tint="@color/colorPinkishOrange"
+                        app:srcCompat="@drawable/ic_delete_24px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="36dp"
+                        android:fontFamily="@font/helvetica_regular"
+                        android:gravity="center_horizontal"
+                        android:text="@string/title_delete"
+                        android:textColor="@color/colorNero"
+                        android:textSize="17sp" />
+
+                </FrameLayout>
+
+                <View
+                    android:id="@+id/sub_deleteDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorWhisper"
+                    app:layout_constraintTop_toBottomOf="@id/sub_deleteBtn" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

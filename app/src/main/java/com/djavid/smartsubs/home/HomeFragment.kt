@@ -11,7 +11,7 @@ import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.common.BroadcastHandler
 import com.djavid.smartsubs.common.subscribeApplicationReceiver
-import com.djavid.smartsubs.utils.ACTION_REFRESH_LIST
+import com.djavid.smartsubs.utils.ACTION_REFRESH
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.direct
@@ -26,7 +26,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             intent?.let {
-                if (it.action == ACTION_REFRESH_LIST) {
+                if (it.action == ACTION_REFRESH) {
                     presenter.reloadSubs()
                 }
             }
@@ -46,7 +46,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
         subscribeApplicationReceiver(
             broadcastReceiver,
-            listOf(ACTION_REFRESH_LIST), BroadcastHandler.Unsubscribe.ON_PAUSE
+            listOf(ACTION_REFRESH), BroadcastHandler.Unsubscribe.ON_PAUSE
         )
     }
 

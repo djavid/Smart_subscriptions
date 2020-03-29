@@ -26,6 +26,20 @@ INSERT OR REPLACE INTO subscriptionEntity(
 )
 VALUES ?;
 
+edit:
+INSERT OR REPLACE INTO subscriptionEntity(
+    id,
+    title,
+    price,
+    currencyCode,
+    periodQuantity,
+    period,
+    paymentDate,
+    category,
+    comment
+)
+VALUES ?;
+
 getSubscriptionById:
 SELECT * FROM subscriptionEntity WHERE id = ?;
 

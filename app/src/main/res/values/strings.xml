@@ -79,6 +79,10 @@
 
     <!--region subscription-->
     <string name="title_next_payment_today">Следующая оплата сегодня</string>
+    <string name="title_edit">Редактировать</string>
+    <string name="title_delete">Удалить</string>
+    <string name="title_save">Сохранить</string>
+    <string name="title_save_sub">Сохранить подписку</string>
     <!--endregion-->
 
 </resources>

@@ -1,6 +1,7 @@
 package com.djavid.smartsubs.subscription
 
 import com.djavid.smartsubs.common.CommonFragmentNavigator
+import com.djavid.smartsubs.create.CreateContract
 import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Subscription
@@ -13,17 +14,24 @@ class SubscriptionPresenter(
     private val fragmentNavigator: CommonFragmentNavigator,
     private val repository: SubscriptionsRepository,
     private val modelMapper: SubscriptionModelMapper,
+    private val createNavigator: CreateContract.Navigator,
     coroutineScope: CoroutineScope
 ) : SubscriptionContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var subscription: Subscription
+    private var id: Long = 0
 
     override fun init(id: Long) {
         view.init(this)
+        this.id = id
 
         view.setBackgroundTransparent(false, SLIDE_DURATION)
         view.showToolbar(true, SLIDE_DURATION)
 
+        reload()
+    }
+
+    override fun reload() {
         launch {
             loadSub(id)
             showContent()
@@ -51,6 +59,17 @@ class SubscriptionPresenter(
         }
     }
 
+    override fun onEditClicked() {
+        createNavigator.goToCreateScreen(subscription.id)
+    }
+
+    override fun onDeleteClicked() {
+        launch {
+            repository.deleteSubById(subscription.id)
+            finish()
+        }
+    }
+
     override fun onCloseBtnClicked() {
         finish()
     }
@@ -66,7 +85,7 @@ class SubscriptionPresenter(
             view.showToolbar(false, SLIDE_DURATION)
             view.setBackgroundTransparent(true, SLIDE_DURATION)
             withContext(Dispatchers.Default) { delay(SLIDE_DURATION) }
-            view.notifyToRefreshSubs()
+            view.notifyToRefresh()
             fragmentNavigator.goBack()
         }
     }

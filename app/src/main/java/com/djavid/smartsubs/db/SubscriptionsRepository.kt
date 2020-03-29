@@ -19,7 +19,7 @@ class SubscriptionsRepository(
         }
     }
 
-    suspend fun getCategories(): List<String> = withContext(Dispatchers.IO) {
+    suspend fun getCategories(): List<String> = withContext(Dispatchers.IO) { //todo use this to show suggestions
         queries.getCategories().executeAsList().mapNotNull { it.category }
     }
 
@@ -34,6 +34,11 @@ class SubscriptionsRepository(
     suspend fun saveSub(model: SubscriptionDao) = withContext(Dispatchers.IO) {
         val entity = entityMapper.toEntity(model)
         queries.insert(entity)
+    }
+
+    suspend fun editSub(model: SubscriptionDao) = withContext(Dispatchers.IO) {
+        val entity = entityMapper.toEntity(model)
+        queries.edit(entity)
     }
 
     suspend fun deleteSubById(id: Long) = withContext(Dispatchers.IO) {

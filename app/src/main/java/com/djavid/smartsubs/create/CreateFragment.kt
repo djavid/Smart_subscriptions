@@ -10,6 +10,7 @@ import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.common.BaseFragment
+import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
@@ -21,7 +22,11 @@ class CreateFragment : BaseFragment(R.layout.fragment_create), BackPressListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         kodein = (activity?.application as Application).createComponent(this)
-        presenter.init()
+
+        arguments?.let {
+            val subId = it.getLong(KEY_SUBSCRIPTION_ID, 0)
+            presenter.init(if (subId == 0L) null else subId)
+        }
     }
 
     override fun onBackPressed() {

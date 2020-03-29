@@ -52,9 +52,10 @@ class Application: Application(), KodeinAware {
         import(CreateModule(fragment).kodein)
     }
 
-    fun subscription(fragment: Fragment) = Kodein.lazy {
+    fun subscriptionComponent(fragment: Fragment) = Kodein.lazy {
         extend(kodein)
         import(SubscriptionModule(fragment).kodein)
+        import(CreateNavigatorModule().kodein)
     }
 
 }

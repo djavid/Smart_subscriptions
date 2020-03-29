@@ -5,6 +5,7 @@ import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
+import com.djavid.smartsubs.utils.DATE_TIME_FORMAT
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 import org.joda.time.LocalDate
@@ -18,23 +19,48 @@ class CreatePresenter(
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var model: SubscriptionDao
+    private var editMode = false
     private val periodItems = SubscriptionPeriodType.values().toList()
 
-    override fun init() {
+    override fun init(id: Long?) {
         view.init(this)
 
-        model = SubscriptionDao(
-            0, "", 0.0, Currency.getInstance("RUB"),
-            SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
-            null, null, null
-        )
+        launch {
+            model = SubscriptionDao(
+                0, "", 0.0, Currency.getInstance("RUB"),
+                SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
+                null, null, null
+            )
 
-        updateSpinner()
-        view.setCurrencySymbol(model.currency)
+            if (id != null) {
+                repository.getSubById(id)?.let { model = it }
+                editMode = true
+                view.switchTitlesToEditMode()
+            }
+
+            fillForm()
+        }
 
         view.expandPanel()
         view.setBackgroundTransparent(false, SLIDE_DURATION)
         view.showToolbar(true, SLIDE_DURATION)
+    }
+
+    private fun fillForm() {
+        view.setTitle(model.title)
+        view.setPrice(model.price)
+        view.setCurrencySymbol(model.currency)
+        view.setQuantity(model.period.quantity)
+        updateSpinner()
+        model.paymentDate?.let {
+            view.setDateInput(it.toString(DATE_TIME_FORMAT))
+        }
+        model.category?.let {
+            view.setCategory(it)
+        }
+        model.comment?.let {
+            view.setComment(it)
+        }
     }
 
     private fun updateSpinner() {
@@ -46,7 +72,11 @@ class CreatePresenter(
     override fun onSubmitPressed() {
         if (validateForm()) {
             launch {
-                repository.saveSub(model)
+                if (editMode)
+                    repository.editSub(model)
+                else
+                    repository.saveSub(model)
+
                 finish()
             }
         }
@@ -101,7 +131,7 @@ class CreatePresenter(
 
     override fun onPaymentDateInputChanged(input: LocalDate) {
         model = model.copy(paymentDate = input)
-        view.setDateInput(input.toString("dd.MM.yyyy"))
+        view.setDateInput(input.toString(DATE_TIME_FORMAT))
     }
 
     override fun onCategoryInputChanged(input: String?) {
@@ -127,7 +157,7 @@ class CreatePresenter(
             view.showToolbar(false, SLIDE_DURATION)
             view.setBackgroundTransparent(true, SLIDE_DURATION)
             withContext(Dispatchers.Default) { delay(SLIDE_DURATION) }
-            view.notifyToRefreshSubs()
+            view.notifyToRefresh() //todo notify to refresh
             fragmentNavigator.goBack()
         }
     }
