@@ -8,11 +8,16 @@ import java.util.*
 data class Subscription(
     val id: Long,
     val title: String,
-    val price: Double,
-    val currency: Currency,
+    val price: SubscriptionPrice,
     val period: SubscriptionPeriod,
     val progress: SubscriptionProgress?,
-    val category: String?
+    val category: String?,
+    val overallSpent: Double?
+)
+
+data class SubscriptionPrice(
+    val value: Double,
+    val currency: Currency
 )
 
 data class SubscriptionProgress(
@@ -40,7 +45,7 @@ fun Subscription.getPriceInPeriod(pricePeriod: SubscriptionPeriodType): Double {
     val daysInYear = DateTime().dayOfYear().maximumValue
     val monthsInYear = DateTime().monthOfYear().maximumValue
 
-    val priceForOne = price / period.quantity
+    val priceForOne = price.value / period.quantity
 
     return when (pricePeriod) {
         SubscriptionPeriodType.DAY -> when (period.type) {

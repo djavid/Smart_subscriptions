@@ -45,8 +45,8 @@ class SubsAdapter(
     @ExperimentalStdlibApi
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sub = data[position]
-        val currencySymbol = context.getSymbolForCurrency(sub.currency)
-        val df = DecimalFormat("0.##")
+        val currencySymbol = context.getSymbolForCurrency(sub.price.currency)
+        val df = DecimalFormat(DECIMAL_FORMAT)
 
         holder.title.text = sub.title
         val priceForPeriod = sub.getPriceInPeriod(pricePeriod)

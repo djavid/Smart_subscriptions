@@ -5,6 +5,7 @@ import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
+import com.djavid.smartsubs.models.SubscriptionPrice
 import com.djavid.smartsubs.models.getPriceInPeriod
 import com.djavid.smartsubs.subscription.SubscriptionContract
 import com.djavid.smartsubs.utils.SharedRepository
@@ -32,10 +33,11 @@ class HomePresenter(
     override fun reloadSubs() {
         launch {
             subs = repository.getSubs().map { modelMapper.fromDao(it) }.toMutableList()
+            val price = SubscriptionPrice(calculateSubsPrice(), sharedPrefs.selectedCurrency)
 
             view.setSubsCount(subs.count())
             view.showSubs(subs, sharedPrefs.selectedSubsPeriod)
-            view.setSubsPrice(calculateSubsPrice(), sharedPrefs.selectedCurrency)
+            view.setSubsPrice(price)
         }
     }
 
@@ -64,9 +66,10 @@ class HomePresenter(
         val types = SubscriptionPeriodType.values()
         val index = (types.indexOf(sharedPrefs.selectedSubsPeriod) + 1).rem(types.size)
         sharedPrefs.selectedSubsPeriod = types[index]
+        val price = SubscriptionPrice(calculateSubsPrice(), sharedPrefs.selectedCurrency)
 
         view.setSubsPeriod(sharedPrefs.selectedSubsPeriod)
-        view.setSubsPrice(calculateSubsPrice(), sharedPrefs.selectedCurrency)
+        view.setSubsPrice(price)
         view.updateListPrices(sharedPrefs.selectedSubsPeriod)
     }
 

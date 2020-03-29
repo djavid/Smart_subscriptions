@@ -11,7 +11,11 @@
     <!--region masks-->
     <string name="mask_subs_count">%d %s</string>
     <string name="mask_price">%s %s</string>
+    <string name="mask_subscription_price">%s %s %s %s</string>
+    <string name="mask_subscription_price_quantity">%s %s %s %d %s</string>
     <string name="mask_days_until">через %d %s</string>
+    <string name="mask_next_payment">Следующая оплата через %d %s</string>
+    <string name="mask_overall_spent">Всего потрачено %s %s</string>
     <!--endregion-->
 
     <!--region home-->
@@ -71,6 +75,10 @@
     <string name="desc_first_pay">Добавьте дату первого списания, чтобы видеть расходы, или дату следующего платежа, если не можете вспомнить (необязательно)</string>
     <string name="title_note">Примечание</string>
     <string name="title_category">Категория</string>
+    <!--endregion-->
+
+    <!--region subscription-->
+    <string name="title_next_payment_today">Следующая оплата сегодня</string>
     <!--endregion-->
 
 </resources>

@@ -23,7 +23,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/helvetica_bold"
-            android:text="Apple music"
             android:textColor="@color/colorNero"
             android:textSize="21sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,9 +38,11 @@
             android:fontFamily="@font/helvetica_medium"
             android:textColor="@color/colorGray_65"
             android:textSize="14sp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sub_title"
-            tools:text="Семейная подписка" />
+            tools:text="Семейная подписка"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/sub_closeBtn"
@@ -79,6 +80,98 @@
             android:scrollbarThumbVertical="@null"
             tools:ignore="UselessParent">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/sub_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/helvetica_medium"
+                    android:textColor="@color/colorNero"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="75 ₽ каждый месяц" />
+
+                <View
+                    android:id="@+id/sub_priceDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorWhisper"
+                    app:layout_constraintTop_toBottomOf="@id/sub_price" />
+
+                <TextView
+                    android:id="@+id/sub_nextPayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/helvetica_medium"
+                    android:textColor="@color/colorNero"
+                    android:textSize="17sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sub_priceDivider"
+                    tools:text="Следующая оплата через 10 дней "
+                    tools:visibility="visible" />
+
+                <ProgressBar
+                    android:id="@+id/sub_progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/progress_green_drawable"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/sub_nextPayment"
+                    app:layout_goneMarginEnd="16dp"
+                    app:layout_goneMarginTop="20dp"
+                    tools:progress="73"
+                    tools:visibility="visible" />
+
+                <View
+                    android:id="@+id/sub_nextPaymentDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorWhisper"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/sub_progressBar"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/sub_overallSpent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/helvetica_medium"
+                    android:textColor="@color/colorNero"
+                    android:textSize="17sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sub_nextPaymentDivider"
+                    tools:text="Всего потрачено 3753,34 ₽"
+                    tools:visibility="visible" />
+
+                <View
+                    android:id="@+id/sub_spentDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorWhisper"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/sub_overallSpent"
+                    tools:visibility="visible" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 

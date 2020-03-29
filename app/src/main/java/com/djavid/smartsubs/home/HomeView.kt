@@ -6,14 +6,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.djavid.smartsubs.R
-import com.djavid.smartsubs.models.Subscription
-import com.djavid.smartsubs.models.SubscriptionPeriodType
-import com.djavid.smartsubs.models.getSubPeriodString
-import com.djavid.smartsubs.models.getSymbolForCurrency
+import com.djavid.smartsubs.models.*
+import com.djavid.smartsubs.utils.DECIMAL_FORMAT
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import java.text.DecimalFormat
-import java.util.*
 
 class HomeView(
     private val viewRoot: View
@@ -80,11 +77,11 @@ class HomeView(
         viewRoot.home_subsCount.text = viewRoot.context.getString(R.string.mask_subs_count, count, plural)
     }
 
-    override fun setSubsPrice(price: Double, currency: Currency) {
-        val currencySymbol = viewRoot.context.getSymbolForCurrency(currency)
-        val df = DecimalFormat("0.##")
+    override fun setSubsPrice(price: SubscriptionPrice) {
+        val currencySymbol = viewRoot.context.getSymbolForCurrency(price.currency)
+        val df = DecimalFormat(DECIMAL_FORMAT)
 
-        viewRoot.home_subsPrice.text = viewRoot.context.getString(R.string.mask_price, df.format(price), currencySymbol)
+        viewRoot.home_subsPrice.text = viewRoot.context.getString(R.string.mask_price, df.format(price.value), currencySymbol)
     }
 
     override fun setSubsPeriod(period: SubscriptionPeriodType) {

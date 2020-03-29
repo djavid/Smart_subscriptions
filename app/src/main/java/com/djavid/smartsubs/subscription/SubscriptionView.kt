@@ -1,20 +1,25 @@
 package com.djavid.smartsubs.subscription
 
 import android.content.Intent
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.djavid.smartsubs.R
-import com.djavid.smartsubs.utils.ACTION_REFRESH_LIST
-import com.djavid.smartsubs.utils.animateAlpha
-import com.djavid.smartsubs.utils.hideKeyboard
+import com.djavid.smartsubs.models.*
+import com.djavid.smartsubs.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_subscription.view.*
+import java.text.DecimalFormat
 
 class SubscriptionView(
     private val viewRoot: View
-): SubscriptionContract.View {
+) : SubscriptionContract.View {
 
     private lateinit var bottomSheet: BottomSheetBehavior<FrameLayout>
     private lateinit var presenter: SubscriptionContract.Presenter
@@ -33,9 +38,15 @@ class SubscriptionView(
         bottomSheet = BottomSheetBehavior.from(viewRoot.sub_bottomSheet)
     }
 
-    override fun expandPanel() {
+    override fun expandPanel(biggerToolbar: Boolean) {
         viewRoot.post {
-            val offset = viewRoot.context.resources.getDimensionPixelOffset(R.dimen.subscription_toolbar_height)
+            val offset = viewRoot.context.resources.getDimensionPixelOffset(
+                if (biggerToolbar)
+                    R.dimen.subscription_toolbar_height
+                else
+                    R.dimen.subscription_toolbar_without_category_height
+            )
+
             bottomSheet.setPeekHeight(viewRoot.height - offset, true)
         }
     }
@@ -65,6 +76,88 @@ class SubscriptionView(
     override fun notifyToRefreshSubs() {
         val intent = Intent(ACTION_REFRESH_LIST)
         LocalBroadcastManager.getInstance(viewRoot.context).sendBroadcast(intent)
+    }
+
+    override fun setTitle(title: String) {
+        viewRoot.sub_title.text = title
+    }
+
+    override fun setCategory(category: String) {
+        viewRoot.sub_category.show(true)
+        viewRoot.sub_category.text = category
+    }
+
+    override fun setPrice(period: SubscriptionPeriod, price: SubscriptionPrice) = with(viewRoot) {
+        val currSymbol = context.getSymbolForCurrency(price.currency)
+        val everyPlural = viewRoot.context.resources.getQuantityString(R.plurals.plural_every, period.quantity)
+        val periodPlural = context.getSubPeriodString(period.type, period.quantity)
+        val priceFormatted = DecimalFormat(DECIMAL_FORMAT).format(price.value)
+
+        val text = if (period.quantity == 1) {
+            context.getString(
+                R.string.mask_subscription_price, priceFormatted,
+                currSymbol, everyPlural, periodPlural
+            )
+
+        } else {
+            context.getString(
+                R.string.mask_subscription_price_quantity, priceFormatted,
+                currSymbol, everyPlural, period.quantity, periodPlural
+            )
+        }
+        sub_price.text = text.toPriceSpannable()
+    }
+
+    override fun setNextPayment(progress: SubscriptionProgress) = with(viewRoot) {
+        val text = if (progress.daysLeft == 0) {
+            context.getString(R.string.title_next_payment_today)
+        } else {
+            val periodPlural = context.getSubPeriodString(SubscriptionPeriodType.DAY, progress.daysLeft)
+            context.getString(R.string.mask_next_payment, progress.daysLeft, periodPlural)
+        }
+
+        sub_nextPayment.text = text.toPinkSpannable()
+        sub_progressBar.progress = (progress.progress * 100).toInt()
+        sub_nextPayment.show(true)
+        sub_progressBar.show(true)
+        sub_nextPaymentDivider.show(true)
+    }
+
+    override fun setOverallSpent(spent: SubscriptionPrice) = with(viewRoot) {
+        val currSymbol = context.getSymbolForCurrency(spent.currency)
+        val spentFormatted = DecimalFormat(DECIMAL_FORMAT).format(spent.value)
+        val text = context.getString(R.string.mask_overall_spent, spentFormatted, currSymbol)
+
+        sub_overallSpent.text = text.toPinkSpannable()
+        sub_overallSpent.show(true)
+        sub_spentDivider.show(true)
+    }
+
+    private fun String.toPriceSpannable(): SpannableString {
+        val spannable = SpannableString(this)
+
+        val firstWhitespace = spannable.indexOf(' ')
+        val secondWhitespace = spannable.indexOf(' ', firstWhitespace + 1)
+        val spanFlag = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        val colorGray = ContextCompat.getColor(viewRoot.context, R.color.colorGray)
+
+        spannable.setSpan(AbsoluteSizeSpan(17, true), secondWhitespace + 1, length, spanFlag)
+        spannable.setSpan(ForegroundColorSpan(colorGray), secondWhitespace + 1, length, spanFlag)
+
+        return spannable
+    }
+
+    private fun String.toPinkSpannable(): SpannableString {
+        val spannable = SpannableString(this)
+
+        val firstWhitespace = spannable.indexOf(' ')
+        val secondWhitespace = spannable.indexOf(' ', firstWhitespace + 1)
+        val spanFlag = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        val colorPink = ContextCompat.getColor(viewRoot.context, R.color.colorPinkishOrange)
+
+        spannable.setSpan(ForegroundColorSpan(colorPink), secondWhitespace + 1, length, spanFlag)
+
+        return spannable
     }
 
 }

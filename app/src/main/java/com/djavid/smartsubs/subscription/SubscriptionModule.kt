@@ -13,7 +13,9 @@ class SubscriptionModule(fragment: Fragment) {
     val kodein = Kodein.Module("subscription_module") {
         bind<View>() with singleton { fragment.sub_fragment }
         bind<SubscriptionContract.Presenter>() with singleton {
-            SubscriptionPresenter(instance(), instance(), instance())
+            SubscriptionPresenter(
+                instance(), instance(), instance(), instance(), instance()
+            )
         }
         bind<SubscriptionContract.View>() with singleton { SubscriptionView(instance()) }
         bind<CommonFragmentNavigator>() with singleton {

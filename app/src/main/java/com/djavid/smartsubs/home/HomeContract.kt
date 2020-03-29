@@ -2,6 +2,7 @@ package com.djavid.smartsubs.home
 
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
+import com.djavid.smartsubs.models.SubscriptionPrice
 import java.util.*
 
 interface HomeContract {
@@ -21,7 +22,7 @@ interface HomeContract {
         fun showSubs(subs: List<Subscription>, pricePeriod: SubscriptionPeriodType)
         fun updateListPrices(pricePeriod: SubscriptionPeriodType)
         fun setSubsCount(count: Int)
-        fun setSubsPrice(price: Double, currency: Currency)
+        fun setSubsPrice(price: SubscriptionPrice)
         fun setSubsPeriod(period: SubscriptionPeriodType)
     }
 

@@ -47,3 +47,21 @@ fun LocalDate.getFirstPeriodBeforeNow(period: SubscriptionPeriod): LocalDate {
 
     return date
 }
+
+fun LocalDate.getPeriodsCountBeforeNow(period: SubscriptionPeriod): Int {
+    val dateNow = LocalDate.now(DateTimeZone.forTimeZone(TimeZone.getDefault()))
+
+    return if (this.isAfter(dateNow))
+        0
+    else {
+        var date = this
+        var count = 0
+
+        while (date.isBefore(dateNow)) {
+            date = date.addPeriod(period)
+            count++
+        }
+
+        count - 1
+    }
+}

@@ -2,6 +2,7 @@
 <resources>
     <dimen name="toolbar_height">70dp</dimen>
     <dimen name="subscription_toolbar_height">87dp</dimen>
+    <dimen name="subscription_toolbar_without_category_height">65dp</dimen>
     <dimen name="edittext_height">38dp</dimen>
     <dimen name="create_submit_height">45dp</dimen>
     <dimen name="create_form_bottom_space">77dp</dimen>
