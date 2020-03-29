@@ -17,6 +17,7 @@ interface SubscriptionContract {
         fun setTitle(title: String)
         fun setCategory(category: String)
         fun setPrice(period: SubscriptionPeriod, price: SubscriptionPrice)
+        fun setComment(comment: String)
         fun setNextPayment(progress: SubscriptionProgress)
         fun setOverallSpent(spent: SubscriptionPrice)
     }

@@ -45,6 +45,9 @@ class SubscriptionPresenter(
             view.setCategory(it)
         }
         view.setPrice(subscription.period, subscription.price)
+        subscription.comment?.let {
+            view.setComment(it)
+        }
         subscription.progress?.let {
             view.setNextPayment(it)
         }

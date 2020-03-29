@@ -189,7 +189,7 @@ class CreateView(
 
     override fun switchTitlesToEditMode() {
         viewRoot.create_submitBtnTitle.text = viewRoot.context.getString(R.string.title_save)
-        viewRoot.create_title.text = viewRoot.context.getString(R.string.title_save_sub)
+        viewRoot.create_title.text = viewRoot.context.getString(R.string.title_edit)
     }
 
 }

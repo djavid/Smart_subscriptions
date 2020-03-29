@@ -25,6 +25,10 @@ class CreatePresenter(
     override fun init(id: Long?) {
         view.init(this)
 
+        view.setBackgroundTransparent(false, SLIDE_DURATION)
+        view.showToolbar(true, SLIDE_DURATION)
+        view.expandPanel()
+
         launch {
             model = SubscriptionDao(
                 0, "", 0.0, Currency.getInstance("RUB"),
@@ -35,15 +39,13 @@ class CreatePresenter(
             if (id != null) {
                 repository.getSubById(id)?.let { model = it }
                 editMode = true
+
                 view.switchTitlesToEditMode()
+                fillForm()
             }
 
-            fillForm()
+            updateSpinner()
         }
-
-        view.expandPanel()
-        view.setBackgroundTransparent(false, SLIDE_DURATION)
-        view.showToolbar(true, SLIDE_DURATION)
     }
 
     private fun fillForm() {
@@ -51,7 +53,6 @@ class CreatePresenter(
         view.setPrice(model.price)
         view.setCurrencySymbol(model.currency)
         view.setQuantity(model.period.quantity)
-        updateSpinner()
         model.paymentDate?.let {
             view.setDateInput(it.toString(DATE_TIME_FORMAT))
         }

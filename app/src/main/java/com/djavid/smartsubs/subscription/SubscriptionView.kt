@@ -110,6 +110,11 @@ class SubscriptionView(
         sub_price.text = text.toPriceSpannable()
     }
 
+    override fun setComment(comment: String) {
+        viewRoot.sub_comment.show(true)
+        viewRoot.sub_comment.text = comment
+    }
+
     override fun setNextPayment(progress: SubscriptionProgress) = with(viewRoot) {
         val text = if (progress.daysLeft == 0) {
             context.getString(R.string.title_next_payment_today)
