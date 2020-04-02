@@ -15,6 +15,7 @@ import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_subscription.view.*
+import kotlinx.android.synthetic.main.layout_notif_setting.view.*
 import java.text.DecimalFormat
 
 class SubscriptionView(
@@ -28,12 +29,17 @@ class SubscriptionView(
         this.presenter = presenter
         setupView()
         setupBottomSheet()
+        setupNotifForm()
     }
 
     private fun setupView() {
         viewRoot.sub_closeBtn.setOnClickListener { presenter.onCloseBtnClicked() }
         viewRoot.sub_editBtn.setOnClickListener { presenter.onEditClicked() }
         viewRoot.sub_deleteBtn.setOnClickListener { presenter.onDeleteClicked() }
+    }
+
+    private fun setupNotifForm() = with(viewRoot) {
+        //todo notif_frequencySelector
     }
 
     private fun setupBottomSheet() {

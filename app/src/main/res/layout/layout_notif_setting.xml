@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    tools:ignore="contentDescription,KeyboardInaccessibleWidget">
+
+    <ImageView
+        android:id="@+id/notif_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="4dp"
+        android:tint="@color/colorOrange"
+        app:layout_constraintBottom_toBottomOf="@id/notif_frequencySelector"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/notif_frequencySelector"
+        app:srcCompat="@drawable/ic_add_alert_24px" />
+
+    <TextView
+        android:id="@+id/notif_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/helvetica_medium"
+        android:text="@string/title_notify"
+        android:textColor="@color/colorNero"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@id/notif_frequencySelector"
+        app:layout_constraintStart_toEndOf="@id/notif_icon"
+        app:layout_constraintTop_toTopOf="@id/notif_frequencySelector" />
+
+    <Spinner
+        android:id="@+id/notif_frequencySelector"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edittext_height"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/bg_period_selector"
+        app:layout_constraintStart_toEndOf="@id/notif_title"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_width="123dp" />
+
+    <ImageView
+        android:id="@+id/notif_expandIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:tint="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="@id/notif_frequencySelector"
+        app:layout_constraintEnd_toEndOf="@id/notif_frequencySelector"
+        app:layout_constraintTop_toTopOf="@id/notif_frequencySelector"
+        app:srcCompat="@drawable/ic_expand_more_24px" />
+
+    <LinearLayout
+        android:id="@+id/notif_daysContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/notif_frequencySelector">
+
+        <CheckBox
+            android:id="@+id/notif_daysCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/notif_daysFor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/helvetica_regular"
+            android:fontFeatureSettings="smcp"
+            android:text="@string/title_for"
+            android:textColor="@color/colorGray"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/notif_daysCountInput"
+            style="@style/InputTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginStart="11dp"
+            android:alpha="0.65"
+            android:autofillHints="@null"
+            android:gravity="center"
+            android:hint="@string/hint_quantity"
+            android:inputType="number"
+            android:paddingStart="11dp"
+            android:paddingEnd="11dp"
+            android:textColorHint="@color/colorNero"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/notif_daysBefore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="11dp"
+            android:fontFamily="@font/helvetica_regular"
+            android:text="@string/title_days_before_payment"
+            android:textColor="@color/colorGray"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/notif_daysTime"
+            style="@style/InputTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginStart="10dp"
+            android:alpha="0.65"
+            android:autofillHints="@null"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/hint_time"
+            android:inputType="time"
+            android:paddingStart="11dp"
+            android:paddingEnd="11dp"
+            android:textColorHint="@color/colorNero"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notif_dayContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/notif_daysContainer">
+
+        <CheckBox
+            android:id="@+id/notif_dayCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/notif_inPaymentDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/helvetica_regular"
+            android:fontFeatureSettings="smcp"
+            android:text="@string/title_in_payment_day"
+            android:textColor="@color/colorGray"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/notif_dayTime"
+            style="@style/InputTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginStart="10dp"
+            android:alpha="0.65"
+            android:autofillHints="@null"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/hint_time"
+            android:inputType="time"
+            android:paddingStart="11dp"
+            android:paddingEnd="11dp"
+            android:textColorHint="@color/colorNero"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,4 +35,23 @@ interface SubscriptionContract {
         fun goToSubscription(id: Long)
     }
 
+//    data class NotifFormModel(
+//        val frequency: NotifFrequency,
+//        val daysTypeChecked: Boolean,
+//        val dayTypeChecked: Boolean,
+//        val daysBefore: Int,
+//        val daysTime: LocalTime,
+//        val dayTime: LocalTime
+//    )
+//
+//    data class Notif(
+//        val notifId: Long,
+//        val notifDateTime: DateTime
+//        //todo thing about repeat
+//    )
+//
+//    enum class NotifFrequency {
+//        ONE_TIME, EVERY_TIME
+//    }
+
 }

@@ -82,6 +82,13 @@
     <string name="title_edit">Редактировать</string>
     <string name="title_delete">Удалить</string>
     <string name="title_save">Сохранить</string>
+    <string name="title_notify">Уведомить</string>
+    <string name="title_for">За</string>
+    <string name="title_days_before_payment">день до оплаты в</string>
+    <string name="title_in_payment_day">в день оплаты в</string>
+    <string name="hint_time">время</string>
+    <string name="title_one_time">один раз</string>
+    <string name="title_every_time">каждый раз</string>
     <!--endregion-->
 
 </resources>
