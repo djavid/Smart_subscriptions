@@ -1,5 +1,6 @@
 package com.djavid.smartsubs.subscription
 
+import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPrice
 import com.djavid.smartsubs.models.SubscriptionProgress
@@ -20,6 +21,7 @@ interface SubscriptionContract {
         fun setComment(comment: String)
         fun setNextPayment(progress: SubscriptionProgress)
         fun setOverallSpent(spent: SubscriptionPrice)
+        fun showNotifications(items: List<Notification>)
     }
 
     interface Presenter {
@@ -29,29 +31,12 @@ interface SubscriptionContract {
         fun onCloseBtnClicked()
         fun onEditClicked()
         fun onDeleteClicked()
+        fun onAddNotification()
+        fun onEditNotification(model: Notification)
     }
 
     interface Navigator {
         fun goToSubscription(id: Long)
     }
-
-//    data class NotifFormModel(
-//        val frequency: NotifFrequency,
-//        val daysTypeChecked: Boolean,
-//        val dayTypeChecked: Boolean,
-//        val daysBefore: Int,
-//        val daysTime: LocalTime,
-//        val dayTime: LocalTime
-//    )
-//
-//    data class Notif(
-//        val notifId: Long,
-//        val notifDateTime: DateTime
-//        //todo thing about repeat
-//    )
-//
-//    enum class NotifFrequency {
-//        ONE_TIME, EVERY_TIME
-//    }
 
 }

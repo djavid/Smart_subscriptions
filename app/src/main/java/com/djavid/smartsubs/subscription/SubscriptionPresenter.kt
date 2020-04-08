@@ -2,8 +2,10 @@ package com.djavid.smartsubs.subscription
 
 import com.djavid.smartsubs.common.CommonFragmentNavigator
 import com.djavid.smartsubs.create.CreateContract
+import com.djavid.smartsubs.db.NotificationsRepository
 import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
+import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPrice
 import com.djavid.smartsubs.utils.SLIDE_DURATION
@@ -12,7 +14,8 @@ import kotlinx.coroutines.*
 class SubscriptionPresenter(
     private val view: SubscriptionContract.View,
     private val fragmentNavigator: CommonFragmentNavigator,
-    private val repository: SubscriptionsRepository,
+    private val subscriptionsRepository: SubscriptionsRepository,
+    private val notificationsRepository: NotificationsRepository,
     private val modelMapper: SubscriptionModelMapper,
     private val createNavigator: CreateContract.Navigator,
     coroutineScope: CoroutineScope
@@ -35,7 +38,16 @@ class SubscriptionPresenter(
         launch {
             loadSub(id)
             showContent()
+            view.showNotifications(loadNotifications(id))
         }
+    }
+
+    override fun onAddNotification() {
+        //todo
+    }
+
+    override fun onEditNotification(model: Notification) {
+        //todo
     }
 
     private fun showContent() {
@@ -57,9 +69,13 @@ class SubscriptionPresenter(
     }
 
     private suspend fun loadSub(id: Long) {
-        repository.getSubById(id)?.let {
+        subscriptionsRepository.getSubById(id)?.let {
             subscription = modelMapper.fromDao(it)
         }
+    }
+
+    private suspend fun loadNotifications(id: Long): List<Notification> {
+        return notificationsRepository.getNotificationsBySubId(id)
     }
 
     override fun onEditClicked() {
@@ -68,7 +84,7 @@ class SubscriptionPresenter(
 
     override fun onDeleteClicked() {
         launch {
-            repository.deleteSubById(subscription.id)
+            subscriptionsRepository.deleteSubById(subscription.id)
             finish()
         }
     }

@@ -1,0 +1,44 @@
+CREATE TABLE notificationEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0,
+    subId INTEGER NOT NULL,
+    repeating INTEGER AS Boolean NOT NULL,
+    daysBefore INTEGER NOT NULL,
+    millisOfDay INTEGER NOT NULL,
+    active INTEGER AS Boolean NOT NULL
+);
+
+getNotifications:
+SELECT * FROM notificationEntity;
+
+insert:
+INSERT OR REPLACE INTO notificationEntity(
+    subId,
+    repeating,
+    daysBefore,
+    millisOfDay,
+    active
+)
+VALUES ?;
+
+edit:
+INSERT OR REPLACE INTO notificationEntity(
+    id,
+    subId,
+    repeating,
+    daysBefore,
+    millisOfDay,
+    active
+)
+VALUES ?;
+
+getNotificationsBySubscriptionId:
+SELECT * FROM notificationEntity WHERE subId = ?;
+
+deleteNotificationById:
+DELETE FROM notificationEntity WHERE id = ?;
+
+deleteNotificationsBySubscriptionId:
+DELETE FROM notificationEntity WHERE subId = ?;
+
+deleteAllNotifications:
+DELETE FROM notificationEntity;

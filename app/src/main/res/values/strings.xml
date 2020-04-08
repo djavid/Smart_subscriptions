@@ -25,35 +25,35 @@
     <string name="add_sub">Добавить подписку</string>
     <string name="title_today">Сегодня</string>
 
-    <plurals name="plural_every" >
+    <plurals name="plural_every">
         <item quantity="one">каждый</item>
         <item quantity="few">каждые</item>
         <item quantity="many">каждые</item>
         <item quantity="other">каждые</item>
     </plurals>
 
-    <plurals name="plural_day" >
+    <plurals name="plural_day">
         <item quantity="one">день</item>
         <item quantity="few">дня</item>
         <item quantity="many">дней</item>
         <item quantity="other">дней</item>
     </plurals>
 
-    <plurals name="plural_month" >
+    <plurals name="plural_month">
         <item quantity="one">месяц</item>
         <item quantity="few">месяца</item>
         <item quantity="many">месяцев</item>
         <item quantity="other">месяцев</item>
     </plurals>
 
-    <plurals name="plural_year" >
+    <plurals name="plural_year">
         <item quantity="one">год</item>
         <item quantity="few">года</item>
         <item quantity="many">лет</item>
         <item quantity="other">лет</item>
     </plurals>
 
-    <plurals name="plural_sub" >
+    <plurals name="plural_sub">
         <item quantity="one">подписка</item>
         <item quantity="few">подписки</item>
         <item quantity="many">подписок</item>
@@ -83,9 +83,10 @@
     <string name="title_delete">Удалить</string>
     <string name="title_save">Сохранить</string>
     <string name="title_notify">Уведомить</string>
+    <string name="title_notifications">Уведомления</string>
     <string name="title_for">За</string>
-    <string name="title_days_before_payment">день до оплаты в</string>
-    <string name="title_in_payment_day">в день оплаты в</string>
+    <string name="title_days_before_payment">за %d %s до оплаты в</string>
+    <string name="title_in_payment_day">в день оплаты в %s</string>
     <string name="hint_time">время</string>
     <string name="title_one_time">один раз</string>
     <string name="title_every_time">каждый раз</string>

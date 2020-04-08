@@ -8,5 +8,6 @@ class MappersModule {
     val kodein = Kodein.Module("mappers_module") {
         bind<SubscriptionEntityMapper>() with singleton { SubscriptionEntityMapper() }
         bind<SubscriptionModelMapper>() with singleton { SubscriptionModelMapper() }
+        bind<NotificationEntityMapper>() with singleton { NotificationEntityMapper() }
     }
 }

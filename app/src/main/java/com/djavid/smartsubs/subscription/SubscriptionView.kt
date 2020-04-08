@@ -10,12 +10,12 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_subscription.view.*
-import kotlinx.android.synthetic.main.layout_notif_setting.view.*
 import java.text.DecimalFormat
 
 class SubscriptionView(
@@ -24,26 +24,34 @@ class SubscriptionView(
 
     private lateinit var bottomSheet: BottomSheetBehavior<FrameLayout>
     private lateinit var presenter: SubscriptionContract.Presenter
+    private lateinit var adapter: NotificationsAdapter
 
     override fun init(presenter: SubscriptionContract.Presenter) {
         this.presenter = presenter
         setupView()
         setupBottomSheet()
-        setupNotifForm()
+        setupNotificationsAdapter()
     }
 
     private fun setupView() {
         viewRoot.sub_closeBtn.setOnClickListener { presenter.onCloseBtnClicked() }
         viewRoot.sub_editBtn.setOnClickListener { presenter.onEditClicked() }
         viewRoot.sub_deleteBtn.setOnClickListener { presenter.onDeleteClicked() }
-    }
-
-    private fun setupNotifForm() = with(viewRoot) {
-        //todo notif_frequencySelector
+        viewRoot.sub_addNotif.setOnClickListener { presenter.onAddNotification() }
     }
 
     private fun setupBottomSheet() {
         bottomSheet = BottomSheetBehavior.from(viewRoot.sub_bottomSheet)
+    }
+
+    private fun setupNotificationsAdapter() {
+        adapter = NotificationsAdapter(viewRoot.context, presenter::onEditNotification)
+        viewRoot.sub_notifRecycler.adapter = adapter
+        viewRoot.sub_notifRecycler.layoutManager = LinearLayoutManager(viewRoot.context)
+    }
+
+    override fun showNotifications(items: List<Notification>) {
+        adapter.setNotifications(items)
     }
 
     override fun expandPanel(biggerToolbar: Boolean) {
