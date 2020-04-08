@@ -3,6 +3,7 @@ package com.djavid.smartsubs.utils
 const val ACTION_REFRESH = "com.djavid.smartsubs.action.refresh"
 
 const val KEY_SUBSCRIPTION_ID = "com.djavid.smartsubs.key.subscription_id"
+const val KEY_NOTIFICATION_ID = "com.djavid.smartsubs.key.notification_id"
 
 const val DECIMAL_FORMAT = "0.##"
 const val DATE_TIME_FORMAT = "dd.MM.yyyy"

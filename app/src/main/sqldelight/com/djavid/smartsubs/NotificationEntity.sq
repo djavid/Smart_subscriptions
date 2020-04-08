@@ -31,6 +31,9 @@ INSERT OR REPLACE INTO notificationEntity(
 )
 VALUES ?;
 
+getNotificationById:
+SELECT * FROM notificationEntity WHERE id = ?;
+
 getNotificationsBySubscriptionId:
 SELECT * FROM notificationEntity WHERE subId = ?;
 

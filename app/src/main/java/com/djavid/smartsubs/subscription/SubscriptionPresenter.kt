@@ -8,6 +8,7 @@ import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPrice
+import com.djavid.smartsubs.notification.NotificationContract
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 
@@ -18,6 +19,7 @@ class SubscriptionPresenter(
     private val notificationsRepository: NotificationsRepository,
     private val modelMapper: SubscriptionModelMapper,
     private val createNavigator: CreateContract.Navigator,
+    private val notificationNavigator: NotificationContract.Navigator,
     coroutineScope: CoroutineScope
 ) : SubscriptionContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -43,7 +45,7 @@ class SubscriptionPresenter(
     }
 
     override fun onAddNotification() {
-        //todo
+        notificationNavigator.showNotificationDialog(subscription.id)
     }
 
     override fun onEditNotification(model: Notification) {

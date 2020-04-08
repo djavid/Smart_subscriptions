@@ -10,6 +10,8 @@ import com.djavid.smartsubs.db.DatabaseModule
 import com.djavid.smartsubs.home.HomeModule
 import com.djavid.smartsubs.home.HomeNavigatorModule
 import com.djavid.smartsubs.mappers.MappersModule
+import com.djavid.smartsubs.notification.NotificationModule
+import com.djavid.smartsubs.notification.NotificationNavigatorModule
 import com.djavid.smartsubs.root.RootModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
 import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
@@ -56,6 +58,12 @@ class Application: Application(), KodeinAware {
         extend(kodein)
         import(SubscriptionModule(fragment).kodein)
         import(CreateNavigatorModule().kodein)
+        import(NotificationNavigatorModule().kodein)
+    }
+
+    fun notificationComponent(fragment: Fragment) = Kodein.lazy {
+        extend(kodein)
+        import(NotificationModule(fragment).kodein)
     }
 
 }
