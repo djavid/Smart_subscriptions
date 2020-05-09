@@ -34,17 +34,17 @@ class NotificationsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        val time = item.time.toString("hh:mm")
+        val time = item.time.toString("HH:mm")
         val isInPaymentDay = item.daysBefore == 0L
 
         holder.checkBox.isChecked = item.active
-        holder.repeatIcon.show(item.repeating)
+        holder.repeatIcon.show(item.isRepeating)
         holder.editBtn.setOnClickListener { editAction.invoke(item) }
 
         val notifText = if (isInPaymentDay)
-            context.getString(R.string.title_in_payment_day, time)
+            context.getString(R.string.title_in_payment_day_at, time)
         else
-            context.getString(R.string.title_days_before_payment, item.daysBefore, time)
+            context.getString(R.string.title_days_before_payment_at, item.daysBefore, time)
         holder.text.text = notifText
     }
 

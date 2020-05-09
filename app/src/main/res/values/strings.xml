@@ -84,12 +84,21 @@
     <string name="title_save">Сохранить</string>
     <string name="title_notify">Уведомить</string>
     <string name="title_notifications">Уведомления</string>
-    <string name="title_for">За</string>
-    <string name="title_days_before_payment">за %d %s до оплаты в</string>
-    <string name="title_in_payment_day">в день оплаты в %s</string>
+    <string name="title_days_before_payment_at">за %d %s до оплаты в</string>
+    <string name="title_in_payment_day_at">в день оплаты в %s</string>
     <string name="hint_time">время</string>
     <string name="title_one_time">один раз</string>
     <string name="title_every_time">каждый раз</string>
+    <!--endregion-->
+
+    <!--region subscription-->
+    <string name="title_in_payment_day">в день оплаты</string>
+    <string name="title_days_before">%s до оплаты</string>
+    <string name="title_for">за</string>
+    <string name="hint_days_before_value">1</string>
+    <string name="title_choose_time">выбрать время</string>
+    <string name="title_repeat">повторять</string>
+    <string name="title_save_notification">Сохранить уведомление</string>
     <!--endregion-->
 
 </resources>

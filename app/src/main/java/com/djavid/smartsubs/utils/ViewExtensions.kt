@@ -2,6 +2,7 @@ package com.djavid.smartsubs.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -14,6 +15,9 @@ import android.view.Window
 import android.view.animation.AlphaAnimation
 import android.view.animation.Interpolator
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 
 fun View.show(show: Boolean) {
     this.visibility = if (show) {
@@ -63,4 +67,14 @@ fun Window.setWhiteNavigationBar() {
 
         setBackgroundDrawable(windowBackground)
     }
+}
+
+fun ImageView.setTintColor(colorRes: Int) {
+    val color = ContextCompat.getColor(context, colorRes)
+    imageTintList = ColorStateList.valueOf(color)
+}
+
+fun TextView.setColor(colorRes: Int) {
+    val color = ContextCompat.getColor(context, colorRes)
+    setTextColor(color)
 }

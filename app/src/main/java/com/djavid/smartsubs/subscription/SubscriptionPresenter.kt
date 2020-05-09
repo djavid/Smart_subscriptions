@@ -52,7 +52,7 @@ class SubscriptionPresenter(
     }
 
     override fun onEditNotification(model: Notification) {
-        //todo
+        notificationNavigator.showNotificationDialog(subscription.id, model.id)
     }
 
     private fun showContent() {

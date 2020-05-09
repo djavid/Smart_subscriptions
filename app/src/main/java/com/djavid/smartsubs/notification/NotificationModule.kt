@@ -10,9 +10,10 @@ import org.kodein.di.generic.singleton
 
 class NotificationModule(fragment: Fragment) {
     val kodein = Kodein.Module("notification_module") {
+        bind<Fragment>() with singleton { fragment }
         bind<View>() with singleton { fragment.notif_fragment }
         bind<NotificationContract.View>() with singleton {
-            NotificationView(instance())
+            NotificationView(instance(), instance())
         }
         bind<NotificationContract.Presenter>() with singleton {
             NotificationPresenter(instance(), instance(), instance())

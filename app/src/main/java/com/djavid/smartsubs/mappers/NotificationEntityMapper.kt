@@ -10,7 +10,7 @@ class NotificationEntityMapper {
         return NotificationEntity.Impl(
             model.id,
             model.subId,
-            model.repeating,
+            model.isRepeating,
             model.daysBefore,
             model.time.millisOfDay.toLong(),
             model.active

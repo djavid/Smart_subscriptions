@@ -47,6 +47,10 @@ class NotificationsRepository(
         queries.deleteNotificationsBySubscriptionId(subId)
     }
 
+    suspend fun deleteNotificationById(id: Long) = withContext(Dispatchers.IO) {
+        queries.deleteNotificationById(id)
+    }
+
     suspend fun deleteAllNotifications() = withContext(Dispatchers.IO) {
         queries.deleteAllNotifications()
     }

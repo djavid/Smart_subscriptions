@@ -2,9 +2,9 @@
 <resources>
 
     <!--region common-->
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#7a7a7a</color>
+    <color name="colorPrimaryDark">#2A2A2A</color>
+    <color name="colorAccent">#FFA000</color>
     <!--endregion-->
 
     <!--region home-->
