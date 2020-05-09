@@ -51,6 +51,7 @@ class SubscriptionView(
     }
 
     override fun showNotifications(items: List<Notification>) {
+        viewRoot.sub_notifGroup.show(true)
         adapter.setNotifications(items)
     }
 

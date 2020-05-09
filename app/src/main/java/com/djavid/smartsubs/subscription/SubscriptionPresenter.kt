@@ -38,9 +38,12 @@ class SubscriptionPresenter(
 
     override fun reload() {
         launch {
-            loadSub(id)
+            subscription = loadSub(id) ?: return@launch
             showContent()
-            view.showNotifications(loadNotifications(id))
+
+            if (subscription.progress != null) {
+                view.showNotifications(loadNotifications(id))
+            }
         }
     }
 
@@ -70,9 +73,9 @@ class SubscriptionPresenter(
         }
     }
 
-    private suspend fun loadSub(id: Long) {
-        subscriptionsRepository.getSubById(id)?.let {
-            subscription = modelMapper.fromDao(it)
+    private suspend fun loadSub(id: Long): Subscription? {
+        return subscriptionsRepository.getSubById(id)?.let {
+            modelMapper.fromDao(it)
         }
     }
 

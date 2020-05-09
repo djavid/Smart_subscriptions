@@ -185,6 +185,14 @@
                     app:layout_constraintTop_toBottomOf="@id/sub_overallSpent"
                     tools:visibility="visible" />
 
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/sub_notifGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="sub_notifIcon,sub_notifTitle,sub_addNotif,sub_notifRecycler,sub_notifDivider"
+                    tools:visibility="visible" />
+
                 <ImageView
                     android:id="@+id/sub_notifIcon"
                     android:layout_width="24dp"
