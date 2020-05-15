@@ -8,5 +8,5 @@ data class Notification(
     val isRepeating: Boolean,
     val daysBefore: Long, // if 0 than show in payment date
     val time: LocalTime,
-    val active: Boolean
+    val isActive: Boolean
 )

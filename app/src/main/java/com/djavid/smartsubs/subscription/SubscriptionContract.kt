@@ -33,6 +33,7 @@ interface SubscriptionContract {
         fun onDeleteClicked()
         fun onAddNotification()
         fun onEditNotification(model: Notification)
+        fun onNotifCheckChanged(notif: Notification, checked: Boolean)
     }
 
     interface Navigator {

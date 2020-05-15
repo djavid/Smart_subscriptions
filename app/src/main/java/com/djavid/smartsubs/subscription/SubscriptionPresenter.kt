@@ -42,7 +42,8 @@ class SubscriptionPresenter(
             showContent()
 
             if (subscription.progress != null) {
-                view.showNotifications(loadNotifications(id))
+                val notifications = loadNotifications(id).sortedBy { it.daysBefore }
+                view.showNotifications(notifications)
             }
         }
     }
@@ -53,6 +54,14 @@ class SubscriptionPresenter(
 
     override fun onEditNotification(model: Notification) {
         notificationNavigator.showNotificationDialog(subscription.id, model.id)
+    }
+
+    override fun onNotifCheckChanged(notif: Notification, checked: Boolean) {
+        launch {
+            notificationsRepository.getNotificationById(notif.id)?.let {
+                notificationsRepository.editNotification(it.copy(isActive = checked))
+            }
+        }
     }
 
     private fun showContent() {

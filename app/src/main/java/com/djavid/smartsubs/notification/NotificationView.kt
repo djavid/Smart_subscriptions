@@ -60,6 +60,29 @@ class NotificationView(
         viewRoot.notif_daysInput.doAfterTextChanged {
             presenter.onDaysInputChanged(it?.toString())
         }
+        viewRoot.notif_daysInput.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                presenter.onDaysInputClicked()
+            }
+        }
+    }
+
+    override fun setDaysPlural(count: Long) {
+        val days = viewRoot.context.resources.getQuantityString(R.plurals.plural_day, count.toInt())
+        val text = viewRoot.context.getString(R.string.title_days_before, days)
+        viewRoot.notif_daysSecondTitle.text = text
+    }
+
+    override fun setDaysInputError(show: Boolean) {
+        viewRoot.notif_daysInput.setError(show)
+    }
+
+    override fun clearFocus() {
+        viewRoot.notif_daysInput.clearFocus()
+    }
+
+    override fun hideKeyboard() {
+        viewRoot.notif_daysInput.hideKeyBoard()
     }
 
     override fun showTimePicker(hour: Int, minutes: Int) {
@@ -122,6 +145,17 @@ class NotificationView(
     override fun notifyToRefresh() {
         val intent = Intent(ACTION_REFRESH)
         LocalBroadcastManager.getInstance(viewRoot.context).sendBroadcast(intent)
+    }
+
+    @Suppress("deprecation")
+    override fun setSubmitButtonState(active: Boolean) = with(viewRoot) {
+        val bgRes = if (active) R.drawable.bg_submit_btn_active else R.drawable.bg_submit_btn_inactive
+        val drawable = context.resources.getDrawable(bgRes, null)
+        notif_submitBtn.background = drawable
+
+        val textRes = if (active) R.string.title_save_notification else R.string.title_activate_notification
+        val text = context.getString(textRes)
+        notif_submitBtn.text = text
     }
 
 }

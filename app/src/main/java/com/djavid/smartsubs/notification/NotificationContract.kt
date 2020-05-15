@@ -18,6 +18,11 @@ interface NotificationContract {
         fun showDeleteBtn(show: Boolean)
         fun finish()
         fun notifyToRefresh()
+        fun clearFocus()
+        fun hideKeyboard()
+        fun setDaysPlural(count: Long)
+        fun setDaysInputError(show: Boolean)
+        fun setSubmitButtonState(active: Boolean)
     }
 
     interface Presenter {
@@ -30,6 +35,7 @@ interface NotificationContract {
         fun onDayRadioChanged(checked: Boolean)
         fun onDaysRadioChanged(checked: Boolean)
         fun onDaysInputChanged(input: String?)
+        fun onDaysInputClicked()
         fun onTimeSet(time: LocalTime)
         fun onDeleteClicked()
     }

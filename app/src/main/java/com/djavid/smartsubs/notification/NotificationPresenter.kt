@@ -5,7 +5,6 @@ import com.djavid.smartsubs.models.Notification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.joda.time.LocalTime
-import java.lang.NumberFormatException
 
 class NotificationPresenter(
     private val view: NotificationContract.View,
@@ -33,24 +32,60 @@ class NotificationPresenter(
         }
     }
 
+    private fun fillForm() {
+        when {
+            model.daysBefore == 0L -> {
+                view.setDayRadioSelected(true)
+            }
+            model.daysBefore > 0 -> {
+                //daysInput = model.daysBefore
+                view.setDaysRadioSelected(true)
+                view.setDaysInputText(model.daysBefore)
+            }
+        }
+
+        view.setDaysPlural(daysInput)
+
+        if (model.isRepeating) {
+            view.setRepeatButtonSelected(true)
+        }
+
+        if (timeChosen) {
+            view.setTimeText(model.time.toString("HH:mm"))
+            view.setTimeBtnSelected(true)
+        }
+    }
+
     private fun setEditMode() {
         editMode = true
         timeChosen = true
 
+        if (model.daysBefore > 1) {
+            daysInput = model.daysBefore
+        }
+
         view.showDeleteBtn(true)
+        view.setSubmitButtonState(model.isActive)
     }
 
     override fun onSubmitClicked() {
-        if (validateForm()) {
-            launch {
-                if (editMode) {
-                    repository.editNotification(model)
-                } else {
-                    repository.saveNotification(model.copy(active = true))
-                }
-
+        launch {
+            if (editMode && !model.isActive) {
+                model = model.copy(isActive = true)
+                repository.editNotification(model)
+                view.setSubmitButtonState(true)
                 view.notifyToRefresh()
-                view.finish()
+            } else {
+                if (validateForm()) {
+                    if (editMode) {
+                        repository.editNotification(model)
+                    } else {
+                        repository.saveNotification(model.copy(isActive = true))
+                    }
+
+                    view.notifyToRefresh()
+                    view.finish()
+                }
             }
         }
     }
@@ -64,39 +99,21 @@ class NotificationPresenter(
     }
 
     private fun validateForm(): Boolean {
+        var valid = true
+
         if (!timeChosen) {
             //todo try to add shake animation
             view.showTimeBtnError(true)
             view.setTimeBtnSelected(true)
-            return false
+            valid = false
         }
 
         if (model.daysBefore == -1L) {
-            return false
+            view.setDaysInputError(true)
+            valid = false
         }
 
-        return true
-    }
-
-    private fun fillForm() {
-        when {
-            model.daysBefore == 0L -> {
-                view.setDayRadioSelected(true)
-            }
-            model.daysBefore > 0 -> {
-                view.setDaysRadioSelected(true)
-                view.setDaysInputText(model.daysBefore)
-            }
-        }
-
-        if (model.isRepeating) {
-            view.setRepeatButtonSelected(true)
-        }
-
-        if (timeChosen) {
-            view.setTimeText(model.time.toString("HH:mm"))
-            view.setTimeBtnSelected(true)
-        }
+        return valid
     }
 
     override fun onTimeClicked() {
@@ -110,51 +127,62 @@ class NotificationPresenter(
     }
 
     override fun onDayContainerClicked() {
-        model = model.copy(daysBefore = 0)
-        selectDayRadio()
+        view.setDayRadioSelected(true)
     }
 
     override fun onDaysContainerClicked() {
-        model = model.copy(daysBefore = daysInput)
-        selectDaysRadio()
+        view.setDaysRadioSelected(true)
     }
 
     override fun onDayRadioChanged(checked: Boolean) {
         if (checked) {
-            model = model.copy(daysBefore = 0)
             selectDayRadio()
         }
     }
 
     override fun onDaysRadioChanged(checked: Boolean) {
         if (checked) {
-            model = model.copy(daysBefore = daysInput)
             selectDaysRadio()
         }
     }
 
     private fun selectDayRadio() {
+        model = model.copy(daysBefore = 0)
         view.setDaysInputSelected(false)
         view.setDayRadioSelected(true)
         view.setDaysRadioSelected(false)
+        view.clearFocus()
+        view.hideKeyboard()
+        view.setDaysInputError(false)
     }
 
     private fun selectDaysRadio() {
+        model = model.copy(daysBefore = daysInput)
         view.setDaysInputSelected(true)
         view.setDayRadioSelected(false)
         view.setDaysRadioSelected(true)
     }
 
     override fun onDaysInputChanged(input: String?) {
-        if (input != null) {
+        if (input != null && input.isNotEmpty()) {
             try {
                 daysInput = input.toLong()
-                model = model.copy(daysBefore = daysInput)
-                selectDaysRadio()
+                view.setDaysPlural(daysInput)
+                view.setDaysInputError(false)
             } catch (e: NumberFormatException) {
                 //no-op
             }
+        } else {
+            daysInput = -1
         }
+
+        model = model.copy(daysBefore = daysInput)
+        selectDaysRadio()
+    }
+
+    override fun onDaysInputClicked() {
+        model = model.copy(daysBefore = daysInput)
+        selectDaysRadio()
     }
 
     override fun onTimeSet(time: LocalTime) {

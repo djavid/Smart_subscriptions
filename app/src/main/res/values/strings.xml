@@ -84,7 +84,7 @@
     <string name="title_save">Сохранить</string>
     <string name="title_notify">Уведомить</string>
     <string name="title_notifications">Уведомления</string>
-    <string name="title_days_before_payment_at">за %d %s до оплаты в</string>
+    <string name="title_days_before_payment_at">за %d %s до оплаты в %s</string>
     <string name="title_in_payment_day_at">в день оплаты в %s</string>
     <string name="hint_time">время</string>
     <string name="title_one_time">один раз</string>
@@ -99,6 +99,7 @@
     <string name="title_choose_time">выбрать время</string>
     <string name="title_repeat">повторять</string>
     <string name="title_save_notification">Сохранить уведомление</string>
+    <string name="title_activate_notification">Включить уведомление</string>
     <!--endregion-->
 
 </resources>

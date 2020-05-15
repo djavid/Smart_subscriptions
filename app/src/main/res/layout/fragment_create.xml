@@ -78,7 +78,7 @@
 
                 <TextView
                     android:id="@+id/create_titleTextView"
-                    style="@style/InputTitleTheme"
+                    style="@style/InputTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -87,9 +87,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
+                <com.djavid.smartsubs.common.view.ClosableEditText
                     android:id="@+id/create_titleInput"
-                    style="@style/InputTheme"
+                    style="@style/InputStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:layout_marginStart="16dp"
@@ -101,7 +101,7 @@
 
                 <TextView
                     android:id="@+id/create_paymentTextView"
-                    style="@style/InputTitleTheme"
+                    style="@style/InputTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -110,9 +110,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/create_titleInput" />
 
-                <EditText
+                <com.djavid.smartsubs.common.view.ClosableEditText
                     android:id="@+id/create_priceInput"
-                    style="@style/InputTheme"
+                    style="@style/InputStyle"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edittext_height"
                     android:layout_marginStart="16dp"
@@ -151,9 +151,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/create_priceInput" />
 
-                <EditText
+                <com.djavid.smartsubs.common.view.ClosableEditText
                     android:id="@+id/create_periodQuantityInput"
-                    style="@style/InputTheme"
+                    style="@style/InputStyle"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edittext_height"
                     android:layout_marginStart="16dp"
@@ -203,9 +203,9 @@
                     android:textSize="13sp"
                     app:layout_constraintTop_toBottomOf="@id/create_periodQuantityInput" />
 
-                <EditText
+                <com.djavid.smartsubs.common.view.ClosableEditText
                     android:id="@+id/create_paymentDateInput"
-                    style="@style/InputTheme"
+                    style="@style/InputStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:layout_marginStart="16dp"
@@ -219,7 +219,7 @@
 
                 <TextView
                     android:id="@+id/create_noteTextView"
-                    style="@style/InputTitleTheme"
+                    style="@style/InputTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -228,9 +228,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/create_paymentDateInput" />
 
-                <EditText
+                <com.djavid.smartsubs.common.view.ClosableEditText
                     android:id="@+id/create_categoryInput"
-                    style="@style/InputTheme"
+                    style="@style/InputStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:layout_marginStart="16dp"
@@ -240,9 +240,9 @@
                     android:inputType="text"
                     app:layout_constraintTop_toBottomOf="@id/create_noteTextView" />
 
-                <EditText
+                <com.djavid.smartsubs.common.view.ClosableEditText
                     android:id="@+id/create_noteInput"
-                    style="@style/InputTheme"
+                    style="@style/InputStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -255,40 +255,18 @@
                     android:paddingBottom="9dp"
                     app:layout_constraintTop_toBottomOf="@id/create_categoryInput" />
 
-                <androidx.cardview.widget.CardView
+                <Button
                     android:id="@+id/create_submitBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/create_submit_height"
+                    style="@style/SubmitBtnActiveStyle"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    app:cardBackgroundColor="@color/colorOrange"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="5dp"
-                    app:contentPaddingLeft="16dp"
-                    app:contentPaddingRight="16dp"
+                    android:text="@string/add_sub"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/create_noteInput">
-
-                    <TextView
-                        android:id="@+id/create_submitBtnTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="34dp"
-                        android:fontFamily="@font/helvetica_bold"
-                        android:includeFontPadding="true"
-                        android:text="@string/add_sub"
-                        android:textColor="@android:color/white"
-                        android:textSize="14sp" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="end|center_vertical"
-                        app:srcCompat="@drawable/ic_add_24px" />
-
-                </androidx.cardview.widget.CardView>
+                    app:layout_constraintTop_toBottomOf="@id/create_noteInput" />
 
                 <Space
                     android:layout_width="match_parent"

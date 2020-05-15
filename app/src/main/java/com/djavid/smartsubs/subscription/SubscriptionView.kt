@@ -45,7 +45,7 @@ class SubscriptionView(
     }
 
     private fun setupNotificationsAdapter() {
-        adapter = NotificationsAdapter(viewRoot.context, presenter::onEditNotification)
+        adapter = NotificationsAdapter(viewRoot.context, presenter::onEditNotification, presenter::onNotifCheckChanged)
         viewRoot.sub_notifRecycler.adapter = adapter
         viewRoot.sub_notifRecycler.layoutManager = LinearLayoutManager(viewRoot.context)
     }

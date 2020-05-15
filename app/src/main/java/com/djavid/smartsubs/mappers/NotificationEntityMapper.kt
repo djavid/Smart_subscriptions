@@ -13,7 +13,7 @@ class NotificationEntityMapper {
             model.isRepeating,
             model.daysBefore,
             model.time.millisOfDay.toLong(),
-            model.active
+            model.isActive
         )
     }
 

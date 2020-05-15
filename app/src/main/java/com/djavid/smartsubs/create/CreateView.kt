@@ -149,8 +149,7 @@ class CreateView(
     }
 
     override fun showTitleError(show: Boolean) {
-        val drawable = if (show) R.drawable.bg_edittext_error else R.drawable.bg_edittext
-        viewRoot.create_titleInput.background = viewRoot.context.getDrawable(drawable)
+        viewRoot.create_titleInput.setError(show)
     }
 
     override fun showPriceError(show: Boolean) {
@@ -159,8 +158,7 @@ class CreateView(
     }
 
     override fun showQuantityError(show: Boolean) {
-        val drawable = if (show) R.drawable.bg_edittext_error else R.drawable.bg_edittext
-        viewRoot.create_periodQuantityInput.background = viewRoot.context.getDrawable(drawable)
+        viewRoot.create_periodQuantityInput.setError(show)
     }
 
     override fun setTitle(title: String) {
@@ -188,7 +186,7 @@ class CreateView(
     }
 
     override fun switchTitlesToEditMode() {
-        viewRoot.create_submitBtnTitle.text = viewRoot.context.getString(R.string.title_save)
+        viewRoot.create_submitBtn.text = viewRoot.context.getString(R.string.title_save)
         viewRoot.create_title.text = viewRoot.context.getString(R.string.title_edit)
     }
 

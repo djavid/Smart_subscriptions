@@ -15,7 +15,8 @@ import kotlinx.android.synthetic.main.notification_item.view.*
 
 class NotificationsAdapter(
     private val context: Context,
-    private val editAction: (Notification) -> Unit
+    private val editAction: (Notification) -> Unit,
+    private val checkChangedAction: (Notification, Boolean) -> Unit
 ) : RecyclerView.Adapter<NotificationsAdapter.ViewHolder>() {
 
     private var data = listOf<Notification>()
@@ -37,14 +38,18 @@ class NotificationsAdapter(
         val time = item.time.toString("HH:mm")
         val isInPaymentDay = item.daysBefore == 0L
 
-        holder.checkBox.isChecked = item.active
+        holder.checkBox.isChecked = item.isActive
         holder.repeatIcon.show(item.isRepeating)
         holder.editBtn.setOnClickListener { editAction.invoke(item) }
+        holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            checkChangedAction(item, isChecked)
+        }
 
+        val dayPlural = context.resources.getQuantityString(R.plurals.plural_day, item.daysBefore.toInt())
         val notifText = if (isInPaymentDay)
             context.getString(R.string.title_in_payment_day_at, time)
         else
-            context.getString(R.string.title_days_before_payment_at, item.daysBefore, time)
+            context.getString(R.string.title_days_before_payment_at, item.daysBefore, dayPlural, time)
         holder.text.text = notifText
     }
 
