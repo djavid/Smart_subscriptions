@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS pendingIntentEntity;
+CREATE TABLE pendingIntentEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0,
+    jsonString TEXT NOT NULL
+);
