@@ -1,7 +1,10 @@
 package com.djavid.smartsubs.notification
 
 import com.djavid.smartsubs.db.NotificationsRepository
+import com.djavid.smartsubs.db.PendingIntentRepository
+import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.models.Notification
+import com.djavid.smartsubs.utils.getFirstPeriodAfterNow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.joda.time.LocalTime
@@ -9,6 +12,9 @@ import org.joda.time.LocalTime
 class NotificationPresenter(
     private val view: NotificationContract.View,
     private val repository: NotificationsRepository,
+    private val subRepository: SubscriptionsRepository,
+    private val intentRepository: PendingIntentRepository,
+    private val alarmNotifier: AlarmNotifier,
     coroutineScope: CoroutineScope
 ) : NotificationContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -38,7 +44,6 @@ class NotificationPresenter(
                 view.setDayRadioSelected(true)
             }
             model.daysBefore > 0 -> {
-                //daysInput = model.daysBefore
                 view.setDaysRadioSelected(true)
                 view.setDaysInputText(model.daysBefore)
             }
@@ -71,23 +76,43 @@ class NotificationPresenter(
     override fun onSubmitClicked() {
         launch {
             if (editMode && !model.isActive) {
-                model = model.copy(isActive = true)
-                repository.editNotification(model)
-                view.setSubmitButtonState(true)
-                view.notifyToRefresh()
+                activateNotification()
             } else {
                 if (validateForm()) {
-                    if (editMode) {
-                        repository.editNotification(model)
-                    } else {
-                        repository.saveNotification(model.copy(isActive = true))
-                    }
-
-                    view.notifyToRefresh()
-                    view.finish()
+                    saveNotification()
+                    scheduleNotification()
                 }
             }
         }
+    }
+
+    private suspend fun saveNotification() {
+        if (editMode) {
+            repository.editNotification(model)
+        } else {
+            repository.saveNotification(model.copy(isActive = true))
+        }
+    }
+
+    private suspend fun activateNotification() {
+        model = model.copy(isActive = true)
+        repository.editNotification(model)
+        view.setSubmitButtonState(true)
+        view.notifyToRefresh()
+    }
+
+    private suspend fun scheduleNotification() { //todo after changing sub title, notif's title stays unchanged
+        val sub = subRepository.getSubById(model.subId)
+
+        if (sub?.paymentDate != null) {
+            val nextPaymentDate = sub.paymentDate.getFirstPeriodAfterNow(sub.period)
+            val notifTime = nextPaymentDate.minusDays(model.daysBefore.toInt()).toDateTime(model.time)
+
+            alarmNotifier.scheduleNotification(model.id, sub.title, model.daysBefore, notifTime.millis)
+        }
+
+        view.notifyToRefresh()
+        view.finish()
     }
 
     override fun onDeleteClicked() {

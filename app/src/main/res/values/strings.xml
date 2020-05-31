@@ -91,7 +91,7 @@
     <string name="title_every_time">каждый раз</string>
     <!--endregion-->
 
-    <!--region subscription-->
+    <!--region notification-->
     <string name="title_in_payment_day">в день оплаты</string>
     <string name="title_days_before">%s до оплаты</string>
     <string name="title_for">за</string>
@@ -100,6 +100,11 @@
     <string name="title_repeat">повторять</string>
     <string name="title_save_notification">Сохранить уведомление</string>
     <string name="title_activate_notification">Включить уведомление</string>
+    <string name="subscription_channel_name">Уведомления об окончании подписок</string>
+
+    <string name="title_notif_expires_today">Подписка истекает сегодня.\nНе забудьте оплатить или отменить.</string>
+    <string name="title_notif_expires_tomorrow">Подписка истекает завтра.\nНе забудьте оплатить или отменить.</string>
+    <string name="title_notif_expires_days_after">Подписка истекает через %d %s.\nНе забудьте оплатить или отменить.</string>
     <!--endregion-->
 
 </resources>

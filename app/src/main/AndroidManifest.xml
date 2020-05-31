@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.djavid.smartsubs">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:name="com.djavid.smartsubs.Application"
         android:allowBackup="true"
@@ -17,8 +19,8 @@
         <activity
             android:name=".root.RootActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"
             android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +28,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".notification.AlarmBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.WAKE_LOCK">
+            <intent-filter>
+                <action android:name="com.djavid.smartsubs.action.alarm" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

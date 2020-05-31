@@ -1,6 +1,7 @@
 package com.djavid.smartsubs
 
 import android.app.Application
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.djavid.smartsubs.coroutines.CoroutineModule
@@ -12,6 +13,7 @@ import com.djavid.smartsubs.home.HomeNavigatorModule
 import com.djavid.smartsubs.mappers.MappersModule
 import com.djavid.smartsubs.notification.NotificationModule
 import com.djavid.smartsubs.notification.NotificationNavigatorModule
+import com.djavid.smartsubs.worker.NotificationWorkerModule
 import com.djavid.smartsubs.root.RootModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
 import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
@@ -21,7 +23,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.singleton
 
-class Application: Application(), KodeinAware {
+class Application : Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
@@ -64,6 +66,11 @@ class Application: Application(), KodeinAware {
     fun notificationComponent(fragment: Fragment) = Kodein.lazy {
         extend(kodein)
         import(NotificationModule(fragment).kodein)
+    }
+
+    fun notificationWorkerComponent(context: Context) = Kodein.lazy {
+        extend(kodein)
+        import(NotificationWorkerModule(context).kodein)
     }
 
 }

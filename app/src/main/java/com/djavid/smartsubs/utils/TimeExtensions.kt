@@ -8,7 +8,13 @@ import java.util.*
 
 fun LocalDate.addPeriod(period: SubscriptionPeriod): LocalDate = when (period.type) {
     SubscriptionPeriodType.DAY -> plusDays(period.quantity)
-    SubscriptionPeriodType.MONTH -> plusMonths(period.quantity)
+    SubscriptionPeriodType.MONTH -> {
+        if (dayOfMonth == dayOfMonth().maximumValue) {
+            plusMonths(period.quantity).dayOfMonth().withMaximumValue()
+        } else {
+            plusMonths(period.quantity)
+        }
+    }
     SubscriptionPeriodType.YEAR -> plusYears(period.quantity)
 }
 
