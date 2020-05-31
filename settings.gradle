@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='SmartSubs'
+rootProject.name='Умные подписки'
