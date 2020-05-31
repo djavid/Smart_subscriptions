@@ -3,7 +3,7 @@ package com.djavid.smartsubs.root
 interface RootContract {
 
     interface Presenter {
-        fun init()
+        fun init(subId: Long?)
         fun goToHomeScreen()
     }
 

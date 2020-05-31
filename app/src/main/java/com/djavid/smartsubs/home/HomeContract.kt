@@ -3,7 +3,6 @@ package com.djavid.smartsubs.home
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.SubscriptionPrice
-import java.util.*
 
 interface HomeContract {
 
@@ -27,7 +26,7 @@ interface HomeContract {
     }
 
     interface Navigator {
-        fun goToHomeScreen()
+        fun goToHome()
     }
 
 }

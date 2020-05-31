@@ -2,7 +2,9 @@ package com.djavid.smartsubs.worker
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -11,6 +13,8 @@ import androidx.work.WorkerParameters
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.db.NotificationsRepository
+import com.djavid.smartsubs.models.Notification
+import com.djavid.smartsubs.root.RootActivity
 import com.djavid.smartsubs.utils.*
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein
@@ -29,29 +33,42 @@ class NotificationWorker(
     private val notificationManager: NotificationManager by instance()
     private val sharedRepository: SharedRepository by instance()
 
+    private var model: Notification? = null
+
     override fun doWork(): Result {
         val id = workerParams.inputData.getLong(KEY_NOTIFICATION_ID, -1)
         val title = workerParams.inputData.getString(KEY_SUBSCRIPTION_TITLE)
         val daysUntil = workerParams.inputData.getLong(KEY_DAYS_UNTIL_SUBSCRIPTION_ENDS, -1)
         val atMillis = workerParams.inputData.getLong(KEY_AT_MILLIS, -1)
 
-        if (title?.isNotEmpty() == true && daysUntil > -1 && atMillis > -1 && id > -1) {
-            val content = generateNotifContent(title, daysUntil)
+        return if (title?.isNotEmpty() == true && daysUntil > -1 && atMillis > -1 && id > -1) {
+            loadNotification(id)
 
-            setupNotificationChannel()
-            showSubExpiresNotification(sharedRepository.nextNotifId(), title, content)
+            if (model != null) {
+                val content = generateNotifContent(title, daysUntil)
+                setupNotificationChannel()
+                showSubExpiresNotification(model!!, title, sharedRepository.nextNotifId(), content)
 
-            deactivateNotification(id)
+                deactivateNotification()
 
-            return Result.success()
+                Result.success()
+            } else {
+                Result.failure()
+            }
         } else {
-            return Result.failure()
+            Result.failure()
         }
     }
 
-    private fun deactivateNotification(id: Long) {
+    private fun loadNotification(id: Long) {
         runBlocking {
-            repository.getNotificationById(id)?.let {
+            model = repository.getNotificationById(id)
+        }
+    }
+
+    private fun deactivateNotification() {
+        runBlocking {
+            model?.let {
                 repository.editNotification(it.copy(isActive = false))
             }
         }
@@ -72,29 +89,27 @@ class NotificationWorker(
         }
     }
 
-    private fun showSubExpiresNotification(notifId: Int, title: String, content: String) {
+    private fun showSubExpiresNotification(model: Notification, subTitle: String, notifId: Int, content: String) {
         val builder = NotificationCompat.Builder(context, SUBSCRIPTION_NOTIF_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher_round) //todo replace icon
             .setColor(ContextCompat.getColor(context, R.color.colorAccent))
-            .setContentTitle(title)
+            .setContentTitle(subTitle)
             .setContentText(content)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setStyle(NotificationCompat.BigTextStyle())
-//            .setContentIntent(createOpenQuestDetailsPendingIntent(questId)) todo add click action
+            .setContentIntent(createSubscriptionPendingIntent(model.subId))
             .setAutoCancel(false)
 
         notificationManager.notify(null, notifId, builder.build())
     }
 
-//    todo add notif click action
-//    private fun createSubScreenPendingIntent(): PendingIntent {
-//        val intent = Intent(context, QuestOverviewActivity::class.java).apply {
-//            putExtra(EXTRA_QUEST_ID, questId)
-//            putExtra(EXTRA_APPLICATION_LOCALE, localeProvider.getLocale())
-//        }
-//        return TaskStackBuilder.create(context).addNextIntent(intent)
-//            .getPendingIntent(questId.hashCode(), PendingIntent.FLAG_UPDATE_CURRENT)!!
-//    }
+    private fun createSubscriptionPendingIntent(subId: Long): PendingIntent {
+        val intent = Intent(context, RootActivity::class.java).apply {
+            putExtra(KEY_SUBSCRIPTION_ID, subId)
+        }
+
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
 
     private fun generateNotifContent(subTitle: String, daysUntil: Long): String {
         return when {

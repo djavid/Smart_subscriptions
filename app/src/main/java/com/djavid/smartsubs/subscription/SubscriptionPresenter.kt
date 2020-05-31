@@ -4,6 +4,7 @@ import com.djavid.smartsubs.common.CommonFragmentNavigator
 import com.djavid.smartsubs.create.CreateContract
 import com.djavid.smartsubs.db.NotificationsRepository
 import com.djavid.smartsubs.db.SubscriptionsRepository
+import com.djavid.smartsubs.home.HomeContract
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.Subscription
@@ -15,6 +16,7 @@ import kotlinx.coroutines.*
 class SubscriptionPresenter(
     private val view: SubscriptionContract.View,
     private val fragmentNavigator: CommonFragmentNavigator,
+    private val homeNavigator: HomeContract.Navigator,
     private val subscriptionsRepository: SubscriptionsRepository,
     private val notificationsRepository: NotificationsRepository,
     private val modelMapper: SubscriptionModelMapper,
@@ -25,10 +27,12 @@ class SubscriptionPresenter(
 
     private lateinit var subscription: Subscription
     private var id: Long = 0
+    private var isRoot: Boolean = false
 
-    override fun init(id: Long) {
+    override fun init(id: Long, isRoot: Boolean) {
         view.init(this)
         this.id = id
+        this.isRoot = isRoot
 
         view.setBackgroundTransparent(false, SLIDE_DURATION)
         view.showToolbar(true, SLIDE_DURATION)
@@ -119,7 +123,12 @@ class SubscriptionPresenter(
             view.setBackgroundTransparent(true, SLIDE_DURATION)
             withContext(Dispatchers.Default) { delay(SLIDE_DURATION) }
             view.notifyToRefresh()
+
             fragmentNavigator.goBack()
+
+            if (isRoot) {
+                homeNavigator.goToHome()
+            }
         }
     }
 

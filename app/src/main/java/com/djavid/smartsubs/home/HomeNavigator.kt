@@ -7,7 +7,7 @@ class HomeNavigator(
     private val fragmentManager: FragmentManager
 ) : HomeContract.Navigator {
 
-    override fun goToHomeScreen() {
+    override fun goToHome() {
         fragmentManager
             .beginTransaction()
             .setReorderingAllowed(true)

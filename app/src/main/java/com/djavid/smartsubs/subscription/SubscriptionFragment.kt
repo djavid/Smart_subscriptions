@@ -12,6 +12,7 @@ import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.common.BroadcastHandler
 import com.djavid.smartsubs.common.subscribeApplicationReceiver
 import com.djavid.smartsubs.utils.ACTION_REFRESH
+import com.djavid.smartsubs.utils.KEY_IS_ROOT
 import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
@@ -40,7 +41,9 @@ class SubscriptionFragment : BaseFragment(R.layout.fragment_subscription), BackP
 
         arguments?.let {
             val id = it.getLong(KEY_SUBSCRIPTION_ID)
-            presenter.init(id)
+            val isRoot = it.getBoolean(KEY_IS_ROOT)
+
+            presenter.init(id, isRoot)
         }
     }
 

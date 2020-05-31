@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BackPressListener
+import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.Kodein
@@ -22,7 +23,9 @@ class RootActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_root)
         kodein = (application as Application).rootComponent(this)
-        presenter.init()
+
+        val subId = intent.getLongExtra(KEY_SUBSCRIPTION_ID, -1)
+        presenter.init(if (subId != -1L) subId else null)
     }
 
     override fun onDestroy() {

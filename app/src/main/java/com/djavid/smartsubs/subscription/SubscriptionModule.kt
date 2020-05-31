@@ -16,7 +16,7 @@ class SubscriptionModule(fragment: Fragment) {
         bind<SubscriptionContract.Presenter>() with singleton {
             SubscriptionPresenter(
                 instance(), instance(), instance(), instance(), instance(), instance(),
-                instance(), instance()
+                instance(), instance(), instance()
             )
         }
         bind<SubscriptionContract.View>() with singleton { SubscriptionView(instance()) }

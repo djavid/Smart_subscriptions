@@ -42,6 +42,7 @@ class Application : Application(), KodeinAware {
         extend(kodein)
         import(RootModule(activity).kodein)
         import(HomeNavigatorModule().kodein)
+        import(SubscriptionNavigatorModule().kodein)
     }
 
     fun homeComponent(fragment: Fragment) = Kodein.lazy {
@@ -61,6 +62,7 @@ class Application : Application(), KodeinAware {
         import(SubscriptionModule(fragment).kodein)
         import(CreateNavigatorModule().kodein)
         import(NotificationNavigatorModule().kodein)
+        import(HomeNavigatorModule().kodein)
     }
 
     fun notificationComponent(fragment: Fragment) = Kodein.lazy {
