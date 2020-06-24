@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--region common-->
+    <string name="app_name">SmartSubs</string>
+    <!--endregion-->
+
+    <!--region common-->
+    <string name="symbol_rub">₽</string>
+    <!--endregion-->
+
+    <!--region masks-->
+    <string name="mask_subs_count">%d %s</string>
+    <string name="mask_price">%s %s</string>
+    <string name="mask_subscription_price">%s %s %s %s</string>
+    <string name="mask_subscription_price_quantity">%s %s %s %d %s</string>
+    <string name="mask_days_until">через %d %s</string>
+    <string name="mask_next_payment">Следующая оплата через %d %s</string>
+    <string name="mask_overall_spent">Всего потрачено %s %s</string>
+    <!--endregion-->
+
+    <!--region home-->
+    <string name="title_day">день</string>
+    <string name="title_month">месяц</string>
+    <string name="title_year">год</string>
+    <string name="add_sub">Добавить подписку</string>
+    <string name="title_today">Сегодня</string>
+
+    <plurals name="plural_every">
+        <item quantity="one">каждый</item>
+        <item quantity="few">каждые</item>
+        <item quantity="many">каждые</item>
+        <item quantity="other">каждые</item>
+    </plurals>
+
+    <plurals name="plural_day">
+        <item quantity="one">день</item>
+        <item quantity="few">дня</item>
+        <item quantity="many">дней</item>
+        <item quantity="other">дней</item>
+    </plurals>
+
+    <plurals name="plural_month">
+        <item quantity="one">месяц</item>
+        <item quantity="few">месяца</item>
+        <item quantity="many">месяцев</item>
+        <item quantity="other">месяцев</item>
+    </plurals>
+
+    <plurals name="plural_year">
+        <item quantity="one">год</item>
+        <item quantity="few">года</item>
+        <item quantity="many">лет</item>
+        <item quantity="other">лет</item>
+    </plurals>
+
+    <plurals name="plural_sub">
+        <item quantity="one">подписка</item>
+        <item quantity="few">подписки</item>
+        <item quantity="many">подписок</item>
+        <item quantity="other">подписок</item>
+    </plurals>
+    <!--endregion-->
+
+    <!--region create-->
+    <string name="title_cancel">Отмена</string>
+    <string name="title_add_sub">Добавить подписку</string>
+    <string name="title_sub_title">Название подписки</string>
+    <string name="title_payment">Оплата</string>
+    <string name="title_additional">Дополнительно</string>
+    <string name="hint_title">Например Apple music</string>
+    <string name="hint_price">0.00</string>
+    <string name="hint_quantity">1</string>
+    <string name="hint_first_pay">например, сегодня</string>
+    <string name="title_every">каждый</string>
+    <string name="desc_first_pay">Добавьте дату первого списания, чтобы видеть расходы, или дату следующего платежа, если не можете вспомнить (необязательно)</string>
+    <string name="title_note">Примечание</string>
+    <string name="title_category">Категория</string>
+    <!--endregion-->
+
+    <!--region subscription-->
+    <string name="title_next_payment_today">Следующая оплата сегодня</string>
+    <string name="title_edit">Редактировать</string>
+    <string name="title_delete">Удалить</string>
+    <string name="title_save">Сохранить</string>
+    <string name="title_notify">Уведомить</string>
+    <string name="title_notifications">Уведомления</string>
+    <string name="title_days_before_payment_at">за %d %s до оплаты в %s</string>
+    <string name="title_in_payment_day_at">в день оплаты в %s</string>
+    <string name="hint_time">время</string>
+    <string name="title_one_time">один раз</string>
+    <string name="title_every_time">каждый раз</string>
+    <!--endregion-->
+
+    <!--region notification-->
+    <string name="title_in_payment_day">в день оплаты</string>
+    <string name="title_days_before">%s до оплаты</string>
+    <string name="title_for">за</string>
+    <string name="hint_days_before_value">1</string>
+    <string name="title_choose_time">выбрать время</string>
+    <string name="title_repeat">повторять</string>
+    <string name="title_save_notification">Сохранить уведомление</string>
+    <string name="title_activate_notification">Включить уведомление</string>
+    <string name="subscription_channel_name">Уведомления об окончании подписок</string>
+
+    <string name="title_notif_expires_today">Подписка истекает сегодня.\nНе забудьте оплатить или отменить.</string>
+    <string name="title_notif_expires_tomorrow">Подписка истекает завтра.\nНе забудьте оплатить или отменить.</string>
+    <string name="title_notif_expires_days_after">Подписка истекает через %d %s.\nНе забудьте оплатить или отменить.</string>
+    <!--endregion-->
+
+</resources>

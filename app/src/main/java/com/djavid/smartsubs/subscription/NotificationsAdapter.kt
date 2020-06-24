@@ -35,7 +35,7 @@ class NotificationsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        val time = item.time.toString("HH:mm")
+        val time = item.atDateTime.toLocalTime().toString("HH:mm")
         val isInPaymentDay = item.daysBefore == 0L
 
         holder.checkBox.isChecked = item.isActive

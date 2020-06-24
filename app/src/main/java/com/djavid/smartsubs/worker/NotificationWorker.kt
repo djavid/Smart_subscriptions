@@ -7,13 +7,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.db.NotificationsRepository
+import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.models.Notification
+import com.djavid.smartsubs.models.SubscriptionDao
+import com.djavid.smartsubs.notification.AlarmNotifier
 import com.djavid.smartsubs.root.RootActivity
 import com.djavid.smartsubs.utils.*
 import kotlinx.coroutines.runBlocking
@@ -29,30 +34,41 @@ class NotificationWorker(
     override val kodein: Kodein
         get() = (context.applicationContext as Application).notificationWorkerComponent(context)
 
-    private val repository: NotificationsRepository by instance()
+    private val notifRepository: NotificationsRepository by instance()
+    private val subRepository: SubscriptionsRepository by instance()
     private val notificationManager: NotificationManager by instance()
     private val sharedRepository: SharedRepository by instance()
+    private val alarmNotifier: AlarmNotifier by instance()
 
     private var model: Notification? = null
+    private var subModel: SubscriptionDao? = null
 
     override fun doWork(): Result {
         val id = workerParams.inputData.getLong(KEY_NOTIFICATION_ID, -1)
-        val title = workerParams.inputData.getString(KEY_SUBSCRIPTION_TITLE)
-        val daysUntil = workerParams.inputData.getLong(KEY_DAYS_UNTIL_SUBSCRIPTION_ENDS, -1)
-        val atMillis = workerParams.inputData.getLong(KEY_AT_MILLIS, -1)
 
-        return if (title?.isNotEmpty() == true && daysUntil > -1 && atMillis > -1 && id > -1) {
+        return if (id > -1) {
             loadNotification(id)
+            loadSub(model?.subId)
 
-            if (model != null) {
-                val content = generateNotifContent(title, daysUntil)
+            return model?.let {
+                val content = generateNotifContent(it.daysBefore)
                 setupNotificationChannel()
-                showSubExpiresNotification(model!!, title, sharedRepository.nextNotifId(), content)
+                showSubExpiresNotification(it, it.subTitle, sharedRepository.nextNotifId(), content)
 
-                deactivateNotification()
+                if (it.isRepeating) {
+                    val newModel = recalculateDateTime()
 
+                    if (newModel != null) {
+                        saveNotification(newModel)
+                        alarmNotifier.setAlarm(newModel)
+                    }
+                } else {
+                    deleteNotification()
+                }
+
+                sendRefreshBroadcast()
                 Result.success()
-            } else {
+            } ?: kotlin.run {
                 Result.failure()
             }
         } else {
@@ -60,16 +76,63 @@ class NotificationWorker(
         }
     }
 
+    private fun recalculateDateTime(): Notification? {
+        loadSub(model?.subId)
+
+        model?.let { notif ->
+            val paymentDate = subModel?.paymentDate
+            val period = subModel?.period
+
+            if (paymentDate != null && period != null) {
+                val atDateTime = paymentDate.getFirstPeriodAfterNow(period).addPeriod(period)
+                    .toDateTime(notif.atDateTime.toLocalTime())
+                    .minusDays(notif.daysBefore.toInt())
+
+                return model?.copy(atDateTime = atDateTime)
+            }
+        }
+
+        return null
+    }
+
+    private fun sendRefreshBroadcast() {
+        val intent = Intent(ACTION_REFRESH)
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+    }
+
     private fun loadNotification(id: Long) {
         runBlocking {
-            model = repository.getNotificationById(id)
+            model = notifRepository.getNotificationById(id)
+        }
+    }
+
+    private fun saveNotification(model: Notification) {
+        println("saveNotif: $model")
+        runBlocking {
+            notifRepository.editNotification(model)
+        }
+    }
+
+    private fun loadSub(id: Long?) {
+        if (id != null) {
+            runBlocking {
+                subModel = subRepository.getSubById(id)
+            }
+        }
+    }
+
+    private fun deleteNotification() {
+        runBlocking {
+            model?.let {
+                notifRepository.deleteNotificationById(it.id)
+            }
         }
     }
 
     private fun deactivateNotification() {
         runBlocking {
             model?.let {
-                repository.editNotification(it.copy(isActive = false))
+                notifRepository.editNotification(it.copy(isActive = false))
             }
         }
     }
@@ -97,21 +160,30 @@ class NotificationWorker(
             .setContentText(content)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setStyle(NotificationCompat.BigTextStyle())
-            .setContentIntent(createSubscriptionPendingIntent(model.subId))
             .setAutoCancel(false)
+            .apply {
+                val intent = createSubscriptionPendingIntent(model.subId)
+                if (intent != null) {
+                    setContentIntent(intent)
+                }
+            }
 
         notificationManager.notify(null, notifId, builder.build())
     }
 
-    private fun createSubscriptionPendingIntent(subId: Long): PendingIntent {
+    private fun createSubscriptionPendingIntent(subId: Long): PendingIntent? {
         val intent = Intent(context, RootActivity::class.java).apply {
             putExtra(KEY_SUBSCRIPTION_ID, subId)
         }
 
-        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val stackBuilder = TaskStackBuilder.create(context).apply {
+            addNextIntent(intent)
+        }
+
+        return stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
-    private fun generateNotifContent(subTitle: String, daysUntil: Long): String {
+    private fun generateNotifContent(daysUntil: Long): String {
         return when {
             daysUntil == 0L -> { //today
                 context.getString(R.string.title_notif_expires_today)

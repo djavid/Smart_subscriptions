@@ -11,6 +11,7 @@ import com.djavid.smartsubs.db.DatabaseModule
 import com.djavid.smartsubs.home.HomeModule
 import com.djavid.smartsubs.home.HomeNavigatorModule
 import com.djavid.smartsubs.mappers.MappersModule
+import com.djavid.smartsubs.notification.AlarmNotifierModule
 import com.djavid.smartsubs.notification.NotificationModule
 import com.djavid.smartsubs.notification.NotificationNavigatorModule
 import com.djavid.smartsubs.worker.NotificationWorkerModule
@@ -63,16 +64,19 @@ class Application : Application(), KodeinAware {
         import(CreateNavigatorModule().kodein)
         import(NotificationNavigatorModule().kodein)
         import(HomeNavigatorModule().kodein)
+        import(AlarmNotifierModule().kodein)
     }
 
     fun notificationComponent(fragment: Fragment) = Kodein.lazy {
         extend(kodein)
         import(NotificationModule(fragment).kodein)
+        import(AlarmNotifierModule().kodein)
     }
 
     fun notificationWorkerComponent(context: Context) = Kodein.lazy {
         extend(kodein)
         import(NotificationWorkerModule(context).kodein)
+        import(AlarmNotifierModule().kodein)
     }
 
 }

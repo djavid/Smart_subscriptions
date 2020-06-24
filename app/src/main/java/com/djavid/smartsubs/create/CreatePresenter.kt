@@ -158,7 +158,7 @@ class CreatePresenter(
             view.showToolbar(false, SLIDE_DURATION)
             view.setBackgroundTransparent(true, SLIDE_DURATION)
             withContext(Dispatchers.Default) { delay(SLIDE_DURATION) }
-            view.notifyToRefresh() //todo notify to refresh
+            view.notifyToRefresh()
             fragmentNavigator.goBack()
         }
     }

@@ -25,14 +25,17 @@ fun LocalDate.minusPeriod(period: SubscriptionPeriod): LocalDate = when (period.
 }
 
 fun LocalDate.getFirstPeriodAfterNow(period: SubscriptionPeriod): LocalDate {
-    var date = this
-    val dateNow = LocalDate.now(DateTimeZone.forTimeZone(TimeZone.getDefault()))
+    return getFirstPeriodAfter(LocalDate.now(), period)
+}
 
-    while (date.isAfter(dateNow)) {
+fun LocalDate.getFirstPeriodAfter(dateAfter: LocalDate, period: SubscriptionPeriod): LocalDate {
+    var date = this
+
+    while (date.isAfter(dateAfter)) {
         date = date.minusPeriod(period)
     }
 
-    while (date.isBefore(dateNow)) {
+    while (date.isBefore(dateAfter)) {
         date = date.addPeriod(period)
     }
 

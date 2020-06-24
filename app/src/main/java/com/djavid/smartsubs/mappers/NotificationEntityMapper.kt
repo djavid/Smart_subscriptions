@@ -2,7 +2,7 @@ package com.djavid.smartsubs.mappers
 
 import com.djavid.smartsubs.NotificationEntity
 import com.djavid.smartsubs.models.Notification
-import org.joda.time.LocalTime
+import org.joda.time.DateTime
 
 class NotificationEntityMapper {
 
@@ -12,8 +12,9 @@ class NotificationEntityMapper {
             model.subId,
             model.isRepeating,
             model.daysBefore,
-            model.time.millisOfDay.toLong(),
-            model.isActive
+            model.atDateTime.millis,
+            model.isActive,
+            model.subTitle
         )
     }
 
@@ -23,8 +24,9 @@ class NotificationEntityMapper {
             entity.subId,
             entity.repeating,
             entity.daysBefore,
-            LocalTime.fromMillisOfDay(entity.millisOfDay),
-            entity.active
+            DateTime(entity.atMillis),
+            entity.active,
+            entity.subTitle
         )
     }
 

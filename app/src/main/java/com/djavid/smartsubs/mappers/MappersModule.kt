@@ -9,6 +9,5 @@ class MappersModule {
         bind<SubscriptionEntityMapper>() with singleton { SubscriptionEntityMapper() }
         bind<SubscriptionModelMapper>() with singleton { SubscriptionModelMapper() }
         bind<NotificationEntityMapper>() with singleton { NotificationEntityMapper() }
-        bind<PendingIntentEntityMapper>() with singleton { PendingIntentEntityMapper() }
     }
 }

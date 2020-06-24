@@ -35,7 +35,7 @@ class SubscriptionEntityMapper {
             SubscriptionPeriod(
                 SubscriptionPeriodType.valueOf(entity.period), entity.periodQuantity.toInt()
             ),
-            entity.paymentDate?.let { LocalDate(it, DateTimeZone.forTimeZone(TimeZone.getDefault())) },
+            entity.paymentDate?.let { LocalDate(it) },
             entity.category,
             entity.comment
         )

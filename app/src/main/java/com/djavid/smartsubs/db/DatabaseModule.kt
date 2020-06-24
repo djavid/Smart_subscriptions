@@ -3,7 +3,6 @@ package com.djavid.smartsubs.db
 import android.content.Context
 import android.content.SharedPreferences
 import com.djavid.smartsubs.NotificationEntityQueries
-import com.djavid.smartsubs.PendingIntentEntityQueries
 import com.djavid.smartsubs.SubscriptionEntityQueries
 import com.djavid.smartsubs.utils.SharedRepository
 import com.squareup.sqldelight.android.AndroidSqliteDriver
@@ -36,9 +35,6 @@ class DatabaseModule(
         bind<NotificationEntityQueries>() with singleton {
             instance<Database>().notificationEntityQueries
         }
-        bind<PendingIntentEntityQueries>() with singleton {
-            instance<Database>().pendingIntentEntityQueries
-        }
 
         //repositories
         bind<SubscriptionsRepository>() with singleton {
@@ -46,10 +42,6 @@ class DatabaseModule(
         }
         bind<NotificationsRepository>() with singleton {
             NotificationsRepository(instance(), instance(), instance())
-        }
-
-        bind<PendingIntentRepository>() with singleton {
-            PendingIntentRepository(instance(), instance(), instance())
         }
     }
 }

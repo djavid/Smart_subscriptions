@@ -1,40 +1,50 @@
 package com.djavid.smartsubs.notification
 
 import com.djavid.smartsubs.db.NotificationsRepository
-import com.djavid.smartsubs.db.PendingIntentRepository
 import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.models.Notification
+import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.utils.getFirstPeriodAfterNow
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.joda.time.DateTime
 import org.joda.time.LocalTime
 
 class NotificationPresenter(
     private val view: NotificationContract.View,
     private val repository: NotificationsRepository,
     private val subRepository: SubscriptionsRepository,
-    private val intentRepository: PendingIntentRepository,
     private val alarmNotifier: AlarmNotifier,
     coroutineScope: CoroutineScope
 ) : NotificationContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var model: Notification
+    private var subModel: SubscriptionDao? = null
     private var editMode = false
-    private var timeChosen = false
+    private var chosenTime: LocalTime? = null
     private var daysInput = 1L
 
     override fun init(subscriptionId: Long, id: Long?) {
         view.init(this)
 
         launch {
-            model = Notification(0, subscriptionId, false, -1, LocalTime(), false)
+            subModel = subRepository.getSubById(subscriptionId)
 
-            if (id != null) {
-                repository.getNotificationById(id)?.let { model = it }
-                setEditMode()
+            subModel?.let { sub ->
+                model = Notification(
+                    0, subscriptionId, false, -1,
+                    DateTime(), false, sub.title
+                )
+
+                if (id != null) {
+                    repository.getNotificationById(id)?.let { model = it }
+                    setEditMode()
+                }
+
+                fillForm()
             }
-
-            fillForm()
         }
     }
 
@@ -55,19 +65,20 @@ class NotificationPresenter(
             view.setRepeatButtonSelected(true)
         }
 
-        if (timeChosen) {
-            view.setTimeText(model.time.toString("HH:mm"))
+        chosenTime?.let {
+            view.setTimeText(it.toString("HH:mm"))
             view.setTimeBtnSelected(true)
         }
     }
 
     private fun setEditMode() {
         editMode = true
-        timeChosen = true
 
         if (model.daysBefore > 1) {
             daysInput = model.daysBefore
         }
+
+        chosenTime = model.atDateTime.toLocalTime()
 
         view.showDeleteBtn(true)
         view.setSubmitButtonState(model.isActive)
@@ -75,13 +86,16 @@ class NotificationPresenter(
 
     override fun onSubmitClicked() {
         launch {
-            if (editMode && !model.isActive) {
-                activateNotification()
-            } else {
-                if (validateForm()) {
+            if (validateForm()) {
+                if (editMode && !model.isActive) {
+                    activateNotification()
+                } else {
                     saveNotification()
-                    scheduleNotification()
                 }
+
+                view.notifyToRefresh()
+                alarmNotifier.setAlarm(model)
+                view.finish()
             }
         }
     }
@@ -97,27 +111,13 @@ class NotificationPresenter(
     private suspend fun activateNotification() {
         model = model.copy(isActive = true)
         repository.editNotification(model)
-        view.setSubmitButtonState(true)
-        view.notifyToRefresh()
-    }
-
-    private suspend fun scheduleNotification() { //todo after changing sub title, notif's title stays unchanged
-        val sub = subRepository.getSubById(model.subId)
-
-        if (sub?.paymentDate != null) {
-            val nextPaymentDate = sub.paymentDate.getFirstPeriodAfterNow(sub.period)
-            val notifTime = nextPaymentDate.minusDays(model.daysBefore.toInt()).toDateTime(model.time)
-
-            alarmNotifier.scheduleNotification(model.id, sub.title, model.daysBefore, notifTime.millis)
-        }
-
-        view.notifyToRefresh()
-        view.finish()
     }
 
     override fun onDeleteClicked() {
         launch {
+            alarmNotifier.cancelAlarm(model.id)
             repository.deleteNotificationById(model.id)
+
             view.notifyToRefresh()
             view.finish()
         }
@@ -126,7 +126,7 @@ class NotificationPresenter(
     private fun validateForm(): Boolean {
         var valid = true
 
-        if (!timeChosen) {
+        if (chosenTime == null) {
             //todo try to add shake animation
             view.showTimeBtnError(true)
             view.setTimeBtnSelected(true)
@@ -172,20 +172,28 @@ class NotificationPresenter(
     }
 
     private fun selectDayRadio() {
-        model = model.copy(daysBefore = 0)
-        view.setDaysInputSelected(false)
-        view.setDayRadioSelected(true)
-        view.setDaysRadioSelected(false)
-        view.clearFocus()
-        view.hideKeyboard()
-        view.setDaysInputError(false)
+        launch {
+            model = model.copy(daysBefore = 0)
+            calculateDateTime()
+
+            view.setDaysInputSelected(false)
+            view.setDayRadioSelected(true)
+            view.setDaysRadioSelected(false)
+            view.clearFocus()
+            view.hideKeyboard()
+            view.setDaysInputError(false)
+        }
     }
 
     private fun selectDaysRadio() {
-        model = model.copy(daysBefore = daysInput)
-        view.setDaysInputSelected(true)
-        view.setDayRadioSelected(false)
-        view.setDaysRadioSelected(true)
+        launch {
+            model = model.copy(daysBefore = daysInput)
+            calculateDateTime()
+
+            view.setDaysInputSelected(true)
+            view.setDayRadioSelected(false)
+            view.setDaysRadioSelected(true)
+        }
     }
 
     override fun onDaysInputChanged(input: String?) {
@@ -211,11 +219,27 @@ class NotificationPresenter(
     }
 
     override fun onTimeSet(time: LocalTime) {
-        timeChosen = true
-        model = model.copy(time = time)
-        view.setTimeBtnSelected(true)
-        view.showTimeBtnError(false)
-        view.setTimeText(time.toString("HH:mm"))
+        launch {
+            chosenTime = time
+            calculateDateTime()
+
+            view.setTimeBtnSelected(true)
+            view.showTimeBtnError(false)
+            view.setTimeText(time.toString("HH:mm"))
+        }
+    }
+
+    private suspend fun calculateDateTime() {
+        withContext(Dispatchers.IO) {
+            val paymentDate = subModel?.paymentDate
+            val period = subModel?.period
+
+            if (paymentDate != null && period != null && chosenTime != null) {
+                val nextPaymentDate = paymentDate.getFirstPeriodAfterNow(period)
+                val atDateTime = nextPaymentDate.minusDays(model.daysBefore.toInt()).toDateTime(chosenTime)
+                model = model.copy(atDateTime = atDateTime)
+            }
+        }
     }
 
 }

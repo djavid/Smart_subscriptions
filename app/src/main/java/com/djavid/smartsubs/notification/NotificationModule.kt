@@ -18,9 +18,9 @@ class NotificationModule(fragment: Fragment) {
             NotificationView(instance(), instance())
         }
         bind<NotificationContract.Presenter>() with singleton {
-            NotificationPresenter(instance(), instance(), instance(), instance(), instance(), instance())
+            NotificationPresenter(
+                instance(), instance(), instance(), instance(), instance()
+            )
         }
-
-        bind<AlarmNotifier>() with singleton { AlarmNotifier(instance()) }
     }
 }
