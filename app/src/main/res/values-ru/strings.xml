@@ -108,4 +108,12 @@
     <string name="title_notif_expires_days_after">Подписка истекает через %d %s.\nНе забудьте оплатить или отменить.</string>
     <!--endregion-->
 
+    <!--region sort-->
+    <string name="title_sort">Сортировать</string>
+    <string name="title_title">Название</string>
+    <string name="title_by">по</string>
+    <string name="title_by_increase">возрастанию</string>
+    <string name="title_by_decrease">убыванию</string>
+    <!--endregion-->
+
 </resources>

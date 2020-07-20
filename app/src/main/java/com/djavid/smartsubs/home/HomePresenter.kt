@@ -7,6 +7,7 @@ import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.SubscriptionPrice
 import com.djavid.smartsubs.models.getPriceInPeriod
+import com.djavid.smartsubs.sort.SortContract
 import com.djavid.smartsubs.subscription.SubscriptionContract
 import com.djavid.smartsubs.utils.SharedRepository
 import kotlinx.coroutines.CoroutineScope
@@ -16,6 +17,7 @@ class HomePresenter(
     private val view: HomeContract.View,
     private val repository: SubscriptionsRepository,
     private val createNavigator: CreateContract.Navigator,
+    private val sortNavigator: SortContract.Navigator,
     private val subNavigator: SubscriptionContract.Navigator,
     private val modelMapper: SubscriptionModelMapper,
     private val sharedPrefs: SharedRepository,
@@ -60,6 +62,10 @@ class HomePresenter(
 
     override fun onAddSubPressed() {
         createNavigator.goToCreateScreen()
+    }
+
+    override fun onSortBtnPressed() {
+        sortNavigator.openSortScreen()
     }
 
     override fun onPeriodPressed() {
