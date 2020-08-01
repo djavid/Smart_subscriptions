@@ -16,6 +16,8 @@ import com.djavid.smartsubs.notification.NotificationModule
 import com.djavid.smartsubs.notification.NotificationNavigatorModule
 import com.djavid.smartsubs.worker.NotificationWorkerModule
 import com.djavid.smartsubs.root.RootModule
+import com.djavid.smartsubs.sort.SortModule
+import com.djavid.smartsubs.sort.SortNavigationModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
 import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
 import net.danlew.android.joda.JodaTimeAndroid
@@ -51,6 +53,7 @@ class Application : Application(), KodeinAware {
         import(HomeModule(fragment).kodein)
         import(CreateNavigatorModule().kodein)
         import(SubscriptionNavigatorModule().kodein)
+        import(SortNavigationModule().kodein)
     }
 
     fun createComponent(fragment: Fragment) = Kodein.lazy {
@@ -77,6 +80,12 @@ class Application : Application(), KodeinAware {
         extend(kodein)
         import(NotificationWorkerModule(context).kodein)
         import(AlarmNotifierModule().kodein)
+    }
+
+    fun sortComponent(fragment: Fragment) = Kodein.lazy {
+        extend(kodein)
+        import(SortModule(fragment).kodein)
+        import(SortNavigationModule().kodein)
     }
 
 }

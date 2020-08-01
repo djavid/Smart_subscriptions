@@ -27,35 +27,35 @@
     <string name="title_today">Сегодня</string>
 
     <plurals name="plural_every">
-        <item quantity="one">каждый</item>
+        <item quantity="one">каждый %d</item>
         <item quantity="few">каждые</item>
         <item quantity="many">каждые</item>
         <item quantity="other">каждые</item>
     </plurals>
 
     <plurals name="plural_day">
-        <item quantity="one">день</item>
+        <item quantity="one">день %d</item>
         <item quantity="few">дня</item>
         <item quantity="many">дней</item>
         <item quantity="other">дней</item>
     </plurals>
 
     <plurals name="plural_month">
-        <item quantity="one">месяц</item>
+        <item quantity="one">месяц %d</item>
         <item quantity="few">месяца</item>
         <item quantity="many">месяцев</item>
         <item quantity="other">месяцев</item>
     </plurals>
 
     <plurals name="plural_year">
-        <item quantity="one">год</item>
+        <item quantity="one">год %d</item>
         <item quantity="few">года</item>
         <item quantity="many">лет</item>
         <item quantity="other">лет</item>
     </plurals>
 
     <plurals name="plural_sub">
-        <item quantity="one">подписка</item>
+        <item quantity="one">подписка %d</item>
         <item quantity="few">подписки</item>
         <item quantity="many">подписок</item>
         <item quantity="other">подписок</item>
@@ -106,6 +106,22 @@
     <string name="title_notif_expires_today">Подписка истекает сегодня.\nНе забудьте оплатить или отменить.</string>
     <string name="title_notif_expires_tomorrow">Подписка истекает завтра.\nНе забудьте оплатить или отменить.</string>
     <string name="title_notif_expires_days_after">Подписка истекает через %d %s.\nНе забудьте оплатить или отменить.</string>
+    <!--endregion-->
+
+    <!--region sort-->
+    <string name="title_sort">Сортировать</string>
+    <string name="title_title">Название</string>
+    <string name="title_by">по</string>
+    <string name="title_by_increase">возрастанию</string>
+    <string name="title_by_decrease">убыванию</string>
+    <!--endregion-->
+
+    <!--region sortBy -->
+    <string name="sort_by_title">название</string>
+    <string name="sort_by_price">цена</string>
+    <string name="sort_by_days_left">дней до оплаты</string>
+    <string name="sort_by_creation_date">дата создания</string>
+
     <!--endregion-->
 
 </resources>

@@ -43,6 +43,7 @@ class HomeView(
 
         viewRoot.home_periodSelector.setOnClickListener { presenter.onPeriodPressed() }
         viewRoot.home_addBtn.setOnClickListener { presenter.onAddSubPressed() }
+        viewRoot.home_sortBtn.setOnClickListener { presenter.onSortBtnPressed() }
     }
 
     private fun setupBottomSheet() {

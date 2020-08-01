@@ -9,6 +9,7 @@ interface HomeContract {
     interface Presenter {
         fun init()
         fun reloadSubs()
+        fun onSortBtnPressed()
         fun onAddSubPressed()
         fun onPeriodPressed()
         fun onItemSwipedToLeft(position: Int)

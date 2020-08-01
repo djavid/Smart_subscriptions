@@ -4,6 +4,7 @@
     <dimen name="subscription_toolbar_height">87dp</dimen>
     <dimen name="subscription_toolbar_without_category_height">65dp</dimen>
     <dimen name="edittext_height">38dp</dimen>
+    <dimen name="button_height">38dp</dimen>
     <dimen name="submit_btn_height">44dp</dimen>
     <dimen name="create_form_bottom_space">77dp</dimen>
 </resources>
