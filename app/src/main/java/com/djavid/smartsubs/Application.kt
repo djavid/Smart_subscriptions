@@ -85,6 +85,7 @@ class Application : Application(), KodeinAware {
     fun sortComponent(fragment: Fragment) = Kodein.lazy {
         extend(kodein)
         import(SortModule(fragment).kodein)
+        import(SortNavigationModule().kodein)
     }
 
 }

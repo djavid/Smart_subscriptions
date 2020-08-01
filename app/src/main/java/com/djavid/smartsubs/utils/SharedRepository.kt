@@ -1,6 +1,8 @@
 package com.djavid.smartsubs.utils
 
 import android.content.SharedPreferences
+import com.djavid.smartsubs.models.SortBy
+import com.djavid.smartsubs.models.SortType
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import java.util.*
 
@@ -12,6 +14,8 @@ class SharedRepository(
         const val PREF_SELECTED_CURRENCY_CODE = "selected_currency_code"
         const val PREF_SELECTED_SUBS_PERIOD = "selected_subs_period"
         const val PREF_LAST_NOTIF_ID = "last_notif_id"
+        const val PREF_SELECTED_SORT_TYPE = "selected_sort_type"
+        const val PREF_SELECTED_SORT_BY = "selected_sort_by"
     }
 
     var selectedCurrency: Currency
@@ -31,6 +35,26 @@ class SharedRepository(
         }
         set(value) {
             repository.edit().putString(PREF_SELECTED_SUBS_PERIOD, value.name).apply()
+        }
+
+    var selectedSortType: SortType
+        get() {
+            return repository.getString(PREF_SELECTED_SORT_TYPE, null)?.let {
+                SortType.valueOf(it)
+            } ?: SortType.DESC
+        }
+        set(value) {
+            repository.edit().putString(PREF_SELECTED_SORT_TYPE, value.name).apply()
+        }
+
+    var selectedSortBy: SortBy
+        get() {
+            return repository.getString(PREF_SELECTED_SORT_BY, null)?.let {
+                SortBy.valueOf(it)
+            } ?: SortBy.CREATION_DATE
+        }
+        set(value) {
+            repository.edit().putString(PREF_SELECTED_SORT_BY, value.name).apply()
         }
 
     fun nextNotifId(): Int {

@@ -57,9 +57,10 @@ class SubsAdapter(
             holder.categorySpace.show(true)
         }
 
-        sub.progress?.let {
-            holder.periodLeft.show(true)
+        holder.progressBar.show(sub.progress != null)
+        holder.periodLeft.show(sub.progress != null)
 
+        sub.progress?.let {
             if (it.daysLeft == 0) {
                 holder.periodLeft.text = context.getString(R.string.title_today).decapitalize(context.getCurrentLocale())
             } else {
@@ -67,7 +68,6 @@ class SubsAdapter(
                 holder.periodLeft.text = context.getString(R.string.mask_days_until, it.daysLeft, pluralDays)
             }
 
-            holder.progressBar.show(true)
             holder.progressBar.progress = (it.progress * 100).toInt()
             holder.progressBar.setProgressColor(1 - it.progress)
         }

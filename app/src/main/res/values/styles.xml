@@ -14,6 +14,24 @@
         <item name="android:textSize">17sp</item>
     </style>
 
+    <style name="ButtonStyle">
+        <item name="android:height">@dimen/button_height</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:fontFamily">@font/helvetica_regular</item>
+        <item name="android:textColor">@color/colorNero</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ButtonStyleActive">
+        <item name="android:height">@dimen/button_height</item>
+        <item name="android:background">@drawable/bg_button_active</item>
+        <item name="android:fontFamily">@font/helvetica_medium</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="SubmitBtnActiveStyle" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:layout_height">@dimen/submit_btn_height</item>
         <item name="android:background">@drawable/bg_submit_btn_active</item>

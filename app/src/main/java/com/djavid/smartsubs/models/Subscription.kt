@@ -65,5 +65,4 @@ fun Subscription.getPriceInPeriod(pricePeriod: SubscriptionPeriodType): Double {
             SubscriptionPeriodType.YEAR -> priceForOne
         }
     }
-
 }

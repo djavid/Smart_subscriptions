@@ -6,6 +6,8 @@ const val ACTION_ALARM = "com.djavid.smartsubs.action.alarm"
 const val KEY_SUBSCRIPTION_ID = "com.djavid.smartsubs.key.subscription_id"
 const val KEY_IS_ROOT = "com.djavid.smartsubs.key.is_root"
 const val KEY_NOTIFICATION_ID = "com.djavid.smartsubs.key.notification_id"
+const val KEY_SORT_SCREEN_TYPE = "com.djavid.smartsubs.key.sort_screen_type"
+const val KEY_SORT_BY = "com.djavid.smartsubs.key.sort_by"
 
 const val SUBSCRIPTION_NOTIF_CHANNEL_ID = "com.djavid smartsubs.subscription_notif_channel_id"
 
