@@ -56,7 +56,7 @@
     </plurals>
 
     <plurals name="plural_sub">
-        <item quantity="one">подписка %d</item>
+        <item quantity="one">подписка</item>
         <item quantity="few">подписки</item>
         <item quantity="many">подписок</item>
         <item quantity="other">подписок</item>
