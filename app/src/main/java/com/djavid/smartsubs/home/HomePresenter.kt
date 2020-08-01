@@ -57,10 +57,15 @@ class HomePresenter(
             subs = applySortPreferences(subs)
 
             view.setSubsCount(subs.count())
-            view.showSubs(subs, sharedPrefs.selectedSubsPeriod)
 
             val price = SubscriptionPrice(calculateSubsPrice(), sharedPrefs.selectedCurrency)
             view.setSubsPrice(price)
+
+            view.showEmptyPlaceholder(subs.isEmpty())
+
+            if (subs.isNotEmpty()) {
+                view.showSubs(subs, sharedPrefs.selectedSubsPeriod)
+            }
         }
     }
 

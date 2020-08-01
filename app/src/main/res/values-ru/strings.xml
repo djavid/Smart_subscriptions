@@ -25,6 +25,7 @@
     <string name="title_year">год</string>
     <string name="add_sub">Добавить подписку</string>
     <string name="title_today">Сегодня</string>
+    <string name="title_no_subs">Нет подписок\nДобавьте первую подписку в правом углу.</string>
 
     <plurals name="plural_every">
         <item quantity="one">каждый</item>

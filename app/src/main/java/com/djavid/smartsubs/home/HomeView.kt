@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.utils.DECIMAL_FORMAT
+import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import java.text.DecimalFormat
@@ -44,6 +45,10 @@ class HomeView(
         viewRoot.home_periodSelector.setOnClickListener { presenter.onPeriodPressed() }
         viewRoot.home_addBtn.setOnClickListener { presenter.onAddSubPressed() }
         viewRoot.home_sortBtn.setOnClickListener { presenter.onSortBtnPressed() }
+    }
+
+    override fun showEmptyPlaceholder(show: Boolean) {
+        viewRoot.home_emptyPlaceholder.show(show)
     }
 
     private fun setupBottomSheet() {
