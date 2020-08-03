@@ -84,7 +84,7 @@ class NotificationWorker(
             val period = subModel?.period
 
             if (paymentDate != null && period != null) {
-                val atDateTime = paymentDate.getFirstPeriodAfterNow(period).addPeriod(period) //todo tests for this ext
+                val atDateTime = paymentDate.getFirstPeriodAfterNow(period).addPeriod(period)
                     .toDateTime(notif.atDateTime.toLocalTime())
                     .minusDays(notif.daysBefore.toInt())
 
@@ -107,6 +107,7 @@ class NotificationWorker(
     }
 
     private fun saveNotification(model: Notification) {
+        println("saveNotif: $model")
         runBlocking {
             notifRepository.editNotification(model)
         }
@@ -153,7 +154,7 @@ class NotificationWorker(
 
     private fun showSubExpiresNotification(model: Notification, subTitle: String, notifId: Int, content: String) {
         val builder = NotificationCompat.Builder(context, SUBSCRIPTION_NOTIF_CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setSmallIcon(R.mipmap.ic_launcher_round) //todo replace icon
             .setColor(ContextCompat.getColor(context, R.color.colorAccent))
             .setContentTitle(subTitle)
             .setContentText(content)
