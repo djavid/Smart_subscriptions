@@ -21,7 +21,6 @@ class AlarmNotifier(
         if (alarmManager != null) {
             val pendingIntent = getPendingIntentToFire(model.id)
 
-            println("setAlarm: $model")
             AlarmManagerCompat.setExactAndAllowWhileIdle(
                 alarmManager, AlarmManager.RTC_WAKEUP, model.atDateTime.millis, pendingIntent
             )
