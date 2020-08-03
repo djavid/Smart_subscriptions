@@ -12,8 +12,6 @@ import com.djavid.smartsubs.worker.NotificationWorker
 class AlarmBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        println("onReceive: context {$context}\nintent {$intent}")
-
         if (intent != null && context != null) {
             val id = intent.getLongExtra(KEY_NOTIFICATION_ID, -1)
             val data = Data.Builder().putLong(KEY_NOTIFICATION_ID, id).build()
