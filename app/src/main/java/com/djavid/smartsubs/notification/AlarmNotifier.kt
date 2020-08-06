@@ -31,13 +31,13 @@ class AlarmNotifier(
         val broadcastReceiverIntent = getBroadcastReceiverIntent(notifId)
 
         return PendingIntent.getBroadcast(
-            context, 0, broadcastReceiverIntent, PendingIntent.FLAG_ONE_SHOT
+            context, notifId.toInt(), broadcastReceiverIntent, PendingIntent.FLAG_ONE_SHOT
         )
     }
 
     private fun getBroadcastReceiverIntent(id: Long): Intent {
         return Intent(context, AlarmBroadcastReceiver::class.java).apply {
-            action = ACTION_ALARM
+            action = ACTION_ALARM + id
             putExtra(KEY_NOTIFICATION_ID, id)
         }
     }

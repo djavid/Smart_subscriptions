@@ -12,7 +12,6 @@ import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_sort.view.*
 
-
 class SortView(
     private val viewRoot: View,
     private val fragment: Fragment
