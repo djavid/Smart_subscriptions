@@ -45,18 +45,25 @@ class SubsAdapter(
     @ExperimentalStdlibApi
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sub = data[position]
-        val currencySymbol = context.getSymbolForCurrency(sub.price.currency)
-        val df = DecimalFormat(DECIMAL_FORMAT)
 
         holder.title.text = sub.title
+        holder.itemView.setOnClickListener { onClick(sub.id) }
+
+        setupPrice(holder, sub)
+        setupCategory(holder, sub)
+        setupProgress(holder, sub)
+    }
+
+    private fun setupPrice(holder: ViewHolder, sub: Subscription) {
+        val currencySymbol = context.getSymbolForCurrency(sub.price.currency)
+        val df = DecimalFormat(DECIMAL_FORMAT)
         val priceForPeriod = sub.getPriceInPeriod(pricePeriod)
+
         holder.price.text = context.getString(R.string.mask_price, df.format(priceForPeriod), currencySymbol)
+    }
 
-        sub.category?.let {
-            holder.category.text = it
-            holder.categorySpace.show(true)
-        }
-
+    @ExperimentalStdlibApi
+    private fun setupProgress(holder: ViewHolder, sub: Subscription) {
         holder.progressBar.show(sub.progress != null)
         holder.periodLeft.show(sub.progress != null)
 
@@ -71,8 +78,15 @@ class SubsAdapter(
             holder.progressBar.progress = (it.progress * 100).toInt()
             holder.progressBar.setProgressColor(1 - it.progress)
         }
+    }
 
-        holder.itemView.setOnClickListener { onClick(sub.id) }
+    private fun setupCategory(holder: ViewHolder, sub: Subscription) {
+        holder.category.show(sub.category != null)
+        holder.categorySpace.show(sub.category != null)
+        sub.category?.let {
+            holder.category.text = it
+            holder.categorySpace.show(true)
+        }
     }
 
     private fun ProgressBar.setProgressColor(leftProgress: Double) {

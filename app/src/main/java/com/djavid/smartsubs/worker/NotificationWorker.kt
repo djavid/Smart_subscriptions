@@ -45,50 +45,53 @@ class NotificationWorker(
 
     override fun doWork(): Result {
         val id = workerParams.inputData.getLong(KEY_NOTIFICATION_ID, -1)
+        if (id == -1L) return Result.failure()
 
-        return if (id > -1) {
-            loadNotification(id)
-            loadSub(model?.subId)
+        loadNotification(id)
+        loadSub(model?.subId)
 
-            return model?.let {
-                val content = generateNotifContent(it.daysBefore)
-                setupNotificationChannel()
-                showSubExpiresNotification(it, it.subTitle, sharedRepository.nextNotifId(), content)
+        return model?.let { model ->
+            subModel?.let { subModel ->
+                showNotif(model, subModel)
 
-                if (it.isRepeating) {
-                    val newModel = recalculateDateTime()
-
-                    if (newModel != null) {
-                        saveNotification(newModel)
-                        alarmNotifier.setAlarm(newModel)
-                    }
+                if (model.isRepeating) {
+                    planNextAlarm()
                 } else {
                     deleteNotification()
                 }
 
                 sendRefreshBroadcast()
                 Result.success()
-            } ?: kotlin.run {
-                Result.failure()
             }
-        } else {
-            Result.failure()
+        } ?: Result.failure()
+    }
+
+    private fun showNotif(model: Notification, subModel: SubscriptionDao) {
+        val content = generateNotifContent(model.daysBefore)
+        setupNotificationChannel()
+        showSubExpiresNotification(model, subModel.title, sharedRepository.nextNotifId(), content)
+    }
+
+    private fun planNextAlarm() {
+        val newModel = recalculateDateTime()
+
+        if (newModel != null) {
+            saveNotification(newModel)
+            alarmNotifier.setAlarm(newModel)
         }
     }
 
     private fun recalculateDateTime(): Notification? {
-        loadSub(model?.subId)
-
-        model?.let { notif ->
+        model?.let { model ->
             val paymentDate = subModel?.paymentDate
             val period = subModel?.period
 
             if (paymentDate != null && period != null) {
                 val atDateTime = paymentDate.getFirstPeriodAfterNow(period).addPeriod(period)
-                    .toDateTime(notif.atDateTime.toLocalTime())
-                    .minusDays(notif.daysBefore.toInt())
+                    .toDateTime(model.atDateTime.toLocalTime())
+                    .minusDays(model.daysBefore.toInt())
 
-                return model?.copy(atDateTime = atDateTime)
+                return model.copy(atDateTime = atDateTime)
             }
         }
 
@@ -107,7 +110,6 @@ class NotificationWorker(
     }
 
     private fun saveNotification(model: Notification) {
-        println("saveNotif: $model")
         runBlocking {
             notifRepository.editNotification(model)
         }
@@ -154,7 +156,7 @@ class NotificationWorker(
 
     private fun showSubExpiresNotification(model: Notification, subTitle: String, notifId: Int, content: String) {
         val builder = NotificationCompat.Builder(context, SUBSCRIPTION_NOTIF_CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher_round) //todo replace icon
+            .setSmallIcon(R.mipmap.ic_launcher_round)
             .setColor(ContextCompat.getColor(context, R.color.colorAccent))
             .setContentTitle(subTitle)
             .setContentText(content)

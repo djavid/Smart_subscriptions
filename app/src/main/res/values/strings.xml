@@ -2,6 +2,7 @@
 
     <!--region common-->
     <string name="app_name">Smart subs</string>
+    <string name="facebook_app_id" translatable="false">2681721465409338</string>
     <!--endregion-->
 
     <!--region common-->
