@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--region common-->
     <string name="app_name">Умные подписки</string>
@@ -28,35 +28,35 @@
     <string name="title_no_subs">Нет подписок\nДобавьте первую подписку в правом углу.</string>
 
     <plurals name="plural_every">
-        <item quantity="one">каждый</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">каждый</item>
         <item quantity="few">каждые</item>
         <item quantity="many">каждые</item>
         <item quantity="other">каждые</item>
     </plurals>
 
     <plurals name="plural_day">
-        <item quantity="one">день</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">день</item>
         <item quantity="few">дня</item>
         <item quantity="many">дней</item>
         <item quantity="other">дней</item>
     </plurals>
 
     <plurals name="plural_month">
-        <item quantity="one">месяц</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">месяц</item>
         <item quantity="few">месяца</item>
         <item quantity="many">месяцев</item>
         <item quantity="other">месяцев</item>
     </plurals>
 
     <plurals name="plural_year">
-        <item quantity="one">год</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">год</item>
         <item quantity="few">года</item>
         <item quantity="many">лет</item>
         <item quantity="other">лет</item>
     </plurals>
 
     <plurals name="plural_sub">
-        <item quantity="one">подписка</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">подписка</item>
         <item quantity="few">подписки</item>
         <item quantity="many">подписок</item>
         <item quantity="other">подписок</item>
@@ -91,6 +91,9 @@
     <string name="hint_time">время</string>
     <string name="title_one_time">один раз</string>
     <string name="title_every_time">каждый раз</string>
+    <string name="title_are_you_sure">Вы уверены?</string>
+    <string name="title_yes">Да</string>
+    <string name="title_no">Нет</string>
     <!--endregion-->
 
     <!--region notification-->
