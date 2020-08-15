@@ -20,10 +20,12 @@ import com.djavid.smartsubs.sort.SortModule
 import com.djavid.smartsubs.sort.SortNavigationModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
 import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
+import com.djavid.smartsubs.utils.FirebaseLogger
 import net.danlew.android.joda.JodaTimeAndroid
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 
 class Application : Application(), KodeinAware {
@@ -35,6 +37,8 @@ class Application : Application(), KodeinAware {
 
     override val kodein = Kodein.lazy {
         bind<Application>() with singleton { this@Application }
+        bind<Context>("appContext") with singleton { applicationContext }
+        bind<FirebaseLogger>() with singleton { FirebaseLogger(instance("appContext")) }
 
         import(CoroutineModule().kodein)
         import(DatabaseModule(applicationContext).kodein)

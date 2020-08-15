@@ -14,7 +14,9 @@ class SortModule(fragment: Fragment) {
         bind<Fragment>() with singleton { fragment }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
         bind<SortContract.Presenter>() with singleton {
-            SortPresenter(instance(), instance(), instance(), instance(), instance())
+            SortPresenter(
+                instance(), instance(), instance(), instance(), instance(), instance()
+            )
         }
         bind<SortContract.View>() with singleton { SortView(instance(), instance()) }
         bind<View>() with singleton { fragment.sort_fragment }

@@ -22,6 +22,7 @@ interface SubscriptionContract {
         fun setNextPayment(progress: SubscriptionProgress)
         fun setOverallSpent(spent: SubscriptionPrice)
         fun showNotifications(items: List<Notification>)
+        fun showDeletionPromptDialog()
     }
 
     interface Presenter {
@@ -31,6 +32,7 @@ interface SubscriptionContract {
         fun onCloseBtnClicked()
         fun onEditClicked()
         fun onDeleteClicked()
+        fun onDeletionPrompted()
         fun onAddNotification()
         fun onEditNotification(model: Notification)
         fun onNotifCheckChanged(notif: Notification, checked: Boolean)

@@ -6,6 +6,7 @@ import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.utils.DATE_TIME_FORMAT
+import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 import org.joda.time.LocalDate
@@ -15,6 +16,7 @@ class CreatePresenter(
     private val view: CreateContract.View,
     private val repository: SubscriptionsRepository,
     private val fragmentNavigator: CommonFragmentNavigator,
+    private val logger: FirebaseLogger,
     coroutineScope: CoroutineScope
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -73,10 +75,12 @@ class CreatePresenter(
     override fun onSubmitPressed() {
         if (validateForm()) {
             launch {
-                if (editMode)
+                if (editMode) {
                     repository.editSub(model)
-                else
+                } else {
                     repository.saveSub(model)
+                    logger.subCreated(model)
+                }
 
                 finish()
             }

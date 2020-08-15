@@ -11,6 +11,7 @@ import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPrice
 import com.djavid.smartsubs.notification.AlarmNotifier
 import com.djavid.smartsubs.notification.NotificationContract
+import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 
@@ -24,6 +25,7 @@ class SubscriptionPresenter(
     private val createNavigator: CreateContract.Navigator,
     private val notificationNavigator: NotificationContract.Navigator,
     private val alarmNotifier: AlarmNotifier,
+    private val logger: FirebaseLogger,
     coroutineScope: CoroutineScope
 ) : SubscriptionContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -109,8 +111,13 @@ class SubscriptionPresenter(
     }
 
     override fun onDeleteClicked() {
+        view.showDeletionPromptDialog()
+    }
+
+    override fun onDeletionPrompted() {
         launch {
             subscriptionsRepository.deleteSubById(subscription.id)
+            logger.subDelete(subscription)
             finish()
         }
     }

@@ -1,5 +1,7 @@
 package com.djavid.smartsubs.subscription
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.text.Spannable
 import android.text.SpannableString
@@ -53,6 +55,25 @@ class SubscriptionView(
     override fun showNotifications(items: List<Notification>) {
         viewRoot.sub_notifGroup.show(true)
         adapter.setNotifications(items)
+    }
+
+    override fun showDeletionPromptDialog() {
+        val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    presenter.onDeletionPrompted()
+                }
+                DialogInterface.BUTTON_NEGATIVE -> {
+                    dialog.dismiss()
+                }
+            }
+        }
+
+        val builder = AlertDialog.Builder(viewRoot.context)
+        builder.setMessage(viewRoot.context.getString(R.string.title_are_you_sure))
+            .setPositiveButton(viewRoot.context.getString(R.string.title_yes), dialogClickListener)
+            .setNegativeButton(viewRoot.context.getString(R.string.title_no), dialogClickListener)
+            .show()
     }
 
     override fun expandPanel(biggerToolbar: Boolean) {

@@ -8,6 +8,7 @@ import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.sort.SortContract
 import com.djavid.smartsubs.subscription.SubscriptionContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
+import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.SharedRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,6 +16,7 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.math.log
 
 class HomePresenter(
     private val view: HomeContract.View,
@@ -25,6 +27,7 @@ class HomePresenter(
     private val modelMapper: SubscriptionModelMapper,
     private val sharedPrefs: SharedRepository,
     private val pipeline: BasePipeline<Pair<String, String>>,
+    private val logger: FirebaseLogger,
     coroutineScope: CoroutineScope
 ) : HomeContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -96,11 +99,17 @@ class HomePresenter(
 
     override fun onItemClick(id: Long) {
         subNavigator.goToSubscription(id)
+
+        subs.find { it.id == id }?.let {
+            logger.subItemClicked(it)
+        }
     }
 
     override fun onItemSwipedToLeft(position: Int) {
         launch {
             val subToRemove = subs[position]
+            logger.subDelete(subToRemove)
+            logger.onSubItemSwipedLeft(position)
             repository.deleteSubById(subToRemove.id)
             reloadSubs()
         }
@@ -108,10 +117,12 @@ class HomePresenter(
 
     override fun onAddSubPressed() {
         createNavigator.goToCreateScreen()
+        logger.addSubPressed()
     }
 
     override fun onSortBtnPressed() {
         sortNavigator.openSortScreen()
+        logger.sortBtnClicked()
     }
 
     override fun onPeriodPressed() {
@@ -123,6 +134,7 @@ class HomePresenter(
         view.setSubsPeriod(sharedPrefs.selectedSubsPeriod)
         view.setSubsPrice(price)
         view.updateListPrices(sharedPrefs.selectedSubsPeriod)
+        logger.onPeriodChangeClicked(types[index])
     }
 
 }
