@@ -11,6 +11,7 @@
 
     <!--region masks-->
     <string name="mask_subs_count">%d %s</string>
+    <string name="mask_notifs_count">%d %s</string>
     <string name="mask_price">%s %s</string>
     <string name="mask_subscription_price">%s %s %s %s</string>
     <string name="mask_subscription_price_quantity">%s %s %s %d %s</string>
@@ -61,6 +62,13 @@
         <item quantity="many">subscriptions</item>
         <item quantity="other">subscriptions</item>
     </plurals>
+
+    <plurals name="plural_notification">
+        <item quantity="one">notification</item>
+        <item quantity="few">notifications</item>
+        <item quantity="many">notifications</item>
+        <item quantity="other">notifications</item>
+    </plurals>
     <!--endregion-->
 
     <!--region create-->
@@ -86,7 +94,7 @@
     <string name="title_save">Save</string>
     <string name="title_notify">Notify</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_days_before_payment_at">%d %s days before payment at %s</string>
+    <string name="title_days_before_payment_at">%d %s before payment at %s</string>
     <string name="title_in_payment_day_at">in payment day at %s</string>
     <string name="hint_time">time</string>
     <string name="title_one_time">one time</string>
@@ -110,6 +118,8 @@
     <string name="title_notif_expires_today">Subscription expires today.\nDon\'t forget to pay or cancel subscription.</string>
     <string name="title_notif_expires_tomorrow">Subscription expires tomorrow.\nDon\'t forget to pay or cancel subscription.</string>
     <string name="title_notif_expires_days_after">Subscription expires in %d %s.\nDon\'t forget to pay or cancel subscription.</string>
+
+    <string name="title_add_notif">Add notification</string>
     <!--endregion-->
 
     <!--region sort-->

@@ -14,6 +14,8 @@ import com.djavid.smartsubs.mappers.MappersModule
 import com.djavid.smartsubs.notification.AlarmNotifierModule
 import com.djavid.smartsubs.notification.NotificationModule
 import com.djavid.smartsubs.notification.NotificationNavigatorModule
+import com.djavid.smartsubs.notifications.NotificationsModule
+import com.djavid.smartsubs.notifications.NotificationsNavigatorModule
 import com.djavid.smartsubs.worker.NotificationWorkerModule
 import com.djavid.smartsubs.root.RootModule
 import com.djavid.smartsubs.sort.SortModule
@@ -69,14 +71,21 @@ class Application : Application(), KodeinAware {
         extend(kodein)
         import(SubscriptionModule(fragment).kodein)
         import(CreateNavigatorModule().kodein)
-        import(NotificationNavigatorModule().kodein)
         import(HomeNavigatorModule().kodein)
         import(AlarmNotifierModule().kodein)
+        import(NotificationsNavigatorModule().kodein)
     }
 
     fun notificationComponent(fragment: Fragment) = Kodein.lazy {
         extend(kodein)
         import(NotificationModule(fragment).kodein)
+        import(AlarmNotifierModule().kodein)
+    }
+
+    fun notificationsComponent(fragment: Fragment) = Kodein.lazy {
+        extend(kodein)
+        import(NotificationNavigatorModule().kodein)
+        import(NotificationsModule(fragment).kodein)
         import(AlarmNotifierModule().kodein)
     }
 

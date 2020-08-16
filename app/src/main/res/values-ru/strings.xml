@@ -11,6 +11,7 @@
 
     <!--region masks-->
     <string name="mask_subs_count">%d %s</string>
+    <string name="mask_notifs_count">%d %s</string>
     <string name="mask_price">%s %s</string>
     <string name="mask_subscription_price">%s %s %s %s</string>
     <string name="mask_subscription_price_quantity">%s %s %s %d %s</string>
@@ -61,6 +62,13 @@
         <item quantity="many">подписок</item>
         <item quantity="other">подписок</item>
     </plurals>
+
+    <plurals name="plural_notification">
+        <item quantity="one" tools:ignore="ImpliedQuantity">уведомление</item>
+        <item quantity="few">уведомления</item>
+        <item quantity="many">уведомлений</item>
+        <item quantity="other">уведомлений</item>
+    </plurals>
     <!--endregion-->
 
     <!--region create-->
@@ -110,6 +118,8 @@
     <string name="title_notif_expires_today">Подписка истекает сегодня.\nНе забудьте оплатить или отменить.</string>
     <string name="title_notif_expires_tomorrow">Подписка истекает завтра.\nНе забудьте оплатить или отменить.</string>
     <string name="title_notif_expires_days_after">Подписка истекает через %d %s.\nНе забудьте оплатить или отменить.</string>
+
+    <string name="title_add_notif">Добавить уведомление</string>
     <!--endregion-->
 
     <!--region sort-->

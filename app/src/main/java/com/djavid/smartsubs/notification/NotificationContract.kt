@@ -17,7 +17,6 @@ interface NotificationContract {
         fun showTimeBtnError(show: Boolean)
         fun showDeleteBtn(show: Boolean)
         fun finish()
-        fun notifyToRefresh()
         fun clearFocus()
         fun hideKeyboard()
         fun setDaysPlural(count: Long)

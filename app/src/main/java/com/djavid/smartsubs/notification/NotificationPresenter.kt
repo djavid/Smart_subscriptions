@@ -1,9 +1,11 @@
 package com.djavid.smartsubs.notification
 
+import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.db.NotificationsRepository
 import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.SubscriptionDao
+import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.getFirstPeriodAfterNow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +19,7 @@ class NotificationPresenter(
     private val repository: NotificationsRepository,
     private val subRepository: SubscriptionsRepository,
     private val alarmNotifier: AlarmNotifier,
+    private val pipeline: BasePipeline<Pair<String, String>>,
     coroutineScope: CoroutineScope
 ) : NotificationContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -93,7 +96,7 @@ class NotificationPresenter(
                     saveNotification()
                 }
 
-                view.notifyToRefresh()
+                pipeline.postValue(ACTION_REFRESH to "")
                 alarmNotifier.setAlarm(model)
                 view.finish()
             }
@@ -118,7 +121,7 @@ class NotificationPresenter(
             alarmNotifier.cancelAlarm(model.id)
             repository.deleteNotificationById(model.id)
 
-            view.notifyToRefresh()
+            pipeline.postValue(ACTION_REFRESH to "")
             view.finish()
         }
     }

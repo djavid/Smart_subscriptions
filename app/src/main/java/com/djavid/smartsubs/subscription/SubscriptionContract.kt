@@ -1,6 +1,5 @@
 package com.djavid.smartsubs.subscription
 
-import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPrice
 import com.djavid.smartsubs.models.SubscriptionProgress
@@ -21,8 +20,8 @@ interface SubscriptionContract {
         fun setComment(comment: String)
         fun setNextPayment(progress: SubscriptionProgress)
         fun setOverallSpent(spent: SubscriptionPrice)
-        fun showNotifications(items: List<Notification>)
         fun showDeletionPromptDialog()
+        fun setNotifsCount(notifs: Int)
     }
 
     interface Presenter {
@@ -33,9 +32,7 @@ interface SubscriptionContract {
         fun onEditClicked()
         fun onDeleteClicked()
         fun onDeletionPrompted()
-        fun onAddNotification()
-        fun onEditNotification(model: Notification)
-        fun onNotifCheckChanged(notif: Notification, checked: Boolean)
+        fun onNotifsClicked()
     }
 
     interface Navigator {
