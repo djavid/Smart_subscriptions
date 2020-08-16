@@ -19,7 +19,8 @@ class NotificationModule(fragment: Fragment) {
         }
         bind<NotificationContract.Presenter>() with singleton {
             NotificationPresenter(
-                instance(), instance(), instance(), instance(), instance(), instance()
+                instance(), instance(), instance(), instance(), instance(), instance(), instance(),
+                instance()
             )
         }
     }

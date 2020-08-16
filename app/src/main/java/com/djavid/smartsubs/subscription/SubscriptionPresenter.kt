@@ -93,6 +93,7 @@ class SubscriptionPresenter(
 
     override fun onNotifsClicked() {
         notificationsNavigator.showNotificationsDialog(id)
+        logger.onNotifsClicked()
     }
 
     private suspend fun loadSub(id: Long): Subscription? {
@@ -103,6 +104,7 @@ class SubscriptionPresenter(
 
     override fun onEditClicked() {
         createNavigator.goToCreateScreen(subscription.id)
+        logger.onSubEditClicked()
     }
 
     override fun onDeleteClicked() {

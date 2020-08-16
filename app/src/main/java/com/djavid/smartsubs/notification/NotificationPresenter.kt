@@ -3,9 +3,11 @@ package com.djavid.smartsubs.notification
 import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.db.NotificationsRepository
 import com.djavid.smartsubs.db.SubscriptionsRepository
+import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.utils.ACTION_REFRESH
+import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.getFirstPeriodAfterNow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +22,8 @@ class NotificationPresenter(
     private val subRepository: SubscriptionsRepository,
     private val alarmNotifier: AlarmNotifier,
     private val pipeline: BasePipeline<Pair<String, String>>,
+    private val logger: FirebaseLogger,
+    private val subMapper: SubscriptionModelMapper,
     coroutineScope: CoroutineScope
 ) : NotificationContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -106,22 +110,27 @@ class NotificationPresenter(
     private suspend fun saveNotification() {
         if (editMode) {
             repository.editNotification(model)
+            logger.onNotifEdited(model)
         } else {
             repository.saveNotification(model.copy(isActive = true))
+            logger.onNotifCreated(model)
         }
     }
 
     private suspend fun activateNotification() {
         model = model.copy(isActive = true)
         repository.editNotification(model)
+        logger.onActivateNotifClicked()
     }
 
     override fun onDeleteClicked() {
         launch {
             alarmNotifier.cancelAlarm(model.id)
             repository.deleteNotificationById(model.id)
-
             pipeline.postValue(ACTION_REFRESH to "")
+            subModel?.let {
+                logger.subDelete(subMapper.fromDao(it))
+            }
             view.finish()
         }
     }

@@ -20,7 +20,7 @@ class NotificationsModule(fragment: Fragment) {
         }
         bind<NotificationsContract.Presenter>() with singleton {
             NotificationsPresenter(
-                instance(), instance(), instance(), instance(), instance(), instance()
+                instance(), instance(), instance(), instance(), instance(), instance(), instance()
             )
         }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }

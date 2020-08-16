@@ -6,6 +6,7 @@ import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.notification.AlarmNotifier
 import com.djavid.smartsubs.notification.NotificationContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
+import com.djavid.smartsubs.utils.FirebaseLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -18,6 +19,7 @@ class NotificationsPresenter(
     private val alarmNotifier: AlarmNotifier,
     private val notificationsRepository: NotificationsRepository,
     private val pipeline: BasePipeline<Pair<String, String>>,
+    private val logger: FirebaseLogger,
     coroutineScope: CoroutineScope
 ) : NotificationsContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -57,10 +59,12 @@ class NotificationsPresenter(
 
     override fun onAddNotification() {
         notificationNavigator.showNotificationDialog(subId)
+        logger.onAddNotifClicked()
     }
 
     override fun onEditNotification(model: Notification) {
         notificationNavigator.showNotificationDialog(subId, model.id)
+        logger.onEditNotifClicked(model)
     }
 
     override fun onNotifCheckChanged(notif: Notification, checked: Boolean) {
@@ -73,6 +77,8 @@ class NotificationsPresenter(
                 } else {
                     alarmNotifier.cancelAlarm(notif.id)
                 }
+
+                logger.onNotifCheckClicked(notif, checked)
             }
         }
     }
