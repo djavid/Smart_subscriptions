@@ -37,7 +37,7 @@ class SubscriptionModelMapper {
             val periodsCount = paymentDate.getPeriodsCountBeforeNow(dao.period)
 
             if (periodsCount > 0) {
-                (periodsCount + 1) * dao.price // +1 because paymentDate assumes one more period before it
+                periodsCount * dao.price
             } else {
                 0.0
             }

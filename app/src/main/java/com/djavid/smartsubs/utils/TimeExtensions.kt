@@ -71,6 +71,6 @@ fun LocalDate.getPeriodsCountBeforeNow(period: SubscriptionPeriod): Int {
             count++
         }
 
-        count - 1
+        count
     }
 }

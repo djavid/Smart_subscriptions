@@ -55,6 +55,9 @@ class CreateView(
         create_periodQuantityInput.doAfterTextChanged {
             presenter.onPeriodQuantityInputChanged(it?.toString()?.toIntOrNull())
         }
+        create_trialPeriodCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            presenter.onTrialPeriodChecked(isChecked)
+        }
         create_categoryInput.doAfterTextChanged {
             presenter.onCategoryInputChanged(it?.toString())
         }
@@ -127,6 +130,18 @@ class CreateView(
         viewRoot.create_everyTextView.text = text
     }
 
+    override fun setPaymentDateTrialDescription() {
+        viewRoot.create_firstPayDescription.text = viewRoot.context.getString(R.string.desc_trial_pay)
+    }
+
+    override fun setPaymentDateDefaultDescription() {
+        viewRoot.create_firstPayDescription.text = viewRoot.context.getString(R.string.desc_first_pay)
+    }
+
+    override fun setTrialPeriodCheckbox(checked: Boolean) {
+        viewRoot.create_trialPeriodCheckbox.isChecked = checked
+    }
+
     override fun showToolbar(show: Boolean, duration: Long) {
         val fromAlpha = if (show) 0f else 1f
         val toAlpha = if (show) 1f else 0f
@@ -159,6 +174,10 @@ class CreateView(
 
     override fun showQuantityError(show: Boolean) {
         viewRoot.create_periodQuantityInput.setError(show)
+    }
+
+    override fun showPaymentDateError(show: Boolean) {
+        viewRoot.create_paymentDateInput.setError(show)
     }
 
     override fun setTitle(title: String) {

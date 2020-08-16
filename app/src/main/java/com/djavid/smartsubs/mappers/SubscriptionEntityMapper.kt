@@ -22,7 +22,8 @@ class SubscriptionEntityMapper {
             model.period.type.name,
             model.paymentDate?.toDateTimeAtStartOfDay(timeZone)?.millis,
             model.category,
-            model.comment
+            model.comment,
+            model.trialPaymentDate?.toDateTimeAtStartOfDay(timeZone)?.millis
         )
     }
 
@@ -37,7 +38,8 @@ class SubscriptionEntityMapper {
             ),
             entity.paymentDate?.let { LocalDate(it) },
             entity.category,
-            entity.comment
+            entity.comment,
+            entity.trialPaymentDate?.let { LocalDate(it) }
         )
     }
 

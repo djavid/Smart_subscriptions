@@ -80,11 +80,13 @@
     <string name="hint_title">Например Apple music</string>
     <string name="hint_price">0.00</string>
     <string name="hint_quantity">1</string>
-    <string name="hint_first_pay">например, сегодня</string>
+    <string name="hint_first_pay">например, завтра</string>
     <string name="title_every">каждый</string>
     <string name="desc_first_pay">Добавьте дату первого списания, чтобы видеть расходы, или дату следующего платежа, если не можете вспомнить (необязательно)</string>
+    <string name="desc_trial_pay">Добавьте дату окончания пробного периода</string>
     <string name="title_note">Примечание</string>
     <string name="title_category">Категория</string>
+    <string name="title_trial_period">Пробный период</string>
     <!--endregion-->
 
     <!--region subscription-->

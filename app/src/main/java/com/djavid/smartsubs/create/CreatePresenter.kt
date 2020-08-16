@@ -35,7 +35,7 @@ class CreatePresenter(
             model = SubscriptionDao(
                 0, "", 0.0, Currency.getInstance("RUB"),
                 SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
-                null, null, null
+                null, null, null, null
             )
 
             if (id != null) {
@@ -58,6 +58,7 @@ class CreatePresenter(
         model.paymentDate?.let {
             view.setDateInput(it.toString(DATE_TIME_FORMAT))
         }
+        view.setTrialPeriodCheckbox(model.trialPaymentDate != null)
         model.category?.let {
             view.setCategory(it)
         }
@@ -105,6 +106,13 @@ class CreatePresenter(
             isValid = false
         }
 
+        model.trialPaymentDate?.let {
+            if (it.isBefore(LocalDate.now())) {
+                view.showPaymentDateError(true)
+                isValid  = false
+            }
+        }
+
         return isValid
     }
 
@@ -134,8 +142,21 @@ class CreatePresenter(
         model = model.copy(period = model.period.copy(type = selectedPeriodType))
     }
 
+    override fun onTrialPeriodChecked(checked: Boolean) {
+        view.showPaymentDateError(false)
+
+        model = if (checked) {
+            view.setPaymentDateTrialDescription()
+            model.copy(trialPaymentDate = model.paymentDate)
+        } else {
+            view.setPaymentDateDefaultDescription()
+            model.copy(trialPaymentDate = null)
+        }
+    }
+
     override fun onPaymentDateInputChanged(input: LocalDate) {
         model = model.copy(paymentDate = input)
+        view.showPaymentDateError(false)
         view.setDateInput(input.toString(DATE_TIME_FORMAT))
     }
 
