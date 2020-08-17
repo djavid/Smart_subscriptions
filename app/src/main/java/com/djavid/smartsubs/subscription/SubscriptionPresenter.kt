@@ -88,7 +88,11 @@ class SubscriptionPresenter(
         subscription.overallSpent?.let {
             view.setOverallSpent(SubscriptionPrice(it, subscription.price.currency))
         }
-        view.setNotifsCount(notifsCount)
+
+        view.showNotifsSection(subscription.progress != null)
+        if (subscription.progress != null) {
+            view.setNotifsCount(notifsCount)
+        }
     }
 
     override fun onNotifsClicked() {

@@ -191,7 +191,9 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:padding="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/sub_spentDivider">
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/sub_spentDivider"
+                    tools:visibility="visible">
 
                     <ImageView
                         android:layout_width="24dp"

@@ -194,4 +194,8 @@ class SubscriptionView(
         viewRoot.sub_notifsBtn_title.text = viewRoot.context.getString(R.string.mask_notifs_count, notifs, plural)
     }
 
+    override fun showNotifsSection(show: Boolean) {
+        viewRoot.sub_notifsBtn.show(show)
+    }
+
 }

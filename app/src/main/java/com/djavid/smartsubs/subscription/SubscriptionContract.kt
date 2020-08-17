@@ -22,6 +22,7 @@ interface SubscriptionContract {
         fun setOverallSpent(spent: SubscriptionPrice)
         fun showDeletionPromptDialog()
         fun setNotifsCount(notifs: Int)
+        fun showNotifsSection(show: Boolean)
     }
 
     interface Presenter {
