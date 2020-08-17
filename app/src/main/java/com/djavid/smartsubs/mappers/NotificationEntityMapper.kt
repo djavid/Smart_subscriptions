@@ -13,8 +13,7 @@ class NotificationEntityMapper {
             model.isRepeating,
             model.daysBefore,
             model.atDateTime.millis,
-            model.isActive,
-            model.subTitle
+            model.isActive
         )
     }
 
@@ -25,8 +24,7 @@ class NotificationEntityMapper {
             entity.repeating,
             entity.daysBefore,
             DateTime(entity.atMillis),
-            entity.active,
-            entity.subTitle
+            entity.active
         )
     }
 

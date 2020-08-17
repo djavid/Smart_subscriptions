@@ -3,6 +3,7 @@ package com.djavid.smartsubs.models
 import android.content.Context
 import com.djavid.smartsubs.R
 import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import java.util.*
 
 data class Subscription(
@@ -13,7 +14,8 @@ data class Subscription(
     val progress: SubscriptionProgress?,
     val category: String?,
     val overallSpent: Double?,
-    val comment: String?
+    val comment: String?,
+    val trialPaymentDate: LocalDate?
 )
 
 data class SubscriptionPrice(

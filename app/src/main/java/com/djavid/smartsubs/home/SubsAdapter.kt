@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Space
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.Subscription
@@ -58,8 +59,13 @@ class SubsAdapter(
         val currencySymbol = context.getSymbolForCurrency(sub.price.currency)
         val df = DecimalFormat(DECIMAL_FORMAT)
         val priceForPeriod = sub.getPriceInPeriod(pricePeriod)
+        val isTrial = sub.trialPaymentDate != null
+        val priceColor = ContextCompat.getColor(context,
+            if (isTrial) R.color.colorPinkishOrange else R.color.colorNero
+        )
 
         holder.price.text = context.getString(R.string.mask_price, df.format(priceForPeriod), currencySymbol)
+        holder.price.setTextColor(priceColor)
     }
 
     @ExperimentalStdlibApi

@@ -8,6 +8,5 @@ data class Notification(
     val isRepeating: Boolean,
     val daysBefore: Long, // if 0 than show in payment date
     val atDateTime: DateTime,
-    val isActive: Boolean,
-    val subTitle: String //subscription title
+    val isActive: Boolean
 )

@@ -23,6 +23,7 @@ class CreatePresenter(
     private lateinit var model: SubscriptionDao
     private var editMode = false
     private val periodItems = SubscriptionPeriodType.values().toList()
+    private var isTrialSub: Boolean = false
 
     override fun init(id: Long?) {
         view.init(this)
@@ -144,6 +145,7 @@ class CreatePresenter(
 
     override fun onTrialPeriodChecked(checked: Boolean) {
         view.showPaymentDateError(false)
+        isTrialSub = checked
 
         model = if (checked) {
             view.setPaymentDateTrialDescription()
@@ -155,7 +157,7 @@ class CreatePresenter(
     }
 
     override fun onPaymentDateInputChanged(input: LocalDate) {
-        model = model.copy(paymentDate = input)
+        model = model.copy(paymentDate = input, trialPaymentDate = if (isTrialSub) input else null)
         view.showPaymentDateError(false)
         view.setDateInput(input.toString(DATE_TIME_FORMAT))
     }

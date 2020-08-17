@@ -19,7 +19,6 @@ import org.joda.time.LocalTime
 class NotificationPresenter(
     private val view: NotificationContract.View,
     private val repository: NotificationsRepository,
-    private val subRepository: SubscriptionsRepository,
     private val alarmNotifier: AlarmNotifier,
     private val pipeline: BasePipeline<Pair<String, String>>,
     private val logger: FirebaseLogger,
@@ -37,21 +36,17 @@ class NotificationPresenter(
         view.init(this)
 
         launch {
-            subModel = subRepository.getSubById(subscriptionId)
+            model = Notification(
+                0, subscriptionId, false, -1,
+                DateTime(), false
+            )
 
-            subModel?.let { sub ->
-                model = Notification(
-                    0, subscriptionId, false, -1,
-                    DateTime(), false, sub.title
-                )
-
-                if (id != null) {
-                    repository.getNotificationById(id)?.let { model = it }
-                    setEditMode()
-                }
-
-                fillForm()
+            if (id != null) {
+                repository.getNotificationById(id)?.let { model = it }
+                setEditMode()
             }
+
+            fillForm()
         }
     }
 

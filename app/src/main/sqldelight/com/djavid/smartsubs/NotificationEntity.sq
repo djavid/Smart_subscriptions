@@ -4,8 +4,7 @@ CREATE TABLE notificationEntity (
     repeating INTEGER AS Boolean NOT NULL,
     daysBefore INTEGER NOT NULL,
     atMillis INTEGER NOT NULL,
-    active INTEGER AS Boolean NOT NULL,
-    subTitle TEXT NOT NULL
+    active INTEGER AS Boolean NOT NULL
 );
 
 getNotifications:
@@ -17,8 +16,7 @@ INSERT OR REPLACE INTO notificationEntity(
     repeating,
     daysBefore,
     atMillis,
-    active,
-    subTitle
+    active
 )
 VALUES ?;
 
@@ -29,8 +27,7 @@ INSERT OR REPLACE INTO notificationEntity(
     repeating,
     daysBefore,
     atMillis,
-    active,
-    subTitle
+    active
 )
 VALUES ?;
 
