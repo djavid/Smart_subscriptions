@@ -16,13 +16,15 @@ import com.djavid.smartsubs.notification.NotificationModule
 import com.djavid.smartsubs.notification.NotificationNavigatorModule
 import com.djavid.smartsubs.notifications.NotificationsModule
 import com.djavid.smartsubs.notifications.NotificationsNavigatorModule
-import com.djavid.smartsubs.worker.NotificationWorkerModule
 import com.djavid.smartsubs.root.RootModule
 import com.djavid.smartsubs.sort.SortModule
 import com.djavid.smartsubs.sort.SortNavigationModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
 import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
 import com.djavid.smartsubs.utils.FirebaseLogger
+import com.djavid.smartsubs.worker.NotificationWorkerModule
+import com.yandex.metrica.YandexMetrica
+import com.yandex.metrica.YandexMetricaConfig
 import net.danlew.android.joda.JodaTimeAndroid
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -35,6 +37,14 @@ class Application : Application(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         JodaTimeAndroid.init(this)
+        initAppMetrica()
+    }
+
+    private fun initAppMetrica() {
+        val apiKey = applicationContext.getString(R.string.yandex_metrica_api_key)
+        val config = YandexMetricaConfig.newConfigBuilder(apiKey).build()
+        YandexMetrica.activate(applicationContext, config)
+        YandexMetrica.enableActivityAutoTracking(this)
     }
 
     override val kodein = Kodein.lazy {
