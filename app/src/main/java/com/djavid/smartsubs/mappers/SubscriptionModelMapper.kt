@@ -15,10 +15,23 @@ import java.util.*
 
 class SubscriptionModelMapper {
 
-    fun fromDao(dao: SubscriptionDao): Subscription {
+    private fun getProgressForTrialSub(dao: SubscriptionDao): SubscriptionProgress? {
+        return if (dao.trialPaymentDate != null) {
+            val dateNow = LocalDate.now()
 
-        val subscriptionProgress = dao.paymentDate?.let { paymentDate ->
-            val currentPeriodStart = paymentDate.getFirstPeriodBeforeNow(dao.period)
+            val daysLeft = Days.daysBetween(dateNow, dao.trialPaymentDate).days
+            val trialDaysAmount = Days.daysBetween(dao.creationDate.toLocalDate(), dao.trialPaymentDate).days
+            val progress = 1 - daysLeft / trialDaysAmount.toDouble()
+
+            return SubscriptionProgress(daysLeft, progress)
+        } else {
+            null
+        }
+    }
+
+    private fun getProgressForSub(dao: SubscriptionDao): SubscriptionProgress? {
+        return if (dao.paymentDate != null) {
+            val currentPeriodStart = dao.paymentDate.getFirstPeriodBeforeNow(dao.period)
             val currentPeriodEnd = currentPeriodStart.addPeriod(dao.period)
             val dateNow = LocalDate.now(DateTimeZone.forTimeZone(TimeZone.getDefault()))
 
@@ -31,6 +44,16 @@ class SubscriptionModelMapper {
 
                 SubscriptionProgress(daysLeft, progress)
             }
+        } else {
+            null
+        }
+    }
+
+    fun fromDao(dao: SubscriptionDao): Subscription {
+        val subscriptionProgress = when {
+            dao.trialPaymentDate != null -> getProgressForTrialSub(dao)
+            dao.paymentDate != null -> getProgressForSub(dao)
+            else -> null
         }
 
         val overallSpent = dao.paymentDate?.let { paymentDate ->

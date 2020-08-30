@@ -6,12 +6,23 @@ import com.djavid.smartsubs.models.SubscriptionDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.joda.time.LocalDate
 
 class SubscriptionsRepository(
     private val queries: SubscriptionEntityQueries,
     private val entityMapper: SubscriptionEntityMapper,
     coroutineScope: CoroutineScope
 ) : CoroutineScope by coroutineScope {
+
+    suspend fun updateTrialSubs(): List<SubscriptionDao> = withContext(Dispatchers.IO) {
+        getSubs().forEach {
+            if (it.trialPaymentDate != null && LocalDate.now().isAfter(it.trialPaymentDate)) {
+                val sub = it.copy(paymentDate = it.trialPaymentDate, trialPaymentDate = null)
+                queries.edit(entityMapper.toEntity(sub))
+            }
+        }
+        getSubs()
+    }
 
     suspend fun getSubs(): List<SubscriptionDao> = withContext(Dispatchers.IO) {
         queries.getSubscriptions().executeAsList().map {

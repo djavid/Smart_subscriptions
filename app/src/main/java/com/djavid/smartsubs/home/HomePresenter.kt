@@ -56,6 +56,7 @@ class HomePresenter(
 
     override fun reloadSubs() {
         launch {
+            repository.updateTrialSubs()
             subs = repository.getSubs().map { modelMapper.fromDao(it) }.toMutableList()
             subs = applySortPreferences(subs)
 
