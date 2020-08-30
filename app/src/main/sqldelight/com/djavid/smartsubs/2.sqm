@@ -13,6 +13,6 @@ CREATE TABLE notificationEntity (
 );
 
 INSERT INTO notificationEntity(id, subId, creationDate, repeating, daysBefore, atMillis, active)
-SELECT id, subId, strftime('%s','now'), repeating, daysBefore, atMillis, active FROM notificationEntity_old;
+SELECT id, subId, strftime('%s','now') || substr(strftime('%f','now'), 4), repeating, daysBefore, atMillis, active FROM notificationEntity_old;
 
 DROP TABLE IF EXISTS notificationEntity_old;
