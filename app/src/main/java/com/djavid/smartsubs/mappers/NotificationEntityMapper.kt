@@ -10,6 +10,7 @@ class NotificationEntityMapper {
         return NotificationEntity.Impl(
             model.id,
             model.subId,
+            model.creationDate.millis,
             model.isRepeating,
             model.daysBefore,
             model.atDateTime.millis,
@@ -21,6 +22,7 @@ class NotificationEntityMapper {
         return Notification(
             entity.id,
             entity.subId,
+            DateTime(entity.creationDate),
             entity.repeating,
             entity.daysBefore,
             DateTime(entity.atMillis),

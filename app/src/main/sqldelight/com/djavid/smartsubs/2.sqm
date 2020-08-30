@@ -1,1 +1,18 @@
 ALTER TABLE subscriptionEntity ADD COLUMN trialPaymentDate INTEGER;
+
+ALTER TABLE notificationEntity RENAME TO notificationEntity_old;
+
+CREATE TABLE notificationEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0,
+    subId INTEGER NOT NULL,
+    creationDate INTEGER NOT NULL,
+    repeating INTEGER NOT NULL,
+    daysBefore INTEGER NOT NULL,
+    atMillis INTEGER NOT NULL,
+    active INTEGER NOT NULL
+);
+
+INSERT INTO notificationEntity(id, subId, creationDate, repeating, daysBefore, atMillis, active)
+SELECT id, subId, strftime('%s','now'), repeating, daysBefore, atMillis, active FROM notificationEntity_old;
+
+DROP TABLE IF EXISTS notificationEntity_old;

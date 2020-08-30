@@ -2,7 +2,6 @@ package com.djavid.smartsubs.notification
 
 import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.db.NotificationsRepository
-import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.SubscriptionDao
@@ -37,8 +36,7 @@ class NotificationPresenter(
 
         launch {
             model = Notification(
-                0, subscriptionId, false, -1,
-                DateTime(), false
+                0, subscriptionId, DateTime(), false, -1, DateTime(), false
             )
 
             if (id != null) {

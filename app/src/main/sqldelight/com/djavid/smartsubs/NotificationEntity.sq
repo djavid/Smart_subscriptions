@@ -1,6 +1,7 @@
 CREATE TABLE notificationEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0,
     subId INTEGER NOT NULL,
+    creationDate INTEGER NOT NULL,
     repeating INTEGER AS Boolean NOT NULL,
     daysBefore INTEGER NOT NULL,
     atMillis INTEGER NOT NULL,
@@ -13,6 +14,7 @@ SELECT * FROM notificationEntity;
 insert:
 INSERT OR REPLACE INTO notificationEntity(
     subId,
+    creationDate,
     repeating,
     daysBefore,
     atMillis,
@@ -24,6 +26,7 @@ edit:
 INSERT OR REPLACE INTO notificationEntity(
     id,
     subId,
+    creationDate,
     repeating,
     daysBefore,
     atMillis,
