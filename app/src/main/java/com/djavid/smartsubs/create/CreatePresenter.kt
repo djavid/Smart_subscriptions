@@ -9,6 +9,7 @@ import com.djavid.smartsubs.utils.DATE_TIME_FORMAT
 import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
+import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.util.*
 
@@ -34,7 +35,7 @@ class CreatePresenter(
 
         launch {
             model = SubscriptionDao(
-                0, "", 0.0, Currency.getInstance("RUB"),
+                0, DateTime(),"", 0.0, Currency.getInstance("RUB"),
                 SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
                 null, null, null, null
             )

@@ -1,0 +1,22 @@
+ALTER TABLE subscriptionEntity RENAME TO subscriptionEntity_old;
+
+CREATE TABLE subscriptionEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0,
+    creationDate INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    price REAL NOT NULL,
+    currencyCode TEXT NOT NULL,
+    periodQuantity INTEGER NOT NULL,
+    period TEXT NOT NULL,
+    paymentDate INTEGER,
+    category TEXT,
+    comment TEXT,
+    trialPaymentDate INTEGER
+);
+
+INSERT INTO subscriptionEntity(id, creationDate, title, price, currencyCode, periodQuantity,
+period, paymentDate, category, comment, trialPaymentDate)
+SELECT id, strftime('%s','now') || substr(strftime('%f','now'), 4), title, price, currencyCode,
+periodQuantity, period, paymentDate, category, comment, trialPaymentDate FROM subscriptionEntity_old;
+
+DROP TABLE IF EXISTS subscriptionEntity_old;
