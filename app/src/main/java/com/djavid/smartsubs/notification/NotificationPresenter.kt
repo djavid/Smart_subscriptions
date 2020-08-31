@@ -113,7 +113,7 @@ class NotificationPresenter(
     private suspend fun activateNotification() {
         model = model.copy(isActive = true)
         repository.editNotification(model)
-        logger.onActivateNotifClicked()
+        logger.onActivateNotifClicked(model)
     }
 
     override fun onDeleteClicked() {

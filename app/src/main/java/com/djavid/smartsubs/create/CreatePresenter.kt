@@ -80,6 +80,7 @@ class CreatePresenter(
             launch {
                 if (editMode) {
                     repository.editSub(model)
+                    logger.subEdited(model)
                 } else {
                     repository.saveSub(model)
                     logger.subCreated(model)
