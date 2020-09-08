@@ -21,7 +21,12 @@ class SubscriptionModelMapper {
 
             val daysLeft = Days.daysBetween(dateNow, dao.trialPaymentDate).days
             val trialDaysAmount = Days.daysBetween(dao.creationDate.toLocalDate(), dao.trialPaymentDate).days
-            val progress = 1 - daysLeft / trialDaysAmount.toDouble()
+
+            val progress = if (trialDaysAmount != 0) {
+                1 - daysLeft / trialDaysAmount.toDouble()
+            } else {
+                1.0
+            }
 
             return SubscriptionProgress(daysLeft, progress)
         } else {

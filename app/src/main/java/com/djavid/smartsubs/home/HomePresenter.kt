@@ -16,7 +16,6 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.math.log
 
 class HomePresenter(
     private val view: HomeContract.View,
@@ -95,7 +94,7 @@ class HomePresenter(
 
     private fun calculateSubsPrice(): Double {
         val pricePeriod = sharedPrefs.selectedSubsPeriod
-        return subs.sumByDouble { it.getPriceInPeriod(pricePeriod) }
+        return subs.filter { it.trialPaymentDate == null }.sumByDouble { it.getPriceInPeriod(pricePeriod) }
     }
 
     override fun onItemClick(id: Long) {
