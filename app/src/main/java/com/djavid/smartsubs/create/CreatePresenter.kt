@@ -36,8 +36,8 @@ class CreatePresenter(
         launch {
             model = SubscriptionDao(
                 0, DateTime(),"", 0.0, Currency.getInstance("RUB"),
-                SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
-                null, null, null, null
+                SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), null,
+                null, null, null, false
             )
 
             if (id != null) {
@@ -79,7 +79,7 @@ class CreatePresenter(
         if (validateForm()) {
             launch {
                 if (editMode) {
-                    repository.editSub(model)
+                    repository.editSub(model.copy(isLoaded = false))
                     logger.subEdited(model)
                 } else {
                     repository.saveSub(model)

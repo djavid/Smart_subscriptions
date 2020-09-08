@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.work.Configuration
 import com.djavid.smartsubs.coroutines.CoroutineModule
 import com.djavid.smartsubs.create.CreateModule
 import com.djavid.smartsubs.create.CreateNavigatorModule
@@ -23,6 +24,7 @@ import com.djavid.smartsubs.subscription.SubscriptionModule
 import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
 import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.worker.NotificationWorkerModule
+import com.djavid.smartsubs.worker.UploaderWorker
 import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
 import net.danlew.android.joda.JodaTimeAndroid
@@ -32,12 +34,23 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 
-class Application : Application(), KodeinAware {
+class Application : Application(), Configuration.Provider, KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
         JodaTimeAndroid.init(this)
         initAppMetrica()
+        enqueueWorks()
+    }
+
+    override fun getWorkManagerConfiguration(): Configuration {
+        return Configuration.Builder()
+            .setMinimumLoggingLevel(android.util.Log.INFO)
+            .build()
+    }
+
+    private fun enqueueWorks() {
+        UploaderWorker.enqueueWork(this)
     }
 
     private fun initAppMetrica() {
@@ -109,6 +122,10 @@ class Application : Application(), KodeinAware {
         extend(kodein)
         import(SortModule(fragment).kodein)
         import(SortNavigationModule().kodein)
+    }
+
+    fun uploaderComponent(context: Context) = Kodein.lazy {
+        extend(kodein)
     }
 
 }
