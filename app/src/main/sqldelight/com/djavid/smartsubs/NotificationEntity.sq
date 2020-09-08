@@ -1,11 +1,11 @@
 CREATE TABLE notificationEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0,
     subId INTEGER NOT NULL,
+    creationDate INTEGER NOT NULL,
     repeating INTEGER AS Boolean NOT NULL,
     daysBefore INTEGER NOT NULL,
     atMillis INTEGER NOT NULL,
-    active INTEGER AS Boolean NOT NULL,
-    subTitle TEXT NOT NULL
+    active INTEGER AS Boolean NOT NULL
 );
 
 getNotifications:
@@ -14,11 +14,11 @@ SELECT * FROM notificationEntity;
 insert:
 INSERT OR REPLACE INTO notificationEntity(
     subId,
+    creationDate,
     repeating,
     daysBefore,
     atMillis,
-    active,
-    subTitle
+    active
 )
 VALUES ?;
 
@@ -26,11 +26,11 @@ edit:
 INSERT OR REPLACE INTO notificationEntity(
     id,
     subId,
+    creationDate,
     repeating,
     daysBefore,
     atMillis,
-    active,
-    subTitle
+    active
 )
 VALUES ?;
 

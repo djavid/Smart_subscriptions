@@ -1,5 +1,7 @@
 package com.djavid.smartsubs.subscription
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.text.Spannable
 import android.text.SpannableString
@@ -10,7 +12,6 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.utils.*
@@ -24,35 +25,41 @@ class SubscriptionView(
 
     private lateinit var bottomSheet: BottomSheetBehavior<FrameLayout>
     private lateinit var presenter: SubscriptionContract.Presenter
-    private lateinit var adapter: NotificationsAdapter
 
     override fun init(presenter: SubscriptionContract.Presenter) {
         this.presenter = presenter
         setupView()
         setupBottomSheet()
-        setupNotificationsAdapter()
     }
 
     private fun setupView() {
         viewRoot.sub_closeBtn.setOnClickListener { presenter.onCloseBtnClicked() }
         viewRoot.sub_editBtn.setOnClickListener { presenter.onEditClicked() }
         viewRoot.sub_deleteBtn.setOnClickListener { presenter.onDeleteClicked() }
-        viewRoot.sub_addNotif.setOnClickListener { presenter.onAddNotification() }
+        viewRoot.sub_notifsBtn.setOnClickListener { presenter.onNotifsClicked() }
     }
 
     private fun setupBottomSheet() {
         bottomSheet = BottomSheetBehavior.from(viewRoot.sub_bottomSheet)
     }
 
-    private fun setupNotificationsAdapter() {
-        adapter = NotificationsAdapter(viewRoot.context, presenter::onEditNotification, presenter::onNotifCheckChanged)
-        viewRoot.sub_notifRecycler.adapter = adapter
-        viewRoot.sub_notifRecycler.layoutManager = LinearLayoutManager(viewRoot.context)
-    }
+    override fun showDeletionPromptDialog() {
+        val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    presenter.onDeletionPrompted()
+                }
+                DialogInterface.BUTTON_NEGATIVE -> {
+                    dialog.dismiss()
+                }
+            }
+        }
 
-    override fun showNotifications(items: List<Notification>) {
-        viewRoot.sub_notifGroup.show(true)
-        adapter.setNotifications(items)
+        val builder = AlertDialog.Builder(viewRoot.context)
+        builder.setMessage(viewRoot.context.getString(R.string.title_are_you_sure))
+            .setPositiveButton(viewRoot.context.getString(R.string.title_yes), dialogClickListener)
+            .setNegativeButton(viewRoot.context.getString(R.string.title_no), dialogClickListener)
+            .show()
     }
 
     override fun expandPanel(biggerToolbar: Boolean) {
@@ -180,6 +187,15 @@ class SubscriptionView(
         spannable.setSpan(ForegroundColorSpan(colorPink), secondWhitespace + 1, length, spanFlag)
 
         return spannable
+    }
+
+    override fun setNotifsCount(notifs: Int) {
+        val plural = viewRoot.context.resources.getQuantityString(R.plurals.plural_notification, notifs)
+        viewRoot.sub_notifsBtn_title.text = viewRoot.context.getString(R.string.mask_notifs_count, notifs, plural)
+    }
+
+    override fun showNotifsSection(show: Boolean) {
+        viewRoot.sub_notifsBtn.show(show)
     }
 
 }

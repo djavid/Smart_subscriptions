@@ -15,10 +15,28 @@ import java.util.*
 
 class SubscriptionModelMapper {
 
-    fun fromDao(dao: SubscriptionDao): Subscription {
+    private fun getProgressForTrialSub(dao: SubscriptionDao): SubscriptionProgress? {
+        return if (dao.trialPaymentDate != null) {
+            val dateNow = LocalDate.now()
 
-        val subscriptionProgress = dao.paymentDate?.let { paymentDate ->
-            val currentPeriodStart = paymentDate.getFirstPeriodBeforeNow(dao.period)
+            val daysLeft = Days.daysBetween(dateNow, dao.trialPaymentDate).days
+            val trialDaysAmount = Days.daysBetween(dao.creationDate.toLocalDate(), dao.trialPaymentDate).days
+
+            val progress = if (trialDaysAmount != 0) {
+                1 - daysLeft / trialDaysAmount.toDouble()
+            } else {
+                1.0
+            }
+
+            return SubscriptionProgress(daysLeft, progress)
+        } else {
+            null
+        }
+    }
+
+    private fun getProgressForSub(dao: SubscriptionDao): SubscriptionProgress? {
+        return if (dao.paymentDate != null) {
+            val currentPeriodStart = dao.paymentDate.getFirstPeriodBeforeNow(dao.period)
             val currentPeriodEnd = currentPeriodStart.addPeriod(dao.period)
             val dateNow = LocalDate.now(DateTimeZone.forTimeZone(TimeZone.getDefault()))
 
@@ -31,13 +49,23 @@ class SubscriptionModelMapper {
 
                 SubscriptionProgress(daysLeft, progress)
             }
+        } else {
+            null
+        }
+    }
+
+    fun fromDao(dao: SubscriptionDao): Subscription {
+        val subscriptionProgress = when {
+            dao.trialPaymentDate != null -> getProgressForTrialSub(dao)
+            dao.paymentDate != null -> getProgressForSub(dao)
+            else -> null
         }
 
         val overallSpent = dao.paymentDate?.let { paymentDate ->
             val periodsCount = paymentDate.getPeriodsCountBeforeNow(dao.period)
 
             if (periodsCount > 0) {
-                (periodsCount + 1) * dao.price // +1 because paymentDate assumes one more period before it
+                periodsCount * dao.price
             } else {
                 0.0
             }
@@ -53,7 +81,8 @@ class SubscriptionModelMapper {
             subscriptionProgress,
             dao.category,
             overallSpent,
-            dao.comment
+            dao.comment,
+            dao.trialPaymentDate
         )
     }
 

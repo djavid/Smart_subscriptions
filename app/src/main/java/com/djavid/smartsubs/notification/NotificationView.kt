@@ -142,11 +142,6 @@ class NotificationView(
         (fragment as? BottomSheetDialogFragment)?.dismiss()
     }
 
-    override fun notifyToRefresh() {
-        val intent = Intent(ACTION_REFRESH)
-        LocalBroadcastManager.getInstance(viewRoot.context).sendBroadcast(intent)
-    }
-
     @Suppress("deprecation")
     override fun setSubmitButtonState(active: Boolean) = with(viewRoot) {
         val bgRes = if (active) R.drawable.bg_submit_btn_active else R.drawable.bg_submit_btn_inactive

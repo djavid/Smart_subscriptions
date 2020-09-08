@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--region common-->
     <string name="app_name">Умные подписки</string>
@@ -11,6 +11,7 @@
 
     <!--region masks-->
     <string name="mask_subs_count">%d %s</string>
+    <string name="mask_notifs_count">%d %s</string>
     <string name="mask_price">%s %s</string>
     <string name="mask_subscription_price">%s %s %s %s</string>
     <string name="mask_subscription_price_quantity">%s %s %s %d %s</string>
@@ -28,38 +29,45 @@
     <string name="title_no_subs">Нет подписок\nДобавьте первую подписку в правом углу.</string>
 
     <plurals name="plural_every">
-        <item quantity="one">каждый</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">каждый</item>
         <item quantity="few">каждые</item>
         <item quantity="many">каждые</item>
         <item quantity="other">каждые</item>
     </plurals>
 
     <plurals name="plural_day">
-        <item quantity="one">день</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">день</item>
         <item quantity="few">дня</item>
         <item quantity="many">дней</item>
         <item quantity="other">дней</item>
     </plurals>
 
     <plurals name="plural_month">
-        <item quantity="one">месяц</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">месяц</item>
         <item quantity="few">месяца</item>
         <item quantity="many">месяцев</item>
         <item quantity="other">месяцев</item>
     </plurals>
 
     <plurals name="plural_year">
-        <item quantity="one">год</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">год</item>
         <item quantity="few">года</item>
         <item quantity="many">лет</item>
         <item quantity="other">лет</item>
     </plurals>
 
     <plurals name="plural_sub">
-        <item quantity="one">подписка</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">подписка</item>
         <item quantity="few">подписки</item>
         <item quantity="many">подписок</item>
         <item quantity="other">подписок</item>
+    </plurals>
+
+    <plurals name="plural_notification">
+        <item quantity="one" tools:ignore="ImpliedQuantity">уведомление</item>
+        <item quantity="few">уведомления</item>
+        <item quantity="many">уведомлений</item>
+        <item quantity="other">уведомлений</item>
     </plurals>
     <!--endregion-->
 
@@ -72,11 +80,13 @@
     <string name="hint_title">Например Apple music</string>
     <string name="hint_price">0.00</string>
     <string name="hint_quantity">1</string>
-    <string name="hint_first_pay">например, сегодня</string>
+    <string name="hint_first_pay">например, завтра</string>
     <string name="title_every">каждый</string>
     <string name="desc_first_pay">Добавьте дату первого списания, чтобы видеть расходы, или дату следующего платежа, если не можете вспомнить (необязательно)</string>
+    <string name="desc_trial_pay">Добавьте дату окончания пробного периода</string>
     <string name="title_note">Примечание</string>
     <string name="title_category">Категория</string>
+    <string name="title_trial_period">Пробный период</string>
     <!--endregion-->
 
     <!--region subscription-->
@@ -91,6 +101,9 @@
     <string name="hint_time">время</string>
     <string name="title_one_time">один раз</string>
     <string name="title_every_time">каждый раз</string>
+    <string name="title_are_you_sure">Вы уверены?</string>
+    <string name="title_yes">Да</string>
+    <string name="title_no">Нет</string>
     <!--endregion-->
 
     <!--region notification-->
@@ -107,6 +120,8 @@
     <string name="title_notif_expires_today">Подписка истекает сегодня.\nНе забудьте оплатить или отменить.</string>
     <string name="title_notif_expires_tomorrow">Подписка истекает завтра.\nНе забудьте оплатить или отменить.</string>
     <string name="title_notif_expires_days_after">Подписка истекает через %d %s.\nНе забудьте оплатить или отменить.</string>
+
+    <string name="title_add_notif">Добавить уведомление</string>
     <!--endregion-->
 
     <!--region sort-->

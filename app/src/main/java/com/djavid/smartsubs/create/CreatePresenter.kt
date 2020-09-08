@@ -6,8 +6,10 @@ import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.utils.DATE_TIME_FORMAT
+import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
+import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.util.*
 
@@ -15,12 +17,14 @@ class CreatePresenter(
     private val view: CreateContract.View,
     private val repository: SubscriptionsRepository,
     private val fragmentNavigator: CommonFragmentNavigator,
+    private val logger: FirebaseLogger,
     coroutineScope: CoroutineScope
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var model: SubscriptionDao
     private var editMode = false
     private val periodItems = SubscriptionPeriodType.values().toList()
+    private var isTrialSub: Boolean = false
 
     override fun init(id: Long?) {
         view.init(this)
@@ -31,9 +35,9 @@ class CreatePresenter(
 
         launch {
             model = SubscriptionDao(
-                0, "", 0.0, Currency.getInstance("RUB"),
-                SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1),
-                null, null, null
+                0, DateTime(),"", 0.0, Currency.getInstance("RUB"),
+                SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), null,
+                null, null, null, false
             )
 
             if (id != null) {
@@ -56,6 +60,7 @@ class CreatePresenter(
         model.paymentDate?.let {
             view.setDateInput(it.toString(DATE_TIME_FORMAT))
         }
+        view.setTrialPeriodCheckbox(model.trialPaymentDate != null)
         model.category?.let {
             view.setCategory(it)
         }
@@ -73,10 +78,13 @@ class CreatePresenter(
     override fun onSubmitPressed() {
         if (validateForm()) {
             launch {
-                if (editMode)
-                    repository.editSub(model)
-                else
+                if (editMode) {
+                    repository.editSub(model.copy(isLoaded = false))
+                    logger.subEdited(model)
+                } else {
                     repository.saveSub(model)
+                    logger.subCreated(model)
+                }
 
                 finish()
             }
@@ -99,6 +107,13 @@ class CreatePresenter(
         if (model.period.quantity <= 0) {
             view.showQuantityError(true)
             isValid = false
+        }
+
+        model.trialPaymentDate?.let {
+            if (it.isBefore(LocalDate.now())) {
+                view.showPaymentDateError(true)
+                isValid  = false
+            }
         }
 
         return isValid
@@ -130,8 +145,22 @@ class CreatePresenter(
         model = model.copy(period = model.period.copy(type = selectedPeriodType))
     }
 
+    override fun onTrialPeriodChecked(checked: Boolean) {
+        view.showPaymentDateError(false)
+        isTrialSub = checked
+
+        model = if (checked) {
+            view.setPaymentDateTrialDescription()
+            model.copy(trialPaymentDate = model.paymentDate)
+        } else {
+            view.setPaymentDateDefaultDescription()
+            model.copy(trialPaymentDate = null)
+        }
+    }
+
     override fun onPaymentDateInputChanged(input: LocalDate) {
-        model = model.copy(paymentDate = input)
+        model = model.copy(paymentDate = input, trialPaymentDate = if (isTrialSub) input else null)
+        view.showPaymentDateError(false)
         view.setDateInput(input.toString(DATE_TIME_FORMAT))
     }
 

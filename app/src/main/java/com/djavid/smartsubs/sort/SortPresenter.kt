@@ -4,6 +4,7 @@ import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.models.SortBy
 import com.djavid.smartsubs.models.SortType
 import com.djavid.smartsubs.utils.ACTION_REFRESH
+import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.KEY_SORT_BY
 import com.djavid.smartsubs.utils.SharedRepository
 import kotlinx.coroutines.CoroutineScope
@@ -17,6 +18,7 @@ class SortPresenter(
     private val sharedRepository: SharedRepository,
     private val sortNavigator: SortContract.Navigator,
     private val pipeline: BasePipeline<Pair<String, String>>,
+    private val logger: FirebaseLogger,
     coroutineScope: CoroutineScope
 ) : SortContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -64,6 +66,7 @@ class SortPresenter(
     override fun onSortItemClicked(item: SortBy) {
         sharedRepository.selectedSortBy = item
         pipeline.postValue(Pair(KEY_SORT_BY, item.name))
+        logger.onSortByChanged(item)
         view.finish()
     }
 
@@ -73,15 +76,19 @@ class SortPresenter(
 
     override fun onAscSortClicked() {
         if (sharedRepository.selectedSortType != SortType.ASC) {
-            updateSortType(SortType.ASC)
+            val sortType = SortType.ASC
+            updateSortType(sortType)
             pipeline.postValue(Pair(ACTION_REFRESH, ""))
+            logger.onSortTypeChanged(sortType)
         }
     }
 
     override fun onDescSortClicked() {
         if (sharedRepository.selectedSortType != SortType.DESC) {
-            updateSortType(SortType.DESC)
+            val sortType = SortType.DESC
+            updateSortType(sortType)
             pipeline.postValue(Pair(ACTION_REFRESH, ""))
+            logger.onSortTypeChanged(sortType)
         }
     }
 

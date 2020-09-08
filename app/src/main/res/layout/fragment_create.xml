@@ -189,19 +189,40 @@
                     app:layout_constraintTop_toTopOf="@id/create_periodSelector"
                     app:srcCompat="@drawable/ic_expand_more_24px" />
 
+                <CheckBox
+                    android:id="@+id/create_trialPeriodCheckbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/create_periodQuantityInput" />
+
+                <TextView
+                    android:id="@+id/create_freePeriodTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/title_trial_period"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@id/create_trialPeriodCheckbox"
+                    app:layout_constraintStart_toEndOf="@id/create_trialPeriodCheckbox"
+                    app:layout_constraintTop_toTopOf="@id/create_trialPeriodCheckbox" />
+
                 <TextView
                     android:id="@+id/create_firstPayDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/helvetica_regular"
                     android:lineSpacingExtra="6sp"
                     android:text="@string/desc_first_pay"
                     android:textColor="@color/colorGray"
                     android:textSize="13sp"
-                    app:layout_constraintTop_toBottomOf="@id/create_periodQuantityInput" />
+                    app:layout_constraintTop_toBottomOf="@id/create_trialPeriodCheckbox" />
 
                 <com.djavid.smartsubs.common.view.ClosableEditText
                     android:id="@+id/create_paymentDateInput"

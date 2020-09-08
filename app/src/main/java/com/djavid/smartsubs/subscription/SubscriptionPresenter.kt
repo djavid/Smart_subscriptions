@@ -1,5 +1,6 @@
 package com.djavid.smartsubs.subscription
 
+import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CommonFragmentNavigator
 import com.djavid.smartsubs.create.CreateContract
 import com.djavid.smartsubs.db.NotificationsRepository
@@ -11,8 +12,13 @@ import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPrice
 import com.djavid.smartsubs.notification.AlarmNotifier
 import com.djavid.smartsubs.notification.NotificationContract
+import com.djavid.smartsubs.notifications.NotificationsContract
+import com.djavid.smartsubs.utils.ACTION_REFRESH
+import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
 
 class SubscriptionPresenter(
     private val view: SubscriptionContract.View,
@@ -22,11 +28,13 @@ class SubscriptionPresenter(
     private val notificationsRepository: NotificationsRepository,
     private val modelMapper: SubscriptionModelMapper,
     private val createNavigator: CreateContract.Navigator,
-    private val notificationNavigator: NotificationContract.Navigator,
-    private val alarmNotifier: AlarmNotifier,
+    private val notificationsNavigator: NotificationsContract.Navigator,
+    private val logger: FirebaseLogger,
+    private val pipeline: BasePipeline<Pair<String, String>>,
     coroutineScope: CoroutineScope
 ) : SubscriptionContract.Presenter, CoroutineScope by coroutineScope {
 
+    private lateinit var channel: ReceiveChannel<Pair<String, String>>
     private lateinit var subscription: Subscription
     private var id: Long = 0
     private var isRoot: Boolean = false
@@ -39,44 +47,32 @@ class SubscriptionPresenter(
         view.setBackgroundTransparent(false, SLIDE_DURATION)
         view.showToolbar(true, SLIDE_DURATION)
 
+        listenPipeline()
         reload()
     }
 
     override fun reload() {
         launch {
             subscription = loadSub(id) ?: return@launch
-            showContent()
+            val notifsCount = notificationsRepository.getNotificationsBySubId(id).count()
 
-            if (subscription.progress != null) {
-                val notifications = loadNotifications(id).sortedBy { it.daysBefore }
-                view.showNotifications(notifications)
-            }
+            showContent(notifsCount)
         }
     }
 
-    override fun onAddNotification() {
-        notificationNavigator.showNotificationDialog(subscription.id)
-    }
-
-    override fun onEditNotification(model: Notification) {
-        notificationNavigator.showNotificationDialog(subscription.id, model.id)
-    }
-
-    override fun onNotifCheckChanged(notif: Notification, checked: Boolean) {
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun listenPipeline() {
         launch {
-            notificationsRepository.getNotificationById(notif.id)?.let { notif ->
-                notificationsRepository.editNotification(notif.copy(isActive = checked))
-
-                if (checked) {
-                    alarmNotifier.setAlarm(notif)
-                } else {
-                    alarmNotifier.cancelAlarm(notif.id)
+            channel = pipeline.subscribe()
+            channel.consumeEach {
+                when (it.first) {
+                    ACTION_REFRESH -> reload()
                 }
             }
         }
     }
 
-    private fun showContent() {
+    private fun showContent(notifsCount: Int) {
         view.expandPanel(subscription.category != null)
         view.setTitle(subscription.title)
         subscription.category?.let {
@@ -92,6 +88,16 @@ class SubscriptionPresenter(
         subscription.overallSpent?.let {
             view.setOverallSpent(SubscriptionPrice(it, subscription.price.currency))
         }
+
+        view.showNotifsSection(subscription.progress != null)
+        if (subscription.progress != null) {
+            view.setNotifsCount(notifsCount)
+        }
+    }
+
+    override fun onNotifsClicked() {
+        notificationsNavigator.showNotificationsDialog(id)
+        logger.onNotifsClicked()
     }
 
     private suspend fun loadSub(id: Long): Subscription? {
@@ -100,17 +106,19 @@ class SubscriptionPresenter(
         }
     }
 
-    private suspend fun loadNotifications(id: Long): List<Notification> {
-        return notificationsRepository.getNotificationsBySubId(id)
-    }
-
     override fun onEditClicked() {
         createNavigator.goToCreateScreen(subscription.id)
+        logger.onSubEditClicked()
     }
 
     override fun onDeleteClicked() {
+        view.showDeletionPromptDialog()
+    }
+
+    override fun onDeletionPrompted() {
         launch {
             subscriptionsRepository.deleteSubById(subscription.id)
+            logger.subDelete(subscription)
             finish()
         }
     }

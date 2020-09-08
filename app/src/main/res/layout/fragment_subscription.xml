@@ -185,65 +185,42 @@
                     app:layout_constraintTop_toBottomOf="@id/sub_overallSpent"
                     tools:visibility="visible" />
 
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/sub_notifGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:constraint_referenced_ids="sub_notifIcon,sub_notifTitle,sub_addNotif,sub_notifRecycler,sub_notifDivider"
-                    tools:visibility="visible" />
-
-                <ImageView
-                    android:id="@+id/sub_notifIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="20dp"
-                    android:tint="@color/colorOrange"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/sub_spentDivider"
-                    app:srcCompat="@drawable/ic_notifications_24_px" />
-
-                <TextView
-                    android:id="@+id/sub_notifTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:fontFamily="@font/helvetica_regular"
-                    android:text="@string/title_notifications"
-                    android:textColor="@color/colorNero"
-                    android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="@id/sub_notifIcon"
-                    app:layout_constraintStart_toEndOf="@id/sub_notifIcon"
-                    app:layout_constraintTop_toTopOf="@id/sub_notifIcon" />
-
-                <ImageView
-                    android:id="@+id/sub_addNotif"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:tint="@color/colorOrange"
-                    app:layout_constraintBottom_toBottomOf="@id/sub_notifIcon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/sub_notifIcon"
-                    app:srcCompat="@drawable/ic_add_24px" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/sub_notifRecycler"
+                <FrameLayout
+                    android:id="@+id/sub_notifsBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/sub_notifIcon"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/notification_item" />
+                    android:background="?selectableItemBackground"
+                    android:padding="16dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/sub_spentDivider"
+                    tools:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:tint="@color/colorOrange"
+                        app:srcCompat="@drawable/ic_notifications_24_px" />
+
+                    <TextView
+                        android:id="@+id/sub_notifsBtn_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="44dp"
+                        android:fontFamily="@font/helvetica_regular"
+                        android:gravity="center_horizontal"
+                        android:text="@string/title_notifications"
+                        android:textColor="@color/colorNero"
+                        android:textSize="17sp" />
+
+                </FrameLayout>
 
                 <View
                     android:id="@+id/sub_notifDivider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
                     android:background="@color/colorWhisper"
-                    app:layout_constraintTop_toBottomOf="@id/sub_notifRecycler" />
+                    app:layout_constraintTop_toBottomOf="@id/sub_notifsBtn" />
 
                 <FrameLayout
                     android:id="@+id/sub_editBtn"

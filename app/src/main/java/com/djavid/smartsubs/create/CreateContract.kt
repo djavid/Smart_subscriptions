@@ -18,6 +18,7 @@ interface CreateContract {
 
         fun onPeriodQuantityInputChanged(input: Int?)
         fun onPeriodItemSelected(position: Int)
+        fun onTrialPeriodChecked(checked: Boolean)
 
         fun onPaymentDateInputPressed()
         fun onPaymentDateInputChanged(input: LocalDate)
@@ -46,12 +47,16 @@ interface CreateContract {
         fun showTitleError(show: Boolean)
         fun showPriceError(show: Boolean)
         fun showQuantityError(show: Boolean)
+        fun showPaymentDateError(show: Boolean)
         fun setTitle(title: String)
         fun setPrice(price: Double)
         fun setQuantity(quantity: Int)
         fun setCategory(category: String)
         fun setComment(note: String)
         fun switchTitlesToEditMode()
+        fun setPaymentDateTrialDescription()
+        fun setPaymentDateDefaultDescription()
+        fun setTrialPeriodCheckbox(checked: Boolean)
     }
 
     interface Navigator {
