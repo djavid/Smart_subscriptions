@@ -59,6 +59,9 @@ class HomeView(
         adapter = SubsAdapter(viewRoot.context, presenter::onItemClick)
         viewRoot.home_subsRecycler.layoutManager = LinearLayoutManager(viewRoot.context)
         viewRoot.home_subsRecycler.adapter = adapter
+        viewRoot.home_subsRecycler.setHasFixedSize(true)
+        viewRoot.home_subsRecycler.setItemViewCacheSize(20)
+
         itemTouchHelper.attachToRecyclerView(viewRoot.home_subsRecycler)
     }
 
