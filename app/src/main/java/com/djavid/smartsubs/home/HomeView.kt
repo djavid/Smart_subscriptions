@@ -62,7 +62,7 @@ class HomeView(
         viewRoot.home_subsRecycler.setHasFixedSize(true)
         viewRoot.home_subsRecycler.setItemViewCacheSize(20)
 
-        itemTouchHelper.attachToRecyclerView(viewRoot.home_subsRecycler)
+        //itemTouchHelper.attachToRecyclerView(viewRoot.home_subsRecycler)
     }
 
     override fun slidePanelToTop() {
