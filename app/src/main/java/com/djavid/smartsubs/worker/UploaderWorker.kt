@@ -22,7 +22,7 @@ class UploaderWorker(
     workerParams: WorkerParameters
 ) : CoroutineWorker(appContext, workerParams), KodeinAware {
 
-    override var kodein: Kodein = (appContext as Application).uploaderComponent(appContext)
+    override var kodein: Kodein = (appContext as Application).uploaderComponent()
 
     private val subsRepository by instance<SubscriptionsRepository>()
     private val entityMapper by instance<SubscriptionEntityMapper>()
