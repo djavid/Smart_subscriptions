@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/subMedia_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet"
+    tools:ignore="contentDescription">
+
+    <TextView
+        android:id="@+id/subMedia_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/helvetica_medium"
+        android:text="@string/title_subscribe_on"
+        android:textColor="@color/colorBlueyGrey"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/subMedia_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/helvetica_medium"
+        android:text="@string/title_telegram"
+        android:textColor="@color/colorBlueTg"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/subMedia_title"
+        app:layout_constraintStart_toEndOf="@id/subMedia_title"
+        app:layout_constraintTop_toTopOf="@id/subMedia_title" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/subMedia_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subMedia_title"
+        app:srcCompat="@drawable/ic_tg_icon" />
+
+    <TextView
+        android:id="@+id/subMedia_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:lineSpacingExtra="5sp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/helvetica_regular"
+        android:text="@string/tg_channel_description"
+        android:textAlignment="center"
+        android:textColor="@color/colorNero"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subMedia_icon" />
+
+    <TextView
+        android:id="@+id/subMedia_subscribeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="36dp"
+        android:fontFamily="@font/helvetica_bold"
+        android:text="@string/title_subscribe"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlueTg"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subMedia_description" />
+
+    <TextView
+        android:id="@+id/subMedia_noBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/helvetica_regular"
+        android:text="@string/title_no"
+        android:textColor="@color/colorBlueyGrey"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/subMedia_subscribeBtn"
+        app:layout_constraintEnd_toStartOf="@id/subMedia_subscribeBtn"
+        app:layout_constraintTop_toTopOf="@id/subMedia_subscribeBtn" />
+
+    <Space
+        android:id="@+id/sort_bottomSpace"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:layout_constraintTop_toBottomOf="@id/subMedia_subscribeBtn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

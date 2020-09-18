@@ -42,7 +42,6 @@ interface CreateContract {
         fun hideKeyboard()
         fun setDateInput(text: String)
         fun setCurrencySymbol(currency: Currency)
-        fun notifyToRefresh()
         fun setEveryPlural(quantity: Int)
         fun showTitleError(show: Boolean)
         fun showPriceError(show: Boolean)

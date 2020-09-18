@@ -137,7 +137,13 @@
     <string name="sort_by_price">цена</string>
     <string name="sort_by_days_left">дней до оплаты</string>
     <string name="sort_by_creation_date">дата создания</string>
+    <!--endregion-->
 
+    <!--region subscribeMedia -->
+    <string name="title_telegram">телеграм</string>
+    <string name="title_subscribe_on">Подпишись на наш</string>
+    <string name="tg_channel_description">Пишем об интересных подписках от разных компаний и их скрытых возможностях.</string>
+    <string name="title_subscribe">Подписаться</string>
     <!--endregion-->
 
 </resources>

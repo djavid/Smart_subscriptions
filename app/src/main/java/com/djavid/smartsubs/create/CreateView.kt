@@ -1,7 +1,6 @@
 package com.djavid.smartsubs.create
 
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.text.SpannableStringBuilder
 import android.view.View
 import android.widget.AdapterView
@@ -9,12 +8,10 @@ import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getSubPeriodString
 import com.djavid.smartsubs.models.getSymbolForCurrency
-import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.animateAlpha
 import com.djavid.smartsubs.utils.hideKeyboard
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -156,11 +153,6 @@ class CreateView(
 
     override fun hideKeyboard() {
         (viewRoot.context as? AppCompatActivity).hideKeyboard()
-    }
-
-    override fun notifyToRefresh() {
-        val intent = Intent(ACTION_REFRESH)
-        LocalBroadcastManager.getInstance(viewRoot.context).sendBroadcast(intent)
     }
 
     override fun showTitleError(show: Boolean) {

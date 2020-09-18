@@ -1,5 +1,6 @@
 package com.djavid.smartsubs.home
 
+import android.app.Activity
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -14,13 +15,17 @@ class HomeModule(fragment: Fragment) {
         bind<HomeContract.View>() with singleton {
             HomeView(instance())
         }
+        bind<Activity>() with singleton { fragment.requireActivity() }
         bind<View>() with singleton { fragment.homeFragment }
         bind<HomeContract.Presenter>() with singleton {
             HomePresenter(
                 instance(), instance(), instance(), instance(), instance(), instance(), instance(),
-                instance(), instance(), instance()
+                instance(), instance(), instance(), instance(), instance()
             )
         }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
+        bind<InAppReview>() with singleton {
+            InAppReview(instance(), instance(), instance())
+        }
     }
 }

@@ -140,4 +140,11 @@
     <string name="sort_by_creation_date">creation date</string>
     <!--endregion-->
 
+    <!--region subscribeMedia -->
+    <string name="title_telegram">telegram</string>
+    <string name="title_subscribe_on">Subscribe to our</string>
+    <string name="tg_channel_description">Пишем об интересных подписках от разных компаний и их скрытых возможностях.</string>
+    <string name="title_subscribe">Subscribe</string>
+    <!--endregion-->
+
 </resources>

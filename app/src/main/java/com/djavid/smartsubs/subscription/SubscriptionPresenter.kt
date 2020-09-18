@@ -138,7 +138,7 @@ class SubscriptionPresenter(
             view.showToolbar(false, SLIDE_DURATION)
             view.setBackgroundTransparent(true, SLIDE_DURATION)
             withContext(Dispatchers.Default) { delay(SLIDE_DURATION) }
-            view.notifyToRefresh()
+            pipeline.postValue(ACTION_REFRESH to "")
 
             fragmentNavigator.goBack()
 

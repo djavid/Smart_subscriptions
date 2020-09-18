@@ -97,11 +97,6 @@ class SubscriptionView(
         (viewRoot.context as? AppCompatActivity).hideKeyboard()
     }
 
-    override fun notifyToRefresh() {
-        val intent = Intent(ACTION_REFRESH)
-        LocalBroadcastManager.getInstance(viewRoot.context).sendBroadcast(intent)
-    }
-
     override fun setTitle(title: String) {
         viewRoot.sub_title.text = title
     }
