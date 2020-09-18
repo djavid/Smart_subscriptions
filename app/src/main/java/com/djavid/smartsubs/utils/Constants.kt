@@ -1,6 +1,7 @@
 package com.djavid.smartsubs.utils
 
 const val ACTION_REFRESH = "com.djavid.smartsubs.action.refresh"
+const val ACTION_SHOW_TG_DIALOG = "com.djavid.smartsubs.action.show_tg_dialog"
 const val ACTION_ALARM = "com.djavid.smartsubs.action.alarm"
 
 const val KEY_SUBSCRIPTION_ID = "com.djavid.smartsubs.key.subscription_id"

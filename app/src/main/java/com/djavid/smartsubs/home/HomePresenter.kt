@@ -6,15 +6,14 @@ import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.sort.SortContract
+import com.djavid.smartsubs.subscribe.SubscribeMediaContract
 import com.djavid.smartsubs.subscription.SubscriptionContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.SharedRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.launch
 import java.util.*
 
 class HomePresenter(
@@ -27,6 +26,7 @@ class HomePresenter(
     private val sharedPrefs: SharedRepository,
     private val pipeline: BasePipeline<Pair<String, String>>,
     private val logger: FirebaseLogger,
+    private val subscribeMediaNavigator: SubscribeMediaContract.Navigator,
     coroutineScope: CoroutineScope
 ) : HomeContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -38,7 +38,26 @@ class HomePresenter(
         view.slidePanelToTop()
         view.setSubsPeriod(sharedPrefs.selectedSubsPeriod)
 
+        if (sharedPrefs.firstTimeOpened) {
+            onFirstOpen()
+        }
+
         listenPipeline()
+    }
+
+    private fun onFirstOpen() {
+        sharedPrefs.firstTimeOpened = false
+    }
+
+    private fun showTgDialog() {
+        launch(Dispatchers.Default) {
+            delay(300)
+            subscribeMediaNavigator.showSubscribeDialog()
+        }
+    }
+
+    private fun showInAppReview() {
+        //todo
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -47,7 +66,15 @@ class HomePresenter(
             channel = pipeline.subscribe()
             channel.consumeEach {
                 when (it.first) {
-                    ACTION_REFRESH -> reloadSubs()
+                    ACTION_REFRESH -> {
+                        reloadSubs()
+
+                        if (sharedPrefs.tgDialogTimesShown == 0) {
+                            showTgDialog()
+                        } else {
+                            showInAppReview()
+                        }
+                    }
                 }
             }
         }

@@ -20,6 +20,8 @@ import com.djavid.smartsubs.notifications.NotificationsNavigatorModule
 import com.djavid.smartsubs.root.RootModule
 import com.djavid.smartsubs.sort.SortModule
 import com.djavid.smartsubs.sort.SortNavigationModule
+import com.djavid.smartsubs.subscribe.SubscribeMediaModule
+import com.djavid.smartsubs.subscribe.SubscribeMediaNavigationModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
 import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
 import com.djavid.smartsubs.utils.FirebaseLogger
@@ -83,6 +85,7 @@ class Application : Application(), Configuration.Provider, KodeinAware {
         import(CreateNavigatorModule().kodein)
         import(SubscriptionNavigatorModule().kodein)
         import(SortNavigationModule().kodein)
+        import(SubscribeMediaNavigationModule().kodein)
     }
 
     fun createComponent(fragment: Fragment) = Kodein.lazy {
@@ -126,6 +129,11 @@ class Application : Application(), Configuration.Provider, KodeinAware {
 
     fun uploaderComponent(context: Context) = Kodein.lazy {
         extend(kodein)
+    }
+
+    fun subscribeMediaComponent(fragment: Fragment) = Kodein.lazy {
+        extend(kodein)
+        import(SubscribeMediaModule(fragment).kodein)
     }
 
 }

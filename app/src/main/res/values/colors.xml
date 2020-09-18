@@ -19,6 +19,8 @@
     <color name="colorOrange">#FFA000</color>
     <color name="colorPinkishOrange">#ef6950</color>
     <color name="colorBlue">#4a90e2</color>
+    <color name="colorBlueTg">#1477be</color>
+    <color name="colorBlueyGrey">#8d979e</color>
     <!--endregion-->
 
     <!--region create-->

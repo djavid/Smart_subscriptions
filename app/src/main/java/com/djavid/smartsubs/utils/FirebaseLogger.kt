@@ -131,4 +131,16 @@ class FirebaseLogger(
         analytics.logEvent(Event.SUB_EDITED.value, bundle)
     }
 
+    fun subscribeTgShown() {
+        analytics.logEvent(Event.SUBSCRIBE_TG_DIALOG_SHOWN.value, Bundle())
+    }
+
+    fun subscribeTgClickedYes() {
+        analytics.logEvent(Event.SUBSCRIBE_TG_CLICKED_YES.value, Bundle())
+    }
+
+    fun subscribeTgClickedNo() {
+        analytics.logEvent(Event.SUBSCRIBE_TG_CLICKED_NO.value, Bundle())
+    }
+
 }

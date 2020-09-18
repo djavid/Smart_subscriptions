@@ -16,6 +16,9 @@ class SharedRepository(
         const val PREF_LAST_NOTIF_ID = "last_notif_id"
         const val PREF_SELECTED_SORT_TYPE = "selected_sort_type"
         const val PREF_SELECTED_SORT_BY = "selected_sort_by"
+        const val PREF_TG_DIALOG_TIMES_SHOWN = "tg_dialog_times_shown"
+        const val PREF_TG_DIALOG_YES_TIMES_CLICKED = "tg_dialog_yes_times_clicked"
+        const val PREF_FIRST_TIME_OPENED = "first_time_opened"
     }
 
     var selectedCurrency: Currency
@@ -65,5 +68,29 @@ class SharedRepository(
 
         return nextId
     }
+
+    var tgDialogTimesShown: Int
+        get() {
+            return repository.getInt(PREF_TG_DIALOG_TIMES_SHOWN, 0)
+        }
+        set(value) {
+            repository.edit().putInt(PREF_TG_DIALOG_TIMES_SHOWN, value).apply()
+        }
+
+    var tgDialogTimesYesClicked: Int
+        get() {
+            return repository.getInt(PREF_TG_DIALOG_YES_TIMES_CLICKED, 0)
+        }
+        set(value) {
+            repository.edit().putInt(PREF_TG_DIALOG_YES_TIMES_CLICKED, value).apply()
+        }
+
+    var firstTimeOpened: Boolean
+        get() {
+            return repository.getBoolean(PREF_FIRST_TIME_OPENED, true)
+        }
+        set(value) {
+            repository.edit().putBoolean(PREF_FIRST_TIME_OPENED, value).apply()
+        }
 
 }
