@@ -13,7 +13,6 @@ interface SubscriptionContract {
         fun showToolbar(show: Boolean, duration: Long)
         fun setBackgroundTransparent(transparent: Boolean, duration: Long)
         fun hideKeyboard()
-        fun notifyToRefresh()
         fun setTitle(title: String)
         fun setCategory(category: String)
         fun setPrice(period: SubscriptionPeriod, price: SubscriptionPrice)

@@ -1,10 +1,12 @@
 package com.djavid.smartsubs.create
 
+import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CommonFragmentNavigator
 import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
+import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.DATE_TIME_FORMAT
 import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.SLIDE_DURATION
@@ -18,6 +20,7 @@ class CreatePresenter(
     private val repository: SubscriptionsRepository,
     private val fragmentNavigator: CommonFragmentNavigator,
     private val logger: FirebaseLogger,
+    private val pipeline: BasePipeline<Pair<String, String>>,
     coroutineScope: CoroutineScope
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -187,7 +190,7 @@ class CreatePresenter(
             view.showToolbar(false, SLIDE_DURATION)
             view.setBackgroundTransparent(true, SLIDE_DURATION)
             withContext(Dispatchers.Default) { delay(SLIDE_DURATION) }
-            view.notifyToRefresh()
+            pipeline.postValue(ACTION_REFRESH to "")
             fragmentNavigator.goBack()
         }
     }

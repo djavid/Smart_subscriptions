@@ -17,6 +17,7 @@ class SharedRepository(
         const val PREF_SELECTED_SORT_TYPE = "selected_sort_type"
         const val PREF_SELECTED_SORT_BY = "selected_sort_by"
         const val PREF_TG_DIALOG_TIMES_SHOWN = "tg_dialog_times_shown"
+        const val PREF_IN_APP_REVIEW_TIMES_SHOWN = "tg_in_app_review_times_shown"
         const val PREF_TG_DIALOG_YES_TIMES_CLICKED = "tg_dialog_yes_times_clicked"
         const val PREF_FIRST_TIME_OPENED = "first_time_opened"
     }
@@ -75,6 +76,14 @@ class SharedRepository(
         }
         set(value) {
             repository.edit().putInt(PREF_TG_DIALOG_TIMES_SHOWN, value).apply()
+        }
+
+    var tgInAppReviewTimesShown: Int
+        get() {
+            return repository.getInt(PREF_IN_APP_REVIEW_TIMES_SHOWN, 0)
+        }
+        set(value) {
+            repository.edit().putInt(PREF_IN_APP_REVIEW_TIMES_SHOWN, value).apply()
         }
 
     var tgDialogTimesYesClicked: Int

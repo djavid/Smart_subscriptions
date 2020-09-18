@@ -27,6 +27,7 @@ class HomePresenter(
     private val pipeline: BasePipeline<Pair<String, String>>,
     private val logger: FirebaseLogger,
     private val subscribeMediaNavigator: SubscribeMediaContract.Navigator,
+    private val inAppReview: InAppReview,
     coroutineScope: CoroutineScope
 ) : HomeContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -57,7 +58,7 @@ class HomePresenter(
     }
 
     private fun showInAppReview() {
-        //todo
+        inAppReview.showInAppDialog()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -71,7 +72,7 @@ class HomePresenter(
 
                         if (sharedPrefs.tgDialogTimesShown == 0) {
                             showTgDialog()
-                        } else {
+                        } else if (sharedPrefs.tgInAppReviewTimesShown == 0) {
                             showInAppReview()
                         }
                     }
