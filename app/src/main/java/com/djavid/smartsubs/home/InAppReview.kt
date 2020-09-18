@@ -1,6 +1,7 @@
 package com.djavid.smartsubs.home
 
 import android.app.Activity
+import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.SharedRepository
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
@@ -8,7 +9,8 @@ import com.google.android.play.core.review.ReviewManagerFactory
 
 class InAppReview(
     private val activity: Activity,
-    private val sharedPrefs: SharedRepository
+    private val sharedPrefs: SharedRepository,
+    private val firebaseLogger: FirebaseLogger
 ) {
 
     fun showInAppDialog() {
@@ -17,6 +19,7 @@ class InAppReview(
             if (it != null) {
                 manager.launchReviewFlow(activity, it)
                 sharedPrefs.tgInAppReviewTimesShown++
+                firebaseLogger.inAppReviewShowTry()
             }
         }
     }

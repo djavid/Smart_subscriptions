@@ -25,7 +25,7 @@ class HomeModule(fragment: Fragment) {
         }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
         bind<InAppReview>() with singleton {
-            InAppReview(instance(), instance())
+            InAppReview(instance(), instance(), instance())
         }
     }
 }

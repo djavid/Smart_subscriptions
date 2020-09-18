@@ -33,4 +33,6 @@ enum class Event(val value: String) {
     SUBSCRIBE_TG_DIALOG_SHOWN("subscribe_tg_dialog_shown"),
     SUBSCRIBE_TG_CLICKED_YES("subscribe_tg_clicked_yes"),
     SUBSCRIBE_TG_CLICKED_NO("subscribe_tg_clicked_no"),
+
+    IN_APP_REVIEW_SHOW_TRY("in_app_review_show_try"),
 }

@@ -143,4 +143,8 @@ class FirebaseLogger(
         analytics.logEvent(Event.SUBSCRIBE_TG_CLICKED_NO.value, Bundle())
     }
 
+    fun inAppReviewShowTry() {
+        analytics.logEvent(Event.IN_APP_REVIEW_SHOW_TRY.value, Bundle())
+    }
+
 }
