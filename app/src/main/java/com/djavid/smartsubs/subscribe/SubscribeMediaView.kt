@@ -1,5 +1,6 @@
 package com.djavid.smartsubs.subscribe
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.view.View
@@ -12,6 +13,10 @@ class SubscribeMediaView(
     private val viewRoot: View,
     private val fragment: Fragment
 ) : SubscribeMediaContract.View {
+
+    companion object {
+        private const val TG_URL = "https://www.t.me/smartsubs"
+    }
 
     private lateinit var presenter: SubscribeMediaContract.Presenter
 
@@ -27,8 +32,17 @@ class SubscribeMediaView(
     }
 
     override fun openTgChannel() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=smartsubs"))
-        startActivity(viewRoot.context, intent, null)
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=smartsubs"))
+            startActivity(viewRoot.context, intent, null)
+        } catch (e: ActivityNotFoundException) {
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(TG_URL))
+                startActivity(viewRoot.context, intent, null)
+            } catch (e: ActivityNotFoundException) {
+                //no-op
+            }
+        }
     }
 
 }
