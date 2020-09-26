@@ -15,5 +15,6 @@ data class SubscriptionDao(
     val category: String?,
     val comment: String?,
     val trialPaymentDate: LocalDate?,
-    val isLoaded: Boolean
+    val isLoaded: Boolean,
+    val iconUrl: String?
 )

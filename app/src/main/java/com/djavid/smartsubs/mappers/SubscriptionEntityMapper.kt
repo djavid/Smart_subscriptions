@@ -26,7 +26,8 @@ class SubscriptionEntityMapper {
             model.category,
             model.comment,
             model.trialPaymentDate?.toDateTimeAtStartOfDay(timeZone)?.millis,
-            model.isLoaded
+            model.isLoaded,
+            model.iconUrl
         )
     }
 
@@ -44,7 +45,8 @@ class SubscriptionEntityMapper {
             entity.category,
             entity.comment,
             entity.trialPaymentDate?.let { LocalDate(it) },
-            entity.isLoaded
+            entity.isLoaded,
+            entity.iconUrl
         )
     }
 

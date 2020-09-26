@@ -96,4 +96,7 @@ dependencies {
 
     //yandex AppMetrica
     implementation 'com.yandex.android:mobmetricalib:3.15.0'
+
+    //coil
+    implementation 'io.coil-kt:coil:0.13.0'
 }

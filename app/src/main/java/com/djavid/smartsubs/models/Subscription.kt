@@ -15,7 +15,8 @@ data class Subscription(
     val category: String?,
     val overallSpent: Double?,
     val comment: String?,
-    val trialPaymentDate: LocalDate?
+    val trialPaymentDate: LocalDate?,
+    val iconUrl: String?
 )
 
 data class SubscriptionPrice(

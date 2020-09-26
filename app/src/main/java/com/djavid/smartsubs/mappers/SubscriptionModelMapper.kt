@@ -82,7 +82,8 @@ class SubscriptionModelMapper {
             dao.category,
             overallSpent,
             dao.comment,
-            dao.trialPaymentDate
+            dao.trialPaymentDate,
+            dao.iconUrl
         )
     }
 

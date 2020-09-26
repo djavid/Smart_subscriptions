@@ -40,7 +40,7 @@ class CreatePresenter(
             model = SubscriptionDao(
                 0, DateTime(),"", 0.0, Currency.getInstance("RUB"),
                 SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), null,
-                null, null, null, false
+                null, null, null, false, null
             )
 
             if (id != null) {

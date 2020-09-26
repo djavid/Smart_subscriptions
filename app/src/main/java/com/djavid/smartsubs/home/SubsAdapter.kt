@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Space
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
@@ -50,9 +54,28 @@ class SubsAdapter(
         holder.title.text = sub.title
         holder.itemView.setOnClickListener { onClick(sub.id) }
 
+        setupIcon(holder, sub)
         setupPrice(holder, sub)
         setupCategory(holder, sub)
         setupProgress(holder, sub)
+    }
+
+    private fun setupIcon(holder: ViewHolder, sub: Subscription) {
+        sub.iconUrl?.let {
+            holder.icon.load(it) {
+                crossfade(true)
+                transformations(CircleCropTransformation())
+            }
+            holder.icon.show(true)
+        } ?: run {
+            holder.icon.layoutParams = (holder.icon.layoutParams as ConstraintLayout.LayoutParams).apply {
+                marginStart = 0
+            }
+        }
+
+        holder.title.layoutParams = (holder.title.layoutParams as ConstraintLayout.LayoutParams).apply {
+            marginStart = if (sub.iconUrl == null) 0 else context.toPx(16)
+        }
     }
 
     private fun setupPrice(holder: ViewHolder, sub: Subscription) {
@@ -60,7 +83,8 @@ class SubsAdapter(
         val df = DecimalFormat(DECIMAL_FORMAT)
         val priceForPeriod = sub.getPriceInPeriod(pricePeriod)
         val isTrial = sub.trialPaymentDate != null
-        val priceColor = ContextCompat.getColor(context,
+        val priceColor = ContextCompat.getColor(
+            context,
             if (isTrial) R.color.colorPinkishOrange else R.color.colorNero
         )
 
@@ -110,6 +134,7 @@ class SubsAdapter(
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val icon: AppCompatImageView = itemView.sub_icon
         val title: TextView = itemView.sub_title
         val price: TextView = itemView.sub_price
         val progressBar: ProgressBar = itemView.sub_progressBar
