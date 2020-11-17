@@ -127,7 +127,7 @@ class Application : Application(), Configuration.Provider, KodeinAware {
         import(SortNavigationModule().kodein)
     }
 
-    fun uploaderComponent(context: Context) = Kodein.lazy {
+    fun uploaderComponent() = Kodein.lazy {
         extend(kodein)
     }
 

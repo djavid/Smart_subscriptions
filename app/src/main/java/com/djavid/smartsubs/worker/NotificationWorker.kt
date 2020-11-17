@@ -87,7 +87,7 @@ class NotificationWorker(
             val period = subModel?.period
 
             if (paymentDate != null && period != null) {
-                val atDateTime = paymentDate.getFirstPeriodAfterNow(period).addPeriod(period) //todo tests for this ext
+                val atDateTime = paymentDate.getFirstPeriodAfterNow(period).addPeriod(period)
                     .toDateTime(model.atDateTime.toLocalTime())
                     .minusDays(model.daysBefore.toInt())
 
