@@ -6,12 +6,15 @@ interface SubscribeMediaContract {
         fun init()
         fun onNoClicked()
         fun onSubscribeClicked()
+        fun tgAppOpenFailed()
+        fun tgBrowserOpenFailed()
     }
 
     interface View {
         fun init(presenter: Presenter)
         fun close()
-        fun openTgChannel()
+        fun openTgChannelInApp()
+        fun openTgChannelInBrowser(channelUrl: String)
     }
 
     interface Navigator {
