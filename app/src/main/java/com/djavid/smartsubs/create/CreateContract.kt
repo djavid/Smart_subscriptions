@@ -34,6 +34,7 @@ interface CreateContract {
         fun getPeriodString(period: SubscriptionPeriodType, quantity: Int): String
         fun setupSpinner(periods: List<String>)
         fun expandPanel()
+        fun enableInputs(enable: Boolean)
         fun openDatePicker(prevSelectedDate: LocalDate?)
         fun collapsePanel()
         fun showToolbar(show: Boolean, duration: Long)

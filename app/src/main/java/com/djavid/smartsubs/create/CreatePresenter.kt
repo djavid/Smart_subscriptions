@@ -32,6 +32,7 @@ class CreatePresenter(
     override fun init(id: Long?) {
         view.init(this)
 
+        view.enableInputs(false)
         view.setBackgroundTransparent(false, SLIDE_DURATION)
         view.showToolbar(true, SLIDE_DURATION)
         view.expandPanel()
@@ -52,6 +53,7 @@ class CreatePresenter(
             }
 
             updateSpinner()
+            view.enableInputs(true)
         }
     }
 

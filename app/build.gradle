@@ -21,6 +21,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue("bool", "FIREBASE_ANALYTICS_DEACTIVATED", "false")
+        }
+        debug {
+            resValue("bool", "FIREBASE_ANALYTICS_DEACTIVATED", "true")
         }
     }
 
