@@ -16,7 +16,9 @@ data class Subscription(
     val overallSpent: Double?,
     val comment: String?,
     val trialPaymentDate: LocalDate?
-)
+) {
+    fun isTrial() = trialPaymentDate != null
+}
 
 data class SubscriptionPrice(
     val value: Double,

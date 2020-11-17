@@ -121,7 +121,7 @@ class HomePresenter(
 
     private fun calculateSubsPrice(): Double {
         val pricePeriod = sharedPrefs.selectedSubsPeriod
-        return subs.filter { it.trialPaymentDate == null }.sumByDouble { it.getPriceInPeriod(pricePeriod) }
+        return subs.filter { !it.isTrial() }.sumByDouble { it.getPriceInPeriod(pricePeriod) }
     }
 
     override fun onItemClick(id: Long) {
