@@ -11,9 +11,11 @@ import com.djavid.smartsubs.subscription.SubscriptionContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.utils.SharedRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 import java.util.*
 
 class HomePresenter(
@@ -51,10 +53,7 @@ class HomePresenter(
     }
 
     private fun showTgDialog() {
-        launch(Dispatchers.Default) {
-            delay(300)
-            subscribeMediaNavigator.showSubscribeDialog()
-        }
+        subscribeMediaNavigator.showSubscribeDialog()
     }
 
     private fun showInAppReview() {
@@ -122,7 +121,7 @@ class HomePresenter(
 
     private fun calculateSubsPrice(): Double {
         val pricePeriod = sharedPrefs.selectedSubsPeriod
-        return subs.filter { it.trialPaymentDate == null }.sumByDouble { it.getPriceInPeriod(pricePeriod) }
+        return subs.filter { !it.isTrial() }.sumByDouble { it.getPriceInPeriod(pricePeriod) }
     }
 
     override fun onItemClick(id: Long) {

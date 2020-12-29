@@ -17,6 +17,7 @@ import com.djavid.smartsubs.models.getSymbolForCurrency
 import com.djavid.smartsubs.utils.*
 import kotlinx.android.synthetic.main.subscription_item.view.*
 import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 class SubsAdapter(
     private val context: Context,
@@ -57,14 +58,12 @@ class SubsAdapter(
 
     private fun setupPrice(holder: ViewHolder, sub: Subscription) {
         val currencySymbol = context.getSymbolForCurrency(sub.price.currency)
-        val df = DecimalFormat(DECIMAL_FORMAT)
-        val priceForPeriod = sub.getPriceInPeriod(pricePeriod)
-        val isTrial = sub.trialPaymentDate != null
+        val priceForPeriod = sub.getPriceInPeriod(pricePeriod).roundToInt().toString()
         val priceColor = ContextCompat.getColor(context,
-            if (isTrial) R.color.colorPinkishOrange else R.color.colorNero
+            if (sub.isTrial()) R.color.colorPinkishOrange else R.color.colorNero
         )
 
-        holder.price.text = context.getString(R.string.mask_price, df.format(priceForPeriod), currencySymbol)
+        holder.price.text = context.getString(R.string.mask_price, priceForPeriod, currencySymbol)
         holder.price.setTextColor(priceColor)
     }
 

@@ -15,7 +15,7 @@ class SubscribeMediaView(
 ) : SubscribeMediaContract.View {
 
     companion object {
-        private const val TG_URL = "https://www.t.me/smartsubs"
+        private const val TG_INTENT_URL = "tg://resolve?domain=smartsubs"
     }
 
     private lateinit var presenter: SubscribeMediaContract.Presenter
@@ -31,17 +31,21 @@ class SubscribeMediaView(
         (fragment as? BottomSheetDialogFragment)?.dismiss()
     }
 
-    override fun openTgChannel() {
+    override fun openTgChannelInApp() {
         try {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=smartsubs"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(TG_INTENT_URL))
             startActivity(viewRoot.context, intent, null)
         } catch (e: ActivityNotFoundException) {
-            try {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(TG_URL))
-                startActivity(viewRoot.context, intent, null)
-            } catch (e: ActivityNotFoundException) {
-                //no-op
-            }
+            presenter.tgAppOpenFailed()
+        }
+    }
+
+    override fun openTgChannelInBrowser(channelUrl: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(channelUrl))
+            startActivity(viewRoot.context, intent, null)
+        } catch (e: ActivityNotFoundException) {
+            presenter.tgBrowserOpenFailed()
         }
     }
 

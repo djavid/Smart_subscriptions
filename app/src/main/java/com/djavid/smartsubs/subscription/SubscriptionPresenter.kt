@@ -89,10 +89,12 @@ class SubscriptionPresenter(
             view.setOverallSpent(SubscriptionPrice(it, subscription.price.currency))
         }
 
-        view.showNotifsSection(subscription.progress != null)
-        if (subscription.progress != null) {
-            view.setNotifsCount(notifsCount)
-        }
+        //notifs
+        view.showNotifsSection(false) //too much bugs, better to make notifs through server
+//        view.showNotifsSection(subscription.progress != null)
+//        if (subscription.progress != null) {
+//            view.setNotifsCount(notifsCount)
+//        }
     }
 
     override fun onNotifsClicked() {

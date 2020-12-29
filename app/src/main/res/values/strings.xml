@@ -143,7 +143,7 @@
     <!--region subscribeMedia -->
     <string name="title_telegram">telegram</string>
     <string name="title_subscribe_on">Subscribe to our</string>
-    <string name="tg_channel_description">Пишем об интересных подписках от разных компаний и их скрытых возможностях.</string>
+    <string name="tg_channel_description">Here is our channel where we make reviews on subscriptions.</string>
     <string name="title_subscribe">Subscribe</string>
     <!--endregion-->
 

@@ -69,6 +69,18 @@ class CreateView(
         }
     }
 
+    override fun enableInputs(enable: Boolean) {
+        viewRoot.create_titleInput.isEnabled = enable
+        viewRoot.create_priceInput.isEnabled = enable
+        viewRoot.create_periodQuantityInput.isEnabled = enable
+        viewRoot.create_trialPeriodCheckbox.isEnabled = enable
+        viewRoot.create_paymentDateInput.isEnabled = enable
+        viewRoot.create_periodSelector.isEnabled = enable
+        viewRoot.create_categoryInput.isEnabled = enable
+        viewRoot.create_noteInput.isEnabled = enable
+        viewRoot.create_submitBtn.isEnabled = enable
+    }
+
     override fun openDatePicker(prevSelectedDate: LocalDate?) {
         val dateNow = LocalDate.now(DateTimeZone.forTimeZone(TimeZone.getDefault()))
         val selectedDate = prevSelectedDate ?: dateNow

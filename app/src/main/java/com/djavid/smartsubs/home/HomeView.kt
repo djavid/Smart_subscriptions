@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.*
-import com.djavid.smartsubs.utils.DECIMAL_FORMAT
 import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 class HomeView(
     private val viewRoot: View
@@ -88,9 +87,9 @@ class HomeView(
 
     override fun setSubsPrice(price: SubscriptionPrice) {
         val currencySymbol = viewRoot.context.getSymbolForCurrency(price.currency)
-        val df = DecimalFormat(DECIMAL_FORMAT)
+        val priceToShow = price.value.roundToInt().toString()
 
-        viewRoot.home_subsPrice.text = viewRoot.context.getString(R.string.mask_price, df.format(price.value), currencySymbol)
+        viewRoot.home_subsPrice.text = viewRoot.context.getString(R.string.mask_price, priceToShow, currencySymbol)
     }
 
     override fun setSubsPeriod(period: SubscriptionPeriodType) {

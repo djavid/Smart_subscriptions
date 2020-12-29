@@ -97,6 +97,7 @@
                     android:layout_marginEnd="16dp"
                     android:hint="@string/hint_title"
                     android:inputType="text"
+                    android:maxLength="30"
                     app:layout_constraintTop_toBottomOf="@id/create_titleTextView" />
 
                 <TextView
@@ -121,6 +122,7 @@
                     android:gravity="center"
                     android:hint="@string/hint_price"
                     android:inputType="numberDecimal"
+                    android:maxLength="15"
                     app:layout_constraintEnd_toStartOf="@id/create_currencySymbol"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/create_paymentTextView" />
@@ -162,6 +164,7 @@
                     android:gravity="center"
                     android:hint="@string/hint_quantity"
                     android:inputType="number"
+                    android:maxLength="4"
                     app:layout_constraintEnd_toStartOf="@id/create_periodSelector"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/create_everyTextView" />
@@ -259,6 +262,7 @@
                     android:layout_marginEnd="16dp"
                     android:hint="@string/title_category"
                     android:inputType="text"
+                    android:maxLength="30"
                     app:layout_constraintTop_toBottomOf="@id/create_noteTextView" />
 
                 <com.djavid.smartsubs.common.view.ClosableEditText

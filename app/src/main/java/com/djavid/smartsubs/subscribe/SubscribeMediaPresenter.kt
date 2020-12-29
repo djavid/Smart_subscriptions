@@ -9,6 +9,10 @@ class SubscribeMediaPresenter(
     private val firebaseLogger: FirebaseLogger
 ) : SubscribeMediaContract.Presenter {
 
+    companion object {
+        private const val TG_URL = "https://www.t.me/smartsubs"
+    }
+
     override fun init() {
         view.init(this)
         firebaseLogger.subscribeTgShown()
@@ -23,6 +27,15 @@ class SubscribeMediaPresenter(
     override fun onSubscribeClicked() {
         sharedPrefs.tgDialogTimesYesClicked++
         firebaseLogger.subscribeTgClickedYes()
-        view.openTgChannel()
+        view.openTgChannelInApp()
     }
+
+    override fun tgAppOpenFailed() {
+        view.openTgChannelInBrowser(TG_URL)
+    }
+
+    override fun tgBrowserOpenFailed() {
+        //no-op
+    }
+
 }

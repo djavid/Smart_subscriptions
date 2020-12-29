@@ -24,6 +24,12 @@ class CreatePresenter(
     coroutineScope: CoroutineScope
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
+    companion object {
+        private const val MAX_TITLE_LENGTH = 30
+        private const val MAX_PRICE_VALUE = 100000000
+        private const val MAX_PERIOD_QUANTITY_VALUE = 10000
+    }
+
     private lateinit var model: SubscriptionDao
     private var editMode = false
     private val periodItems = SubscriptionPeriodType.values().toList()
@@ -32,13 +38,14 @@ class CreatePresenter(
     override fun init(id: Long?) {
         view.init(this)
 
+        view.enableInputs(false)
         view.setBackgroundTransparent(false, SLIDE_DURATION)
         view.showToolbar(true, SLIDE_DURATION)
         view.expandPanel()
 
         launch {
             model = SubscriptionDao(
-                0, DateTime(),"", 0.0, Currency.getInstance("RUB"),
+                0, DateTime(), "", 0.0, Currency.getInstance("RUB"),
                 SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), null,
                 null, null, null, false
             )
@@ -52,6 +59,7 @@ class CreatePresenter(
             }
 
             updateSpinner()
+            view.enableInputs(true)
         }
     }
 
@@ -97,17 +105,17 @@ class CreatePresenter(
     private fun validateForm(): Boolean {
         var isValid = true
 
-        if (model.title.isEmpty()) {
+        if (model.title.isEmpty() || model.title.length > MAX_TITLE_LENGTH) {
             view.showTitleError(true)
             isValid = false
         }
 
-        if (model.price <= 0) {
+        if (model.price <= 0 || model.price > MAX_PRICE_VALUE) {
             view.showPriceError(true)
             isValid = false
         }
 
-        if (model.period.quantity <= 0) {
+        if (model.period.quantity <= 0 || model.period.quantity > MAX_PERIOD_QUANTITY_VALUE) {
             view.showQuantityError(true)
             isValid = false
         }
@@ -115,7 +123,7 @@ class CreatePresenter(
         model.trialPaymentDate?.let {
             if (it.isBefore(LocalDate.now())) {
                 view.showPaymentDateError(true)
-                isValid  = false
+                isValid = false
             }
         }
 

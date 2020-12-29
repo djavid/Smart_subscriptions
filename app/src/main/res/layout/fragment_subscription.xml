@@ -18,27 +18,34 @@
 
         <TextView
             android:id="@+id/sub_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
             android:fontFamily="@font/helvetica_bold"
+            android:maxLines="1"
             android:textColor="@color/colorNero"
             android:textSize="21sp"
+            app:layout_constraintEnd_toStartOf="@id/sub_closeBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Apple music" />
 
         <TextView
             android:id="@+id/sub_category"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/helvetica_medium"
+            android:maxLines="1"
             android:textColor="@color/colorGray_65"
             android:textSize="14sp"
             android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/sub_closeBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sub_title"
             tools:text="Семейная подписка"
@@ -52,10 +59,10 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="25dp"
             android:padding="3dp"
-            android:tint="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_close_24px" />
+            app:srcCompat="@drawable/ic_close_24px"
+            app:tint="@android:color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,12 +93,14 @@
 
                 <TextView
                     android:id="@+id/sub_price"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/helvetica_medium"
                     android:textColor="@color/colorNero"
                     android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="75 ₽ каждый месяц" />
@@ -122,17 +131,19 @@
 
                 <TextView
                     android:id="@+id/sub_nextPayment"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/helvetica_medium"
                     android:textColor="@color/colorNero"
                     android:textSize="17sp"
                     android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/sub_priceDivider"
-                    tools:text="Следующая оплата через 10 дней "
+                    tools:text="Следующая оплата через 10 дней"
                     tools:visibility="visible" />
 
                 <ProgressBar
@@ -162,14 +173,17 @@
 
                 <TextView
                     android:id="@+id/sub_overallSpent"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/helvetica_medium"
+                    android:lineSpacingExtra="5sp"
                     android:textColor="@color/colorNero"
                     android:textSize="17sp"
                     android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/sub_nextPaymentDivider"
                     tools:text="Всего потрачено 3753,34 ₽"
@@ -193,13 +207,13 @@
                     android:padding="16dp"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/sub_spentDivider"
-                    tools:visibility="visible">
+                    tools:visibility="gone">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:tint="@color/colorOrange"
-                        app:srcCompat="@drawable/ic_notifications_24_px" />
+                        app:srcCompat="@drawable/ic_notifications_24_px"
+                        app:tint="@color/colorOrange" />
 
                     <TextView
                         android:id="@+id/sub_notifsBtn_title"
@@ -219,6 +233,7 @@
                     android:id="@+id/sub_notifDivider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:visibility="gone"
                     android:background="@color/colorWhisper"
                     app:layout_constraintTop_toBottomOf="@id/sub_notifsBtn" />
 
@@ -233,8 +248,8 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:tint="@color/colorBlue"
-                        app:srcCompat="@drawable/ic_edit_24px" />
+                        app:srcCompat="@drawable/ic_edit_24px"
+                        app:tint="@color/colorBlue" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -267,8 +282,8 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:tint="@color/colorPinkishOrange"
-                        app:srcCompat="@drawable/ic_delete_24px" />
+                        app:srcCompat="@drawable/ic_delete_24px"
+                        app:tint="@color/colorPinkishOrange" />
 
                     <TextView
                         android:layout_width="wrap_content"

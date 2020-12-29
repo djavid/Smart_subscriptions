@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.djavid.smartsubs.BuildConfig
 import com.djavid.smartsubs.models.*
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.installations.FirebaseInstallations
 import com.google.gson.Gson
 
 class FirebaseLogger(
@@ -16,7 +16,12 @@ class FirebaseLogger(
 
     init {
         analytics.setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
-        analytics.setUserId(FirebaseInstanceId.getInstance().id)
+
+        FirebaseInstallations.getInstance().id.addOnCompleteListener {
+            if (it.isSuccessful) {
+                analytics.setUserId(it.result)
+            }
+        }
     }
 
     fun onActivateNotifClicked(notif: Notification) {
