@@ -7,7 +7,6 @@ import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.mappers.SubscriptionEntityMapper
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.google.firebase.database.ktx.database
-import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -30,15 +29,23 @@ class UploaderWorker(
 
     override suspend fun doWork(): Result {
         val subs = subsRepository.getSubs().filter { !it.isLoaded }
-        val firebaseId = FirebaseInstanceId.getInstance().id
-        var failedCount = 0
+        val id = inputData.getString(INSTALLATION_ID)
 
-        subs.forEach {
-            val result = saveSubToRealtimeDb(it, firebaseId)
-            if (!result) failedCount++
+        return if (id != null) {
+            var failedCount = 0
+
+            subs.forEach {
+                val result = saveSubToRealtimeDb(it, id)
+                if (!result) failedCount++
+            }
+
+            if (failedCount == 0)
+                Result.success()
+            else
+                Result.failure()
+        } else {
+            Result.failure()
         }
-
-        return if (failedCount == 0) Result.success() else Result.failure()
     }
 
     private suspend fun saveSubToRealtimeDb(sub: SubscriptionDao, firebaseId: String) =
@@ -63,13 +70,16 @@ class UploaderWorker(
     companion object {
 
         private const val TAG = "UploadWorker"
+        private const val INSTALLATION_ID = "installation_id"
 
-        fun enqueueWork(context: Context) {
+        fun enqueueWork(context: Context, installationId: String) {
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
-            val inputData = Data.Builder().build()
+            val inputData = Data.Builder()
+                .putString(INSTALLATION_ID, installationId)
+                .build()
 
             val workRequest = OneTimeWorkRequestBuilder<UploaderWorker>()
                 .setConstraints(constraints)

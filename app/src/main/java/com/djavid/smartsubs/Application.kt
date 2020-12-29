@@ -27,6 +27,8 @@ import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
 import com.djavid.smartsubs.utils.FirebaseLogger
 import com.djavid.smartsubs.worker.NotificationWorkerModule
 import com.djavid.smartsubs.worker.UploaderWorker
+import com.google.firebase.FirebaseApp
+import com.google.firebase.installations.FirebaseInstallations
 import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
 import net.danlew.android.joda.JodaTimeAndroid
@@ -41,6 +43,7 @@ class Application : Application(), Configuration.Provider, KodeinAware {
     override fun onCreate() {
         super.onCreate()
         JodaTimeAndroid.init(this)
+        FirebaseApp.initializeApp(this)
         initAppMetrica()
         enqueueWorks()
     }
@@ -52,14 +55,22 @@ class Application : Application(), Configuration.Provider, KodeinAware {
     }
 
     private fun enqueueWorks() {
-        UploaderWorker.enqueueWork(this)
+        if (!BuildConfig.DEBUG) {
+            FirebaseInstallations.getInstance().id.addOnCompleteListener { task ->
+                task.result?.let {
+                    UploaderWorker.enqueueWork(this, it)
+                }
+            }
+        }
     }
 
     private fun initAppMetrica() {
-        val apiKey = applicationContext.getString(R.string.yandex_metrica_api_key)
-        val config = YandexMetricaConfig.newConfigBuilder(apiKey).build()
-        YandexMetrica.activate(applicationContext, config)
-        YandexMetrica.enableActivityAutoTracking(this)
+        if (!BuildConfig.DEBUG) {
+            val apiKey = applicationContext.getString(R.string.yandex_metrica_api_key)
+            val config = YandexMetricaConfig.newConfigBuilder(apiKey).build()
+            YandexMetrica.activate(applicationContext, config)
+            YandexMetrica.enableActivityAutoTracking(this)
+        }
     }
 
     override val kodein = Kodein.lazy {

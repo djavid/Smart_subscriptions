@@ -207,7 +207,7 @@
                     android:padding="16dp"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/sub_spentDivider"
-                    tools:visibility="visible">
+                    tools:visibility="gone">
 
                     <ImageView
                         android:layout_width="24dp"
@@ -233,6 +233,7 @@
                     android:id="@+id/sub_notifDivider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:visibility="gone"
                     android:background="@color/colorWhisper"
                     app:layout_constraintTop_toBottomOf="@id/sub_notifsBtn" />
 
