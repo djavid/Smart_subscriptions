@@ -13,16 +13,13 @@ class RootModule(activity: AppCompatActivity) {
     val kodein = Kodein.Module("root_module") {
         bind<View>() with singleton { activity.rootActivity }
         bind<RootContract.View>() with singleton {
-            RootView(
-                instance()
-            )
+            RootView(instance())
         }
         bind<RootContract.Presenter>() with singleton {
             RootPresenter(
-                instance(), instance(), instance()
+                instance(), instance(), instance(), instance(), instance()
             )
         }
         bind<FragmentManager>() with singleton { activity.supportFragmentManager }
-        bind<FirebaseAuthHelper>() with singleton { FirebaseAuthHelper(instance(), instance()) }
     }
 }

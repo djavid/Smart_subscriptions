@@ -4,90 +4,64 @@ import android.content.Context
 import androidx.work.*
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.db.SubscriptionsRepository
-import com.djavid.smartsubs.mappers.SubscriptionEntityMapper
 import com.djavid.smartsubs.models.SubscriptionDao
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import com.djavid.smartsubs.storage.RealTimeRepository
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class UploaderWorker(
     appContext: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(appContext, workerParams), KodeinAware {
 
+    private val subsRepository by instance<SubscriptionsRepository>()
+    private val realTimeRepository by instance<RealTimeRepository>()
+
     override var kodein: Kodein = (appContext as Application).uploaderComponent()
 
-    private val subsRepository by instance<SubscriptionsRepository>()
-    private val entityMapper by instance<SubscriptionEntityMapper>()
-    private val coroutineScope: CoroutineScope by instance()
-
     override suspend fun doWork(): Result {
-        val subs = subsRepository.getSubs().filter { !it.isLoaded }
-        val id = inputData.getString(INSTALLATION_ID)
+        val subs = subsRepository.getSubs()
 
-        return if (id != null) {
-            var failedCount = 0
+        if (!realTimeRepository.hasLoadedUserSubs()) {
+            saveSubsToRealTimeDb(subs)
+        }
 
-            subs.forEach {
-                val result = saveSubToRealtimeDb(it, id)
-                if (!result) failedCount++
-            }
-
-            if (failedCount == 0)
-                Result.success()
-            else
-                Result.failure()
+        return if (saveSubsToRealTimeDb(subs.filter { !it.isLoaded })) {
+            Result.success()
         } else {
             Result.failure()
         }
     }
 
-    private suspend fun saveSubToRealtimeDb(sub: SubscriptionDao, firebaseId: String) =
-        suspendCoroutine<Boolean> { cont ->
-            Firebase.database.reference
-                .child("subs")
-                .child(firebaseId)
-                .child(sub.id.toString())
-                .setValue(entityMapper.toEntity(sub))
-                .addOnSuccessListener { _ ->
-                    coroutineScope.launch {
-                        subsRepository.editSub(sub.copy(isLoaded = true))
-                        cont.resume(true)
-                    }
-                }
-                .addOnFailureListener {
-                    it.printStackTrace()
-                    cont.resume(false)
-                }
+    private suspend fun saveSubsToRealTimeDb(subs: List<SubscriptionDao>): Boolean {
+        var failedCount = 0
+
+        subs.forEach { sub ->
+            val uploaded = realTimeRepository.saveSubToRealtimeDb(sub)
+
+            if (uploaded) {
+                subsRepository.editSub(sub.copy(isLoaded = true))
+            } else {
+                failedCount++
+            }
         }
 
+        return failedCount == 0
+    }
+
     companion object {
-
-        private const val TAG = "UploadWorker"
-        private const val INSTALLATION_ID = "installation_id"
-
-        fun enqueueWork(context: Context, installationId: String) {
+        fun enqueueWork(context: Context) {
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
-            val inputData = Data.Builder()
-                .putString(INSTALLATION_ID, installationId)
-                .build()
-
             val workRequest = OneTimeWorkRequestBuilder<UploaderWorker>()
                 .setConstraints(constraints)
-                .setInputData(inputData)
-                .addTag(TAG)
+                .addTag(this::class.java.name)
                 .build()
 
-            WorkManager.getInstance(context).cancelAllWorkByTag(TAG)
+            WorkManager.getInstance(context).cancelAllWorkByTag(this::class.java.name)
             WorkManager.getInstance(context).enqueue(workRequest)
         }
     }

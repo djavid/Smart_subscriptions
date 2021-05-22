@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.djavid.smartsubs.NotificationEntityQueries
 import com.djavid.smartsubs.SubscriptionEntityQueries
+import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.storage.SharedRepository
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
@@ -42,6 +43,9 @@ class DatabaseModule(
         }
         bind<NotificationsRepository>() with singleton {
             NotificationsRepository(instance(), instance(), instance())
+        }
+        bind<RealTimeRepository>() with singleton {
+            RealTimeRepository(instance(), instance())
         }
     }
 }

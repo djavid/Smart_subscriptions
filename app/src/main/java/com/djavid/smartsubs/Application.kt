@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.work.Configuration
+import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.coroutines.CoroutineModule
 import com.djavid.smartsubs.create.CreateModule
 import com.djavid.smartsubs.create.CreateNavigatorModule
@@ -17,6 +18,7 @@ import com.djavid.smartsubs.notification.NotificationModule
 import com.djavid.smartsubs.notification.NotificationNavigatorModule
 import com.djavid.smartsubs.notifications.NotificationsModule
 import com.djavid.smartsubs.notifications.NotificationsNavigatorModule
+import com.djavid.smartsubs.root.FirebaseAuthHelper
 import com.djavid.smartsubs.root.RootModule
 import com.djavid.smartsubs.sort.SortModule
 import com.djavid.smartsubs.sort.SortNavigationModule
@@ -24,11 +26,8 @@ import com.djavid.smartsubs.subscribe.SubscribeMediaModule
 import com.djavid.smartsubs.subscribe.SubscribeMediaNavigationModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
 import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
-import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.worker.NotificationWorkerModule
-import com.djavid.smartsubs.worker.UploaderWorker
 import com.google.firebase.FirebaseApp
-import com.google.firebase.installations.FirebaseInstallations
 import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
 import net.danlew.android.joda.JodaTimeAndroid
@@ -45,23 +44,12 @@ class Application : Application(), Configuration.Provider, KodeinAware {
         JodaTimeAndroid.init(this)
         FirebaseApp.initializeApp(this)
         initAppMetrica()
-        enqueueWorks()
     }
 
     override fun getWorkManagerConfiguration(): Configuration {
         return Configuration.Builder()
             .setMinimumLoggingLevel(android.util.Log.INFO)
             .build()
-    }
-
-    private fun enqueueWorks() {
-        if (!BuildConfig.DEBUG) {
-            FirebaseInstallations.getInstance().id.addOnCompleteListener { task ->
-                task.result?.let {
-                    UploaderWorker.enqueueWork(this, it)
-                }
-            }
-        }
     }
 
     private fun initAppMetrica() {
@@ -76,7 +64,10 @@ class Application : Application(), Configuration.Provider, KodeinAware {
     override val kodein = Kodein.lazy {
         bind<Application>() with singleton { this@Application }
         bind<Context>("appContext") with singleton { applicationContext }
+
+        //firebase
         bind<FirebaseLogger>() with singleton { FirebaseLogger(instance("appContext")) }
+        bind<FirebaseAuthHelper>() with singleton { FirebaseAuthHelper(instance(), instance()) }
 
         import(CoroutineModule().kodein)
         import(DatabaseModule(applicationContext).kodein)

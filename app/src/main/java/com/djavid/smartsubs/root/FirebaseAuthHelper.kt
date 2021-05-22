@@ -28,6 +28,8 @@ class FirebaseAuthHelper(
         checkUserAuth()
     }
 
+    fun getUid(): String? = auth.currentUser?.uid
+
     private fun checkUserAuth() {
         if (auth.currentUser == null) {
             signInAnonymously()
