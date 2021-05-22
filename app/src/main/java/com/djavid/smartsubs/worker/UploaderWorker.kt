@@ -38,7 +38,7 @@ class UploaderWorker(
         var failedCount = 0
 
         subs.forEach { sub ->
-            val uploaded = realTimeRepository.saveSubToRealtimeDb(sub)
+            val uploaded = realTimeRepository.saveSub(sub)
 
             if (uploaded) {
                 subsRepository.editSub(sub.copy(isLoaded = true))

@@ -2,6 +2,7 @@ package com.djavid.smartsubs.mappers
 
 import com.djavid.smartsubs.SubscriptionEntity
 import com.djavid.smartsubs.models.SubscriptionDao
+import com.djavid.smartsubs.models.SubscriptionFirebaseEntity
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import org.joda.time.DateTime
@@ -44,7 +45,25 @@ class SubscriptionEntityMapper {
             entity.category,
             entity.comment,
             entity.trialPaymentDate?.let { LocalDate(it) },
-            entity.isLoaded
+            entity.loaded
+        )
+    }
+
+    fun fromFirebaseEntity(entity: SubscriptionFirebaseEntity): SubscriptionDao {
+        return SubscriptionDao(
+            entity.id,
+            DateTime(entity.creationDate),
+            entity.title,
+            entity.price,
+            Currency.getInstance(entity.currencyCode),
+            SubscriptionPeriod(
+                SubscriptionPeriodType.valueOf(entity.period), entity.periodQuantity.toInt()
+            ),
+            entity.paymentDate?.let { LocalDate(it) },
+            entity.category,
+            entity.comment,
+            entity.trialPaymentDate?.let { LocalDate(it) },
+            true
         )
     }
 
