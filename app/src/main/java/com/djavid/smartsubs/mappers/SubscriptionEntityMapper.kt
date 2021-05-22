@@ -12,10 +12,27 @@ import java.util.*
 
 class SubscriptionEntityMapper {
 
-    fun toEntity(model: SubscriptionDao): SubscriptionEntity {
+    fun fromEntity(entity: SubscriptionEntity): SubscriptionDao {
+        return SubscriptionDao(
+            entity.id.toString(),
+            DateTime(entity.creationDate),
+            entity.title,
+            entity.price,
+            Currency.getInstance(entity.currencyCode),
+            SubscriptionPeriod(
+                SubscriptionPeriodType.valueOf(entity.period), entity.periodQuantity.toInt()
+            ),
+            entity.paymentDate?.let { LocalDate(it) },
+            entity.category,
+            entity.comment,
+            entity.trialPaymentDate?.let { LocalDate(it) }
+        )
+    }
+
+    fun toFirebaseEntity(model: SubscriptionDao): SubscriptionFirebaseEntity {
         val timeZone = DateTimeZone.forTimeZone(TimeZone.getDefault())
 
-        return SubscriptionEntity.Impl(
+        return SubscriptionFirebaseEntity(
             model.id,
             model.creationDate.millis,
             model.title,
@@ -27,25 +44,7 @@ class SubscriptionEntityMapper {
             model.category,
             model.comment,
             model.trialPaymentDate?.toDateTimeAtStartOfDay(timeZone)?.millis,
-            model.isLoaded
-        )
-    }
-
-    fun fromEntity(entity: SubscriptionEntity): SubscriptionDao {
-        return SubscriptionDao(
-            entity.id,
-            DateTime(entity.creationDate),
-            entity.title,
-            entity.price,
-            Currency.getInstance(entity.currencyCode),
-            SubscriptionPeriod(
-                SubscriptionPeriodType.valueOf(entity.period), entity.periodQuantity.toInt()
-            ),
-            entity.paymentDate?.let { LocalDate(it) },
-            entity.category,
-            entity.comment,
-            entity.trialPaymentDate?.let { LocalDate(it) },
-            entity.loaded
+            true
         )
     }
 
@@ -62,8 +61,7 @@ class SubscriptionEntityMapper {
             entity.paymentDate?.let { LocalDate(it) },
             entity.category,
             entity.comment,
-            entity.trialPaymentDate?.let { LocalDate(it) },
-            true
+            entity.trialPaymentDate?.let { LocalDate(it) }
         )
     }
 

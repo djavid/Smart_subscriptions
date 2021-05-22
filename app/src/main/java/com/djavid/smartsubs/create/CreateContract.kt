@@ -7,7 +7,7 @@ import java.util.*
 interface CreateContract {
 
     interface Presenter {
-        fun init(id: Long?)
+        fun init(id: String?)
         fun onCancelPressed()
         fun onBackPressed()
 
@@ -60,7 +60,7 @@ interface CreateContract {
     }
 
     interface Navigator {
-        fun goToCreateScreen(id: Long? = null)
+        fun goToCreateScreen(id: String? = null)
     }
 
 }

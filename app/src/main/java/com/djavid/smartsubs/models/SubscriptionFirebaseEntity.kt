@@ -1,7 +1,7 @@
 package com.djavid.smartsubs.models
 
 data class SubscriptionFirebaseEntity(
-    val id: Long = 0,
+    val id: String = "",
     val creationDate: Long = 0,
     val title: String = "",
     val price: Double = 0.0,

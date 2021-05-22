@@ -27,8 +27,8 @@ class NotificationsRepository(
         }
     }
 
-    suspend fun getNotificationsBySubId(subId: Long): List<Notification> = withContext(Dispatchers.IO) {
-        queries.getNotificationsBySubscriptionId(subId)
+    suspend fun getNotificationsBySubId(subId: String): List<Notification> = withContext(Dispatchers.IO) {
+        queries.getNotificationsBySubscriptionId(0) //todo broken
             .executeAsList()
             .map { entityMapper.fromEntity(it) }
     }

@@ -24,8 +24,8 @@ class CreateFragment : BaseFragment(R.layout.fragment_create), BackPressListener
         kodein = (activity?.application as Application).createComponent(this)
 
         arguments?.let {
-            val subId = it.getLong(KEY_SUBSCRIPTION_ID, 0)
-            presenter.init(if (subId == 0L) null else subId)
+            val subId = it.getString(KEY_SUBSCRIPTION_ID)
+            presenter.init(subId)
         }
     }
 

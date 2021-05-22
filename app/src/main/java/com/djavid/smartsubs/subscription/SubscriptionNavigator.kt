@@ -10,9 +10,9 @@ class SubscriptionNavigator(
     private val fragmentManager: FragmentManager
 ) : SubscriptionContract.Navigator {
 
-    override fun goToSubscription(id: Long, isRoot: Boolean) {
+    override fun goToSubscription(id: String, isRoot: Boolean) {
         val bundle = Bundle().apply {
-            putLong(KEY_SUBSCRIPTION_ID, id)
+            putString(KEY_SUBSCRIPTION_ID, id)
             putBoolean(KEY_IS_ROOT, isRoot)
         }
 

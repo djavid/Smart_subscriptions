@@ -33,7 +33,7 @@ class NotificationsFragment : BottomSheetDialogFragment(), KodeinAware {
         expandSheet()
 
         arguments?.let {
-            val subId = it.getLong(KEY_SUBSCRIPTION_ID)
+            val subId = it.getString(KEY_SUBSCRIPTION_ID)
             presenter.init(subId)
         }
     }

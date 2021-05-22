@@ -13,7 +13,7 @@ interface HomeContract {
         fun onAddSubPressed()
         fun onPeriodPressed()
         fun onItemSwipedToLeft(position: Int)
-        fun onItemClick(id: Long)
+        fun onItemClick(id: String)
     }
 
     interface View {

@@ -9,10 +9,10 @@ class CreateNavigator(
     private val fragmentManager: FragmentManager
 ) : CreateContract.Navigator {
 
-    override fun goToCreateScreen(id: Long?) {
+    override fun goToCreateScreen(id: String?) {
         val intent = Bundle().apply {
             if (id != null) {
-                putLong(KEY_SUBSCRIPTION_ID, id)
+                putString(KEY_SUBSCRIPTION_ID, id)
             }
         }
 

@@ -9,9 +9,9 @@ class NotificationNavigator(
     private val fm: FragmentManager
 ) : NotificationContract.Navigator {
 
-    override fun showNotificationDialog(subscriptionId: Long, id: Long?) {
+    override fun showNotificationDialog(subscriptionId: String, id: Long?) {
         val bundle = Bundle().apply {
-            putLong(KEY_SUBSCRIPTION_ID, subscriptionId)
+            putString(KEY_SUBSCRIPTION_ID, subscriptionId)
             if (id != null) putLong(KEY_NOTIFICATION_ID, id)
         }
 

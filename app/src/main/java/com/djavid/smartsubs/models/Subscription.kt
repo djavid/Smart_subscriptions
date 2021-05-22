@@ -7,7 +7,7 @@ import org.joda.time.LocalDate
 import java.util.*
 
 data class Subscription(
-    val id: Long,
+    val id: String,
     val title: String,
     val price: SubscriptionPrice,
     val period: SubscriptionPeriod,

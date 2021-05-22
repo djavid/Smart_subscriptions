@@ -26,8 +26,8 @@ class RootActivity : AppCompatActivity(), KodeinAware {
         kodein = (application as Application).rootComponent(this)
         lifecycle.addObserver(authHelper)
 
-        val subId = intent.getLongExtra(KEY_SUBSCRIPTION_ID, -1)
-        presenter.init(if (subId != -1L) subId else null)
+        val subId = intent.getStringExtra(KEY_SUBSCRIPTION_ID)
+        presenter.init(subId)
     }
 
     override fun onDestroy() {

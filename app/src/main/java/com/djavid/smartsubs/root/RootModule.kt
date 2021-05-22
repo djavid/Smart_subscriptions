@@ -17,7 +17,7 @@ class RootModule(activity: AppCompatActivity) {
         }
         bind<RootContract.Presenter>() with singleton {
             RootPresenter(
-                instance(), instance(), instance(), instance(), instance()
+                instance(), instance(), instance(), instance(), instance(), instance()
             )
         }
         bind<FragmentManager>() with singleton { activity.supportFragmentManager }

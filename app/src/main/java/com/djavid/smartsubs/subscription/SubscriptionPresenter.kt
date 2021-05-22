@@ -4,7 +4,6 @@ import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CommonFragmentNavigator
 import com.djavid.smartsubs.create.CreateContract
 import com.djavid.smartsubs.db.NotificationsRepository
-import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.home.HomeContract
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Subscription
@@ -12,6 +11,7 @@ import com.djavid.smartsubs.models.SubscriptionPrice
 import com.djavid.smartsubs.notifications.NotificationsContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.analytics.FirebaseLogger
+import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -21,7 +21,7 @@ class SubscriptionPresenter(
     private val view: SubscriptionContract.View,
     private val fragmentNavigator: CommonFragmentNavigator,
     private val homeNavigator: HomeContract.Navigator,
-    private val subscriptionsRepository: SubscriptionsRepository,
+    private val subscriptionsRepository: RealTimeRepository,
     private val notificationsRepository: NotificationsRepository,
     private val modelMapper: SubscriptionModelMapper,
     private val createNavigator: CreateContract.Navigator,
@@ -33,12 +33,12 @@ class SubscriptionPresenter(
 
     private lateinit var channel: ReceiveChannel<Pair<String, String>>
     private lateinit var subscription: Subscription
-    private var id: Long = 0
+    private var id: String = ""
     private var isRoot: Boolean = false
 
-    override fun init(id: Long, isRoot: Boolean) {
+    override fun init(id: String?, isRoot: Boolean) {
         view.init(this)
-        this.id = id
+        this.id = id ?: return
         this.isRoot = isRoot
 
         view.setBackgroundTransparent(false, SLIDE_DURATION)
@@ -99,7 +99,7 @@ class SubscriptionPresenter(
         logger.onNotifsClicked()
     }
 
-    private suspend fun loadSub(id: Long): Subscription? {
+    private suspend fun loadSub(id: String): Subscription? {
         return subscriptionsRepository.getSubById(id)?.let {
             modelMapper.fromDao(it)
         }

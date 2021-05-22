@@ -25,7 +25,7 @@ interface SubscriptionContract {
     }
 
     interface Presenter {
-        fun init(id: Long, isRoot: Boolean)
+        fun init(id: String?, isRoot: Boolean)
         fun reload()
         fun onBackPressed()
         fun onCloseBtnClicked()
@@ -36,7 +36,7 @@ interface SubscriptionContract {
     }
 
     interface Navigator {
-        fun goToSubscription(id: Long, isRoot: Boolean = false) //isRoot means that homeFragment doesn't exist in backstack
+        fun goToSubscription(id: String, isRoot: Boolean = false) //isRoot means that homeFragment doesn't exist in backstack
     }
 
 }

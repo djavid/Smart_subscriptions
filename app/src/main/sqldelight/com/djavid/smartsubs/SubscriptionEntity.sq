@@ -10,7 +10,7 @@ CREATE TABLE subscriptionEntity (
     category TEXT,
     comment TEXT,
     trialPaymentDate INTEGER,
-    loaded INTEGER AS Boolean NOT NULL
+    isLoaded INTEGER AS Boolean NOT NULL
 );
 
 getSubscriptions:
@@ -28,7 +28,7 @@ INSERT OR REPLACE INTO subscriptionEntity(
     category,
     comment,
     trialPaymentDate,
-    loaded
+    isLoaded
 )
 VALUES ?;
 
@@ -45,7 +45,7 @@ INSERT OR REPLACE INTO subscriptionEntity(
     category,
     comment,
     trialPaymentDate,
-    loaded
+    isLoaded
 )
 VALUES ?;
 

@@ -2,13 +2,13 @@ package com.djavid.smartsubs.create
 
 import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CommonFragmentNavigator
-import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.DATE_TIME_FORMAT
 import com.djavid.smartsubs.analytics.FirebaseLogger
+import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 import org.joda.time.DateTime
@@ -17,7 +17,7 @@ import java.util.*
 
 class CreatePresenter(
     private val view: CreateContract.View,
-    private val repository: SubscriptionsRepository,
+    private val repository: RealTimeRepository,
     private val fragmentNavigator: CommonFragmentNavigator,
     private val logger: FirebaseLogger,
     private val pipeline: BasePipeline<Pair<String, String>>,
@@ -35,7 +35,7 @@ class CreatePresenter(
     private val periodItems = SubscriptionPeriodType.values().toList()
     private var isTrialSub: Boolean = false
 
-    override fun init(id: Long?) {
+    override fun init(id: String?) {
         view.init(this)
 
         view.enableInputs(false)
@@ -45,9 +45,9 @@ class CreatePresenter(
 
         launch {
             model = SubscriptionDao(
-                0, DateTime(), "", 0.0, Currency.getInstance("RUB"),
+                "", DateTime(), "", 0.0, Currency.getInstance("RUB"),
                 SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), null,
-                null, null, null, false
+                null, null, null
             )
 
             if (id != null) {
@@ -90,10 +90,10 @@ class CreatePresenter(
         if (validateForm()) {
             launch {
                 if (editMode) {
-                    repository.editSub(model.copy(isLoaded = false))
+                    repository.editSub(model)
                     logger.subEdited(model)
                 } else {
-                    repository.saveSub(model)
+                    repository.pushSub(model)
                     logger.subCreated(model)
                 }
 

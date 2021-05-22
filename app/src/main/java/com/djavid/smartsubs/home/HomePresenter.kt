@@ -2,7 +2,6 @@ package com.djavid.smartsubs.home
 
 import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.create.CreateContract
-import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.sort.SortContract
@@ -10,6 +9,7 @@ import com.djavid.smartsubs.subscribe.SubscribeMediaContract
 import com.djavid.smartsubs.subscription.SubscriptionContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.analytics.FirebaseLogger
+import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.storage.SharedRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +20,7 @@ import java.util.*
 
 class HomePresenter(
     private val view: HomeContract.View,
-    private val repository: SubscriptionsRepository,
+    private val repository: RealTimeRepository,
     private val createNavigator: CreateContract.Navigator,
     private val sortNavigator: SortContract.Navigator,
     private val subNavigator: SubscriptionContract.Navigator,
@@ -124,7 +124,7 @@ class HomePresenter(
         return subs.filter { !it.isTrial() }.sumByDouble { it.getPriceInPeriod(pricePeriod) }
     }
 
-    override fun onItemClick(id: Long) {
+    override fun onItemClick(id: String) {
         subNavigator.goToSubscription(id)
 
         subs.find { it.id == id }?.let {

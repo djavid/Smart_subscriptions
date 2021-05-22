@@ -21,7 +21,7 @@ import kotlin.math.roundToInt
 
 class SubsAdapter(
     private val context: Context,
-    private val onClick: (Long) -> Unit
+    private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<SubsAdapter.ViewHolder>() {
 
     private var data = listOf<Subscription>()

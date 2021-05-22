@@ -24,11 +24,11 @@ class NotificationsPresenter(
 ) : NotificationsContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var channel: ReceiveChannel<Pair<String, String>>
-    private var subId: Long = 0
+    private var subId: String = ""
 
-    override fun init(subId: Long) {
+    override fun init(subId: String?) {
         view.init(this)
-        this.subId = subId
+        this.subId = subId ?: ""
 
         listenPipeline()
         reloadNotifs()
@@ -53,7 +53,7 @@ class NotificationsPresenter(
         }
     }
 
-    private suspend fun loadNotifications(id: Long): List<Notification> {
+    private suspend fun loadNotifications(id: String): List<Notification> {
         return notificationsRepository.getNotificationsBySubId(id)
     }
 

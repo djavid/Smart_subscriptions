@@ -15,11 +15,11 @@ import androidx.work.WorkerParameters
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.db.NotificationsRepository
-import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.notification.AlarmNotifier
 import com.djavid.smartsubs.root.RootActivity
+import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.storage.SharedRepository
 import com.djavid.smartsubs.utils.*
 import kotlinx.coroutines.runBlocking
@@ -36,7 +36,7 @@ class NotificationWorker(
         get() = (context.applicationContext as Application).notificationWorkerComponent(context)
 
     private val notifRepository: NotificationsRepository by instance()
-    private val subRepository: SubscriptionsRepository by instance()
+    private val subRepository: RealTimeRepository by instance()
     private val notificationManager: NotificationManager by instance()
     private val sharedRepository: SharedRepository by instance()
     private val alarmNotifier: AlarmNotifier by instance()
@@ -49,7 +49,7 @@ class NotificationWorker(
         if (id == -1L) return Result.failure()
 
         loadNotification(id)
-        loadSub(model?.subId)
+//        loadSub(model?.subId)
 
         return model?.let { model ->
             subModel?.let { subModel ->
@@ -116,7 +116,7 @@ class NotificationWorker(
         }
     }
 
-    private fun loadSub(id: Long?) {
+    private fun loadSub(id: String?) {
         if (id != null) {
             runBlocking {
                 subModel = subRepository.getSubById(id)

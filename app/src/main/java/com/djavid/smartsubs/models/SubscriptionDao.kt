@@ -5,7 +5,7 @@ import org.joda.time.LocalDate
 import java.util.*
 
 data class SubscriptionDao(
-    val id: Long,
+    val id: String,
     val creationDate: DateTime,
     val title: String,
     val price: Double,
@@ -15,5 +15,4 @@ data class SubscriptionDao(
     val category: String?,
     val comment: String?,
     val trialPaymentDate: LocalDate?,
-    val isLoaded: Boolean
 )

@@ -40,7 +40,7 @@ class SubscriptionFragment : BaseFragment(R.layout.fragment_subscription), BackP
         presenter = kodein.direct.instance()
 
         arguments?.let {
-            val id = it.getLong(KEY_SUBSCRIPTION_ID)
+            val id = it.getString(KEY_SUBSCRIPTION_ID)
             val isRoot = it.getBoolean(KEY_IS_ROOT)
 
             presenter.init(id, isRoot)

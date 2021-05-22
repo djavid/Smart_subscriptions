@@ -31,13 +31,15 @@ class NotificationPresenter(
     private var chosenTime: LocalTime? = null
     private var daysInput = 1L
 
-    override fun init(subscriptionId: Long, id: Long?) {
+    override fun init(subscriptionId: String?, id: Long?) {
         view.init(this)
 
         launch {
-            model = Notification(
-                0, subscriptionId, DateTime(), false, -1, DateTime(), false
-            )
+            if (subscriptionId != null) {
+                model = Notification(
+                    0, 0, DateTime(), false, -1, DateTime(), false //todo subId should be string broken
+                )
+            }
 
             if (id != null) {
                 repository.getNotificationById(id)?.let { model = it }

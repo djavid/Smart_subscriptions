@@ -25,7 +25,7 @@ interface NotificationContract {
     }
 
     interface Presenter {
-        fun init(subscriptionId: Long, id: Long?)
+        fun init(subscriptionId: String?, id: Long?)
         fun onTimeClicked()
         fun onRepeatClicked()
         fun onSubmitClicked()
@@ -40,7 +40,7 @@ interface NotificationContract {
     }
 
     interface Navigator {
-        fun showNotificationDialog(subscriptionId: Long, id: Long? = null)
+        fun showNotificationDialog(subscriptionId: String, id: Long? = null)
     }
 
 }

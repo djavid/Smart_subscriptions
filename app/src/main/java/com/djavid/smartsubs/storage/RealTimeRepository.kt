@@ -7,6 +7,9 @@ import com.djavid.smartsubs.models.SubscriptionFirebaseEntity
 import com.djavid.smartsubs.root.FirebaseAuthHelper
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.joda.time.LocalDate
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -16,10 +19,36 @@ class RealTimeRepository(
     private val subscriptionEntityMapper: SubscriptionEntityMapper
 ) {
 
-    suspend fun getSubs(): List<SubscriptionDao> {
-        val uid = authHelper.getUid() ?: return emptyList()
+    suspend fun getSubById(id: String): SubscriptionDao? = withContext(Dispatchers.IO) {
+        val uid = authHelper.getUid() ?: return@withContext null
 
-        return suspendCoroutine { cont ->
+        return@withContext suspendCoroutine { cont ->
+            Firebase.database.reference
+                .child(DB_SUBS_AUTH_ROOT)
+                .child(uid)
+                .child(id)
+                .get()
+                .addOnSuccessListener { data ->
+                    println(data)
+                    val entity = data.getValue(SubscriptionFirebaseEntity::class.java)
+
+                    if (entity != null) {
+                        cont.resume(subscriptionEntityMapper.fromFirebaseEntity(entity))
+                    } else {
+                        cont.resume(null)
+                    }
+                }
+                .addOnFailureListener {
+                    CrashlyticsLogger.logException(it)
+                    cont.resume(null)
+                }
+        }
+    }
+
+    suspend fun getSubs(): List<SubscriptionDao> = withContext(Dispatchers.IO) {
+        val uid = authHelper.getUid() ?: return@withContext emptyList()
+
+        return@withContext suspendCoroutine { cont ->
             Firebase.database.reference
                 .child(DB_SUBS_AUTH_ROOT)
                 .child(uid)
@@ -38,15 +67,25 @@ class RealTimeRepository(
         }
     }
 
-    suspend fun saveSub(sub: SubscriptionDao): Boolean {
-        val uid = authHelper.getUid() ?: return false
+    suspend fun saveSubs(subs: List<SubscriptionDao>): Boolean = withContext(Dispatchers.IO) {
+        var success = true
 
-        return suspendCoroutine { cont ->
+        subs.forEach {
+            success = success && pushSub(it)
+        }
+
+        return@withContext success
+    }
+
+    suspend fun editSub(sub: SubscriptionDao): Boolean = withContext(Dispatchers.IO) {
+        val uid = authHelper.getUid() ?: return@withContext false
+
+        return@withContext suspendCoroutine { cont ->
             Firebase.database.reference
                 .child(DB_SUBS_AUTH_ROOT)
                 .child(uid)
-                .child(sub.id.toString())
-                .setValue(entityMapper.toEntity(sub))
+                .child(sub.id)
+                .setValue(entityMapper.toFirebaseEntity(sub))
                 .addOnSuccessListener {
                     cont.resume(true)
                 }
@@ -57,16 +96,42 @@ class RealTimeRepository(
         }
     }
 
-    suspend fun hasLoadedUserSubs(): Boolean {
-        val uid = authHelper.getUid() ?: return false
+    suspend fun pushSub(sub: SubscriptionDao): Boolean = withContext(Dispatchers.IO) {
+        val uid = authHelper.getUid() ?: return@withContext false
 
-        return suspendCoroutine { cont ->
+        return@withContext suspendCoroutine { cont ->
+            val ref = Firebase.database.reference
+                .child(DB_SUBS_AUTH_ROOT)
+                .child(uid)
+                .push()
+            val key = ref.key
+
+            if (key != null) {
+                ref.setValue(entityMapper.toFirebaseEntity(sub.copy(id = key)))
+                    .addOnSuccessListener {
+                        cont.resume(true)
+                    }
+                    .addOnFailureListener {
+                        CrashlyticsLogger.logException(it)
+                        cont.resume(false)
+                    }
+            } else {
+                cont.resume(false)
+            }
+        }
+    }
+
+    suspend fun deleteSubById(id: String): Boolean = withContext(Dispatchers.IO) {
+        val uid = authHelper.getUid() ?: return@withContext false
+
+        return@withContext suspendCoroutine { cont ->
             Firebase.database.reference
                 .child(DB_SUBS_AUTH_ROOT)
                 .child(uid)
-                .get()
-                .addOnSuccessListener { data ->
-                    cont.resume(data.children.count() > 0)
+                .child(id)
+                .removeValue()
+                .addOnSuccessListener {
+                    cont.resume(true)
                 }
                 .addOnFailureListener {
                     CrashlyticsLogger.logException(it)
@@ -74,6 +139,37 @@ class RealTimeRepository(
                 }
         }
     }
+
+    suspend fun updateTrialSubs(): Unit = withContext(Dispatchers.IO) {
+        getSubs().forEach {
+            if (it.trialPaymentDate != null && LocalDate.now().isAfter(it.trialPaymentDate)) {
+                val sub = it.copy(paymentDate = it.trialPaymentDate, trialPaymentDate = null)
+                editSub(sub)
+            }
+        }
+    }
+
+    suspend fun isEmpty(): Boolean? = withContext(Dispatchers.IO) {
+        val uid = authHelper.getUid() ?: return@withContext false
+
+        return@withContext suspendCoroutine { cont ->
+            Firebase.database.reference
+                .child(DB_SUBS_AUTH_ROOT)
+                .child(uid)
+                .get()
+                .addOnSuccessListener { data ->
+                    cont.resume(!data.hasChildren())
+                }
+                .addOnFailureListener {
+                    CrashlyticsLogger.logException(it)
+                    cont.resume(null)
+                }
+        }
+    }
+
+//    suspend fun getCategories(): List<String> = withContext(Dispatchers.IO) { //todo use this to show suggestions
+//        queries.getCategories().executeAsList().mapNotNull { it.category }
+//    }
 
     companion object {
         const val DB_SUBS_AUTH_ROOT = "subs_auth"

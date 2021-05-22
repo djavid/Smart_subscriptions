@@ -10,14 +10,14 @@ interface NotificationsContract {
     }
 
     interface Presenter {
-        fun init(subId: Long)
+        fun init(subId: String?)
         fun onEditNotification(model: Notification)
         fun onNotifCheckChanged(notif: Notification, checked: Boolean)
         fun onAddNotification()
     }
 
     interface Navigator {
-        fun showNotificationsDialog(subId: Long)
+        fun showNotificationsDialog(subId: String)
     }
 
 }
