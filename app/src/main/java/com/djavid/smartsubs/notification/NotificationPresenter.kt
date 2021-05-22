@@ -6,7 +6,7 @@ import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.utils.ACTION_REFRESH
-import com.djavid.smartsubs.utils.FirebaseLogger
+import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.utils.getFirstPeriodAfterNow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

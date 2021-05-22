@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.utils
+package com.djavid.smartsubs.storage
 
 import android.content.SharedPreferences
 import com.djavid.smartsubs.models.SortBy
@@ -20,6 +20,7 @@ class SharedRepository(
         const val PREF_IN_APP_REVIEW_TIMES_SHOWN = "tg_in_app_review_times_shown"
         const val PREF_TG_DIALOG_YES_TIMES_CLICKED = "tg_dialog_yes_times_clicked"
         const val PREF_FIRST_TIME_OPENED = "first_time_opened"
+        const val PREF_GOOGLE_AUTH_TOKEN = "google_auth_token"
     }
 
     var selectedCurrency: Currency
@@ -100,6 +101,14 @@ class SharedRepository(
         }
         set(value) {
             repository.edit().putBoolean(PREF_FIRST_TIME_OPENED, value).apply()
+        }
+
+    var googleAuthToken: String?
+        get() {
+            return repository.getString(PREF_GOOGLE_AUTH_TOKEN, null)
+        }
+        set(value) {
+            repository.edit().putString(PREF_GOOGLE_AUTH_TOKEN, value).apply()
         }
 
 }

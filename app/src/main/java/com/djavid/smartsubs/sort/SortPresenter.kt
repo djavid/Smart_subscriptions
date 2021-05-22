@@ -4,9 +4,9 @@ import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.models.SortBy
 import com.djavid.smartsubs.models.SortType
 import com.djavid.smartsubs.utils.ACTION_REFRESH
-import com.djavid.smartsubs.utils.FirebaseLogger
+import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.utils.KEY_SORT_BY
-import com.djavid.smartsubs.utils.SharedRepository
+import com.djavid.smartsubs.storage.SharedRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ReceiveChannel

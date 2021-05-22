@@ -1,8 +1,8 @@
 package com.djavid.smartsubs.home
 
 import android.app.Activity
-import com.djavid.smartsubs.utils.FirebaseLogger
-import com.djavid.smartsubs.utils.SharedRepository
+import com.djavid.smartsubs.analytics.FirebaseLogger
+import com.djavid.smartsubs.storage.SharedRepository
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory

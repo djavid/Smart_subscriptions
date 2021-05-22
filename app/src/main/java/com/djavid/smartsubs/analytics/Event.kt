@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.utils
+package com.djavid.smartsubs.analytics
 
 enum class Event(val value: String) {
     //notif

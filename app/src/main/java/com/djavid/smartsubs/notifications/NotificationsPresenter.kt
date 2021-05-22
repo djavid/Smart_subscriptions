@@ -6,7 +6,7 @@ import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.notification.AlarmNotifier
 import com.djavid.smartsubs.notification.NotificationContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
-import com.djavid.smartsubs.utils.FirebaseLogger
+import com.djavid.smartsubs.analytics.FirebaseLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ReceiveChannel

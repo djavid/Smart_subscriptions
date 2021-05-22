@@ -1,7 +1,7 @@
 package com.djavid.smartsubs.subscribe
 
-import com.djavid.smartsubs.utils.FirebaseLogger
-import com.djavid.smartsubs.utils.SharedRepository
+import com.djavid.smartsubs.analytics.FirebaseLogger
+import com.djavid.smartsubs.storage.SharedRepository
 
 class SubscribeMediaPresenter(
     private val view: SubscribeMediaContract.View,

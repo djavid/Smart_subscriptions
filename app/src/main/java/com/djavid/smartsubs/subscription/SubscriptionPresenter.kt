@@ -7,14 +7,11 @@ import com.djavid.smartsubs.db.NotificationsRepository
 import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.home.HomeContract
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
-import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPrice
-import com.djavid.smartsubs.notification.AlarmNotifier
-import com.djavid.smartsubs.notification.NotificationContract
 import com.djavid.smartsubs.notifications.NotificationsContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
-import com.djavid.smartsubs.utils.FirebaseLogger
+import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel

@@ -8,7 +8,7 @@ import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.DATE_TIME_FORMAT
-import com.djavid.smartsubs.utils.FirebaseLogger
+import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 import org.joda.time.DateTime

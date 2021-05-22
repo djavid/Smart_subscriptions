@@ -1,9 +1,10 @@
-package com.djavid.smartsubs.utils
+package com.djavid.smartsubs.analytics
 
 import android.content.Context
 import android.os.Bundle
 import com.djavid.smartsubs.BuildConfig
 import com.djavid.smartsubs.models.*
+import com.djavid.smartsubs.utils.EventParam
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.gson.Gson

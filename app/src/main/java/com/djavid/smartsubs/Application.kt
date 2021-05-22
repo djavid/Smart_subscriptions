@@ -24,7 +24,7 @@ import com.djavid.smartsubs.subscribe.SubscribeMediaModule
 import com.djavid.smartsubs.subscribe.SubscribeMediaNavigationModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
 import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
-import com.djavid.smartsubs.utils.FirebaseLogger
+import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.worker.NotificationWorkerModule
 import com.djavid.smartsubs.worker.UploaderWorker
 import com.google.firebase.FirebaseApp

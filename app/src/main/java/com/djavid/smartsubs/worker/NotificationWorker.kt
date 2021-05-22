@@ -20,6 +20,7 @@ import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.notification.AlarmNotifier
 import com.djavid.smartsubs.root.RootActivity
+import com.djavid.smartsubs.storage.SharedRepository
 import com.djavid.smartsubs.utils.*
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.Kodein

@@ -23,5 +23,6 @@ class RootModule(activity: AppCompatActivity) {
             )
         }
         bind<FragmentManager>() with singleton { activity.supportFragmentManager }
+        bind<FirebaseAuthHelper>() with singleton { FirebaseAuthHelper(instance(), instance()) }
     }
 }

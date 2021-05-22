@@ -16,6 +16,7 @@ class RootActivity : AppCompatActivity(), KodeinAware {
 
     private val coroutineScope: CoroutineScope by instance()
     private val presenter: RootContract.Presenter by instance()
+    private val authHelper: FirebaseAuthHelper by instance()
 
     override lateinit var kodein: Kodein
 
@@ -23,6 +24,7 @@ class RootActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_root)
         kodein = (application as Application).rootComponent(this)
+        lifecycle.addObserver(authHelper)
 
         val subId = intent.getLongExtra(KEY_SUBSCRIPTION_ID, -1)
         presenter.init(if (subId != -1L) subId else null)

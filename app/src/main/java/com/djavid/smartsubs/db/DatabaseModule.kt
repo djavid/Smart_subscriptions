@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.djavid.smartsubs.NotificationEntityQueries
 import com.djavid.smartsubs.SubscriptionEntityQueries
-import com.djavid.smartsubs.utils.SharedRepository
+import com.djavid.smartsubs.storage.SharedRepository
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 import org.kodein.di.Kodein
