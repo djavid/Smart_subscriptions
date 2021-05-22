@@ -42,6 +42,13 @@
         <item quantity="other">дней</item>
     </plurals>
 
+    <plurals name="plural_week">
+        <item quantity="one" tools:ignore="ImpliedQuantity">неделя</item>
+        <item quantity="few">недели</item>
+        <item quantity="many">недель</item>
+        <item quantity="other">недель</item>
+    </plurals>
+
     <plurals name="plural_month">
         <item quantity="one" tools:ignore="ImpliedQuantity">месяц</item>
         <item quantity="few">месяца</item>
@@ -104,6 +111,7 @@
     <string name="title_are_you_sure">Вы уверены?</string>
     <string name="title_yes">Да</string>
     <string name="title_no">Нет</string>
+    <string name="every_week">каждую неделю</string>
     <!--endregion-->
 
     <!--region notification-->

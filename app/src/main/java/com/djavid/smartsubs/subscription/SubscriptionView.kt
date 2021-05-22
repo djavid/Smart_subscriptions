@@ -109,15 +109,23 @@ class SubscriptionView(
     override fun setPrice(period: SubscriptionPeriod, price: SubscriptionPrice) = with(viewRoot) {
         val currSymbol = context.getSymbolForCurrency(price.currency)
         val everyPlural = viewRoot.context.resources.getQuantityString(R.plurals.plural_every, period.quantity)
+
         val periodPlural = context.getSubPeriodString(period.type, period.quantity)
         val priceFormatted = DecimalFormat(DECIMAL_FORMAT).format(price.value)
 
-        val text = if (period.quantity == 1) {
-            context.getString(
-                R.string.mask_subscription_price, priceFormatted,
-                currSymbol, everyPlural, periodPlural
-            )
 
+        val text = if (period.quantity == 1) {
+            if (period.type == SubscriptionPeriodType.WEEK) {
+                context.getString(
+                    R.string.mask_subscription_price_3_words, priceFormatted,
+                    currSymbol, context.getString(R.string.every_week)
+                )
+            } else {
+                context.getString(
+                    R.string.mask_subscription_price, priceFormatted,
+                    currSymbol, everyPlural, periodPlural
+                )
+            }
         } else {
             context.getString(
                 R.string.mask_subscription_price_quantity, priceFormatted,

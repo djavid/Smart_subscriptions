@@ -6,8 +6,11 @@ import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 import java.util.*
 
+const val DAYS_IN_WEEK = 7
+
 fun LocalDate.addPeriod(period: SubscriptionPeriod): LocalDate = when (period.type) {
     SubscriptionPeriodType.DAY -> plusDays(period.quantity)
+    SubscriptionPeriodType.WEEK -> plusDays(period.quantity * DAYS_IN_WEEK)
     SubscriptionPeriodType.MONTH -> {
         if (dayOfMonth == dayOfMonth().maximumValue) {
             plusMonths(period.quantity).dayOfMonth().withMaximumValue()
@@ -20,6 +23,7 @@ fun LocalDate.addPeriod(period: SubscriptionPeriod): LocalDate = when (period.ty
 
 fun LocalDate.minusPeriod(period: SubscriptionPeriod): LocalDate = when (period.type) {
     SubscriptionPeriodType.DAY -> minusDays(period.quantity)
+    SubscriptionPeriodType.WEEK -> minusDays(period.quantity * DAYS_IN_WEEK)
     SubscriptionPeriodType.MONTH -> minusMonths(period.quantity)
     SubscriptionPeriodType.YEAR -> minusYears(period.quantity)
 }
