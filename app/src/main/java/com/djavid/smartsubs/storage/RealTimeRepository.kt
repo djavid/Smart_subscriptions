@@ -2,6 +2,7 @@ package com.djavid.smartsubs.storage
 
 import com.djavid.smartsubs.analytics.CrashlyticsLogger
 import com.djavid.smartsubs.mappers.SubscriptionEntityMapper
+import com.djavid.smartsubs.models.PredefinedSubFirebaseEntity
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionFirebaseEntity
 import com.djavid.smartsubs.root.FirebaseAuthHelper
@@ -44,6 +45,26 @@ class RealTimeRepository(
                 }
         }
     }
+
+    suspend fun loadPredefinedSubs(): List<PredefinedSubFirebaseEntity> =
+        withContext(Dispatchers.IO) {
+            return@withContext suspendCoroutine { cont ->
+                Firebase.database.reference
+                    .child(DB_PREDEFINED_SUBS_ROOT)
+                    .get()
+                    .addOnSuccessListener { data ->
+                        val subs = data.children
+                            .mapNotNull { it.getValue(PredefinedSubFirebaseEntity::class.java) }
+
+                        cont.resume(subs)
+                    }
+                    .addOnFailureListener {
+                        CrashlyticsLogger.logException(it)
+                        cont.resume(emptyList())
+                    }
+            }
+        }
+
 
     suspend fun getSubs(): List<SubscriptionDao> = withContext(Dispatchers.IO) {
         val uid = authHelper.getUid() ?: return@withContext emptyList()
@@ -173,6 +194,7 @@ class RealTimeRepository(
 
     companion object {
         const val DB_SUBS_AUTH_ROOT = "subs_auth"
+        const val DB_PREDEFINED_SUBS_ROOT = "predefined_subs"
     }
 
 }
