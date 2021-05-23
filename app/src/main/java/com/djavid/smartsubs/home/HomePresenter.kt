@@ -53,7 +53,7 @@ class HomePresenter(
     }
 
     private fun showTgDialog() {
-        subscribeMediaNavigator.showSubscribeDialog()
+        //subscribeMediaNavigator.showSubscribeDialog() todo паблик пока мертв
     }
 
     private fun showInAppReview() {
