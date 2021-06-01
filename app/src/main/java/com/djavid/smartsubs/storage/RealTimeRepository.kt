@@ -21,32 +21,37 @@ class RealTimeRepository(
 ) {
 
     private val predefinedSubsCache = mutableListOf<PredefinedSubFirebaseEntity>()
+    private val subsCache = mutableListOf<SubscriptionDao>()
 
-    suspend fun getSubById(id: String): SubscriptionDao? = withContext(Dispatchers.IO) {
-        val uid = authHelper.getUid() ?: return@withContext null
+    suspend fun getSubById(id: String, allowCache: Boolean = false): SubscriptionDao? =
+        withContext(Dispatchers.IO) {
+            if (allowCache) {
+                return@withContext subsCache.find { it.id == id }
+            }
+            val uid = authHelper.getUid() ?: return@withContext null
 
-        return@withContext suspendCoroutine { cont ->
-            Firebase.database.reference
-                .child(DB_SUBS_AUTH_ROOT)
-                .child(uid)
-                .child(id)
-                .get()
-                .addOnSuccessListener { data ->
-                    println(data)
-                    val entity = data.getValue(SubscriptionFirebaseEntity::class.java)
+            return@withContext suspendCoroutine { cont ->
+                Firebase.database.reference
+                    .child(DB_SUBS_AUTH_ROOT)
+                    .child(uid)
+                    .child(id)
+                    .get()
+                    .addOnSuccessListener { data ->
+                        println(data)
+                        val entity = data.getValue(SubscriptionFirebaseEntity::class.java)
 
-                    if (entity != null) {
-                        cont.resume(subscriptionEntityMapper.fromFirebaseEntity(entity))
-                    } else {
+                        if (entity != null) {
+                            cont.resume(subscriptionEntityMapper.fromFirebaseEntity(entity))
+                        } else {
+                            cont.resume(null)
+                        }
+                    }
+                    .addOnFailureListener {
+                        CrashlyticsLogger.logException(it)
                         cont.resume(null)
                     }
-                }
-                .addOnFailureListener {
-                    CrashlyticsLogger.logException(it)
-                    cont.resume(null)
-                }
+            }
         }
-    }
 
     suspend fun getAllPredefinedSubs(allowCache: Boolean = false): List<PredefinedSubFirebaseEntity> =
         withContext(Dispatchers.IO) {
@@ -108,6 +113,8 @@ class RealTimeRepository(
                         .mapNotNull { it.getValue(SubscriptionFirebaseEntity::class.java) }
                         .map { entity -> subscriptionEntityMapper.fromFirebaseEntity(entity) }
 
+                    subsCache.clear()
+                    subsCache.addAll(subs)
                     cont.resume(subs)
                 }
                 .addOnFailureListener {

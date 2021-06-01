@@ -83,7 +83,7 @@ class CreateView(
 
     override fun setSubLogo(bytes: ByteArray?) {
         if (bytes == null) {
-            viewRoot.create_predefinedBtn.show(true)
+            viewRoot.create_predefinedBtn.show(false) //todo should be true on next release
             viewRoot.create_logoBtn.show(false)
         } else {
             viewRoot.create_predefinedBtn.show(false)

@@ -99,8 +99,8 @@ class SubscriptionPresenter(
         logger.onNotifsClicked()
     }
 
-    private suspend fun loadSub(id: String): Subscription? {
-        return subscriptionsRepository.getSubById(id)?.let {
+    private suspend fun loadSub(id: String): Subscription? = withContext(Dispatchers.IO) {
+        subscriptionsRepository.getSubById(id)?.let {
             modelMapper.fromDao(it)
         }
     }

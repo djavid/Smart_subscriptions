@@ -55,7 +55,7 @@ class CreatePresenter(
                 editMode = true
 
                 view.switchTitlesToEditMode()
-                fillForm(predefinedSubs.find { it.id == id })
+                fillForm(predefinedSubs.find { it.id == model.predefinedSubId })
             }
 
             updateSpinner()
@@ -82,10 +82,8 @@ class CreatePresenter(
         view.setSubLogo(item.imageBytes)
     }
 
-    private fun updateSpinner() {
-        val periods = periodItems.map { view.getPeriodString(it, model.period.quantity) }
-        view.setupSpinner(periods)
-        view.selectPeriodItem(periodItems.indexOf(model.period.type))
+    override fun onPredefinedBtnPressed() {
+        //todo show sub choosing screen
     }
 
     override fun onSubmitPressed() {
