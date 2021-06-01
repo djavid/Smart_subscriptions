@@ -29,7 +29,7 @@ class SubscriptionFragment : BaseFragment(R.layout.fragment_subscription), BackP
         override fun onReceive(context: Context?, intent: Intent?) {
             intent?.let {
                 if (it.action == ACTION_REFRESH) {
-                    presenter.reload()
+                    presenter.reload(false)
                 }
             }
         }

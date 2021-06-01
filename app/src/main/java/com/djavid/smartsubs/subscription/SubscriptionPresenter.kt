@@ -1,5 +1,6 @@
 package com.djavid.smartsubs.subscription
 
+import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CommonFragmentNavigator
 import com.djavid.smartsubs.create.CreateContract
@@ -9,9 +10,8 @@ import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPrice
 import com.djavid.smartsubs.notifications.NotificationsContract
-import com.djavid.smartsubs.utils.ACTION_REFRESH
-import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.storage.RealTimeRepository
+import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -46,12 +46,12 @@ class SubscriptionPresenter(
         view.showToolbar(true, SLIDE_DURATION)
 
         listenPipeline()
-        reload()
+        reload(true)
     }
 
-    override fun reload() {
+    override fun reload(allowCache: Boolean) {
         launch {
-            subscription = loadSub(id) ?: return@launch
+            subscription = loadSub(id, allowCache) ?: return@launch
             val notifsCount = notificationsRepository.getNotificationsBySubId(id).count()
 
             showContent(notifsCount)
@@ -64,7 +64,7 @@ class SubscriptionPresenter(
             channel = pipeline.subscribe()
             channel.consumeEach {
                 when (it.first) {
-                    ACTION_REFRESH -> reload()
+                    ACTION_REFRESH -> reload(false)
                 }
             }
         }
@@ -101,11 +101,12 @@ class SubscriptionPresenter(
         logger.onNotifsClicked()
     }
 
-    private suspend fun loadSub(id: String): Subscription? = withContext(Dispatchers.IO) {
-        subscriptionsRepository.getSubById(id)?.let {
-            modelMapper.fromDao(it)
+    private suspend fun loadSub(id: String, allowCache: Boolean): Subscription? =
+        withContext(Dispatchers.IO) {
+            subscriptionsRepository.getSubById(id, allowCache)?.let {
+                modelMapper.fromDao(it)
+            }
         }
-    }
 
     override fun onEditClicked() {
         createNavigator.goToCreateScreen(subscription.id)

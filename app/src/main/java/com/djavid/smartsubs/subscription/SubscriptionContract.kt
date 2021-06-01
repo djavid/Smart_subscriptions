@@ -27,7 +27,7 @@ interface SubscriptionContract {
 
     interface Presenter {
         fun init(id: String?, isRoot: Boolean)
-        fun reload()
+        fun reload(allowCache: Boolean)
         fun onBackPressed()
         fun onCloseBtnClicked()
         fun onEditClicked()

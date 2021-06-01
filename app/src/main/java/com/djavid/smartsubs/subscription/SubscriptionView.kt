@@ -11,6 +11,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.utils.DECIMAL_FORMAT
@@ -49,6 +50,7 @@ class SubscriptionView(
         if (bytes != null) {
             Glide.with(viewRoot.context)
                 .load(bytes)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewRoot.sub_logo)
         }
         viewRoot.sub_logo.show(bytes != null)

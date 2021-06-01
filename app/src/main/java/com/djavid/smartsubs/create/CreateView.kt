@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.models.SubscriptionPeriodType
@@ -90,6 +91,7 @@ class CreateView(
             viewRoot.create_logoBtn.show(true)
             Glide.with(viewRoot.context)
                 .load(bytes)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewRoot.create_logoBtn)
         }
     }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.PredefinedSuggestionItem
 import kotlinx.android.synthetic.main.suggestion_item.view.*
@@ -28,7 +29,10 @@ class SuggestionsAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
 
         val view = convertView ?: layoutInflater.inflate(R.layout.suggestion_item, parent, false)
-        Glide.with(parent.context).load(item?.imageBytes).into(view.suggestionLogo)
+        Glide.with(parent.context)
+            .load(item?.imageBytes)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(view.suggestionLogo)
         view.text1.text = item?.title
 
         return view

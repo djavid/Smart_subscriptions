@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.utils.show
@@ -64,6 +65,7 @@ class HomeView(
         viewRoot.home_subsRecycler.adapter = adapter
         viewRoot.home_subsRecycler.setHasFixedSize(true)
         viewRoot.home_subsRecycler.setItemViewCacheSize(20)
+        (viewRoot.home_subsRecycler.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
 
         //itemTouchHelper.attachToRecyclerView(viewRoot.home_subsRecycler)
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="toolbar_height">100dp</dimen>
-    <dimen name="subscription_toolbar_height">100dp</dimen>
+    <dimen name="toolbar_height">70dp</dimen>
+    <dimen name="subscription_toolbar_height">87dp</dimen>
     <dimen name="subscription_toolbar_without_category_height">65dp</dimen>
     <dimen name="edittext_height">38dp</dimen>
     <dimen name="button_height">38dp</dimen>
