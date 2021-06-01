@@ -62,6 +62,8 @@ class CreatePresenter(
 
                 view.switchTitlesToEditMode()
                 fillForm(predefinedSubs.find { it.subId == model.predefinedSubId })
+            } else {
+                view.setSubLogo(null)
             }
 
             updateSpinner()
