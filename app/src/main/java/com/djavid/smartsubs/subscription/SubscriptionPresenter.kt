@@ -33,6 +33,7 @@ class SubscriptionPresenter(
 
     private lateinit var channel: ReceiveChannel<Pair<String, String>>
     private lateinit var subscription: Subscription
+
     private var id: String = ""
     private var isRoot: Boolean = false
 
@@ -85,6 +86,7 @@ class SubscriptionPresenter(
         subscription.overallSpent?.let {
             view.setOverallSpent(SubscriptionPrice(it, subscription.price.currency))
         }
+        view.setSubLogo(subscription.logoBytes)
 
         //notifs
         view.showNotifsSection(false) //too much bugs, better to make notifs through server

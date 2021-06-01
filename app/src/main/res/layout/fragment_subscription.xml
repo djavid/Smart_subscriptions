@@ -16,6 +16,18 @@
         android:layout_height="@dimen/subscription_toolbar_height"
         app:layout_constraintTop_toTopOf="parent">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/sub_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/sub_category"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/sub_title"
+            tools:background="@color/colorBlue"
+            tools:visibility="visible" />
+
         <TextView
             android:id="@+id/sub_title"
             android:layout_width="0dp"
@@ -29,7 +41,7 @@
             android:textColor="@color/colorNero"
             android:textSize="21sp"
             app:layout_constraintEnd_toStartOf="@id/sub_closeBtn"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sub_logo"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Apple music" />
 
@@ -37,7 +49,6 @@
             android:id="@+id/sub_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/helvetica_medium"
@@ -46,7 +57,7 @@
             android:textSize="14sp"
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@id/sub_closeBtn"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/sub_title"
             app:layout_constraintTop_toBottomOf="@id/sub_title"
             tools:text="Семейная подписка"
             tools:visibility="visible" />
@@ -233,8 +244,8 @@
                     android:id="@+id/sub_notifDivider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:visibility="gone"
                     android:background="@color/colorWhisper"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/sub_notifsBtn" />
 
                 <FrameLayout

@@ -8,6 +8,7 @@ interface SubscriptionContract {
 
     interface View {
         fun init(presenter: Presenter)
+        fun setSubLogo(bytes: ByteArray?)
         fun expandPanel(biggerToolbar: Boolean)
         fun collapsePanel()
         fun showToolbar(show: Boolean, duration: Long)

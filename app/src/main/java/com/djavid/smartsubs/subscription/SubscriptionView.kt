@@ -2,7 +2,6 @@ package com.djavid.smartsubs.subscription
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
@@ -11,10 +10,13 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.bumptech.glide.Glide
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.*
-import com.djavid.smartsubs.utils.*
+import com.djavid.smartsubs.utils.DECIMAL_FORMAT
+import com.djavid.smartsubs.utils.animateAlpha
+import com.djavid.smartsubs.utils.hideKeyboard
+import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_subscription.view.*
 import java.text.DecimalFormat
@@ -41,6 +43,15 @@ class SubscriptionView(
 
     private fun setupBottomSheet() {
         bottomSheet = BottomSheetBehavior.from(viewRoot.sub_bottomSheet)
+    }
+
+    override fun setSubLogo(bytes: ByteArray?) {
+        if (bytes != null) {
+            Glide.with(viewRoot.context)
+                .load(bytes)
+                .into(viewRoot.sub_logo)
+        }
+        viewRoot.sub_logo.show(bytes != null)
     }
 
     override fun showDeletionPromptDialog() {
