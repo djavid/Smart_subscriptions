@@ -1,6 +1,5 @@
 package com.djavid.smartsubs.home
 
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.create.CreateContract
@@ -73,11 +72,14 @@ class HomePresenter(
                     ACTION_REFRESH -> {
                         reloadSubs()
 
-                        if (sharedPrefs.tgDialogTimesShown == 0) {
-                            showTgDialog()
-                        } else if (sharedPrefs.tgInAppReviewTimesShown == 0) {
+                        if (sharedPrefs.inAppReviewTimesShown < 2) {
                             showInAppReview()
                         }
+//                        if (sharedPrefs.tgDialogTimesShown == 0) {
+//                            showTgDialog()
+//                        } else if (sharedPrefs.inAppReviewTimesShown < 2) {
+//                            showInAppReview()
+//                        }
                     }
                 }
             }

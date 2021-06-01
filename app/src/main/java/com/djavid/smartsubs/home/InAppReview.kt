@@ -18,7 +18,7 @@ class InAppReview(
         requestReviewFlow(manager) {
             if (it != null) {
                 manager.launchReviewFlow(activity, it)
-                sharedPrefs.tgInAppReviewTimesShown++
+                sharedPrefs.inAppReviewTimesShown++
                 firebaseLogger.inAppReviewShowTry()
             }
         }

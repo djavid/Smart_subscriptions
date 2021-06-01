@@ -79,7 +79,7 @@ class SharedRepository(
             repository.edit().putInt(PREF_TG_DIALOG_TIMES_SHOWN, value).apply()
         }
 
-    var tgInAppReviewTimesShown: Int
+    var inAppReviewTimesShown: Int
         get() {
             return repository.getInt(PREF_IN_APP_REVIEW_TIMES_SHOWN, 0)
         }
