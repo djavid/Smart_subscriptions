@@ -57,8 +57,6 @@ class SubsAdapter(
 
         Glide.with(holder.itemView.context)
             .load(sub.logoBytes)
-            .placeholder(holder.logo.drawable)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.logo)
         holder.logo.show(sub.logoBytes != null)
         holder.title.text = sub.title

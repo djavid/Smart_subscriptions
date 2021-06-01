@@ -154,4 +154,9 @@
     <string name="title_subscribe">Подписаться</string>
     <!--endregion-->
 
+    <!--region sub list-->
+    <string name="title_select_sub">Выбрать подписку</string>
+    <string name="title_subs">Подписки</string>
+    <!--endregion-->
+
 </resources>

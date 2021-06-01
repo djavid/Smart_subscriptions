@@ -3,6 +3,7 @@ package com.djavid.smartsubs.storage
 import com.djavid.smartsubs.analytics.CrashlyticsLogger
 import com.djavid.smartsubs.mappers.SubscriptionEntityMapper
 import com.djavid.smartsubs.models.PredefinedSubFirebaseEntity
+import com.djavid.smartsubs.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionFirebaseEntity
 import com.djavid.smartsubs.root.FirebaseAuthHelper
@@ -17,7 +18,8 @@ import kotlin.coroutines.suspendCoroutine
 class RealTimeRepository(
     private val entityMapper: SubscriptionEntityMapper,
     private val authHelper: FirebaseAuthHelper,
-    private val subscriptionEntityMapper: SubscriptionEntityMapper
+    private val subscriptionEntityMapper: SubscriptionEntityMapper,
+    private val storageRepository: CloudStorageRepository
 ) {
 
     private val predefinedSubsCache = mutableListOf<PredefinedSubFirebaseEntity>()
@@ -53,7 +55,15 @@ class RealTimeRepository(
             }
         }
 
-    suspend fun getAllPredefinedSubs(allowCache: Boolean = false): List<PredefinedSubFirebaseEntity> =
+    suspend fun getAllPredefinedSubsWithLogo(allowCache: Boolean = false): List<PredefinedSuggestionItem> =
+        withContext(Dispatchers.IO) {
+            getAllPredefinedSubs(allowCache).mapNotNull {
+                val bytes = storageRepository.getSubLogoBytes(it.logoUrl) ?: return@mapNotNull null
+                PredefinedSuggestionItem(it.id, it.title, bytes, it.abbreviations)
+            }
+        }
+
+    private suspend fun getAllPredefinedSubs(allowCache: Boolean = false): List<PredefinedSubFirebaseEntity> =
         withContext(Dispatchers.IO) {
             if (predefinedSubsCache.isNotEmpty() && allowCache) {
                 return@withContext predefinedSubsCache

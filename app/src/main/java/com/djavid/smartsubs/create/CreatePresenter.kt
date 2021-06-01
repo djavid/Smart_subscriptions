@@ -3,14 +3,18 @@ package com.djavid.smartsubs.create
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CommonFragmentNavigator
-import com.djavid.smartsubs.models.*
-import com.djavid.smartsubs.storage.CloudStorageRepository
+import com.djavid.smartsubs.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.models.SubscriptionDao
+import com.djavid.smartsubs.models.SubscriptionPeriod
+import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.storage.RealTimeRepository
+import com.djavid.smartsubs.sub_list.SubListContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.DATE_TIME_FORMAT
 import com.djavid.smartsubs.utils.SLIDE_DURATION
-import kotlinx.android.synthetic.main.suggestion_item.view.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.util.*
@@ -19,19 +23,21 @@ class CreatePresenter(
     private val view: CreateContract.View,
     private val repository: RealTimeRepository,
     private val fragmentNavigator: CommonFragmentNavigator,
+    private val subListNavigator: SubListContract.Navigator,
     private val logger: FirebaseLogger,
-    private val pipeline: BasePipeline<Pair<String, String>>,
+    private val pipeline: BasePipeline<PredefinedSuggestionItem>,
+    private val pipelineString: BasePipeline<Pair<String, String>>,
     private val realTimeRepository: RealTimeRepository,
-    private val storageRepository: CloudStorageRepository,
     coroutineScope: CoroutineScope
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var model: SubscriptionDao
+    private lateinit var channel: ReceiveChannel<PredefinedSuggestionItem>
 
     private var editMode = false
     private val periodItems = SubscriptionPeriodType.values().toList()
     private var isTrialSub: Boolean = false
-    private val predefinedSubs = mutableListOf<PredefinedSubFirebaseEntity>()
+    private val predefinedSubs = mutableListOf<PredefinedSuggestionItem>()
 
     override fun init(id: String?) {
         view.init(this)
@@ -55,35 +61,38 @@ class CreatePresenter(
                 editMode = true
 
                 view.switchTitlesToEditMode()
-                fillForm(predefinedSubs.find { it.id == model.predefinedSubId })
+                fillForm(predefinedSubs.find { it.subId == model.predefinedSubId })
             }
 
             updateSpinner()
             view.enableInputs(true)
-            view.setSubLogo(null)
+        }
+
+        listenPipeline()
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun listenPipeline() {
+        launch(Dispatchers.Main) {
+            channel = pipeline.subscribe()
+            channel.consumeEach { onSuggestionItemClick(it) }
         }
     }
 
-    private fun loadPredefinedSubs() = launch(Dispatchers.Main) {
-        val matches = withContext(Dispatchers.IO) {
-            predefinedSubs.addAll(realTimeRepository.getAllPredefinedSubs(allowCache = true))
-
-            predefinedSubs.mapNotNull {
-                val bytes = storageRepository.getSubLogoBytes(it.logoUrl) ?: return@mapNotNull null
-                PredefinedSuggestionItem(it.id, it.title, bytes, it.abbreviations)
-            }
-        }
-
-        view.setupSuggestions(matches)
+    private suspend fun loadPredefinedSubs() = withContext(Dispatchers.Main) {
+        predefinedSubs.clear()
+        predefinedSubs.addAll(realTimeRepository.getAllPredefinedSubsWithLogo())
+        view.setupSuggestions(predefinedSubs)
     }
 
     override fun onSuggestionItemClick(item: PredefinedSuggestionItem) {
-        model = model.copy(predefinedSubId = item.subId)
+        model = model.copy(predefinedSubId = item.subId, title = item.title)
+        view.setTitle(item.title)
         view.setSubLogo(item.imageBytes)
     }
 
     override fun onPredefinedBtnPressed() {
-        //todo show sub choosing screen
+        subListNavigator.goToSubListScreen()
     }
 
     override fun onSubmitPressed() {
@@ -107,6 +116,7 @@ class CreatePresenter(
     }
 
     override fun onTitleInputChanged(input: String?) {
+        if (model.title == input) return
         model = model.copy(title = input ?: "", predefinedSubId = null)
         view.showTitleError(false)
         view.setSubLogo(null)
@@ -192,7 +202,7 @@ class CreatePresenter(
         return isValid
     }
 
-    private fun fillForm(predefinedSub: PredefinedSubFirebaseEntity?) {
+    private fun fillForm(predefinedSub: PredefinedSuggestionItem?) {
         view.setTitle(model.title)
         view.setPrice(model.price)
         view.setCurrencySymbol(model.currency)
@@ -208,18 +218,7 @@ class CreatePresenter(
             view.setComment(it)
         }
 
-        loadSubLogo(predefinedSub)
-    }
-
-    private fun loadSubLogo(sub: PredefinedSubFirebaseEntity?) {
-        launch {
-            val bytes = withContext(Dispatchers.IO) {
-                sub?.logoUrl?.let {
-                    storageRepository.getSubLogoBytes(it)
-                }
-            }
-            view.setSubLogo(bytes)
-        }
+        view.setSubLogo(predefinedSub?.imageBytes)
     }
 
     private fun updateSpinner() {
@@ -235,7 +234,7 @@ class CreatePresenter(
             view.showToolbar(false, SLIDE_DURATION)
             view.setBackgroundTransparent(true, SLIDE_DURATION)
             withContext(Dispatchers.Default) { delay(SLIDE_DURATION) }
-            pipeline.postValue(ACTION_REFRESH to "")
+            pipelineString.postValue(ACTION_REFRESH to "")
             fragmentNavigator.goBack()
         }
     }

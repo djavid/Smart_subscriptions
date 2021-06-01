@@ -22,6 +22,8 @@ import com.djavid.smartsubs.root.FirebaseAuthHelper
 import com.djavid.smartsubs.root.RootModule
 import com.djavid.smartsubs.sort.SortModule
 import com.djavid.smartsubs.sort.SortNavigationModule
+import com.djavid.smartsubs.sub_list.SubListModule
+import com.djavid.smartsubs.sub_list.SubListNavigatorModule
 import com.djavid.smartsubs.subscribe.SubscribeMediaModule
 import com.djavid.smartsubs.subscribe.SubscribeMediaNavigationModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
@@ -93,6 +95,7 @@ class Application : Application(), Configuration.Provider, KodeinAware {
     fun createComponent(fragment: Fragment) = Kodein.lazy {
         extend(kodein)
         import(CreateModule(fragment).kodein)
+        import(SubListNavigatorModule().kodein)
     }
 
     fun subscriptionComponent(fragment: Fragment) = Kodein.lazy {
@@ -136,6 +139,11 @@ class Application : Application(), Configuration.Provider, KodeinAware {
     fun subscribeMediaComponent(fragment: Fragment) = Kodein.lazy {
         extend(kodein)
         import(SubscribeMediaModule(fragment).kodein)
+    }
+
+    fun subListComponent(fragment: Fragment) = Kodein.lazy {
+        extend(kodein)
+        import(SubListModule(fragment).kodein)
     }
 
 }

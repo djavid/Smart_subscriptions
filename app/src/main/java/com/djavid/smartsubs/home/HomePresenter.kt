@@ -42,7 +42,7 @@ class HomePresenter(
 
         launch(Dispatchers.IO) {
             //preloading subs
-            repository.getAllPredefinedSubs()
+            repository.getAllPredefinedSubsWithLogo(false)
         }
 
         if (sharedPrefs.firstTimeOpened) {

@@ -84,14 +84,13 @@ class CreateView(
 
     override fun setSubLogo(bytes: ByteArray?) {
         if (bytes == null) {
-            viewRoot.create_predefinedBtn.show(false) //todo should be true on next release
+            viewRoot.create_predefinedBtn.show(true)
             viewRoot.create_logoBtn.show(false)
         } else {
             viewRoot.create_predefinedBtn.show(false)
             viewRoot.create_logoBtn.show(true)
             Glide.with(viewRoot.context)
                 .load(bytes)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewRoot.create_logoBtn)
         }
     }

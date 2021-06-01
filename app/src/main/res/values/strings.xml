@@ -156,4 +156,9 @@
     <string name="title_subscribe">Subscribe</string>
     <!--endregion-->
 
+    <!--region sub list-->
+    <string name="title_select_sub">Select subscription</string>
+    <string name="title_subs">Subscriptions</string>
+    <!--endregion-->
+
 </resources>

@@ -50,7 +50,6 @@ class SubscriptionView(
         if (bytes != null) {
             Glide.with(viewRoot.context)
                 .load(bytes)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewRoot.sub_logo)
         }
         viewRoot.sub_logo.show(bytes != null)

@@ -2,6 +2,7 @@ package com.djavid.smartsubs.create
 
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.djavid.smartsubs.common.CommonFragmentNavigator
 import kotlinx.android.synthetic.main.fragment_create.*
 import org.kodein.di.Kodein
@@ -15,12 +16,13 @@ class CreateModule(fragment: Fragment) {
         bind<CreateContract.Presenter>() with singleton {
             CreatePresenter(
                 instance(), instance(), instance(), instance(), instance(), instance(),
-                instance(), instance()
+                instance(), instance(), instance()
             )
         }
+        bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
         bind<CreateContract.View>() with singleton { CreateView(instance()) }
         bind<CommonFragmentNavigator>() with singleton {
-            CommonFragmentNavigator(fragment.requireActivity().supportFragmentManager)
+            CommonFragmentNavigator(instance())
         }
     }
 }

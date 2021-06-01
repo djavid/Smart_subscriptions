@@ -31,7 +31,6 @@ class SuggestionsAdapter(
         val view = convertView ?: layoutInflater.inflate(R.layout.suggestion_item, parent, false)
         Glide.with(parent.context)
             .load(item?.imageBytes)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(view.suggestionLogo)
         view.text1.text = item?.title
 
