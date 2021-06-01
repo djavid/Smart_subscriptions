@@ -7,13 +7,17 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import com.bumptech.glide.Glide
 import com.djavid.smartsubs.R
+import com.djavid.smartsubs.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getSubPeriodString
 import com.djavid.smartsubs.models.getSymbolForCurrency
 import com.djavid.smartsubs.utils.animateAlpha
 import com.djavid.smartsubs.utils.hideKeyboard
+import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_create.view.*
 import org.joda.time.DateTimeZone
@@ -32,9 +36,9 @@ class CreateView(
         setupBottomSheet()
         setupFormInputs()
 
-        viewRoot.create_closeBtn.setOnClickListener {
-            presenter.onCancelPressed()
-        }
+        viewRoot.create_closeBtn.setOnClickListener { presenter.onCancelPressed() }
+        viewRoot.create_logoBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
+        viewRoot.create_predefinedBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
     }
 
     private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -66,6 +70,27 @@ class CreateView(
         }
         create_submitBtn.setOnClickListener {
             presenter.onSubmitPressed()
+        }
+    }
+
+    override fun setupSuggestions(items: List<PredefinedSuggestionItem>) {
+        val adapter = SuggestionsAdapter(items, viewRoot.context)
+        viewRoot.create_titleInput.setAdapter(adapter)
+        viewRoot.create_titleInput.setOnItemClickListener { _, _, position, _ ->
+            presenter.onSuggestionItemClick(items[position])
+        }
+    }
+
+    override fun setSubLogo(bytes: ByteArray?) {
+        if (bytes == null) {
+            viewRoot.create_predefinedBtn.show(true)
+            viewRoot.create_logoBtn.show(false)
+        } else {
+            viewRoot.create_predefinedBtn.show(false)
+            viewRoot.create_logoBtn.show(true)
+            Glide.with(viewRoot.context)
+                .load(bytes)
+                .into(viewRoot.create_logoBtn)
         }
     }
 
@@ -113,7 +138,7 @@ class CreateView(
     }
 
     override fun setupSpinner(periods: List<String>) {
-        val adapter = ArrayAdapter<String>(viewRoot.context, R.layout.spinner_item, periods)
+        val adapter = ArrayAdapter(viewRoot.context, R.layout.spinner_item, periods)
         viewRoot.create_periodSelector.adapter = adapter
         viewRoot.create_periodSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -173,7 +198,7 @@ class CreateView(
 
     override fun showPriceError(show: Boolean) {
         val drawable = if (show) R.drawable.bg_edittext_error else R.drawable.bg_edittext
-        viewRoot.create_priceInput.background = viewRoot.context.getDrawable(drawable)
+        viewRoot.create_priceInput.background = ContextCompat.getDrawable(viewRoot.context, drawable)
     }
 
     override fun showQuantityError(show: Boolean) {

@@ -25,7 +25,8 @@ class SubscriptionEntityMapper {
             entity.paymentDate?.let { LocalDate(it) },
             entity.category,
             entity.comment,
-            entity.trialPaymentDate?.let { LocalDate(it) }
+            entity.trialPaymentDate?.let { LocalDate(it) },
+            null
         )
     }
 
@@ -44,7 +45,8 @@ class SubscriptionEntityMapper {
             model.category,
             model.comment,
             model.trialPaymentDate?.toDateTimeAtStartOfDay(timeZone)?.millis,
-            true
+            true,
+            model.predefinedSubId
         )
     }
 
@@ -61,7 +63,8 @@ class SubscriptionEntityMapper {
             entity.paymentDate?.let { LocalDate(it) },
             entity.category,
             entity.comment,
-            entity.trialPaymentDate?.let { LocalDate(it) }
+            entity.trialPaymentDate?.let { LocalDate(it) },
+            entity.predefinedSubId
         )
     }
 

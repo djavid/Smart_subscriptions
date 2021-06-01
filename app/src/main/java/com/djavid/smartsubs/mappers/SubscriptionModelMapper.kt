@@ -4,16 +4,23 @@ import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionPrice
 import com.djavid.smartsubs.models.SubscriptionProgress
+import com.djavid.smartsubs.storage.CloudStorageRepository
+import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.utils.addPeriod
 import com.djavid.smartsubs.utils.getFirstPeriodBeforeNow
 import com.djavid.smartsubs.utils.getPeriodsCountBeforeNow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.Days
 import org.joda.time.LocalDate
 import java.util.*
 
-class SubscriptionModelMapper {
+class SubscriptionModelMapper(
+    private val storageRepository: CloudStorageRepository,
+    private val repository: RealTimeRepository
+) {
 
     private fun getProgressForTrialSub(dao: SubscriptionDao): SubscriptionProgress? {
         return if (dao.trialPaymentDate != null) {
@@ -54,7 +61,7 @@ class SubscriptionModelMapper {
         }
     }
 
-    fun fromDao(dao: SubscriptionDao): Subscription {
+    suspend fun fromDao(dao: SubscriptionDao): Subscription = withContext(Dispatchers.IO) {
         val subscriptionProgress = when {
             dao.trialPaymentDate != null -> getProgressForTrialSub(dao)
             dao.paymentDate != null -> getProgressForSub(dao)
@@ -72,8 +79,13 @@ class SubscriptionModelMapper {
         }
 
         val subscriptionPrice = SubscriptionPrice(dao.price, dao.currency)
+        val logoBytes = dao.predefinedSubId?.let {
+            repository.getPredefinedSub(it)?.logoUrl?.let { logoUrl ->
+                storageRepository.getSubLogoBytes(logoUrl)
+            }
+        }
 
-        return Subscription(
+        Subscription(
             dao.id,
             dao.title,
             subscriptionPrice,
@@ -82,7 +94,8 @@ class SubscriptionModelMapper {
             dao.category,
             overallSpent,
             dao.comment,
-            dao.trialPaymentDate
+            dao.trialPaymentDate,
+            logoBytes
         )
     }
 

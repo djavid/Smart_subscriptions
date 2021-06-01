@@ -4,6 +4,8 @@ import android.app.Activity
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -17,6 +19,7 @@ class HomeModule(fragment: Fragment) {
         }
         bind<Activity>() with singleton { fragment.requireActivity() }
         bind<View>() with singleton { fragment.homeFragment }
+        bind<LifecycleCoroutineScope>() with singleton { fragment.lifecycleScope }
         bind<HomeContract.Presenter>() with singleton {
             HomePresenter(
                 instance(), instance(), instance(), instance(), instance(), instance(), instance(),

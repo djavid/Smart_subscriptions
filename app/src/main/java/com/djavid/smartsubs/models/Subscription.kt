@@ -16,7 +16,8 @@ data class Subscription(
     val category: String?,
     val overallSpent: Double?,
     val comment: String?,
-    val trialPaymentDate: LocalDate?
+    val trialPaymentDate: LocalDate?,
+    val logoBytes: ByteArray?
 ) {
     fun isTrial() = trialPaymentDate != null
 }

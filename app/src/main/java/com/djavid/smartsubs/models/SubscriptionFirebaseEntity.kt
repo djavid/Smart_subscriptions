@@ -12,5 +12,6 @@ data class SubscriptionFirebaseEntity(
     val category: String? = null,
     val comment: String? = null,
     val trialPaymentDate: Long? = null,
-    val loaded: Boolean = false
+    val loaded: Boolean = false,
+    val predefinedSubId: String? = null
 )

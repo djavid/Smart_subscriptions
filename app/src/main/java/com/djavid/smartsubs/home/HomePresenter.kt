@@ -1,5 +1,7 @@
 package com.djavid.smartsubs.home
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.create.CreateContract
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
@@ -11,11 +13,9 @@ import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.storage.SharedRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.launch
 import java.util.*
 
 class HomePresenter(
@@ -30,8 +30,8 @@ class HomePresenter(
     private val logger: FirebaseLogger,
     private val subscribeMediaNavigator: SubscribeMediaContract.Navigator,
     private val inAppReview: InAppReview,
-    coroutineScope: CoroutineScope
-) : HomeContract.Presenter, CoroutineScope by coroutineScope {
+    lifecycle: LifecycleCoroutineScope
+) : HomeContract.Presenter, CoroutineScope by lifecycle {
 
     private lateinit var channel: ReceiveChannel<Pair<String, String>>
     private var subs = listOf<Subscription>()
@@ -39,7 +39,11 @@ class HomePresenter(
     override fun init() {
         view.init(this)
         view.slidePanelToTop()
-        view.setSubsPeriod(sharedPrefs.selectedSubsPeriod)
+
+        launch(Dispatchers.IO) {
+            //preloading subs
+            repository.getAllPredefinedSubs()
+        }
 
         if (sharedPrefs.firstTimeOpened) {
             onFirstOpen()
@@ -85,14 +89,13 @@ class HomePresenter(
             repository.updateTrialSubs()
             subs = repository.getSubs().map { modelMapper.fromDao(it) }.toMutableList()
             subs = applySortPreferences(subs)
-
-            view.setSubsCount(subs.count())
-
             val price = SubscriptionPrice(calculateSubsPrice(), sharedPrefs.selectedCurrency)
+
+            view.showProgress(false)
+            view.setSubsCount(subs.count())
             view.setSubsPrice(price)
-
+            view.setSubsPeriod(sharedPrefs.selectedSubsPeriod)
             view.showEmptyPlaceholder(subs.isEmpty())
-
             if (subs.isNotEmpty()) {
                 view.showSubs(subs, sharedPrefs.selectedSubsPeriod)
             }

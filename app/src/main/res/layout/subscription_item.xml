@@ -9,6 +9,18 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/sub_logo"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/sub_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/colorBlue"
+        tools:visibility="visible" />
+
     <TextView
         android:id="@+id/sub_title"
         android:layout_width="0dp"
@@ -20,7 +32,7 @@
         android:textColor="@color/colorNero"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/sub_price"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/sub_logo"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="EA Access" />
 
@@ -36,8 +48,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/helvetica_medium"
-        android:singleLine="true"
         android:maxLines="1"
+        android:singleLine="true"
         android:textColor="@color/colorNero"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

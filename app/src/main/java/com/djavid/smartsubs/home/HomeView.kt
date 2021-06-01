@@ -50,6 +50,10 @@ class HomeView(
         viewRoot.home_emptyPlaceholder.show(show)
     }
 
+    override fun showProgress(show: Boolean) {
+        viewRoot.home_progressBar.show(show)
+    }
+
     private fun setupBottomSheet() {
         bottomSheet = BottomSheetBehavior.from(viewRoot.home_sheetContainer)
     }
@@ -93,6 +97,7 @@ class HomeView(
     }
 
     override fun setSubsPeriod(period: SubscriptionPeriodType) {
+        viewRoot.home_periodSelector.show(true)
         viewRoot.home_periodSelector.text = viewRoot.context.getSubPeriodString(period)
     }
 

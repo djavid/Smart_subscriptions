@@ -22,4 +22,23 @@ class CloudStorageRepository {
         }
     }
 
+    suspend fun getSubLogoBytes(storageUrl: String): ByteArray? {
+        return suspendCoroutine { cont ->
+            val gsReference = storage.getReferenceFromUrl(storageUrl)
+
+            gsReference.getBytes(ONE_MEGABYTE)
+                .addOnSuccessListener { bytes ->
+                    cont.resume(bytes)
+                }
+                .addOnFailureListener {
+                    cont.resume(null)
+                }
+        }
+    }
+
+    companion object {
+        private const val ONE_MEGABYTE = 1_000_000L
+    }
+
+
 }

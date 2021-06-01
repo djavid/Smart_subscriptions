@@ -20,6 +20,8 @@ class RealTimeRepository(
     private val subscriptionEntityMapper: SubscriptionEntityMapper
 ) {
 
+    private val predefinedSubsCache = mutableListOf<PredefinedSubFirebaseEntity>()
+
     suspend fun getSubById(id: String): SubscriptionDao? = withContext(Dispatchers.IO) {
         val uid = authHelper.getUid() ?: return@withContext null
 
@@ -46,8 +48,12 @@ class RealTimeRepository(
         }
     }
 
-    suspend fun loadPredefinedSubs(): List<PredefinedSubFirebaseEntity> =
+    suspend fun getAllPredefinedSubs(allowCache: Boolean = false): List<PredefinedSubFirebaseEntity> =
         withContext(Dispatchers.IO) {
+            if (predefinedSubsCache.isNotEmpty() && allowCache) {
+                return@withContext predefinedSubsCache
+            }
+
             return@withContext suspendCoroutine { cont ->
                 Firebase.database.reference
                     .child(DB_PREDEFINED_SUBS_ROOT)
@@ -56,6 +62,8 @@ class RealTimeRepository(
                         val subs = data.children
                             .mapNotNull { it.getValue(PredefinedSubFirebaseEntity::class.java) }
 
+                        predefinedSubsCache.clear()
+                        predefinedSubsCache.addAll(subs)
                         cont.resume(subs)
                     }
                     .addOnFailureListener {
@@ -65,6 +73,27 @@ class RealTimeRepository(
             }
         }
 
+    suspend fun getPredefinedSub(id: String): PredefinedSubFirebaseEntity? =
+        withContext(Dispatchers.IO) {
+            return@withContext suspendCoroutine { cont ->
+                Firebase.database.reference
+                    .child(DB_PREDEFINED_SUBS_ROOT)
+                    .orderByChild("id")
+                    .equalTo(id)
+                    .get()
+                    .addOnSuccessListener { data ->
+                        val subs = data.children.mapNotNull {
+                            it.getValue(PredefinedSubFirebaseEntity::class.java)
+                        }
+
+                        cont.resume(subs.firstOrNull())
+                    }
+                    .addOnFailureListener {
+                        CrashlyticsLogger.logException(it)
+                        cont.resume(null)
+                    }
+            }
+        }
 
     suspend fun getSubs(): List<SubscriptionDao> = withContext(Dispatchers.IO) {
         val uid = authHelper.getUid() ?: return@withContext emptyList()

@@ -9,14 +9,15 @@ import android.widget.Space
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getPriceInPeriod
 import com.djavid.smartsubs.models.getSymbolForCurrency
 import com.djavid.smartsubs.utils.*
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.subscription_item.view.*
-import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
 class SubsAdapter(
@@ -48,6 +49,8 @@ class SubsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sub = data[position]
 
+        Glide.with(holder.itemView.context).load(sub.logoBytes).into(holder.logo)
+        holder.logo.show(sub.logoBytes != null)
         holder.title.text = sub.title
         holder.itemView.setOnClickListener { onClick(sub.id) }
 
@@ -59,7 +62,8 @@ class SubsAdapter(
     private fun setupPrice(holder: ViewHolder, sub: Subscription) {
         val currencySymbol = context.getSymbolForCurrency(sub.price.currency)
         val priceForPeriod = sub.getPriceInPeriod(pricePeriod).roundToInt().toString()
-        val priceColor = ContextCompat.getColor(context,
+        val priceColor = ContextCompat.getColor(
+            context,
             if (sub.isTrial()) R.color.colorPinkishOrange else R.color.colorNero
         )
 
@@ -97,18 +101,19 @@ class SubsAdapter(
     private fun ProgressBar.setProgressColor(leftProgress: Double) {
         when {
             leftProgress >= CONST_GREEN_PROGRESS_MIN_PERCENT -> {
-                progressDrawable = context.getDrawable(R.drawable.progress_green_drawable)
+                progressDrawable = ContextCompat.getDrawable(context, R.drawable.progress_green_drawable)
             }
             leftProgress >= CONST_ORANGE_PROGRESS_MIN_PERCENT -> {
-                progressDrawable = context.getDrawable(R.drawable.progress_orange_drawable)
+                progressDrawable = ContextCompat.getDrawable(context, R.drawable.progress_orange_drawable)
             }
             leftProgress >= CONST_RED_PROGRESS_MIN_PERCENT -> {
-                progressDrawable = context.getDrawable(R.drawable.progress_red_drawable)
+                progressDrawable = ContextCompat.getDrawable(context, R.drawable.progress_red_drawable)
             }
         }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val logo: CircleImageView = itemView.sub_logo
         val title: TextView = itemView.sub_title
         val price: TextView = itemView.sub_price
         val progressBar: ProgressBar = itemView.sub_progressBar

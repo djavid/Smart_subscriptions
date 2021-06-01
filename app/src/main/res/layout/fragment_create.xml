@@ -37,10 +37,10 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="25dp"
             android:padding="3dp"
-            android:tint="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_close_24px" />
+            app:srcCompat="@drawable/ic_close_24px"
+            app:tint="@android:color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,18 +87,42 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.djavid.smartsubs.common.view.ClosableEditText
+                <com.djavid.smartsubs.common.view.ClosableAutoCompleteView
                     android:id="@+id/create_titleInput"
                     style="@style/InputStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="56dp"
                     android:hint="@string/hint_title"
                     android:inputType="text"
                     android:maxLength="30"
                     app:layout_constraintTop_toBottomOf="@id/create_titleTextView" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/create_logoBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/create_titleInput"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/create_titleInput"
+                    app:layout_constraintTop_toTopOf="@id/create_titleInput"
+                    tools:background="@color/colorBlue"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/create_predefinedBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_format_list_bulleted_24px"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@id/create_titleInput"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/create_titleInput"
+                    app:layout_constraintTop_toTopOf="@id/create_titleInput"
+                    tools:visibility="gone" />
 
                 <TextView
                     android:id="@+id/create_paymentTextView"
@@ -129,7 +153,7 @@
 
                 <TextView
                     android:id="@+id/create_currencySymbol"
-                    android:layout_width="wrap_content"
+                    android:layout_width="24dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/helvetica_medium"
@@ -186,11 +210,11 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="16dp"
-                    android:tint="@android:color/black"
                     app:layout_constraintBottom_toBottomOf="@id/create_periodSelector"
                     app:layout_constraintEnd_toEndOf="@id/create_periodSelector"
                     app:layout_constraintTop_toTopOf="@id/create_periodSelector"
-                    app:srcCompat="@drawable/ic_expand_more_24px" />
+                    app:srcCompat="@drawable/ic_expand_more_24px"
+                    app:tint="@android:color/black" />
 
                 <CheckBox
                     android:id="@+id/create_trialPeriodCheckbox"

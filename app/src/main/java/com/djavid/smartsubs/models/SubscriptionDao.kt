@@ -15,4 +15,5 @@ data class SubscriptionDao(
     val category: String?,
     val comment: String?,
     val trialPaymentDate: LocalDate?,
+    val predefinedSubId: String?
 )

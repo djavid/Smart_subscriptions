@@ -25,6 +25,7 @@ interface HomeContract {
         fun setSubsPrice(price: SubscriptionPrice)
         fun setSubsPeriod(period: SubscriptionPeriodType)
         fun showEmptyPlaceholder(show: Boolean)
+        fun showProgress(show: Boolean)
     }
 
     interface Navigator {
