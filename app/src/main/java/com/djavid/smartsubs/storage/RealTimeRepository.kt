@@ -79,11 +79,11 @@ class RealTimeRepository(
 
                         predefinedSubsCache.clear()
                         predefinedSubsCache.addAll(subs)
-                        cont.resume(subs)
+                        cont.resume(subs.toMutableList())
                     }
                     .addOnFailureListener {
                         CrashlyticsLogger.logException(it)
-                        cont.resume(emptyList())
+                        cont.resume(mutableListOf())
                     }
             }
         }
@@ -219,7 +219,7 @@ class RealTimeRepository(
     suspend fun isEmpty(): Boolean? = withContext(Dispatchers.IO) {
         val uid = authHelper.getUid() ?: return@withContext false
 
-        return@withContext suspendCoroutine { cont ->
+        return@withContext suspendCoroutine<Boolean?> { cont ->
             Firebase.database.reference
                 .child(DB_SUBS_AUTH_ROOT)
                 .child(uid)

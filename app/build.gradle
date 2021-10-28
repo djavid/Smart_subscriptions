@@ -6,12 +6,12 @@ apply plugin: 'com.squareup.sqldelight'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.djavid.smartsubs"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 11
         versionName "0.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -48,6 +48,8 @@ sqldelight {
 }
 
 dependencies {
+    implementation project(':shared')
+
     //kotlin
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -58,16 +60,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //android
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
-    implementation "com.google.android.material:material:1.3.0"
+    implementation "com.google.android.material:material:1.4.0"
     implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
     // lifecycle https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-common-java8
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.4.0"
 
     //kodein
     implementation 'org.kodein.di:kodein-di-generic-jvm:6.5.0'
@@ -78,7 +80,7 @@ dependencies {
 
     //coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
 
     //pretty time
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'

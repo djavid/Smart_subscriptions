@@ -32,6 +32,7 @@
             android:name=".root.RootActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:exported="true"
             android:windowSoftInputMode="adjustNothing"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
