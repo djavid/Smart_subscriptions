@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BackPressListener
+import com.djavid.smartsubs.databinding.ActivityRootBinding
 import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
@@ -18,12 +19,15 @@ class RootActivity : AppCompatActivity(), KodeinAware {
     private val presenter: RootContract.Presenter by instance()
     private val authHelper: FirebaseAuthHelper by instance()
 
+    private lateinit var binding: ActivityRootBinding
+
     override lateinit var kodein: Kodein
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_root)
-        kodein = (application as Application).rootComponent(this)
+        binding = ActivityRootBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        kodein = (application as Application).rootComponent(this, binding)
         lifecycle.addObserver(authHelper)
 
         val subId = intent.getStringExtra(KEY_SUBSCRIPTION_ID)

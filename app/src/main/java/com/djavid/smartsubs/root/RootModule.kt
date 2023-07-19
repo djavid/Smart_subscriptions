@@ -1,17 +1,16 @@
 package com.djavid.smartsubs.root
 
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import kotlinx.android.synthetic.main.activity_root.*
+import com.djavid.smartsubs.databinding.ActivityRootBinding
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 
-class RootModule(activity: AppCompatActivity) {
+class RootModule(activity: AppCompatActivity, binding: ActivityRootBinding) {
     val kodein = Kodein.Module("root_module") {
-        bind<View>() with singleton { activity.rootActivity }
+        bind<ActivityRootBinding>() with singleton { binding }
         bind<RootContract.View>() with singleton {
             RootView(instance())
         }

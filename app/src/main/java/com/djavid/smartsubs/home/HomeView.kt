@@ -1,21 +1,22 @@
 package com.djavid.smartsubs.home
 
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.djavid.smartsubs.R
+import com.djavid.smartsubs.databinding.FragmentHomeBinding
 import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlin.math.roundToInt
 
 class HomeView(
-    private val viewRoot: View
+    private val binding: FragmentHomeBinding
 ) : HomeContract.View {
+
+    private val context = binding.root.context
 
     private lateinit var presenter: HomeContract.Presenter
     private lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
@@ -42,38 +43,38 @@ class HomeView(
         setupBottomSheet()
         setupRecycler()
 
-        viewRoot.home_periodSelector.setOnClickListener { presenter.onPeriodPressed() }
-        viewRoot.home_addBtn.setOnClickListener { presenter.onAddSubPressed() }
-        viewRoot.home_sortBtn.setOnClickListener { presenter.onSortBtnPressed() }
+        binding.homePeriodSelector.setOnClickListener { presenter.onPeriodPressed() }
+        binding.homeAddBtn.setOnClickListener { presenter.onAddSubPressed() }
+        binding.homeSortBtn.setOnClickListener { presenter.onSortBtnPressed() }
     }
 
     override fun showEmptyPlaceholder(show: Boolean) {
-        viewRoot.home_emptyPlaceholder.show(show)
+        binding.homeEmptyPlaceholder.show(show)
     }
 
     override fun showProgress(show: Boolean) {
-        viewRoot.home_progressBar.show(show)
+        binding.homeProgressBar.show(show)
     }
 
     private fun setupBottomSheet() {
-        bottomSheet = BottomSheetBehavior.from(viewRoot.home_sheetContainer)
+        bottomSheet = BottomSheetBehavior.from(binding.homeSheetContainer)
     }
 
     private fun setupRecycler() {
-        adapter = SubsAdapter(viewRoot.context, presenter::onItemClick)
-        viewRoot.home_subsRecycler.layoutManager = LinearLayoutManager(viewRoot.context)
-        viewRoot.home_subsRecycler.adapter = adapter
-        viewRoot.home_subsRecycler.setHasFixedSize(true)
-        viewRoot.home_subsRecycler.setItemViewCacheSize(20)
-        (viewRoot.home_subsRecycler.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
+        adapter = SubsAdapter(context, presenter::onItemClick)
+        binding.homeSubsRecycler.layoutManager = LinearLayoutManager(context)
+        binding.homeSubsRecycler.adapter = adapter
+        binding.homeSubsRecycler.setHasFixedSize(true)
+        binding.homeSubsRecycler.setItemViewCacheSize(20)
+        (binding.homeSubsRecycler.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
 
         //itemTouchHelper.attachToRecyclerView(viewRoot.home_subsRecycler)
     }
 
     override fun slidePanelToTop() {
-        viewRoot.post {
-            val offset = viewRoot.context.resources.getDimensionPixelOffset(R.dimen.toolbar_height)
-            bottomSheet.setPeekHeight(viewRoot.height - offset, true)
+        binding.root.post {
+            val offset = context.resources.getDimensionPixelOffset(R.dimen.toolbar_height)
+            bottomSheet.setPeekHeight(binding.root.height - offset, true)
         }
     }
 
@@ -87,20 +88,20 @@ class HomeView(
     }
 
     override fun setSubsCount(count: Int) {
-        val plural = viewRoot.context.resources.getQuantityString(R.plurals.plural_sub, count)
-        viewRoot.home_subsCount.text = viewRoot.context.getString(R.string.mask_subs_count, count, plural)
+        val plural = context.resources.getQuantityString(R.plurals.plural_sub, count)
+        binding.homeSubsCount.text = context.getString(R.string.mask_subs_count, count, plural)
     }
 
     override fun setSubsPrice(price: SubscriptionPrice) {
-        val currencySymbol = viewRoot.context.getSymbolForCurrency(price.currency)
+        val currencySymbol = context.getSymbolForCurrency(price.currency)
         val priceToShow = price.value.roundToInt().toString()
 
-        viewRoot.home_subsPrice.text = viewRoot.context.getString(R.string.mask_price, priceToShow, currencySymbol)
+        binding.homeSubsPrice.text = context.getString(R.string.mask_price, priceToShow, currencySymbol)
     }
 
     override fun setSubsPeriod(period: SubscriptionPeriodType) {
-        viewRoot.home_periodSelector.show(true)
-        viewRoot.home_periodSelector.text = viewRoot.context.getSubPeriodString(period)
+        binding.homePeriodSelector.show(true)
+        binding.homePeriodSelector.text = context.getSubPeriodString(period)
     }
 
 }

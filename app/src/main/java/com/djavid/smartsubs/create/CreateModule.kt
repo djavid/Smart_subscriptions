@@ -1,18 +1,20 @@
 package com.djavid.smartsubs.create
 
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.djavid.smartsubs.common.CommonFragmentNavigator
-import kotlinx.android.synthetic.main.fragment_create.*
+import com.djavid.smartsubs.databinding.FragmentCreateBinding
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 
-class CreateModule(fragment: Fragment) {
+class CreateModule(
+    fragment: Fragment,
+    binding: FragmentCreateBinding
+) {
     val kodein = Kodein.Module("create_module") {
-        bind<View>() with singleton { fragment.create_fragment }
+        bind<FragmentCreateBinding>() with singleton { binding }
         bind<CreateContract.Presenter>() with singleton {
             CreatePresenter(
                 instance(), instance(), instance(), instance(), instance(), instance(),

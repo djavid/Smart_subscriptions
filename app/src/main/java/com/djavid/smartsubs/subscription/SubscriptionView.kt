@@ -6,24 +6,22 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
-import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.smartsubs.R
+import com.djavid.smartsubs.databinding.FragmentSubscriptionBinding
 import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.utils.DECIMAL_FORMAT
 import com.djavid.smartsubs.utils.animateAlpha
 import com.djavid.smartsubs.utils.hideKeyboard
 import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.fragment_subscription.view.*
 import java.text.DecimalFormat
 
 class SubscriptionView(
-    private val viewRoot: View
+    private val binding: FragmentSubscriptionBinding
 ) : SubscriptionContract.View {
 
     private lateinit var bottomSheet: BottomSheetBehavior<FrameLayout>
@@ -36,23 +34,23 @@ class SubscriptionView(
     }
 
     private fun setupView() {
-        viewRoot.sub_closeBtn.setOnClickListener { presenter.onCloseBtnClicked() }
-        viewRoot.sub_editBtn.setOnClickListener { presenter.onEditClicked() }
-        viewRoot.sub_deleteBtn.setOnClickListener { presenter.onDeleteClicked() }
-        viewRoot.sub_notifsBtn.setOnClickListener { presenter.onNotifsClicked() }
+        binding.subCloseBtn.setOnClickListener { presenter.onCloseBtnClicked() }
+        binding.subEditBtn.setOnClickListener { presenter.onEditClicked() }
+        binding.subDeleteBtn.setOnClickListener { presenter.onDeleteClicked() }
+        binding.subNotifsBtn.setOnClickListener { presenter.onNotifsClicked() }
     }
 
     private fun setupBottomSheet() {
-        bottomSheet = BottomSheetBehavior.from(viewRoot.sub_bottomSheet)
+        bottomSheet = BottomSheetBehavior.from(binding.subBottomSheet)
     }
 
     override fun setSubLogo(bytes: ByteArray?) {
         if (bytes != null) {
-            Glide.with(viewRoot.context)
+            Glide.with(binding.root.context)
                 .load(bytes)
-                .into(viewRoot.sub_logo)
+                .into(binding.subLogo)
         }
-        viewRoot.sub_logo.show(bytes != null)
+        binding.subLogo.show(bytes != null)
     }
 
     override fun showDeletionPromptDialog() {
@@ -67,28 +65,28 @@ class SubscriptionView(
             }
         }
 
-        val builder = AlertDialog.Builder(viewRoot.context)
-        builder.setMessage(viewRoot.context.getString(R.string.title_are_you_sure))
-            .setPositiveButton(viewRoot.context.getString(R.string.title_yes), dialogClickListener)
-            .setNegativeButton(viewRoot.context.getString(R.string.title_no), dialogClickListener)
+        val builder = AlertDialog.Builder(binding.root.context)
+        builder.setMessage(binding.root.context.getString(R.string.title_are_you_sure))
+            .setPositiveButton(binding.root.context.getString(R.string.title_yes), dialogClickListener)
+            .setNegativeButton(binding.root.context.getString(R.string.title_no), dialogClickListener)
             .show()
     }
 
     override fun expandPanel(biggerToolbar: Boolean) {
-        viewRoot.post {
-            val offset = viewRoot.context.resources.getDimensionPixelOffset(
+        binding.root.post {
+            val offset = binding.root.context.resources.getDimensionPixelOffset(
                 if (biggerToolbar)
                     R.dimen.subscription_toolbar_height
                 else
                     R.dimen.subscription_toolbar_without_category_height
             )
 
-            bottomSheet.setPeekHeight(viewRoot.height - offset, true)
+            bottomSheet.setPeekHeight(binding.root.height - offset, true)
         }
     }
 
     override fun collapsePanel() {
-        viewRoot.post {
+        binding.root.post {
             bottomSheet.setPeekHeight(0, true)
         }
     }
@@ -96,85 +94,85 @@ class SubscriptionView(
     override fun showToolbar(show: Boolean, duration: Long) {
         val fromAlpha = if (show) 0f else 1f
         val toAlpha = if (show) 1f else 0f
-        viewRoot.sub_toolbar.animateAlpha(fromAlpha, toAlpha, duration)
+        binding.subToolbar.animateAlpha(fromAlpha, toAlpha, duration)
     }
 
     override fun setBackgroundTransparent(transparent: Boolean, duration: Long) {
         val fromAlpha = if (transparent) 1f else 0f
         val toAlpha = if (transparent) 0f else 1f
-        viewRoot.animateAlpha(fromAlpha, toAlpha, duration)
+        binding.root.animateAlpha(fromAlpha, toAlpha, duration)
     }
 
     override fun hideKeyboard() {
-        (viewRoot.context as? AppCompatActivity).hideKeyboard()
+        (binding.root.context as? AppCompatActivity).hideKeyboard()
     }
 
     override fun setTitle(title: String) {
-        viewRoot.sub_title.text = title
+        binding.subTitle.text = title
     }
 
     override fun setCategory(category: String) {
-        viewRoot.sub_category.show(true)
-        viewRoot.sub_category.text = category
+        binding.subCategory.show(true)
+        binding.subCategory.text = category
     }
 
-    override fun setPrice(period: SubscriptionPeriod, price: SubscriptionPrice) = with(viewRoot) {
-        val currSymbol = context.getSymbolForCurrency(price.currency)
-        val everyPlural = viewRoot.context.resources.getQuantityString(R.plurals.plural_every, period.quantity)
+    override fun setPrice(period: SubscriptionPeriod, price: SubscriptionPrice) = with(binding) {
+        val currSymbol = binding.root.context.getSymbolForCurrency(price.currency)
+        val everyPlural = binding.root.context.resources.getQuantityString(R.plurals.plural_every, period.quantity)
 
-        val periodPlural = context.getSubPeriodString(period.type, period.quantity)
+        val periodPlural = binding.root.context.getSubPeriodString(period.type, period.quantity)
         val priceFormatted = DecimalFormat(DECIMAL_FORMAT).format(price.value)
 
 
         val text = if (period.quantity == 1) {
             if (period.type == SubscriptionPeriodType.WEEK) {
-                context.getString(
+                binding.root.context.getString(
                     R.string.mask_subscription_price_3_words, priceFormatted,
-                    currSymbol, context.getString(R.string.every_week)
+                    currSymbol, binding.root.context.getString(R.string.every_week)
                 )
             } else {
-                context.getString(
+                binding.root.context.getString(
                     R.string.mask_subscription_price, priceFormatted,
                     currSymbol, everyPlural, periodPlural
                 )
             }
         } else {
-            context.getString(
+            binding.root.context.getString(
                 R.string.mask_subscription_price_quantity, priceFormatted,
                 currSymbol, everyPlural, period.quantity, periodPlural
             )
         }
-        sub_price.text = text.toPriceSpannable()
+        subPrice.text = text.toPriceSpannable()
     }
 
     override fun setComment(comment: String) {
-        viewRoot.sub_comment.show(true)
-        viewRoot.sub_comment.text = comment
+        binding.subComment.show(true)
+        binding.subComment.text = comment
     }
 
-    override fun setNextPayment(progress: SubscriptionProgress) = with(viewRoot) {
+    override fun setNextPayment(progress: SubscriptionProgress) = with(binding) {
         val text = if (progress.daysLeft == 0) {
-            context.getString(R.string.title_next_payment_today)
+            binding.root.context.getString(R.string.title_next_payment_today)
         } else {
-            val periodPlural = context.getSubPeriodString(SubscriptionPeriodType.DAY, progress.daysLeft)
-            context.getString(R.string.mask_next_payment, progress.daysLeft, periodPlural)
+            val periodPlural = binding.root.context.getSubPeriodString(SubscriptionPeriodType.DAY, progress.daysLeft)
+            binding.root.context.getString(R.string.mask_next_payment, progress.daysLeft, periodPlural)
         }
 
-        sub_nextPayment.text = text.toPinkSpannable()
-        sub_progressBar.progress = (progress.progress * 100).toInt()
-        sub_nextPayment.show(true)
-        sub_progressBar.show(true)
-        sub_nextPaymentDivider.show(true)
+        subNextPayment.text = text.toPinkSpannable()
+        subProgressBar.progress = (progress.progress * 100).toInt()
+        subNextPayment.show(true)
+        subProgressBar.show(true)
+        subNextPaymentDivider.show(true)
     }
 
-    override fun setOverallSpent(spent: SubscriptionPrice) = with(viewRoot) {
-        val currSymbol = context.getSymbolForCurrency(spent.currency)
+    override fun setOverallSpent(spent: SubscriptionPrice) = with(binding) {
+        val currSymbol = binding.root.context.getSymbolForCurrency(spent.currency)
         val spentFormatted = DecimalFormat(DECIMAL_FORMAT).format(spent.value)
-        val text = context.getString(R.string.mask_overall_spent, spentFormatted, currSymbol)
+        val text = binding.root.context.getString(R.string.mask_overall_spent, spentFormatted, currSymbol)
 
-        sub_overallSpent.text = text.toPinkSpannable()
-        sub_overallSpent.show(true)
-        sub_spentDivider.show(true)
+        subOverallSpent.text = text.toPinkSpannable()
+        subOverallSpent.show(true)
+        subSpentDivider.show(true)
     }
 
     private fun String.toPriceSpannable(): SpannableString {
@@ -183,7 +181,7 @@ class SubscriptionView(
         val firstWhitespace = spannable.indexOf(' ')
         val secondWhitespace = spannable.indexOf(' ', firstWhitespace + 1)
         val spanFlag = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        val colorGray = ContextCompat.getColor(viewRoot.context, R.color.colorGray)
+        val colorGray = ContextCompat.getColor(binding.root.context, R.color.colorGray)
 
         spannable.setSpan(AbsoluteSizeSpan(17, true), secondWhitespace + 1, length, spanFlag)
         spannable.setSpan(ForegroundColorSpan(colorGray), secondWhitespace + 1, length, spanFlag)
@@ -197,7 +195,7 @@ class SubscriptionView(
         val firstWhitespace = spannable.indexOf(' ')
         val secondWhitespace = spannable.indexOf(' ', firstWhitespace + 1)
         val spanFlag = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        val colorPink = ContextCompat.getColor(viewRoot.context, R.color.colorPinkishOrange)
+        val colorPink = ContextCompat.getColor(binding.root.context, R.color.colorPinkishOrange)
 
         spannable.setSpan(ForegroundColorSpan(colorPink), secondWhitespace + 1, length, spanFlag)
 
@@ -205,12 +203,12 @@ class SubscriptionView(
     }
 
     override fun setNotifsCount(notifs: Int) {
-        val plural = viewRoot.context.resources.getQuantityString(R.plurals.plural_notification, notifs)
-        viewRoot.sub_notifsBtn_title.text = viewRoot.context.getString(R.string.mask_notifs_count, notifs, plural)
+        val plural = binding.root.context.resources.getQuantityString(R.plurals.plural_notification, notifs)
+        binding.subNotifsBtnTitle.text = binding.root.context.getString(R.string.mask_notifs_count, notifs, plural)
     }
 
     override fun showNotifsSection(show: Boolean) {
-        viewRoot.sub_notifsBtn.show(show)
+        binding.subNotifsBtn.show(show)
     }
 
 }

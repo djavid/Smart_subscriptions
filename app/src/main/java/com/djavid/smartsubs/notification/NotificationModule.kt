@@ -1,19 +1,18 @@
 package com.djavid.smartsubs.notification
 
 import android.content.Context
-import android.view.View
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_notification.*
+import com.djavid.smartsubs.databinding.FragmentNotificationBinding
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 
-class NotificationModule(fragment: Fragment) {
+class NotificationModule(fragment: Fragment, binding: FragmentNotificationBinding) {
     val kodein = Kodein.Module("notification_module") {
         bind<Fragment>() with singleton { fragment }
         bind<Context>() with singleton { fragment.requireContext() }
-        bind<View>() with singleton { fragment.notif_fragment }
+        bind<FragmentNotificationBinding>() with singleton { binding }
         bind<NotificationContract.View>() with singleton {
             NotificationView(instance(), instance())
         }

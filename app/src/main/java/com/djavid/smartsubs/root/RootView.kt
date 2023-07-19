@@ -1,9 +1,9 @@
 package com.djavid.smartsubs.root
 
-import android.view.View
+import com.djavid.smartsubs.databinding.ActivityRootBinding
 
 class RootView(
-    val viewRoot: View
+    val binding: ActivityRootBinding
 ) : RootContract.View {
 
     private lateinit var presenter: RootContract.Presenter

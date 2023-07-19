@@ -2,16 +2,15 @@ package com.djavid.smartsubs.subscription
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.djavid.smartsubs.R
+import com.djavid.smartsubs.databinding.NotificationItemBinding
 import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.utils.show
-import kotlinx.android.synthetic.main.notification_item.view.*
 
 class NotificationsAdapter(
     private val context: Context,
@@ -27,8 +26,8 @@ class NotificationsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.notification_item, parent, false)
-        return ViewHolder(view)
+        val binding = NotificationItemBinding.inflate(LayoutInflater.from(context))
+        return ViewHolder(binding)
     }
 
     override fun getItemCount() = data.size
@@ -53,10 +52,10 @@ class NotificationsAdapter(
         holder.text.text = notifText
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val checkBox: CheckBox = itemView.notif_checkbox
-        val repeatIcon: ImageView = itemView.notif_repeatIcon
-        val text: TextView = itemView.notif_text
-        val editBtn: ImageView = itemView.notif_editBtn
+    class ViewHolder(binding: NotificationItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        val checkBox: CheckBox = binding.notifCheckbox
+        val repeatIcon: ImageView = binding.notifRepeatIcon
+        val text: TextView = binding.notifText
+        val editBtn: ImageView = binding.notifEditBtn
     }
 }

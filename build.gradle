@@ -9,7 +9,7 @@ buildscript {
 
     dependencies {
         classpath "com.android.tools.build:gradle:${gradle_version}"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0"
         classpath "com.squareup.sqldelight:gradle-plugin:$sqldelight_version"
         classpath "com.google.gms:google-services:4.3.4"
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'

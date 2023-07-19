@@ -2,16 +2,14 @@ package com.djavid.smartsubs.create
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.smartsubs.R
+import com.djavid.smartsubs.databinding.SuggestionItemBinding
 import com.djavid.smartsubs.models.PredefinedSuggestionItem
-import kotlinx.android.synthetic.main.suggestion_item.view.*
 import java.util.*
 
 class SuggestionsAdapter(
@@ -26,15 +24,14 @@ class SuggestionsAdapter(
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val item = getItem(position)
-        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = SuggestionItemBinding.bind(parent)
 
-        val view = convertView ?: layoutInflater.inflate(R.layout.suggestion_item, parent, false)
         Glide.with(parent.context)
             .load(item?.imageBytes)
-            .into(view.suggestionLogo)
-        view.text1.text = item?.title
+            .into(binding.suggestionLogo)
+        binding.text1.text = item?.title
 
-        return view
+        return convertView ?: binding.root
     }
 
     override fun getFilter(): Filter {

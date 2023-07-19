@@ -1,10 +1,7 @@
 package com.djavid.smartsubs.home
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Space
@@ -12,18 +9,14 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.djavid.smartsubs.R
+import com.djavid.smartsubs.databinding.SubscriptionItemBinding
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getPriceInPeriod
 import com.djavid.smartsubs.models.getSymbolForCurrency
 import com.djavid.smartsubs.utils.*
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.subscription_item.view.*
 import kotlin.math.roundToInt
 
 class SubsAdapter(
@@ -45,7 +38,7 @@ class SubsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.subscription_item, parent, false)
+        val view = SubscriptionItemBinding.inflate(LayoutInflater.from(context))
         return ViewHolder(view)
     }
 
@@ -120,14 +113,14 @@ class SubsAdapter(
         }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val logo: CircleImageView = itemView.sub_logo
-        val title: TextView = itemView.sub_title
-        val price: TextView = itemView.sub_price
-        val progressBar: ProgressBar = itemView.sub_progressBar
-        val periodLeft: TextView = itemView.sub_periodLeft
-        val category: TextView = itemView.sub_category
-        val categorySpace: Space = itemView.sub_categorySpace
+    class ViewHolder(binding: SubscriptionItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        val logo: CircleImageView = binding.subLogo
+        val title: TextView = binding.subTitle
+        val price: TextView = binding.subPrice
+        val progressBar: ProgressBar = binding.subProgressBar
+        val periodLeft: TextView = binding.subPeriodLeft
+        val category: TextView = binding.subCategory
+        val categorySpace: Space = binding.subCategorySpace
     }
 
 }

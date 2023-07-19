@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.smartsubs.R
+import com.djavid.smartsubs.databinding.FragmentCreateBinding
 import com.djavid.smartsubs.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getSubPeriodString
@@ -20,13 +20,12 @@ import com.djavid.smartsubs.utils.animateAlpha
 import com.djavid.smartsubs.utils.hideKeyboard
 import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.fragment_create.view.*
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 import java.util.*
 
 class CreateView(
-    private val viewRoot: View
+    private val binding: FragmentCreateBinding
 ) : CreateContract.View {
 
     private lateinit var presenter: CreateContract.Presenter
@@ -37,9 +36,9 @@ class CreateView(
         setupBottomSheet()
         setupFormInputs()
 
-        viewRoot.create_closeBtn.setOnClickListener { presenter.onCancelPressed() }
-        viewRoot.create_logoBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
-        viewRoot.create_predefinedBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
+        binding.createCloseBtn.setOnClickListener { presenter.onCancelPressed() }
+        binding.createLogoBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
+        binding.createPredefinedBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
     }
 
     private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -47,64 +46,64 @@ class CreateView(
         presenter.onPaymentDateInputChanged(date)
     }
 
-    private fun setupFormInputs() = with(viewRoot) {
-        create_titleInput.doAfterTextChanged {
+    private fun setupFormInputs() = with(binding) {
+        createTitleInput.doAfterTextChanged {
             presenter.onTitleInputChanged(it?.toString())
         }
-        create_priceInput.doAfterTextChanged {
+        createPriceInput.doAfterTextChanged {
             presenter.onPriceInputChanged(it?.toString()?.toDoubleOrNull())
         }
-        create_periodQuantityInput.doAfterTextChanged {
+        createPeriodQuantityInput.doAfterTextChanged {
             presenter.onPeriodQuantityInputChanged(it?.toString()?.toIntOrNull())
         }
-        create_trialPeriodCheckbox.setOnCheckedChangeListener { _, isChecked ->
+        createTrialPeriodCheckbox.setOnCheckedChangeListener { _, isChecked ->
             presenter.onTrialPeriodChecked(isChecked)
         }
-        create_categoryInput.doAfterTextChanged {
+        createCategoryInput.doAfterTextChanged {
             presenter.onCategoryInputChanged(it?.toString())
         }
-        create_noteInput.doAfterTextChanged {
+        createNoteInput.doAfterTextChanged {
             presenter.onCommentInputChanged(it?.toString())
         }
-        create_paymentDateInput.setOnClickListener {
+        createPaymentDateInput.setOnClickListener {
             presenter.onPaymentDateInputPressed()
         }
-        create_submitBtn.setOnClickListener {
+        createSubmitBtn.setOnClickListener {
             presenter.onSubmitPressed()
         }
     }
 
     override fun setupSuggestions(items: List<PredefinedSuggestionItem>) {
-        val adapter = SuggestionsAdapter(items, viewRoot.context)
-        viewRoot.create_titleInput.setAdapter(adapter)
-        viewRoot.create_titleInput.setOnItemClickListener { _, _, position, _ ->
+        val adapter = SuggestionsAdapter(items, binding.root.context)
+        binding.createTitleInput.setAdapter(adapter)
+        binding.createTitleInput.setOnItemClickListener { _, _, position, _ ->
             presenter.onSuggestionItemClick(items[position])
         }
     }
 
     override fun setSubLogo(bytes: ByteArray?) {
         if (bytes == null) {
-            viewRoot.create_predefinedBtn.show(true)
-            viewRoot.create_logoBtn.show(false)
+            binding.createPredefinedBtn.show(true)
+            binding.createLogoBtn.show(false)
         } else {
-            viewRoot.create_predefinedBtn.show(false)
-            viewRoot.create_logoBtn.show(true)
-            Glide.with(viewRoot.context)
+            binding.createPredefinedBtn.show(false)
+            binding.createLogoBtn.show(true)
+            Glide.with(binding.root.context)
                 .load(bytes)
-                .into(viewRoot.create_logoBtn)
+                .into(binding.createLogoBtn)
         }
     }
 
     override fun enableInputs(enable: Boolean) {
-        viewRoot.create_titleInput.isEnabled = enable
-        viewRoot.create_priceInput.isEnabled = enable
-        viewRoot.create_periodQuantityInput.isEnabled = enable
-        viewRoot.create_trialPeriodCheckbox.isEnabled = enable
-        viewRoot.create_paymentDateInput.isEnabled = enable
-        viewRoot.create_periodSelector.isEnabled = enable
-        viewRoot.create_categoryInput.isEnabled = enable
-        viewRoot.create_noteInput.isEnabled = enable
-        viewRoot.create_submitBtn.isEnabled = enable
+        binding.createTitleInput.isEnabled = enable
+        binding.createPriceInput.isEnabled = enable
+        binding.createPeriodQuantityInput.isEnabled = enable
+        binding.createTrialPeriodCheckbox.isEnabled = enable
+        binding.createPaymentDateInput.isEnabled = enable
+        binding.createPeriodSelector.isEnabled = enable
+        binding.createCategoryInput.isEnabled = enable
+        binding.createNoteInput.isEnabled = enable
+        binding.createSubmitBtn.isEnabled = enable
     }
 
     override fun openDatePicker(prevSelectedDate: LocalDate?) {
@@ -112,36 +111,36 @@ class CreateView(
         val selectedDate = prevSelectedDate ?: dateNow
 
         DatePickerDialog(
-            viewRoot.context, dateSetListener, selectedDate.year,
+            binding.root.context, dateSetListener, selectedDate.year,
             selectedDate.monthOfYear - 1, selectedDate.dayOfMonth
         ).show()
     }
 
     private fun setupBottomSheet() {
-        bottomSheet = BottomSheetBehavior.from(viewRoot.create_bottomSheet)
+        bottomSheet = BottomSheetBehavior.from(binding.createBottomSheet)
     }
 
     override fun expandPanel() {
-        viewRoot.post {
-            val offset = viewRoot.context.resources.getDimensionPixelOffset(R.dimen.toolbar_height)
-            bottomSheet.setPeekHeight(viewRoot.height - offset, true)
+        binding.root.post {
+            val offset = binding.root.context.resources.getDimensionPixelOffset(R.dimen.toolbar_height)
+            bottomSheet.setPeekHeight(binding.root.height - offset, true)
         }
     }
 
     override fun collapsePanel() {
-        viewRoot.post {
+        binding.root.post {
             bottomSheet.setPeekHeight(0, true)
         }
     }
 
     override fun getPeriodString(period: SubscriptionPeriodType, quantity: Int): String {
-        return viewRoot.context.getSubPeriodString(period, quantity)
+        return binding.root.context.getSubPeriodString(period, quantity)
     }
 
     override fun setupSpinner(periods: List<String>) {
-        val adapter = ArrayAdapter(viewRoot.context, R.layout.spinner_item, periods)
-        viewRoot.create_periodSelector.adapter = adapter
-        viewRoot.create_periodSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        val adapter = ArrayAdapter(binding.root.context, R.layout.spinner_item, periods)
+        binding.createPeriodSelector.adapter = adapter
+        binding.createPeriodSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 //no-op
             }
@@ -153,90 +152,90 @@ class CreateView(
     }
 
     override fun selectPeriodItem(position: Int) {
-        viewRoot.create_periodSelector.setSelection(position, true)
+        binding.createPeriodSelector.setSelection(position, true)
     }
 
     override fun setCurrencySymbol(currency: Currency) {
-        viewRoot.create_currencySymbol.text = viewRoot.context.getSymbolForCurrency(currency)
+        binding.createCurrencySymbol.text = binding.root.context.getSymbolForCurrency(currency)
     }
 
     override fun setEveryPlural(quantity: Int) {
-        val text = viewRoot.context.resources.getQuantityString(R.plurals.plural_every, quantity)
-        viewRoot.create_everyTextView.text = text
+        val text = binding.root.context.resources.getQuantityString(R.plurals.plural_every, quantity)
+        binding.createEveryTextView.text = text
     }
 
     override fun setPaymentDateTrialDescription() {
-        viewRoot.create_firstPayDescription.text = viewRoot.context.getString(R.string.desc_trial_pay)
+        binding.createFirstPayDescription.text = binding.root.context.getString(R.string.desc_trial_pay)
     }
 
     override fun setPaymentDateDefaultDescription() {
-        viewRoot.create_firstPayDescription.text = viewRoot.context.getString(R.string.desc_first_pay)
+        binding.createFirstPayDescription.text = binding.root.context.getString(R.string.desc_first_pay)
     }
 
     override fun setTrialPeriodCheckbox(checked: Boolean) {
-        viewRoot.create_trialPeriodCheckbox.isChecked = checked
+        binding.createTrialPeriodCheckbox.isChecked = checked
     }
 
     override fun showToolbar(show: Boolean, duration: Long) {
         val fromAlpha = if (show) 0f else 1f
         val toAlpha = if (show) 1f else 0f
-        viewRoot.create_toolbar.animateAlpha(fromAlpha, toAlpha, duration)
+        binding.createToolbar.animateAlpha(fromAlpha, toAlpha, duration)
     }
 
     override fun setBackgroundTransparent(transparent: Boolean, duration: Long) {
         val fromAlpha = if (transparent) 1f else 0f
         val toAlpha = if (transparent) 0f else 1f
-        viewRoot.animateAlpha(fromAlpha, toAlpha, duration)
+        binding.root.animateAlpha(fromAlpha, toAlpha, duration)
     }
 
     override fun hideKeyboard() {
-        (viewRoot.context as? AppCompatActivity).hideKeyboard()
+        (binding.root.context as? AppCompatActivity).hideKeyboard()
     }
 
     override fun showTitleError(show: Boolean) {
-        viewRoot.create_titleInput.setError(show)
+        binding.createTitleInput.setError(show)
     }
 
     override fun showPriceError(show: Boolean) {
         val drawable = if (show) R.drawable.bg_edittext_error else R.drawable.bg_edittext
-        viewRoot.create_priceInput.background = ContextCompat.getDrawable(viewRoot.context, drawable)
+        binding.createPriceInput.background = ContextCompat.getDrawable(binding.root.context, drawable)
     }
 
     override fun showQuantityError(show: Boolean) {
-        viewRoot.create_periodQuantityInput.setError(show)
+        binding.createPeriodQuantityInput.setError(show)
     }
 
     override fun showPaymentDateError(show: Boolean) {
-        viewRoot.create_paymentDateInput.setError(show)
+        binding.createPaymentDateInput.setError(show)
     }
 
     override fun setTitle(title: String) {
-        viewRoot.create_titleInput.text = SpannableStringBuilder(title)
+        binding.createTitleInput.text = SpannableStringBuilder(title)
     }
 
     override fun setPrice(price: Double) {
-        viewRoot.create_priceInput.text = SpannableStringBuilder(price.toString())
+        binding.createPriceInput.text = SpannableStringBuilder(price.toString())
     }
 
     override fun setQuantity(quantity: Int) {
-        viewRoot.create_periodQuantityInput.text = SpannableStringBuilder(quantity.toString())
+        binding.createPeriodQuantityInput.text = SpannableStringBuilder(quantity.toString())
     }
 
     override fun setDateInput(text: String) {
-        viewRoot.create_paymentDateInput.text = SpannableStringBuilder(text)
+        binding.createPaymentDateInput.text = SpannableStringBuilder(text)
     }
 
     override fun setCategory(category: String) {
-        viewRoot.create_categoryInput.text = SpannableStringBuilder(category)
+        binding.createCategoryInput.text = SpannableStringBuilder(category)
     }
 
     override fun setComment(note: String) {
-        viewRoot.create_noteInput.text = SpannableStringBuilder(note)
+        binding.createNoteInput.text = SpannableStringBuilder(note)
     }
 
     override fun switchTitlesToEditMode() {
-        viewRoot.create_submitBtn.text = viewRoot.context.getString(R.string.title_save)
-        viewRoot.create_title.text = viewRoot.context.getString(R.string.title_edit)
+        binding.createSubmitBtn.text = binding.root.context.getString(R.string.title_save)
+        binding.createTitle.text = binding.root.context.getString(R.string.title_edit)
     }
 
 }

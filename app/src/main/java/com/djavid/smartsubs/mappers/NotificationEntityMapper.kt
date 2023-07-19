@@ -7,7 +7,7 @@ import org.joda.time.DateTime
 class NotificationEntityMapper {
 
     fun toEntity(model: Notification): NotificationEntity {
-        return NotificationEntity.Impl(
+        return NotificationEntity(
             model.id,
             model.subId,
             model.creationDate.millis,

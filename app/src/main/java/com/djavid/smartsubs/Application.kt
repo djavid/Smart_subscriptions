@@ -9,6 +9,15 @@ import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.coroutines.CoroutineModule
 import com.djavid.smartsubs.create.CreateModule
 import com.djavid.smartsubs.create.CreateNavigatorModule
+import com.djavid.smartsubs.databinding.ActivityRootBinding
+import com.djavid.smartsubs.databinding.DialogSubscribeMediaBinding
+import com.djavid.smartsubs.databinding.FragmentCreateBinding
+import com.djavid.smartsubs.databinding.FragmentHomeBinding
+import com.djavid.smartsubs.databinding.FragmentNotificationBinding
+import com.djavid.smartsubs.databinding.FragmentNotificationsBinding
+import com.djavid.smartsubs.databinding.FragmentSortBinding
+import com.djavid.smartsubs.databinding.FragmentSubListBinding
+import com.djavid.smartsubs.databinding.FragmentSubscriptionBinding
 import com.djavid.smartsubs.db.DatabaseModule
 import com.djavid.smartsubs.home.HomeModule
 import com.djavid.smartsubs.home.HomeNavigatorModule
@@ -43,7 +52,6 @@ class Application : Application(), Configuration.Provider, KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
-        JodaTimeAndroid.init(this)
         FirebaseApp.initializeApp(this)
         initAppMetrica()
     }
@@ -55,6 +63,7 @@ class Application : Application(), Configuration.Provider, KodeinAware {
     }
 
     private fun initAppMetrica() {
+
         if (!BuildConfig.DEBUG) {
             val apiKey = applicationContext.getString(R.string.yandex_metrica_api_key)
             val config = YandexMetricaConfig.newConfigBuilder(apiKey).build()
@@ -76,48 +85,64 @@ class Application : Application(), Configuration.Provider, KodeinAware {
         import(MappersModule().kodein)
     }
 
-    fun rootComponent(activity: AppCompatActivity) = Kodein.lazy {
+    fun rootComponent(activity: AppCompatActivity, binding: ActivityRootBinding) = Kodein.lazy {
         extend(kodein)
-        import(RootModule(activity).kodein)
+        import(RootModule(activity, binding).kodein)
         import(HomeNavigatorModule().kodein)
         import(SubscriptionNavigatorModule().kodein)
     }
 
-    fun homeComponent(fragment: Fragment) = Kodein.lazy {
+    fun homeComponent(fragment: Fragment, binding: FragmentHomeBinding) = Kodein.lazy {
         extend(kodein)
-        import(HomeModule(fragment).kodein)
+        import(HomeModule(fragment, binding).kodein)
         import(CreateNavigatorModule().kodein)
         import(SubscriptionNavigatorModule().kodein)
         import(SortNavigationModule().kodein)
         import(SubscribeMediaNavigationModule().kodein)
     }
 
-    fun createComponent(fragment: Fragment) = Kodein.lazy {
+    fun createComponent(fragment: Fragment, binding: FragmentCreateBinding) = Kodein.lazy {
         extend(kodein)
-        import(CreateModule(fragment).kodein)
+        import(CreateModule(fragment, binding).kodein)
         import(SubListNavigatorModule().kodein)
     }
 
-    fun subscriptionComponent(fragment: Fragment) = Kodein.lazy {
+    fun subscriptionComponent(fragment: Fragment, binding: FragmentSubscriptionBinding) = Kodein.lazy {
         extend(kodein)
-        import(SubscriptionModule(fragment).kodein)
+        import(SubscriptionModule(fragment, binding).kodein)
         import(CreateNavigatorModule().kodein)
         import(HomeNavigatorModule().kodein)
         import(AlarmNotifierModule().kodein)
         import(NotificationsNavigatorModule().kodein)
     }
 
-    fun notificationComponent(fragment: Fragment) = Kodein.lazy {
+    fun notificationComponent(fragment: Fragment, binding: FragmentNotificationBinding) = Kodein.lazy {
         extend(kodein)
-        import(NotificationModule(fragment).kodein)
+        import(NotificationModule(fragment, binding).kodein)
         import(AlarmNotifierModule().kodein)
     }
 
-    fun notificationsComponent(fragment: Fragment) = Kodein.lazy {
+    fun notificationsComponent(fragment: Fragment, binding: FragmentNotificationsBinding) = Kodein.lazy {
         extend(kodein)
         import(NotificationNavigatorModule().kodein)
-        import(NotificationsModule(fragment).kodein)
+        import(NotificationsModule(fragment, binding).kodein)
         import(AlarmNotifierModule().kodein)
+    }
+
+    fun sortComponent(fragment: Fragment, binding: FragmentSortBinding) = Kodein.lazy {
+        extend(kodein)
+        import(SortModule(fragment, binding).kodein)
+        import(SortNavigationModule().kodein)
+    }
+
+    fun subscribeMediaComponent(fragment: Fragment, binding: DialogSubscribeMediaBinding) = Kodein.lazy {
+        extend(kodein)
+        import(SubscribeMediaModule(fragment, binding).kodein)
+    }
+
+    fun subListComponent(fragment: Fragment, binding: FragmentSubListBinding) = Kodein.lazy {
+        extend(kodein)
+        import(SubListModule(fragment, binding).kodein)
     }
 
     fun notificationWorkerComponent(context: Context) = Kodein.lazy {
@@ -126,24 +151,8 @@ class Application : Application(), Configuration.Provider, KodeinAware {
         import(AlarmNotifierModule().kodein)
     }
 
-    fun sortComponent(fragment: Fragment) = Kodein.lazy {
-        extend(kodein)
-        import(SortModule(fragment).kodein)
-        import(SortNavigationModule().kodein)
-    }
-
     fun uploaderComponent() = Kodein.lazy {
         extend(kodein)
-    }
-
-    fun subscribeMediaComponent(fragment: Fragment) = Kodein.lazy {
-        extend(kodein)
-        import(SubscribeMediaModule(fragment).kodein)
-    }
-
-    fun subListComponent(fragment: Fragment) = Kodein.lazy {
-        extend(kodein)
-        import(SubListModule(fragment).kodein)
     }
 
 }

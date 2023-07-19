@@ -1,20 +1,21 @@
 package com.djavid.smartsubs.notifications
 
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.djavid.smartsubs.databinding.FragmentNotificationsBinding
 import com.djavid.smartsubs.models.Notification
 import com.djavid.smartsubs.subscription.NotificationsAdapter
-import kotlinx.android.synthetic.main.fragment_notifications.view.*
 
 class NotificationsView(
-    private val viewRoot: View
+    private val binding: FragmentNotificationsBinding
 ) : NotificationsContract.View {
+
+    private val context = binding.root.context
 
     private lateinit var presenter: NotificationsContract.Presenter
     private lateinit var adapter: NotificationsAdapter
 
     init {
-        viewRoot.notifs_addNotifBtn.setOnClickListener { presenter.onAddNotification() }
+        binding.notifsAddNotifBtn.setOnClickListener { presenter.onAddNotification() }
     }
 
     override fun init(presenter: NotificationsContract.Presenter) {
@@ -24,9 +25,9 @@ class NotificationsView(
     }
 
     private fun setupNotificationsAdapter() {
-        adapter = NotificationsAdapter(viewRoot.context, presenter::onEditNotification, presenter::onNotifCheckChanged)
-        viewRoot.notifs_recycler.adapter = adapter
-        viewRoot.notifs_recycler.layoutManager = LinearLayoutManager(viewRoot.context)
+        adapter = NotificationsAdapter(context, presenter::onEditNotification, presenter::onNotifCheckChanged)
+        binding.notifsRecycler.adapter = adapter
+        binding.notifsRecycler.layoutManager = LinearLayoutManager(context)
     }
 
     override fun showNotifications(items: List<Notification>) {

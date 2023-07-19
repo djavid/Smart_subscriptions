@@ -79,11 +79,11 @@ class RealTimeRepository(
 
                         predefinedSubsCache.clear()
                         predefinedSubsCache.addAll(subs)
-                        cont.resume(subs)
+                        cont.resume(subs.toMutableList())
                     }
                     .addOnFailureListener {
                         CrashlyticsLogger.logException(it)
-                        cont.resume(emptyList())
+                        cont.resume(mutableListOf())
                     }
             }
         }
@@ -216,23 +216,23 @@ class RealTimeRepository(
         }
     }
 
-    suspend fun isEmpty(): Boolean? = withContext(Dispatchers.IO) {
-        val uid = authHelper.getUid() ?: return@withContext false
-
-        return@withContext suspendCoroutine { cont ->
-            Firebase.database.reference
-                .child(DB_SUBS_AUTH_ROOT)
-                .child(uid)
-                .get()
-                .addOnSuccessListener { data ->
-                    cont.resume(!data.hasChildren())
-                }
-                .addOnFailureListener {
-                    CrashlyticsLogger.logException(it)
-                    cont.resume(null)
-                }
-        }
-    }
+//    suspend fun isEmpty(): Boolean? = withContext(Dispatchers.IO) {
+//        val uid = authHelper.getUid() ?: return@withContext false
+//
+//        return@withContext suspendCoroutine { cont ->
+//            Firebase.database.reference
+//                .child(DB_SUBS_AUTH_ROOT)
+//                .child(uid)
+//                .get()
+//                .addOnSuccessListener { data ->
+//                    cont.resume(!data.hasChildren())
+//                }
+//                .addOnFailureListener {
+//                    CrashlyticsLogger.logException(it)
+//                    cont.resume(null)
+//                }
+//        }
+//    }
 
 //    suspend fun getCategories(): List<String> = withContext(Dispatchers.IO) { //todo use this to show suggestions
 //        queries.getCategories().executeAsList().mapNotNull { it.category }

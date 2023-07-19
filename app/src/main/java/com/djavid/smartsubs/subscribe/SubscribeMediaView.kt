@@ -3,15 +3,14 @@ package com.djavid.smartsubs.subscribe
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import android.view.View
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
+import com.djavid.smartsubs.databinding.DialogSubscribeMediaBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.dialog_subscribe_media.view.*
 
 class SubscribeMediaView(
-    private val viewRoot: View,
-    private val fragment: Fragment
+    private val fragment: Fragment,
+    private val binding: DialogSubscribeMediaBinding
 ) : SubscribeMediaContract.View {
 
     companion object {
@@ -19,12 +18,13 @@ class SubscribeMediaView(
     }
 
     private lateinit var presenter: SubscribeMediaContract.Presenter
+    private val context = binding.root.context
 
     override fun init(presenter: SubscribeMediaContract.Presenter) {
         this.presenter = presenter
 
-        viewRoot.subMedia_subscribeBtn.setOnClickListener { presenter.onSubscribeClicked() }
-        viewRoot.subMedia_noBtn.setOnClickListener { presenter.onNoClicked() }
+        binding.subMediaSubscribeBtn.setOnClickListener { presenter.onSubscribeClicked() }
+        binding.subMediaNoBtn.setOnClickListener { presenter.onNoClicked() }
     }
 
     override fun close() {
@@ -34,7 +34,7 @@ class SubscribeMediaView(
     override fun openTgChannelInApp() {
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(TG_INTENT_URL))
-            startActivity(viewRoot.context, intent, null)
+            startActivity(context, intent, null)
         } catch (e: ActivityNotFoundException) {
             presenter.tgAppOpenFailed()
         }
@@ -43,7 +43,7 @@ class SubscribeMediaView(
     override fun openTgChannelInBrowser(channelUrl: String) {
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(channelUrl))
-            startActivity(viewRoot.context, intent, null)
+            startActivity(context, intent, null)
         } catch (e: ActivityNotFoundException) {
             presenter.tgBrowserOpenFailed()
         }

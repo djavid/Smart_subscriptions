@@ -4,13 +4,16 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.common.BroadcastHandler
 import com.djavid.smartsubs.common.subscribeApplicationReceiver
+import com.djavid.smartsubs.databinding.FragmentSubscriptionBinding
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.KEY_IS_ROOT
 import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
@@ -24,6 +27,7 @@ class SubscriptionFragment : BaseFragment(R.layout.fragment_subscription), BackP
     private val coroutineScope: CoroutineScope by instance()
 
     private lateinit var presenter: SubscriptionContract.Presenter
+    private lateinit var binding: FragmentSubscriptionBinding
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -35,8 +39,12 @@ class SubscriptionFragment : BaseFragment(R.layout.fragment_subscription), BackP
         }
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return FragmentSubscriptionBinding.inflate(inflater).apply { binding = this }.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        kodein = (activity?.application as Application).subscriptionComponent(this)
+        kodein = (activity?.application as Application).subscriptionComponent(this, binding)
         presenter = kodein.direct.instance()
 
         arguments?.let {
