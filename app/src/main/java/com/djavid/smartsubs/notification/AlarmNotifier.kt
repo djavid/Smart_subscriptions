@@ -31,7 +31,8 @@ class AlarmNotifier(
         val broadcastReceiverIntent = getBroadcastReceiverIntent(notifId)
 
         return PendingIntent.getBroadcast(
-            context, notifId.toInt(), broadcastReceiverIntent, PendingIntent.FLAG_ONE_SHOT
+            context, notifId.toInt(), broadcastReceiverIntent,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
     }
 

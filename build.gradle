@@ -4,25 +4,24 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        jcenter()
     }
 
     dependencies {
         classpath "com.android.tools.build:gradle:${gradle_version}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0"
         classpath "com.squareup.sqldelight:gradle-plugin:$sqldelight_version"
-        classpath "com.google.gms:google-services:4.3.4"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
+        classpath "com.google.gms:google-services:4.3.15"
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.7'
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }

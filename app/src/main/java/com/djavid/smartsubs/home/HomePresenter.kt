@@ -15,6 +15,8 @@ import com.djavid.smartsubs.storage.SharedRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import java.util.*
 
 class HomePresenter(
@@ -32,7 +34,6 @@ class HomePresenter(
     lifecycle: LifecycleCoroutineScope
 ) : HomeContract.Presenter, CoroutineScope by lifecycle {
 
-    private lateinit var channel: ReceiveChannel<Pair<String, String>>
     private var subs = listOf<Subscription>()
 
     override fun init() {
@@ -63,11 +64,9 @@ class HomePresenter(
         inAppReview.showInAppDialog()
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private fun listenPipeline() {
         launch {
-            channel = pipeline.subscribe()
-            channel.consumeEach {
+            pipeline.getFlow().onEach {
                 when (it.first) {
                     ACTION_REFRESH -> {
                         reloadSubs()
@@ -82,7 +81,7 @@ class HomePresenter(
 //                        }
                     }
                 }
-            }
+            }.collect()
         }
     }
 

@@ -14,8 +14,8 @@ import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 
 class SubscriptionPresenter(
     private val view: SubscriptionContract.View,
@@ -31,7 +31,6 @@ class SubscriptionPresenter(
     coroutineScope: CoroutineScope
 ) : SubscriptionContract.Presenter, CoroutineScope by coroutineScope {
 
-    private lateinit var channel: ReceiveChannel<Pair<String, String>>
     private lateinit var subscription: Subscription
 
     private var id: String = ""
@@ -58,15 +57,13 @@ class SubscriptionPresenter(
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private fun listenPipeline() {
         launch {
-            channel = pipeline.subscribe()
-            channel.consumeEach {
+            pipeline.getFlow().onEach {
                 when (it.first) {
                     ACTION_REFRESH -> reload(false)
                 }
-            }
+            }.collect()
         }
     }
 
@@ -90,10 +87,10 @@ class SubscriptionPresenter(
 
         //notifs
         view.showNotifsSection(false) //too much bugs, better to make notifs through server
-//        view.showNotifsSection(subscription.progress != null)
-//        if (subscription.progress != null) {
-//            view.setNotifsCount(notifsCount)
-//        }
+        view.showNotifsSection(subscription.progress != null)
+        if (subscription.progress != null) {
+            view.setNotifsCount(notifsCount)
+        }
     }
 
     override fun onNotifsClicked() {

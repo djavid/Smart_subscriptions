@@ -13,8 +13,8 @@ import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.DATE_TIME_FORMAT
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.util.*
@@ -32,7 +32,6 @@ class CreatePresenter(
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var model: SubscriptionDao
-    private lateinit var channel: ReceiveChannel<PredefinedSuggestionItem>
 
     private var editMode = false
     private val periodItems = SubscriptionPeriodType.values().toList()
@@ -76,8 +75,9 @@ class CreatePresenter(
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun listenPipeline() {
         launch(Dispatchers.Main) {
-            channel = pipeline.subscribe()
-            channel.consumeEach { onSuggestionItemClick(it) }
+            pipeline.getFlow().onEach {
+                onSuggestionItemClick(it)
+            }.collect()
         }
     }
 

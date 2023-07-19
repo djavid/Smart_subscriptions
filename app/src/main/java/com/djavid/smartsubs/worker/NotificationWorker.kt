@@ -28,8 +28,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 
 class NotificationWorker(
-    private val context: Context,
-    private val workerParams: WorkerParameters
+    private val context: Context, private val workerParams: WorkerParameters
 ) : Worker(context, workerParams), KodeinAware {
 
     override val kodein: Kodein
@@ -88,9 +87,7 @@ class NotificationWorker(
             val period = subModel?.period
 
             if (paymentDate != null && period != null) {
-                val atDateTime = paymentDate.getFirstPeriodAfterNow(period).addPeriod(period)
-                    .toDateTime(model.atDateTime.toLocalTime())
-                    .minusDays(model.daysBefore.toInt())
+                val atDateTime = paymentDate.getFirstPeriodAfterNow(period).addPeriod(period).toDateTime(model.atDateTime.toLocalTime()).minusDays(model.daysBefore.toInt())
 
                 return model.copy(atDateTime = atDateTime)
             }
@@ -144,9 +141,7 @@ class NotificationWorker(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelName = context.getString(R.string.subscription_channel_name)
             val channel = NotificationChannel(
-                SUBSCRIPTION_NOTIF_CHANNEL_ID,
-                channelName,
-                NotificationManager.IMPORTANCE_DEFAULT
+                SUBSCRIPTION_NOTIF_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_DEFAULT
             )
             channel.enableLights(false)
             channel.enableVibration(false)
@@ -156,20 +151,12 @@ class NotificationWorker(
     }
 
     private fun showSubExpiresNotification(model: Notification, subTitle: String, notifId: Int, content: String) {
-        val builder = NotificationCompat.Builder(context, SUBSCRIPTION_NOTIF_CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setColor(ContextCompat.getColor(context, R.color.colorAccent))
-            .setContentTitle(subTitle)
-            .setContentText(content)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setStyle(NotificationCompat.BigTextStyle())
-            .setAutoCancel(false)
-            .apply {
-                val intent = createSubscriptionPendingIntent(model.subId)
-                if (intent != null) {
-                    setContentIntent(intent)
-                }
+        val builder = NotificationCompat.Builder(context, SUBSCRIPTION_NOTIF_CHANNEL_ID).setSmallIcon(R.mipmap.ic_launcher_round).setColor(ContextCompat.getColor(context, R.color.colorAccent)).setContentTitle(subTitle).setContentText(content).setPriority(NotificationCompat.PRIORITY_HIGH).setStyle(NotificationCompat.BigTextStyle()).setAutoCancel(false).apply {
+            val intent = createSubscriptionPendingIntent(model.subId)
+            if (intent != null) {
+                setContentIntent(intent)
             }
+        }
 
         notificationManager.notify(null, notifId, builder.build())
     }
@@ -183,7 +170,10 @@ class NotificationWorker(
             addNextIntent(intent)
         }
 
-        return stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        return stackBuilder.getPendingIntent(
+            0,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
     private fun generateNotifContent(daysUntil: Long): String {
@@ -191,13 +181,16 @@ class NotificationWorker(
             daysUntil == 0L -> { //today
                 context.getString(R.string.title_notif_expires_today)
             }
+
             daysUntil == 1L -> { //tomorrow
                 context.getString(R.string.title_notif_expires_tomorrow)
             }
+
             daysUntil > 1 -> { //days after
                 val daysPlural = context.resources.getQuantityString(R.plurals.plural_day, daysUntil.toInt())
                 context.getString(R.string.title_notif_expires_days_after, daysUntil, daysPlural)
             }
+
             else -> ""
         }
     }

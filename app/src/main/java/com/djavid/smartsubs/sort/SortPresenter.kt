@@ -8,9 +8,8 @@ import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.utils.KEY_SORT_BY
 import com.djavid.smartsubs.storage.SharedRepository
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class SortPresenter(
@@ -21,8 +20,6 @@ class SortPresenter(
     private val logger: FirebaseLogger,
     coroutineScope: CoroutineScope
 ) : SortContract.Presenter, CoroutineScope by coroutineScope {
-
-    private lateinit var channel: ReceiveChannel<Pair<String, String>>
 
     override fun init(type: SortContract.ScreenType) {
         view.init(this)
@@ -36,18 +33,16 @@ class SortPresenter(
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private fun listenPipeline() {
         launch {
-            channel = pipeline.subscribe()
-            channel.consumeEach {
+            pipeline.getFlow().onEach {
                 when (it.first) {
                     KEY_SORT_BY -> {
                         loadSortBy()
                         pipeline.postValue(Pair(ACTION_REFRESH, ""))
                     }
                 }
-            }
+            }.collect()
         }
     }
 

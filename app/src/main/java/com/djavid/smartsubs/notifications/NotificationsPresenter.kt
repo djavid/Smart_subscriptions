@@ -8,9 +8,8 @@ import com.djavid.smartsubs.notification.NotificationContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class NotificationsPresenter(
@@ -23,7 +22,6 @@ class NotificationsPresenter(
     coroutineScope: CoroutineScope
 ) : NotificationsContract.Presenter, CoroutineScope by coroutineScope {
 
-    private lateinit var channel: ReceiveChannel<Pair<String, String>>
     private var subId: String = ""
 
     override fun init(subId: String?) {
@@ -41,15 +39,13 @@ class NotificationsPresenter(
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private fun listenPipeline() {
         launch {
-            channel = pipeline.subscribe()
-            channel.consumeEach {
+            pipeline.getFlow().onEach {
                 when (it.first) {
                     ACTION_REFRESH -> reloadNotifs()
                 }
-            }
+            }.collect()
         }
     }
 
