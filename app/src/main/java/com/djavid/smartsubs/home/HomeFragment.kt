@@ -45,11 +45,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.init()
-
-        requireActivity().supportFragmentManager
-            .setFragmentResultListener("", viewLifecycleOwner) { _, bundle ->
-
-            }
     }
 
     override fun onResume() {

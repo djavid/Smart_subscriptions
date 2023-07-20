@@ -25,7 +25,7 @@ class SuggestionsAdapter(
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val item = getItem(position)
-        val binding = SuggestionItemBinding.inflate(LayoutInflater.from(context))
+        val binding = SuggestionItemBinding.inflate(LayoutInflater.from(context), parent, false)
 
         Glide.with(parent.context)
             .load(item?.imageBytes)

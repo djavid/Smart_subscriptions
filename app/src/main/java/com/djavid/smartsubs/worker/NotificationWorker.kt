@@ -48,7 +48,7 @@ class NotificationWorker(
         if (id == -1L) return Result.failure()
 
         loadNotification(id)
-//        loadSub(model?.subId)
+        loadSub(model?.subId?.toString())
 
         return model?.let { model ->
             subModel?.let { subModel ->

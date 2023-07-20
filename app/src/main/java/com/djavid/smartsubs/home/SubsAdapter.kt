@@ -29,7 +29,6 @@ class SubsAdapter(
 
     fun showSubs(subs: List<Subscription>) {
         data = subs
-//        notifyItemRangeInserted(0, subs.count())
         notifyDataSetChanged()
     }
 
@@ -39,7 +38,7 @@ class SubsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = SubscriptionItemBinding.inflate(LayoutInflater.from(context))
+        val view = SubscriptionItemBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(view)
     }
 
