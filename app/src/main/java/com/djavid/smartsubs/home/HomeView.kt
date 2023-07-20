@@ -32,7 +32,7 @@ class HomeView(
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.bindingAdapterPosition
                 presenter.onItemSwipedToLeft(position)
             }
         }
@@ -62,11 +62,12 @@ class HomeView(
 
     private fun setupRecycler() {
         adapter = SubsAdapter(context, presenter::onItemClick)
-        binding.homeSubsRecycler.layoutManager = LinearLayoutManager(context)
         binding.homeSubsRecycler.adapter = adapter
-        binding.homeSubsRecycler.setHasFixedSize(true)
         binding.homeSubsRecycler.setItemViewCacheSize(20)
-        (binding.homeSubsRecycler.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
+
+//        binding.homeSubsRecycler.setHasFixedSize(true)
+
+//        (binding.homeSubsRecycler.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
 
         //itemTouchHelper.attachToRecyclerView(viewRoot.home_subsRecycler)
     }

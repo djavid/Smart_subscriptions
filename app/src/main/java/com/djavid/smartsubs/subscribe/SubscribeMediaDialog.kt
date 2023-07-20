@@ -9,7 +9,7 @@ import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BaseBottomSheetFragment
 import com.djavid.smartsubs.databinding.DialogSubscribeMediaBinding
 import com.djavid.smartsubs.utils.setWhiteNavigationBar
-import org.kodein.di.generic.instance
+import org.kodein.di.instance
 
 class SubscribeMediaDialog : BaseBottomSheetFragment(R.layout.dialog_subscribe_media) {
 
@@ -17,12 +17,14 @@ class SubscribeMediaDialog : BaseBottomSheetFragment(R.layout.dialog_subscribe_m
     private val presenter: SubscribeMediaContract.Presenter by instance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DialogSubscribeMediaBinding.inflate(inflater).apply { binding = this }.root
+        return DialogSubscribeMediaBinding.inflate(inflater).apply {
+            binding = this
+            di = (requireActivity().application as Application).subscribeMediaComponent(this@SubscribeMediaDialog, binding)
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        kodein = (activity?.application as Application).subscribeMediaComponent(this, binding)
 
         presenter.init()
         dialog?.window?.setWhiteNavigationBar()

@@ -17,14 +17,13 @@ import com.djavid.smartsubs.databinding.FragmentHomeBinding
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
-import org.kodein.di.direct
-import org.kodein.di.generic.instance
+import org.kodein.di.instance
 
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     private val coroutineScope: CoroutineScope by instance()
+    private val presenter: HomeContract.Presenter by instance()
 
-    private lateinit var presenter: HomeContract.Presenter
     private lateinit var binding: FragmentHomeBinding
 
     private val broadcastReceiver = object : BroadcastReceiver() {
@@ -38,13 +37,19 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return FragmentHomeBinding.inflate(inflater).apply { binding = this }.root
+        return FragmentHomeBinding.inflate(inflater).apply {
+            binding = this
+            di = (activity?.application as Application).homeComponent(this@HomeFragment, binding)
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        kodein = (activity?.application as Application).homeComponent(this, binding)
-        presenter = kodein.direct.instance()
         presenter.init()
+
+        requireActivity().supportFragmentManager
+            .setFragmentResultListener("", viewLifecycleOwner) { _, bundle ->
+
+            }
     }
 
     override fun onResume() {

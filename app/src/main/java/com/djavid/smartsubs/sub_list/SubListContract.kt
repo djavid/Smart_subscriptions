@@ -24,4 +24,9 @@ class SubListContract {
         fun goToSubListScreen()
     }
 
+    companion object {
+        const val REQUEST_KEY = "sublist_request_key"
+        const val FRAGMENT_RESULT_KEY = "sublist_fragment_result_key"
+    }
+
 }

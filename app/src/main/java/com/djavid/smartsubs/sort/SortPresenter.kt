@@ -59,10 +59,12 @@ class SortPresenter(
     }
 
     override fun onSortItemClicked(item: SortBy) {
-        sharedRepository.selectedSortBy = item
-        pipeline.postValue(Pair(KEY_SORT_BY, item.name))
-        logger.onSortByChanged(item)
-        view.finish()
+        launch {
+            sharedRepository.selectedSortBy = item
+            pipeline.postValue(Pair(KEY_SORT_BY, item.name))
+            logger.onSortByChanged(item)
+            view.finish()
+        }
     }
 
     override fun onSortByClicked() {
@@ -70,20 +72,24 @@ class SortPresenter(
     }
 
     override fun onAscSortClicked() {
-        if (sharedRepository.selectedSortType != SortType.ASC) {
-            val sortType = SortType.ASC
-            updateSortType(sortType)
-            pipeline.postValue(Pair(ACTION_REFRESH, ""))
-            logger.onSortTypeChanged(sortType)
+        launch {
+            if (sharedRepository.selectedSortType != SortType.ASC) {
+                val sortType = SortType.ASC
+                updateSortType(sortType)
+                pipeline.postValue(Pair(ACTION_REFRESH, ""))
+                logger.onSortTypeChanged(sortType)
+            }
         }
     }
 
     override fun onDescSortClicked() {
-        if (sharedRepository.selectedSortType != SortType.DESC) {
-            val sortType = SortType.DESC
-            updateSortType(sortType)
-            pipeline.postValue(Pair(ACTION_REFRESH, ""))
-            logger.onSortTypeChanged(sortType)
+        launch {
+            if (sharedRepository.selectedSortType != SortType.DESC) {
+                val sortType = SortType.DESC
+                updateSortType(sortType)
+                pipeline.postValue(Pair(ACTION_REFRESH, ""))
+                logger.onSortTypeChanged(sortType)
+            }
         }
     }
 

@@ -90,7 +90,7 @@
     <string name="hint_price">0.00</string>
     <string name="hint_quantity">1</string>
     <string name="hint_first_pay">e.g. tomorrow</string>
-    <string name="title_every">каждый</string>
+    <string name="title_every">every</string>
     <string name="desc_first_pay">Add first payment date to see expenses, or next payment date if you can\'t remember (optional)</string>
     <string name="desc_trial_pay">Add trial period expiry date</string>
     <string name="title_note">Note</string>

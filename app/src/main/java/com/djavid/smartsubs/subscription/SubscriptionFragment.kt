@@ -19,14 +19,13 @@ import com.djavid.smartsubs.utils.KEY_IS_ROOT
 import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
-import org.kodein.di.direct
-import org.kodein.di.generic.instance
+import org.kodein.di.instance
 
 class SubscriptionFragment : BaseFragment(R.layout.fragment_subscription), BackPressListener {
 
     private val coroutineScope: CoroutineScope by instance()
 
-    private lateinit var presenter: SubscriptionContract.Presenter
+    private val presenter: SubscriptionContract.Presenter by instance()
     private lateinit var binding: FragmentSubscriptionBinding
 
     private val broadcastReceiver = object : BroadcastReceiver() {
@@ -40,13 +39,13 @@ class SubscriptionFragment : BaseFragment(R.layout.fragment_subscription), BackP
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return FragmentSubscriptionBinding.inflate(inflater).apply { binding = this }.root
+        return FragmentSubscriptionBinding.inflate(inflater).apply {
+            binding = this
+            di = (requireActivity().application as Application).subscriptionComponent(this@SubscriptionFragment, binding)
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        kodein = (activity?.application as Application).subscriptionComponent(this, binding)
-        presenter = kodein.direct.instance()
-
         arguments?.let {
             val id = it.getString(KEY_SUBSCRIPTION_ID)
             val isRoot = it.getBoolean(KEY_IS_ROOT)

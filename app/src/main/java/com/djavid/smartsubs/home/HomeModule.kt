@@ -6,13 +6,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.djavid.smartsubs.databinding.FragmentHomeBinding
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 
 class HomeModule(fragment: Fragment, binding: FragmentHomeBinding) {
-    val kodein = Kodein.Module("home_module") {
+    val di = DI.Module("home_module") {
         bind<HomeContract.View>() with singleton {
             HomeView(instance())
         }

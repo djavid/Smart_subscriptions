@@ -3,13 +3,13 @@ package com.djavid.smartsubs.root
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.djavid.smartsubs.databinding.ActivityRootBinding
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 
 class RootModule(activity: AppCompatActivity, binding: ActivityRootBinding) {
-    val kodein = Kodein.Module("root_module") {
+    val di = DI.Module("root_module") {
         bind<ActivityRootBinding>() with singleton { binding }
         bind<RootContract.View>() with singleton {
             RootView(instance())

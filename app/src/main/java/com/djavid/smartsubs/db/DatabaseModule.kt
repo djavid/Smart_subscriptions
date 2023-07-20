@@ -9,15 +9,16 @@ import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.storage.SharedRepository
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 
 class DatabaseModule(
     private val context: Context
 ) {
-    val kodein = Kodein.Module("database_module") {
+    val di = DI.Module("database_module") {
+
         //shared prefs
         bind<SharedPreferences>() with singleton {
             this@DatabaseModule.context.getSharedPreferences("default", Context.MODE_PRIVATE)

@@ -89,8 +89,7 @@ dependencies {
     // lifecycle https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-common-java8
 
     //kodein
-    implementation 'org.kodein.di:kodein-di-generic-jvm:6.5.0'
-    implementation 'org.kodein.di:kodein-di-framework-android-x:6.5.0'
+    implementation("org.kodein.di:kodein-di-framework-android-x:7.16.0")
 
     //sqldelight
     implementation "com.squareup.sqldelight:android-driver:$sqldelight_version"

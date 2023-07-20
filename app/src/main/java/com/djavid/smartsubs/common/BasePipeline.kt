@@ -7,8 +7,8 @@ class BasePipeline<T> {
 
     private val flow = MutableSharedFlow<T>()
 
-    fun postValue(value: T) {
-        flow.tryEmit(value)
+    suspend fun postValue(value: T) {
+        flow.emit(value)
     }
 
     fun getFlow(): SharedFlow<T> = flow

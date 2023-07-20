@@ -29,6 +29,7 @@ class SubsAdapter(
 
     fun showSubs(subs: List<Subscription>) {
         data = subs
+//        notifyItemRangeInserted(0, subs.count())
         notifyDataSetChanged()
     }
 
@@ -64,29 +65,27 @@ class SubsAdapter(
         val currencySymbol = context.getSymbolForCurrency(sub.price.currency)
         val priceForPeriod = sub.getPriceInPeriod(pricePeriod).roundToInt().toString()
         val priceColor = ContextCompat.getColor(
-            context,
-            if (sub.isTrial()) R.color.colorPinkishOrange else R.color.colorNero
+            context, if (sub.isTrial()) R.color.colorPinkishOrange else R.color.colorNero
         )
 
         holder.price.text = context.getString(R.string.mask_price, priceForPeriod, currencySymbol)
         holder.price.setTextColor(priceColor)
     }
 
-    @ExperimentalStdlibApi
     private fun setupProgress(holder: ViewHolder, sub: Subscription) {
         holder.progressBar.show(sub.progress != null)
         holder.periodLeft.show(sub.progress != null)
 
-        sub.progress?.let {
-            if (it.daysLeft == 0) {
-                holder.periodLeft.text = context.getString(R.string.title_today).decapitalize(context.getCurrentLocale())
+        sub.progress?.let { progress ->
+            if (progress.daysLeft == 0) {
+                holder.periodLeft.text = context.getString(R.string.title_today).replaceFirstChar { it.lowercase(context.getCurrentLocale()) }
             } else {
-                val pluralDays = context.resources.getQuantityString(R.plurals.plural_day, it.daysLeft)
-                holder.periodLeft.text = context.getString(R.string.mask_days_until, it.daysLeft, pluralDays)
+                val pluralDays = context.resources.getQuantityString(R.plurals.plural_day, progress.daysLeft)
+                holder.periodLeft.text = context.getString(R.string.mask_days_until, progress.daysLeft, pluralDays)
             }
 
-            holder.progressBar.progress = (it.progress * 100).toInt()
-            holder.progressBar.setProgressColor(1 - it.progress)
+            holder.progressBar.progress = (progress.value * 100).toInt()
+            holder.progressBar.setProgressColor(1 - progress.value)
         }
     }
 

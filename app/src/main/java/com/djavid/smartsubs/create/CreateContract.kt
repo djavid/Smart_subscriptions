@@ -68,4 +68,9 @@ interface CreateContract {
         fun goToCreateScreen(id: String? = null)
     }
 
+    companion object {
+        const val REQUEST_GUID = "create_request_guid"
+        const val RESULT_KEY_ = "create_request_guid"
+    }
+
 }

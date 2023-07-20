@@ -159,7 +159,7 @@ class SubscriptionView(
         }
 
         subNextPayment.text = text.toPinkSpannable()
-        subProgressBar.progress = (progress.progress * 100).toInt()
+        subProgressBar.progress = (progress.value * 100).toInt()
         subNextPayment.show(true)
         subProgressBar.show(true)
         subNextPaymentDivider.show(true)

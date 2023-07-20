@@ -3,17 +3,16 @@ package com.djavid.smartsubs.root
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.djavid.smartsubs.Application
-import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.databinding.ActivityRootBinding
 import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 
-class RootActivity : AppCompatActivity(), KodeinAware {
+class RootActivity : AppCompatActivity(), DIAware {
 
     private val coroutineScope: CoroutineScope by instance()
     private val presenter: RootContract.Presenter by instance()
@@ -21,13 +20,13 @@ class RootActivity : AppCompatActivity(), KodeinAware {
 
     private lateinit var binding: ActivityRootBinding
 
-    override lateinit var kodein: Kodein
+    override lateinit var di: DI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRootBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        kodein = (application as Application).rootComponent(this, binding)
+        di = (application as Application).rootComponent(this, binding)
         lifecycle.addObserver(authHelper)
 
         val subId = intent.getStringExtra(KEY_SUBSCRIPTION_ID)
@@ -39,6 +38,7 @@ class RootActivity : AppCompatActivity(), KodeinAware {
         coroutineScope.cancel()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {
             supportFragmentManager.fragments

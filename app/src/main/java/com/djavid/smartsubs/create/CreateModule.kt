@@ -4,21 +4,21 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.djavid.smartsubs.common.CommonFragmentNavigator
 import com.djavid.smartsubs.databinding.FragmentCreateBinding
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 
 class CreateModule(
     fragment: Fragment,
     binding: FragmentCreateBinding
 ) {
-    val kodein = Kodein.Module("create_module") {
+    val di = DI.Module("create_module") {
         bind<FragmentCreateBinding>() with singleton { binding }
         bind<CreateContract.Presenter>() with singleton {
             CreatePresenter(
                 instance(), instance(), instance(), instance(), instance(), instance(),
-                instance(), instance(), instance()
+                instance(), instance()
             )
         }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }

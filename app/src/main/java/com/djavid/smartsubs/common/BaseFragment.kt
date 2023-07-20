@@ -2,12 +2,12 @@ package com.djavid.smartsubs.common
 
 import android.content.BroadcastReceiver
 import androidx.fragment.app.Fragment
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
+import org.kodein.di.DI
+import org.kodein.di.DIAware
 
-abstract class BaseFragment(layoutRes: Int) : Fragment(layoutRes), KodeinAware, BroadcastHandler {
+abstract class BaseFragment(layoutRes: Int) : Fragment(layoutRes), DIAware, BroadcastHandler {
 
-    override lateinit var kodein: Kodein
+    override lateinit var di: DI
 
     override val receivers = arrayListOf<Triple<BroadcastReceiver, BroadcastHandler.Scope, BroadcastHandler.Unsubscribe>>()
 

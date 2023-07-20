@@ -11,26 +11,27 @@ import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
 import com.djavid.smartsubs.utils.setWhiteNavigationBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 
-class NotificationsFragment : BottomSheetDialogFragment(), KodeinAware {
+class NotificationsFragment : BottomSheetDialogFragment(), DIAware {
 
     private val presenter: NotificationsContract.Presenter by instance()
     private lateinit var binding: FragmentNotificationsBinding
 
-    override lateinit var kodein: Kodein
+    override lateinit var di: DI
 
     override fun getTheme() = R.style.BottomSheetDialog
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return FragmentNotificationsBinding.inflate(inflater).apply { binding = this }.root
+        return FragmentNotificationsBinding.inflate(inflater).apply {
+            binding = this
+            di = (requireActivity().application as Application).notificationsComponent(this@NotificationsFragment, binding)
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        kodein = (activity?.application as Application).notificationsComponent(this, binding)
-
         dialog?.window?.setWhiteNavigationBar()
         expandSheet()
 

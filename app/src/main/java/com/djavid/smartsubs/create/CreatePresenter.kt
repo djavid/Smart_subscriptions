@@ -1,5 +1,6 @@
 package com.djavid.smartsubs.create
 
+import android.os.Bundle
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CommonFragmentNavigator
@@ -25,7 +26,6 @@ class CreatePresenter(
     private val fragmentNavigator: CommonFragmentNavigator,
     private val subListNavigator: SubListContract.Navigator,
     private val logger: FirebaseLogger,
-    private val pipeline: BasePipeline<PredefinedSuggestionItem>,
     private val pipelineString: BasePipeline<Pair<String, String>>,
     private val realTimeRepository: RealTimeRepository,
     coroutineScope: CoroutineScope
@@ -67,17 +67,6 @@ class CreatePresenter(
 
             updateSpinner()
             view.enableInputs(true)
-        }
-
-        listenPipeline()
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private fun listenPipeline() {
-        launch(Dispatchers.Main) {
-            pipeline.getFlow().onEach {
-                onSuggestionItemClick(it)
-            }.collect()
         }
     }
 
@@ -236,6 +225,9 @@ class CreatePresenter(
             view.showToolbar(false, SLIDE_DURATION)
             view.setBackgroundTransparent(true, SLIDE_DURATION)
             withContext(Dispatchers.Default) { delay(SLIDE_DURATION) }
+//            fragmentNavigator.setFragmentResult(CreateContract.REQUEST_GUID, Bundle().apply {
+//                putSerializable("", )
+//            })
             pipelineString.postValue(ACTION_REFRESH to "")
             fragmentNavigator.goBack()
         }

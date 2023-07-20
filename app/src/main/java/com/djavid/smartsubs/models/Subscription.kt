@@ -29,7 +29,7 @@ data class SubscriptionPrice(
 
 data class SubscriptionProgress(
     val daysLeft: Int,
-    val progress: Double //[0, 1]
+    val value: Double //[0, 1]
 )
 
 data class SubscriptionPeriod(

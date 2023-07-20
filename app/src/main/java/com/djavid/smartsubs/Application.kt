@@ -41,14 +41,13 @@ import com.djavid.smartsubs.worker.NotificationWorkerModule
 import com.google.firebase.FirebaseApp
 import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
-import net.danlew.android.joda.JodaTimeAndroid
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 
-class Application : Application(), Configuration.Provider, KodeinAware {
+class Application : Application(), Configuration.Provider, DIAware {
 
     override fun onCreate() {
         super.onCreate()
@@ -72,7 +71,7 @@ class Application : Application(), Configuration.Provider, KodeinAware {
         }
     }
 
-    override val kodein = Kodein.lazy {
+    override val di by DI.lazy {
         bind<Application>() with singleton { this@Application }
         bind<Context>("appContext") with singleton { applicationContext }
 
@@ -80,79 +79,79 @@ class Application : Application(), Configuration.Provider, KodeinAware {
         bind<FirebaseLogger>() with singleton { FirebaseLogger(instance("appContext")) }
         bind<FirebaseAuthHelper>() with singleton { FirebaseAuthHelper(instance(), instance()) }
 
-        import(CoroutineModule().kodein)
-        import(DatabaseModule(applicationContext).kodein)
-        import(MappersModule().kodein)
+        import(CoroutineModule().di)
+        import(DatabaseModule(applicationContext).di)
+        import(MappersModule().di)
     }
 
-    fun rootComponent(activity: AppCompatActivity, binding: ActivityRootBinding) = Kodein.lazy {
-        extend(kodein)
-        import(RootModule(activity, binding).kodein)
-        import(HomeNavigatorModule().kodein)
-        import(SubscriptionNavigatorModule().kodein)
+    fun rootComponent(activity: AppCompatActivity, binding: ActivityRootBinding) = DI.lazy {
+        extend(di)
+        import(RootModule(activity, binding).di)
+        import(HomeNavigatorModule().di)
+        import(SubscriptionNavigatorModule().di)
     }
 
-    fun homeComponent(fragment: Fragment, binding: FragmentHomeBinding) = Kodein.lazy {
-        extend(kodein)
-        import(HomeModule(fragment, binding).kodein)
-        import(CreateNavigatorModule().kodein)
-        import(SubscriptionNavigatorModule().kodein)
-        import(SortNavigationModule().kodein)
-        import(SubscribeMediaNavigationModule().kodein)
+    fun homeComponent(fragment: Fragment, binding: FragmentHomeBinding) = DI.lazy {
+        extend(di)
+        import(HomeModule(fragment, binding).di)
+        import(CreateNavigatorModule().di)
+        import(SubscriptionNavigatorModule().di)
+        import(SortNavigationModule().di)
+        import(SubscribeMediaNavigationModule().di)
     }
 
-    fun createComponent(fragment: Fragment, binding: FragmentCreateBinding) = Kodein.lazy {
-        extend(kodein)
-        import(CreateModule(fragment, binding).kodein)
-        import(SubListNavigatorModule().kodein)
+    fun createComponent(fragment: Fragment, binding: FragmentCreateBinding) = DI.lazy {
+        extend(di)
+        import(CreateModule(fragment, binding).di)
+        import(SubListNavigatorModule().di)
     }
 
-    fun subscriptionComponent(fragment: Fragment, binding: FragmentSubscriptionBinding) = Kodein.lazy {
-        extend(kodein)
-        import(SubscriptionModule(fragment, binding).kodein)
-        import(CreateNavigatorModule().kodein)
-        import(HomeNavigatorModule().kodein)
-        import(AlarmNotifierModule().kodein)
-        import(NotificationsNavigatorModule().kodein)
+    fun subscriptionComponent(fragment: Fragment, binding: FragmentSubscriptionBinding) = DI.lazy {
+        extend(di)
+        import(SubscriptionModule(fragment, binding).di)
+        import(CreateNavigatorModule().di)
+        import(HomeNavigatorModule().di)
+        import(AlarmNotifierModule().di)
+        import(NotificationsNavigatorModule().di)
     }
 
-    fun notificationComponent(fragment: Fragment, binding: FragmentNotificationBinding) = Kodein.lazy {
-        extend(kodein)
-        import(NotificationModule(fragment, binding).kodein)
-        import(AlarmNotifierModule().kodein)
+    fun notificationComponent(fragment: Fragment, binding: FragmentNotificationBinding) = DI.lazy {
+        extend(di)
+        import(NotificationModule(fragment, binding).di)
+        import(AlarmNotifierModule().di)
     }
 
-    fun notificationsComponent(fragment: Fragment, binding: FragmentNotificationsBinding) = Kodein.lazy {
-        extend(kodein)
-        import(NotificationNavigatorModule().kodein)
-        import(NotificationsModule(fragment, binding).kodein)
-        import(AlarmNotifierModule().kodein)
+    fun notificationsComponent(fragment: Fragment, binding: FragmentNotificationsBinding) = DI.lazy {
+        extend(di)
+        import(NotificationNavigatorModule().di)
+        import(NotificationsModule(fragment, binding).di)
+        import(AlarmNotifierModule().di)
     }
 
-    fun sortComponent(fragment: Fragment, binding: FragmentSortBinding) = Kodein.lazy {
-        extend(kodein)
-        import(SortModule(fragment, binding).kodein)
-        import(SortNavigationModule().kodein)
+    fun sortComponent(fragment: Fragment, binding: FragmentSortBinding) = DI.lazy {
+        extend(di)
+        import(SortModule(fragment, binding).di)
+        import(SortNavigationModule().di)
     }
 
-    fun subscribeMediaComponent(fragment: Fragment, binding: DialogSubscribeMediaBinding) = Kodein.lazy {
-        extend(kodein)
-        import(SubscribeMediaModule(fragment, binding).kodein)
+    fun subscribeMediaComponent(fragment: Fragment, binding: DialogSubscribeMediaBinding) = DI.lazy {
+        extend(di)
+        import(SubscribeMediaModule(fragment, binding).di)
     }
 
-    fun subListComponent(fragment: Fragment, binding: FragmentSubListBinding) = Kodein.lazy {
-        extend(kodein)
-        import(SubListModule(fragment, binding).kodein)
+    fun subListComponent(fragment: Fragment, binding: FragmentSubListBinding) = DI.lazy {
+        extend(di)
+        import(SubListModule(fragment, binding).di)
     }
 
-    fun notificationWorkerComponent(context: Context) = Kodein.lazy {
-        extend(kodein)
-        import(NotificationWorkerModule(context).kodein)
-        import(AlarmNotifierModule().kodein)
+    fun notificationWorkerComponent(context: Context) = DI.lazy {
+        extend(di)
+        import(NotificationWorkerModule(context).di)
+        import(AlarmNotifierModule().di)
     }
 
-    fun uploaderComponent() = Kodein.lazy {
-        extend(kodein)
+    fun uploaderComponent() = DI.lazy {
+        extend(di)
     }
 
 }

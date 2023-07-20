@@ -10,7 +10,7 @@ import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.databinding.FragmentSubListBinding
-import org.kodein.di.generic.instance
+import org.kodein.di.instance
 
 class SubListFragment : BaseFragment(R.layout.fragment_sub_list), BackPressListener {
 
@@ -18,12 +18,14 @@ class SubListFragment : BaseFragment(R.layout.fragment_sub_list), BackPressListe
     private val presenter: SubListContract.Presenter by instance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return FragmentSubListBinding.inflate(inflater).apply { binding = this }.root
+        return FragmentSubListBinding.inflate(inflater).apply {
+            binding = this
+            di = (requireActivity().application as Application).subListComponent(this@SubListFragment, binding)
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        kodein = (activity?.application as Application).subListComponent(this, binding)
 
         presenter.init()
     }

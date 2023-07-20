@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.djavid.smartsubs.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
+import org.kodein.di.DI
+import org.kodein.di.DIAware
 
 abstract class BaseBottomSheetFragment(
     private val layoutRes: Int
-) : BottomSheetDialogFragment(), KodeinAware {
+) : BottomSheetDialogFragment(), DIAware {
 
-    override lateinit var kodein: Kodein
+    override lateinit var di: DI
 
     override fun getTheme() = R.style.BottomSheetDialog
 

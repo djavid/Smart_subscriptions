@@ -2,6 +2,7 @@ package com.djavid.smartsubs.create
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -24,7 +25,7 @@ class SuggestionsAdapter(
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val item = getItem(position)
-        val binding = SuggestionItemBinding.bind(parent)
+        val binding = SuggestionItemBinding.inflate(LayoutInflater.from(context))
 
         Glide.with(parent.context)
             .load(item?.imageBytes)
@@ -43,10 +44,8 @@ class SuggestionsAdapter(
 
                 for (suggestion in suggestionsSource) {
                     suggestion.abbreviations.find { abbr ->
-                        val match = constraint.toString().toLowerCase(Locale.ROOT)
-                            .contains(abbr.toLowerCase(Locale.ROOT)) ||
-                                abbr.toLowerCase(Locale.ROOT)
-                                    .contains(constraint.toString().toLowerCase(Locale.ROOT))
+                        val match = constraint.toString().lowercase().contains(abbr.lowercase()) ||
+                                abbr.lowercase().contains(constraint.toString().lowercase())
 
                         match
                     }?.let {

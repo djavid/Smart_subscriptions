@@ -1,7 +1,7 @@
 package com.djavid.smartsubs.sub_list
 
+import android.os.Bundle
 import androidx.lifecycle.LifecycleCoroutineScope
-import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CommonFragmentNavigator
 import com.djavid.smartsubs.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.storage.RealTimeRepository
@@ -12,7 +12,6 @@ class SubListPresenter(
     private val view: SubListContract.View,
     private val realTimeRepository: RealTimeRepository,
     private val fragmentNavigator: CommonFragmentNavigator,
-    private val pipeline: BasePipeline<PredefinedSuggestionItem>,
     lifecycleCoroutineScope: LifecycleCoroutineScope
 ) : SubListContract.Presenter, CoroutineScope by lifecycleCoroutineScope {
 
@@ -31,7 +30,9 @@ class SubListPresenter(
     }
 
     override fun onItemClick(item: PredefinedSuggestionItem) {
-        pipeline.postValue(item)
+        fragmentNavigator.setFragmentResult(SubListContract.REQUEST_KEY, Bundle().apply {
+            putSerializable(SubListContract.FRAGMENT_RESULT_KEY, item)
+        })
         finish()
     }
 
@@ -56,5 +57,6 @@ class SubListPresenter(
             fragmentNavigator.goBack()
         }
     }
+
 
 }

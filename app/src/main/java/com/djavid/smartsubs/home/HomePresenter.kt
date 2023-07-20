@@ -16,6 +16,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.util.*
 
@@ -37,10 +38,10 @@ class HomePresenter(
     private var subs = listOf<Subscription>()
 
     override fun init() {
-        view.init(this)
-        view.slidePanelToTop()
+        launch(Dispatchers.Main) {
+            view.init(this@HomePresenter)
+            view.slidePanelToTop()
 
-        launch(Dispatchers.IO) {
             //preloading subs
             repository.getAllPredefinedSubsWithLogo(false)
         }
@@ -65,24 +66,23 @@ class HomePresenter(
     }
 
     private fun listenPipeline() {
-        launch {
-            pipeline.getFlow().onEach {
-                when (it.first) {
-                    ACTION_REFRESH -> {
-                        reloadSubs()
+        pipeline.getFlow().onEach {
+            when (it.first) {
+                ACTION_REFRESH -> {
+                    reloadSubs()
 
-                        if (sharedPrefs.inAppReviewTimesShown < 2) {
-                            showInAppReview()
-                        }
+                    if (sharedPrefs.inAppReviewTimesShown < 2) {
+                        showInAppReview()
+                    }
+
 //                        if (sharedPrefs.tgDialogTimesShown == 0) {
 //                            showTgDialog()
 //                        } else if (sharedPrefs.inAppReviewTimesShown < 2) {
 //                            showInAppReview()
 //                        }
-                    }
                 }
-            }.collect()
-        }
+            }
+        }.launchIn(this)
     }
 
     override fun reloadSubs() {

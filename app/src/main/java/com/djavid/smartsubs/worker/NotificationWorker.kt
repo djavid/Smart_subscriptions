@@ -23,15 +23,15 @@ import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.storage.SharedRepository
 import com.djavid.smartsubs.utils.*
 import kotlinx.coroutines.runBlocking
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.instance
 
 class NotificationWorker(
     private val context: Context, private val workerParams: WorkerParameters
-) : Worker(context, workerParams), KodeinAware {
+) : Worker(context, workerParams), DIAware {
 
-    override val kodein: Kodein
+    override val di: DI
         get() = (context.applicationContext as Application).notificationWorkerComponent(context)
 
     private val notifRepository: NotificationsRepository by instance()
