@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 
-abstract class BaseFragment(layoutRes: Int) : Fragment(layoutRes), DIAware, BroadcastHandler {
+abstract class BaseFragment : Fragment(), DIAware, BroadcastHandler {
 
     override lateinit var di: DI
 

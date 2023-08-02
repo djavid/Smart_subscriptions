@@ -25,7 +25,6 @@ class SortView(
 
     override fun showSortByList(items: List<SortBy>) {
         val adapter = SortByAdapter(presenter::onSortItemClicked)
-        binding.sortByRecycler.layoutManager = LinearLayoutManager(context)
         binding.sortByRecycler.adapter = adapter
 
         getDrawable(context, R.drawable.bg_recycler_divider)?.let {

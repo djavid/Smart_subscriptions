@@ -47,7 +47,7 @@ class SortPresenter(
     }
 
     private fun showSortScreen() {
-        view.showSortTitle(true)
+        view.showSortTitle(false)
         view.showSortDelimiter(true)
 
         loadSortBy()

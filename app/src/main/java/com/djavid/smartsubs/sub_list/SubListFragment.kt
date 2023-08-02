@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.djavid.smartsubs.Application
-import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.databinding.FragmentSubListBinding
 import org.kodein.di.instance
 
-class SubListFragment : BaseFragment(R.layout.fragment_sub_list), BackPressListener {
+class SubListFragment : BaseFragment(), BackPressListener {
 
     private lateinit var binding: FragmentSubListBinding
     private val presenter: SubListContract.Presenter by instance()

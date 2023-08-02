@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.djavid.smartsubs.Application
-import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.common.BroadcastHandler
 import com.djavid.smartsubs.common.subscribeApplicationReceiver
@@ -19,7 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.instance
 
-class HomeFragment : BaseFragment(R.layout.fragment_home) {
+class HomeFragment : BaseFragment() {
 
     private val coroutineScope: CoroutineScope by instance()
     private val presenter: HomeContract.Presenter by instance()

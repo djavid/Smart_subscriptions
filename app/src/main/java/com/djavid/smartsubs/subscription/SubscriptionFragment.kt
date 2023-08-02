@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.djavid.smartsubs.Application
-import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.common.BroadcastHandler
@@ -21,7 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.instance
 
-class SubscriptionFragment : BaseFragment(R.layout.fragment_subscription), BackPressListener {
+class SubscriptionFragment : BaseFragment(), BackPressListener {
 
     private val coroutineScope: CoroutineScope by instance()
 

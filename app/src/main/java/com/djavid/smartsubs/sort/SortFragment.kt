@@ -5,23 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.djavid.smartsubs.Application
-import com.djavid.smartsubs.R
 import com.djavid.smartsubs.common.BaseBottomSheetFragment
 import com.djavid.smartsubs.databinding.FragmentSortBinding
 import com.djavid.smartsubs.utils.KEY_SORT_SCREEN_TYPE
-import com.djavid.smartsubs.utils.setWhiteNavigationBar
-import org.kodein.di.DI
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 
-class SortFragment : BaseBottomSheetFragment(R.layout.fragment_sort), DIAware {
+class SortFragment : BaseBottomSheetFragment(), DIAware {
 
     private val presenter: SortContract.Presenter by instance()
     private lateinit var binding: FragmentSortBinding
-    override lateinit var di: DI
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return FragmentSortBinding.inflate(inflater).apply {
+        return FragmentSortBinding.inflate(inflater, container, false).apply {
             binding = this
             di = (requireActivity().application as Application).sortComponent(this@SortFragment, binding)
         }.root
@@ -32,8 +30,9 @@ class SortFragment : BaseBottomSheetFragment(R.layout.fragment_sort), DIAware {
 
         getScreenType {
             presenter.init(it)
-            dialog?.window?.setWhiteNavigationBar()
         }
+
+        BottomSheetBehavior.from(binding.sortBottomSheet).apply { this.state = STATE_EXPANDED }
     }
 
     private fun getScreenType(action: (SortContract.ScreenType) -> Unit) {

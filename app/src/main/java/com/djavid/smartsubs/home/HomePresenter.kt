@@ -108,14 +108,14 @@ class HomePresenter(
 
         return if (asc) {
             when (sharedPrefs.selectedSortBy) {
-                SortBy.TITLE -> subs.sortedBy { it.title.toLowerCase(Locale.getDefault()) }
+                SortBy.TITLE -> subs.sortedBy { it.title.lowercase(Locale.getDefault()) }
                 SortBy.PRICE -> subs.sortedBy { it.getPriceInPeriod(sharedPrefs.selectedSubsPeriod) }
                 SortBy.DAYS_UNTIL -> subs.sortedBy { it.progress?.daysLeft }
                 SortBy.CREATION_DATE -> subs.sortedBy { it.id }
             }
         } else {
             when (sharedPrefs.selectedSortBy) {
-                SortBy.TITLE -> subs.sortedByDescending { it.title.toLowerCase(Locale.getDefault()) }
+                SortBy.TITLE -> subs.sortedByDescending { it.title.lowercase(Locale.getDefault()) }
                 SortBy.PRICE -> subs.sortedByDescending { it.getPriceInPeriod(sharedPrefs.selectedSubsPeriod) }
                 SortBy.DAYS_UNTIL -> subs.sortedByDescending { it.progress?.daysLeft }
                 SortBy.CREATION_DATE -> subs.sortedByDescending { it.id }

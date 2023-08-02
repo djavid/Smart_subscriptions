@@ -23,8 +23,6 @@ class NotificationFragment : BottomSheetDialogFragment(), DIAware {
     private lateinit var binding: FragmentNotificationBinding
     override lateinit var di: DI
 
-    override fun getTheme() = R.style.BottomSheetDialog
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentNotificationBinding.inflate(inflater).apply {
             binding = this
