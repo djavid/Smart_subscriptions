@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.sub_list
+package com.djavid.smartsubs.currencyList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,18 +8,19 @@ import android.view.WindowManager
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.common.BaseFragment
-import com.djavid.smartsubs.databinding.FragmentSubListBinding
+import com.djavid.smartsubs.databinding.FragmentCurrencyListBinding
 import org.kodein.di.instance
 
-class SubListFragment : BaseFragment(), BackPressListener {
+class CurrencyListFragment : BaseFragment(), BackPressListener {
 
-    private lateinit var binding: FragmentSubListBinding
-    private val presenter: SubListContract.Presenter by instance()
+    private lateinit var binding: FragmentCurrencyListBinding
+    private val presenter: CurrencyListContract.Presenter by instance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return FragmentSubListBinding.inflate(inflater).apply {
+        return FragmentCurrencyListBinding.inflate(inflater).apply {
             binding = this
-            di = (requireActivity().application as Application).subListComponent(this@SubListFragment, binding)
+            di = (requireActivity().application as Application)
+                .currencyListComponent(this@CurrencyListFragment, binding)
         }.root
     }
 

@@ -1,21 +1,19 @@
 package com.djavid.smartsubs.create
 
-import android.os.Bundle
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CommonFragmentNavigator
+import com.djavid.smartsubs.currencyList.CurrencyListContract
 import com.djavid.smartsubs.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.models.SubscriptionDao
 import com.djavid.smartsubs.models.SubscriptionPeriod
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.storage.RealTimeRepository
-import com.djavid.smartsubs.sub_list.SubListContract
+import com.djavid.smartsubs.subList.SubListContract
 import com.djavid.smartsubs.utils.ACTION_REFRESH
 import com.djavid.smartsubs.utils.DATE_TIME_FORMAT
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.util.*
@@ -25,6 +23,7 @@ class CreatePresenter(
     private val repository: RealTimeRepository,
     private val fragmentNavigator: CommonFragmentNavigator,
     private val subListNavigator: SubListContract.Navigator,
+    private val currencyListNavigator: CurrencyListContract.Navigator,
     private val logger: FirebaseLogger,
     private val pipelineString: BasePipeline<Pair<String, String>>,
     private val realTimeRepository: RealTimeRepository,
@@ -67,7 +66,12 @@ class CreatePresenter(
 
             updateSpinner()
             view.enableInputs(true)
+            view.setCurrencySymbol(model.currency)
         }
+    }
+
+    override fun onCurrencyClicked() {
+        currencyListNavigator.goToCurrencyListScreen()
     }
 
     private suspend fun loadPredefinedSubs() = withContext(Dispatchers.Main) {

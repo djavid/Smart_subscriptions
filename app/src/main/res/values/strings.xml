@@ -8,6 +8,8 @@
 
     <!--region common-->
     <string name="symbol_rub">₽</string>
+    <string name="symbol_usd">$</string>
+    <string name="symbol_eur">€</string>
     <!--endregion-->
 
     <!--region masks-->
@@ -158,7 +160,9 @@
 
     <!--region sub list-->
     <string name="title_select_sub">Select subscription</string>
+    <string name="title_select_curr">Select currency</string>
     <string name="title_subs">Subscriptions</string>
+    <string name="title_currencies">Currencies</string>
     <!--endregion-->
 
 </resources>

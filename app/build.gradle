@@ -91,6 +91,9 @@ dependencies {
     //kodein
     implementation("org.kodein.di:kodein-di-framework-android-x:7.16.0")
 
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
     //sqldelight
     implementation "com.squareup.sqldelight:android-driver:$sqldelight_version"
 

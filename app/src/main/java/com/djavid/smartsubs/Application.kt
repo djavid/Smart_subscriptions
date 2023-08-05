@@ -9,9 +9,12 @@ import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.coroutines.CoroutineModule
 import com.djavid.smartsubs.create.CreateModule
 import com.djavid.smartsubs.create.CreateNavigatorModule
+import com.djavid.smartsubs.currencyList.CurrencyListModule
+import com.djavid.smartsubs.currencyList.CurrencyListNavigatorModule
 import com.djavid.smartsubs.databinding.ActivityRootBinding
 import com.djavid.smartsubs.databinding.DialogSubscribeMediaBinding
 import com.djavid.smartsubs.databinding.FragmentCreateBinding
+import com.djavid.smartsubs.databinding.FragmentCurrencyListBinding
 import com.djavid.smartsubs.databinding.FragmentHomeBinding
 import com.djavid.smartsubs.databinding.FragmentNotificationBinding
 import com.djavid.smartsubs.databinding.FragmentNotificationsBinding
@@ -31,8 +34,8 @@ import com.djavid.smartsubs.root.FirebaseAuthHelper
 import com.djavid.smartsubs.root.RootModule
 import com.djavid.smartsubs.sort.SortModule
 import com.djavid.smartsubs.sort.SortNavigationModule
-import com.djavid.smartsubs.sub_list.SubListModule
-import com.djavid.smartsubs.sub_list.SubListNavigatorModule
+import com.djavid.smartsubs.subList.SubListModule
+import com.djavid.smartsubs.subList.SubListNavigatorModule
 import com.djavid.smartsubs.subscribe.SubscribeMediaModule
 import com.djavid.smartsubs.subscribe.SubscribeMediaNavigationModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
@@ -104,6 +107,7 @@ class Application : Application(), Configuration.Provider, DIAware {
         extend(di)
         import(CreateModule(fragment, binding).di)
         import(SubListNavigatorModule().di)
+        import(CurrencyListNavigatorModule().di)
     }
 
     fun subscriptionComponent(fragment: Fragment, binding: FragmentSubscriptionBinding) = DI.lazy {
@@ -142,6 +146,11 @@ class Application : Application(), Configuration.Provider, DIAware {
     fun subListComponent(fragment: Fragment, binding: FragmentSubListBinding) = DI.lazy {
         extend(di)
         import(SubListModule(fragment, binding).di)
+    }
+
+    fun currencyListComponent(fragment: Fragment, binding: FragmentCurrencyListBinding) = DI.lazy {
+        extend(di)
+        import(CurrencyListModule(fragment, binding).di)
     }
 
     fun notificationWorkerComponent(context: Context) = DI.lazy {

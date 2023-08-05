@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.sub_list
+package com.djavid.smartsubs.subList
 
 import org.kodein.di.DI
 import org.kodein.di.bind

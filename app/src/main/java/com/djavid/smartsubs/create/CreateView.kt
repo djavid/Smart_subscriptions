@@ -39,6 +39,7 @@ class CreateView(
         binding.createCloseBtn.setOnClickListener { presenter.onCancelPressed() }
         binding.createLogoBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
         binding.createPredefinedBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
+        binding.createCurrencySymbol.setOnClickListener { presenter.onCurrencyClicked() }
     }
 
     private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->

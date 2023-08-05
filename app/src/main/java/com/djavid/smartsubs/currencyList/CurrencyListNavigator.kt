@@ -1,18 +1,18 @@
-package com.djavid.smartsubs.sub_list
+package com.djavid.smartsubs.currencyList
 
 import androidx.fragment.app.FragmentManager
 import com.djavid.smartsubs.R
 
-class SubListNavigator(
+class CurrencyListNavigator(
     private val fm: FragmentManager
-): SubListContract.Navigator {
+): CurrencyListContract.Navigator {
 
-    override fun goToSubListScreen() {
+    override fun goToCurrencyListScreen() {
         fm.beginTransaction()
             .add(
                 R.id.fragmentContainer,
-                SubListFragment(),
-                SubListFragment::class.java.simpleName
+                CurrencyListFragment(),
+                CurrencyListFragment::class.java.simpleName
             )
             .setReorderingAllowed(true)
             .addToBackStack(null)

@@ -30,6 +30,7 @@ interface CreateContract {
         fun onPredefinedBtnPressed()
         fun onSuggestionItemClick(item: PredefinedSuggestionItem)
         fun onSubmitPressed()
+        fun onCurrencyClicked()
     }
 
     interface View {

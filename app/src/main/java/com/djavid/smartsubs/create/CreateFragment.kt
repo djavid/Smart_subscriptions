@@ -10,7 +10,7 @@ import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.databinding.FragmentCreateBinding
 import com.djavid.smartsubs.models.PredefinedSuggestionItem
-import com.djavid.smartsubs.sub_list.SubListContract
+import com.djavid.smartsubs.subList.SubListContract
 import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
 import com.djavid.smartsubs.utils.serializable
 import org.kodein.di.instance

@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.sub_list
+package com.djavid.smartsubs.subList
 
 import com.djavid.smartsubs.models.PredefinedSuggestionItem
 

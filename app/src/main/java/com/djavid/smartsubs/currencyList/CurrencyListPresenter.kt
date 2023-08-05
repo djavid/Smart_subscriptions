@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.sub_list
+package com.djavid.smartsubs.currencyList
 
 import android.os.Bundle
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -8,12 +8,12 @@ import com.djavid.smartsubs.storage.RealTimeRepository
 import com.djavid.smartsubs.utils.SLIDE_DURATION
 import kotlinx.coroutines.*
 
-class SubListPresenter(
-    private val view: SubListContract.View,
+class CurrencyListPresenter(
+    private val view: CurrencyListContract.View,
     private val realTimeRepository: RealTimeRepository,
     private val fragmentNavigator: CommonFragmentNavigator,
     lifecycleCoroutineScope: LifecycleCoroutineScope
-) : SubListContract.Presenter, CoroutineScope by lifecycleCoroutineScope {
+) : CurrencyListContract.Presenter, CoroutineScope by lifecycleCoroutineScope {
 
     private val predefinedSubs = mutableListOf<PredefinedSuggestionItem>()
 
@@ -25,13 +25,13 @@ class SubListPresenter(
         view.expandPanel()
 
         launch {
-            loadPredefinedSubs()
+            loadCurrencies()
         }
     }
 
     override fun onItemClick(item: PredefinedSuggestionItem) {
-        fragmentNavigator.setFragmentResult(SubListContract.REQUEST_KEY, Bundle().apply {
-            putSerializable(SubListContract.FRAGMENT_RESULT_KEY, item)
+        fragmentNavigator.setFragmentResult(CurrencyListContract.REQUEST_KEY, Bundle().apply {
+            putSerializable(CurrencyListContract.FRAGMENT_RESULT_KEY, item)
         })
         finish()
     }
@@ -40,12 +40,16 @@ class SubListPresenter(
         finish()
     }
 
-    private fun loadPredefinedSubs() = launch(Dispatchers.Main) {
-        predefinedSubs.clear()
-        predefinedSubs.addAll(realTimeRepository.getAllPredefinedSubsWithLogo())
-        view.showProgress(false)
-        view.showPredefinedSubs(predefinedSubs)
+    private fun loadCurrencies() {
+        //todo
     }
+
+//    private fun loadPredefinedSubs() = launch(Dispatchers.Main) {
+//        predefinedSubs.clear()
+//        predefinedSubs.addAll(realTimeRepository.getAllPredefinedSubsWithLogo())
+//        view.showProgress(false)
+//        view.showPredefinedSubs(predefinedSubs)
+//    }
 
     private fun finish() {
         launch(Dispatchers.Main) {
