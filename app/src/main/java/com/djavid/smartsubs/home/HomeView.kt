@@ -94,7 +94,7 @@ class HomeView(
     }
 
     override fun setSubsPrice(price: SubscriptionPrice) {
-        val currencySymbol = context.getSymbolForCurrency(price.currency)
+        val currencySymbol = price.currency.symbol
         val priceToShow = price.value.roundToInt().toString()
 
         binding.homeSubsPrice.text = context.getString(R.string.mask_price, priceToShow, currencySymbol)

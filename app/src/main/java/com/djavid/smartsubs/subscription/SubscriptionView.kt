@@ -117,7 +117,7 @@ class SubscriptionView(
     }
 
     override fun setPrice(period: SubscriptionPeriod, price: SubscriptionPrice) = with(binding) {
-        val currSymbol = binding.root.context.getSymbolForCurrency(price.currency)
+        val currSymbol = price.currency.symbol
         val everyPlural = binding.root.context.resources.getQuantityString(R.plurals.plural_every, period.quantity)
 
         val periodPlural = binding.root.context.getSubPeriodString(period.type, period.quantity)
@@ -166,7 +166,7 @@ class SubscriptionView(
     }
 
     override fun setOverallSpent(spent: SubscriptionPrice) = with(binding) {
-        val currSymbol = binding.root.context.getSymbolForCurrency(spent.currency)
+        val currSymbol = spent.currency.symbol
         val spentFormatted = DecimalFormat(DECIMAL_FORMAT).format(spent.value)
         val text = binding.root.context.getString(R.string.mask_overall_spent, spentFormatted, currSymbol)
 

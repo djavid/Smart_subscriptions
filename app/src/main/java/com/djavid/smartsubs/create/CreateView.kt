@@ -15,7 +15,6 @@ import com.djavid.smartsubs.databinding.FragmentCreateBinding
 import com.djavid.smartsubs.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getSubPeriodString
-import com.djavid.smartsubs.models.getSymbolForCurrency
 import com.djavid.smartsubs.utils.animateAlpha
 import com.djavid.smartsubs.utils.hideKeyboard
 import com.djavid.smartsubs.utils.show
@@ -157,7 +156,7 @@ class CreateView(
     }
 
     override fun setCurrencySymbol(currency: Currency) {
-        binding.createCurrencySymbol.text = binding.root.context.getSymbolForCurrency(currency)
+        binding.createCurrencySymbol.text = currency.symbol
     }
 
     override fun setEveryPlural(quantity: Int) {

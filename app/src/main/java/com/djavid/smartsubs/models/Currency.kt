@@ -1,19 +1,15 @@
 package com.djavid.smartsubs.models
 
-import android.content.Context
-import com.djavid.smartsubs.R
+enum class SupportedCurrencies {
+    RUB, USD, EUR, GBP, JPY, CHF, CNY
+}
 
-val supportedCurrencyCodes = listOf("RUB", "USD", "EUR")
+sealed class Currencies(
+    val currencyCode: String
+) {
+    sealed class RussianRouble(
+        currencyCode: String = "RUB"
+    ): Currencies(currencyCode) {
 
-fun Context.getSymbolForCurrency(currency: java.util.Currency): String {
-    return if (supportedCurrencyCodes.contains(currency.currencyCode)) {
-        when (currency.currencyCode) {
-            "RUB" -> getString(R.string.symbol_rub)
-            "USD" -> getString(R.string.symbol_usd)
-            "EUR" -> getString(R.string.symbol_eur)
-            else -> currency.displayName
-        }
-    } else {
-        currency.displayName
     }
 }
