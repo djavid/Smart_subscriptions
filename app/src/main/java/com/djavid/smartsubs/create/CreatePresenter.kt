@@ -76,7 +76,7 @@ class CreatePresenter(
 
     private suspend fun loadPredefinedSubs() = withContext(Dispatchers.Main) {
         predefinedSubs.clear()
-        predefinedSubs.addAll(realTimeRepository.getAllPredefinedSubsWithLogo())
+        predefinedSubs.addAll(realTimeRepository.getAllPredefinedSubsWithLogo(allowCache = true))
         view.setupSuggestions(predefinedSubs)
     }
 

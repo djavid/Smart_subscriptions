@@ -24,7 +24,7 @@ class SubsAdapter(
 ) : RecyclerView.Adapter<SubsAdapter.ViewHolder>() {
 
     private var data = listOf<Subscription>()
-    lateinit var pricePeriod: SubscriptionPeriodType
+    private lateinit var pricePeriod: SubscriptionPeriodType
 
     fun showSubs(subs: List<Subscription>) {
         data = subs
@@ -60,7 +60,7 @@ class SubsAdapter(
     }
 
     private fun setupPrice(holder: ViewHolder, sub: Subscription) {
-        val currencySymbol = sub.price.currency.symbol
+        val currencySymbol = sub.price.currency.getSymbolString()
         val priceForPeriod = sub.getPriceInPeriod(pricePeriod).roundToInt().toString()
         val priceColor = ContextCompat.getColor(
             context, if (sub.isTrial()) R.color.colorPinkishOrange else R.color.colorNero

@@ -2,12 +2,16 @@ package com.djavid.smartsubs.subscribe
 
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.storage.SharedRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SubscribeMediaPresenter(
     private val view: SubscribeMediaContract.View,
     private val sharedPrefs: SharedRepository,
-    private val firebaseLogger: FirebaseLogger
-) : SubscribeMediaContract.Presenter {
+    private val firebaseLogger: FirebaseLogger,
+    coroutineScope: CoroutineScope
+) : SubscribeMediaContract.Presenter, CoroutineScope by coroutineScope {
 
     companion object {
         private const val TG_URL = "https://www.t.me/smartsubs"
@@ -15,18 +19,21 @@ class SubscribeMediaPresenter(
 
     override fun init() {
         view.init(this)
-        firebaseLogger.subscribeTgShown()
-        sharedPrefs.tgDialogTimesShown++
+
+        launch(Dispatchers.IO) {
+            firebaseLogger.subscribeTgShown()
+            sharedPrefs.tgDialogTimesShown++
+        }
     }
 
     override fun onNoClicked() {
-        firebaseLogger.subscribeTgClickedNo()
+        launch { firebaseLogger.subscribeTgClickedNo() }
         view.close()
     }
 
     override fun onSubscribeClicked() {
         sharedPrefs.tgDialogTimesYesClicked++
-        firebaseLogger.subscribeTgClickedYes()
+        launch { firebaseLogger.subscribeTgClickedYes() }
         view.openTgChannelInApp()
     }
 

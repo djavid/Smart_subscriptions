@@ -54,13 +54,17 @@ class NotificationsPresenter(
     }
 
     override fun onAddNotification() {
-        notificationNavigator.showNotificationDialog(subId)
-        logger.onAddNotifClicked()
+        launch {
+            notificationNavigator.showNotificationDialog(subId)
+            logger.onAddNotifClicked()
+        }
     }
 
     override fun onEditNotification(model: Notification) {
-        notificationNavigator.showNotificationDialog(subId, model.id)
-        logger.onEditNotifClicked(model)
+        launch {
+            notificationNavigator.showNotificationDialog(subId, model.id)
+            logger.onEditNotifClicked(model)
+        }
     }
 
     override fun onNotifCheckChanged(notif: Notification, checked: Boolean) {

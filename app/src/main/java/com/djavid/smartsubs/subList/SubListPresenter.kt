@@ -42,7 +42,7 @@ class SubListPresenter(
 
     private fun loadPredefinedSubs() = launch(Dispatchers.Main) {
         predefinedSubs.clear()
-        predefinedSubs.addAll(realTimeRepository.getAllPredefinedSubsWithLogo())
+        predefinedSubs.addAll(realTimeRepository.getAllPredefinedSubsWithLogo(allowCache = true))
         view.showProgress(false)
         view.showPredefinedSubs(predefinedSubs)
     }

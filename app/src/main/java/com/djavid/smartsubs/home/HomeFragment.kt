@@ -17,11 +17,13 @@ import com.djavid.smartsubs.utils.ACTION_REFRESH
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.instance
+import org.orbitmvi.orbit.viewmodel.observe
 
 class HomeFragment : BaseFragment() {
 
     private val coroutineScope: CoroutineScope by instance()
-    private val presenter: HomeContract.Presenter by instance()
+    private val viewModel: HomeViewModel by instance()
+    private val homeView: HomeView by instance()
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -29,7 +31,7 @@ class HomeFragment : BaseFragment() {
         override fun onReceive(context: Context?, intent: Intent?) {
             intent?.let {
                 if (it.action == ACTION_REFRESH) {
-                    presenter.reloadSubs()
+                    viewModel.onRefreshAction()
                 }
             }
         }
@@ -43,13 +45,13 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter.init()
+        homeView.onViewCreated(viewLifecycleOwner)
     }
 
     override fun onResume() {
         super.onResume()
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
-        presenter.reloadSubs()
+        viewModel.onResume()
 
         subscribeApplicationReceiver(
             broadcastReceiver,

@@ -3,9 +3,9 @@ package com.djavid.smartsubs.home
 import androidx.fragment.app.FragmentManager
 import com.djavid.smartsubs.R
 
-class HomeNavigator(
+class HomeNavigatorImpl(
     private val fragmentManager: FragmentManager
-) : HomeContract.Navigator {
+) : HomeNavigator {
 
     override fun goToHome() {
         fragmentManager

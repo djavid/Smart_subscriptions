@@ -6,6 +6,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.djavid.smartsubs.databinding.FragmentHomeBinding
+import com.djavid.smartsubs.utils.InAppReview
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
@@ -13,19 +16,23 @@ import org.kodein.di.singleton
 
 class HomeModule(fragment: Fragment, binding: FragmentHomeBinding) {
     val di = DI.Module("home_module") {
-        bind<HomeContract.View>() with singleton {
-            HomeView(instance())
+        bind<HomeView>() with singleton {
+            HomeView(instance(), instance())
         }
         bind<Activity>() with singleton { fragment.requireActivity() }
         bind<FragmentHomeBinding>() with singleton { binding }
         bind<LifecycleCoroutineScope>() with singleton { fragment.lifecycleScope }
-        bind<HomeContract.Presenter>() with singleton {
-            HomePresenter(
-                instance(), instance(), instance(), instance(), instance(), instance(), instance(),
-                instance(), instance(), instance(), instance(), instance()
+        bind<HomeViewModel>() with singleton {
+            HomeViewModel(
+                instance(), instance(), instance(), instance(), instance(), instance(),
+                instance(), instance(), instance()
             )
         }
+        bind<HomeInteractor>() with singleton {
+            HomeInteractor(instance(), instance(), instance(), instance(), instance(), instance(), instance())
+        }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
+        bind<CoroutineDispatcher>() with singleton { Dispatchers.IO }
         bind<InAppReview>() with singleton {
             InAppReview(instance(), instance(), instance())
         }

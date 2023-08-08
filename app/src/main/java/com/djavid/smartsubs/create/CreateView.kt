@@ -16,6 +16,7 @@ import com.djavid.smartsubs.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.models.SubscriptionPeriodType
 import com.djavid.smartsubs.models.getSubPeriodString
 import com.djavid.smartsubs.utils.animateAlpha
+import com.djavid.smartsubs.utils.getSymbolString
 import com.djavid.smartsubs.utils.hideKeyboard
 import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -38,7 +39,6 @@ class CreateView(
         binding.createCloseBtn.setOnClickListener { presenter.onCancelPressed() }
         binding.createLogoBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
         binding.createPredefinedBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
-        binding.createCurrencySymbol.setOnClickListener { presenter.onCurrencyClicked() }
     }
 
     private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -156,7 +156,7 @@ class CreateView(
     }
 
     override fun setCurrencySymbol(currency: Currency) {
-        binding.createCurrencySymbol.text = currency.symbol
+        binding.createCurrencySymbol.text = currency.getSymbolString()
     }
 
     override fun setEveryPlural(quantity: Int) {

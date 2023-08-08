@@ -5,7 +5,7 @@ import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CommonFragmentNavigator
 import com.djavid.smartsubs.create.CreateContract
 import com.djavid.smartsubs.db.NotificationsRepository
-import com.djavid.smartsubs.home.HomeContract
+import com.djavid.smartsubs.home.HomeNavigator
 import com.djavid.smartsubs.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.models.Subscription
 import com.djavid.smartsubs.models.SubscriptionPrice
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.onEach
 class SubscriptionPresenter(
     private val view: SubscriptionContract.View,
     private val fragmentNavigator: CommonFragmentNavigator,
-    private val homeNavigator: HomeContract.Navigator,
+    private val homeNavigator: HomeNavigator,
     private val subscriptionsRepository: RealTimeRepository,
     private val notificationsRepository: NotificationsRepository,
     private val modelMapper: SubscriptionModelMapper,
@@ -95,7 +95,7 @@ class SubscriptionPresenter(
 
     override fun onNotifsClicked() {
         notificationsNavigator.showNotificationsDialog(id)
-        logger.onNotifsClicked()
+        launch { logger.onNotifsClicked() }
     }
 
     private suspend fun loadSub(id: String, allowCache: Boolean): Subscription? =
@@ -107,7 +107,7 @@ class SubscriptionPresenter(
 
     override fun onEditClicked() {
         createNavigator.goToCreateScreen(subscription.id)
-        logger.onSubEditClicked()
+        launch { logger.onSubEditClicked() }
     }
 
     override fun onDeleteClicked() {

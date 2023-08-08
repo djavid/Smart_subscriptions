@@ -7,8 +7,8 @@ import org.kodein.di.singleton
 
 class HomeNavigatorModule {
     val di = DI.Module("home_navigator_module") {
-        bind<HomeContract.Navigator>() with singleton {
-            HomeNavigator(instance())
+        bind<HomeNavigator>() with singleton {
+            HomeNavigatorImpl(instance())
         }
     }
 }

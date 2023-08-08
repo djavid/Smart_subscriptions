@@ -13,7 +13,7 @@ class SubscribeMediaModule(fragment: Fragment, binding: DialogSubscribeMediaBind
         bind<Fragment>() with singleton { fragment }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
         bind<SubscribeMediaContract.Presenter>() with singleton {
-            SubscribeMediaPresenter(instance(), instance(), instance())
+            SubscribeMediaPresenter(instance(), instance(), instance(), instance())
         }
         bind<SubscribeMediaContract.View>() with singleton {
             SubscribeMediaView(instance(), instance())

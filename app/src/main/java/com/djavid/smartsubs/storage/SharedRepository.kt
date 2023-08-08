@@ -23,13 +23,12 @@ class SharedRepository(
         const val PREF_GOOGLE_AUTH_TOKEN = "google_auth_token"
     }
 
-    var selectedCurrency: Currency
+    var selectedCurrencyCode: String?
         get() {
-            val currCode = repository.getString(PREF_SELECTED_CURRENCY_CODE, null)
-            return Currency.getInstance(currCode ?: "RUB")
+            return repository.getString(PREF_SELECTED_CURRENCY_CODE, null)
         }
         set(value) {
-            repository.edit().putString(PREF_SELECTED_CURRENCY_CODE, value.currencyCode).apply()
+            repository.edit().putString(PREF_SELECTED_CURRENCY_CODE, value).apply()
         }
 
     var selectedSubsPeriod: SubscriptionPeriodType

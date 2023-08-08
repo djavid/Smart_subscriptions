@@ -15,6 +15,7 @@ import com.djavid.smartsubs.databinding.FragmentSubscriptionBinding
 import com.djavid.smartsubs.models.*
 import com.djavid.smartsubs.utils.DECIMAL_FORMAT
 import com.djavid.smartsubs.utils.animateAlpha
+import com.djavid.smartsubs.utils.getSymbolString
 import com.djavid.smartsubs.utils.hideKeyboard
 import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -117,7 +118,7 @@ class SubscriptionView(
     }
 
     override fun setPrice(period: SubscriptionPeriod, price: SubscriptionPrice) = with(binding) {
-        val currSymbol = price.currency.symbol
+        val currSymbol = price.currency.getSymbolString()
         val everyPlural = binding.root.context.resources.getQuantityString(R.plurals.plural_every, period.quantity)
 
         val periodPlural = binding.root.context.getSubPeriodString(period.type, period.quantity)
@@ -166,7 +167,7 @@ class SubscriptionView(
     }
 
     override fun setOverallSpent(spent: SubscriptionPrice) = with(binding) {
-        val currSymbol = spent.currency.symbol
+        val currSymbol = spent.currency.getSymbolString()
         val spentFormatted = DecimalFormat(DECIMAL_FORMAT).format(spent.value)
         val text = binding.root.context.getString(R.string.mask_overall_spent, spentFormatted, currSymbol)
 

@@ -24,6 +24,7 @@ import com.djavid.smartsubs.databinding.FragmentSubscriptionBinding
 import com.djavid.smartsubs.db.DatabaseModule
 import com.djavid.smartsubs.home.HomeModule
 import com.djavid.smartsubs.home.HomeNavigatorModule
+import com.djavid.smartsubs.interactors.CommonInteractorsModule
 import com.djavid.smartsubs.mappers.MappersModule
 import com.djavid.smartsubs.notification.AlarmNotifierModule
 import com.djavid.smartsubs.notification.NotificationModule
@@ -65,7 +66,6 @@ class Application : Application(), Configuration.Provider, DIAware {
     }
 
     private fun initAppMetrica() {
-
         if (!BuildConfig.DEBUG) {
             val apiKey = applicationContext.getString(R.string.yandex_metrica_api_key)
             val config = YandexMetricaConfig.newConfigBuilder(apiKey).build()
@@ -85,6 +85,7 @@ class Application : Application(), Configuration.Provider, DIAware {
         import(CoroutineModule().di)
         import(DatabaseModule(applicationContext).di)
         import(MappersModule().di)
+        import(CommonInteractorsModule().di)
     }
 
     fun rootComponent(activity: AppCompatActivity, binding: ActivityRootBinding) = DI.lazy {

@@ -8,9 +8,11 @@ import com.djavid.smartsubs.utils.EventParam
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class FirebaseLogger(
-    private val context: Context
+    context: Context
 ) {
 
     private val analytics = FirebaseAnalytics.getInstance(context)
@@ -25,28 +27,28 @@ class FirebaseLogger(
         }
     }
 
-    fun onActivateNotifClicked(notif: Notification) {
+    suspend fun onActivateNotifClicked(notif: Notification) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(notif))
         }
         analytics.logEvent(Event.ACTIVATE_NOTIF_CLICKED.value, bundle)
     }
 
-    fun onNotifEdited(notif: Notification) {
+    suspend fun onNotifEdited(notif: Notification) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(notif))
         }
         analytics.logEvent(Event.NOTIF_EDITED.value, bundle)
     }
 
-    fun onNotifCreated(notif: Notification) {
+    suspend fun onNotifCreated(notif: Notification) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(notif))
         }
         analytics.logEvent(Event.NOTIF_CREATED.value, bundle)
     }
 
-    fun onNotifCheckClicked(model: Notification, checked: Boolean) {
+    suspend fun onNotifCheckClicked(model: Notification, checked: Boolean) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(model))
             putBoolean(EventParam.CHECKBOX_CHANGE.value, checked)
@@ -54,102 +56,102 @@ class FirebaseLogger(
         analytics.logEvent(Event.NOTIF_CHECK_CHANGED.value, bundle)
     }
 
-    fun onEditNotifClicked(model: Notification) {
+    suspend fun onEditNotifClicked(model: Notification) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(model))
         }
         analytics.logEvent(Event.EDIT_NOTIF_CLICKED.value, bundle)
     }
 
-    fun onAddNotifClicked() {
+    suspend fun onAddNotifClicked() = withContext(Dispatchers.IO) {
         analytics.logEvent(Event.ADD_NOTIF_CLICKED.value, Bundle())
     }
 
-    fun onNotifsClicked() {
+    suspend fun onNotifsClicked() = withContext(Dispatchers.IO) {
         analytics.logEvent(Event.SHOW_NOTIFS_CLICKED.value, Bundle())
     }
 
-    fun onSubEditClicked() {
+    suspend fun onSubEditClicked() = withContext(Dispatchers.IO) {
         analytics.logEvent(Event.EDIT_SUB_CLICKED.value, Bundle())
     }
 
-    fun onSortByChanged(sortBy: SortBy) {
+    suspend fun onSortByChanged(sortBy: SortBy) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(sortBy))
         }
         analytics.logEvent(Event.SORT_BY_CHANGED.value, bundle)
     }
 
-    fun onSortTypeChanged(sortType: SortType) {
+    suspend fun onSortTypeChanged(sortType: SortType) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(sortType))
         }
         analytics.logEvent(Event.SORT_TYPE_CHANGED.value, bundle)
     }
 
-    fun addSubPressed() {
+    suspend fun addSubPressed() = withContext(Dispatchers.IO) {
         analytics.logEvent(Event.ADD_SUB_CLICKED.value, Bundle())
     }
 
-    fun onPeriodChangeClicked(period: SubscriptionPeriodType) {
+    suspend fun onPeriodChangeClicked(period: SubscriptionPeriodType) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(period))
         }
         analytics.logEvent(Event.PERIOD_CHANGE_CLICKED.value, bundle)
     }
 
-    fun subItemClicked(sub: Subscription) {
+    suspend fun subItemClicked(sub: Subscription) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(sub))
         }
         analytics.logEvent(Event.SUB_ITEM_CLICKED.value, bundle)
     }
 
-    fun onSubItemSwipedLeft(position: Int) {
+    suspend fun onSubItemSwipedLeft(position: Int) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putInt(EventParam.POSITION.value, position)
         }
         analytics.logEvent(Event.SUB_SWIPED_LEFT.value, bundle)
     }
 
-    fun subDelete(sub: Subscription) {
+    suspend fun subDelete(sub: Subscription) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(sub))
         }
         analytics.logEvent(Event.SUB_DELETED.value, bundle)
     }
 
-    fun sortBtnClicked() {
+    suspend fun sortBtnClicked() = withContext(Dispatchers.IO) {
         analytics.logEvent(Event.SORT_BTN_CLICKED.value, Bundle())
     }
 
-    fun subCreated(sub: SubscriptionDao) {
+    suspend fun subCreated(sub: SubscriptionDao) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(sub))
         }
         analytics.logEvent(Event.SUB_CREATED.value, bundle)
     }
 
-    fun subEdited(sub: SubscriptionDao) {
+    suspend fun subEdited(sub: SubscriptionDao) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(sub))
         }
         analytics.logEvent(Event.SUB_EDITED.value, bundle)
     }
 
-    fun subscribeTgShown() {
+    suspend fun subscribeTgShown() = withContext(Dispatchers.IO) {
         analytics.logEvent(Event.SUBSCRIBE_TG_DIALOG_SHOWN.value, Bundle())
     }
 
-    fun subscribeTgClickedYes() {
+    suspend fun subscribeTgClickedYes() = withContext(Dispatchers.IO) {
         analytics.logEvent(Event.SUBSCRIBE_TG_CLICKED_YES.value, Bundle())
     }
 
-    fun subscribeTgClickedNo() {
+    suspend fun subscribeTgClickedNo() = withContext(Dispatchers.IO) {
         analytics.logEvent(Event.SUBSCRIBE_TG_CLICKED_NO.value, Bundle())
     }
 
-    fun inAppReviewShowTry() {
+    suspend fun inAppReviewShowTry() = withContext(Dispatchers.IO) {
         analytics.logEvent(Event.IN_APP_REVIEW_SHOW_TRY.value, Bundle())
     }
 
