@@ -2,7 +2,7 @@ package com.djavid.smartsubs.root
 
 import com.djavid.smartsubs.db.SubscriptionsRepository
 import com.djavid.smartsubs.home.HomeNavigator
-import com.djavid.smartsubs.storage.RealTimeRepository
+import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.subscription.SubscriptionContract
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

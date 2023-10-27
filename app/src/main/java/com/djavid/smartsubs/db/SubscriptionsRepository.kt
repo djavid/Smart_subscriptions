@@ -1,12 +1,11 @@
 package com.djavid.smartsubs.db
 
 import com.djavid.smartsubs.SubscriptionEntityQueries
-import com.djavid.smartsubs.mappers.SubscriptionEntityMapper
-import com.djavid.smartsubs.models.SubscriptionDao
+import com.djavid.smartsubs.data.mappers.SubscriptionEntityMapper
+import com.djavid.smartsubs.data.models.SubscriptionDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.joda.time.LocalDate
 
 class SubscriptionsRepository(
     private val queries: SubscriptionEntityQueries,

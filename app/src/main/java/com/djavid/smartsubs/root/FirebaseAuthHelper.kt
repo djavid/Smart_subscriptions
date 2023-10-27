@@ -3,7 +3,7 @@ package com.djavid.smartsubs.root
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.djavid.smartsubs.analytics.CrashlyticsLogger
-import com.djavid.smartsubs.storage.SharedRepository
+import com.djavid.smartsubs.data.storage.SharedRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

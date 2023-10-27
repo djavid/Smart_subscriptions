@@ -1,0 +1,116 @@
+[versions]
+
+#essentials
+compileSdk = "33"
+targetSdk = "24"
+minSdk = "21"
+versionCode = "11"
+versionName = "0.1.1"
+
+#others
+espresso-core = "3.5.1"
+crashlytics = "2.9.7"
+joda-time = "2.10.9.1"
+circleimageview = "3.1.0" # https://github.com/hdodenhof/CircleImageView
+glide = "4.12.0" # https://github.com/bumptech/glide
+junit = "4.13.2"
+kotlin = "1.9.0"
+lifecycle = "2.6.1"
+play-core = "1.10.3" # https://developer.android.com/guide/playcore#java-kotlin
+play-core-ktx = "1.8.1"
+gson = "2.10" # https://github.com/google/gson
+prettytime = "4.0.1.Final" # https://developer.android.com/topic/libraries/architecture/workmanager/basics
+runner = "1.5.2"
+work-runtime-ktx = "2.8.1"
+facebook-android-sdk = "6.1.0"
+appmetrica = "3.16.1" # https://appmetrica.yandex.ru/docs/mobile-sdk-dg/concepts/android-history.html
+sqldelight = "1.5.5" # https://github.com/cashapp/sqldelight/releases
+appcompat = "1.6.1"
+cardview = "1.0.0"
+constraintlayout = "2.1.4"
+coordinatorlayout = "1.2.0"
+core-ktx = "1.10.1"
+google-services = "4.3.15"
+kodein = "7.16.0"
+coroutines = "1.7.1"
+localbroadcastmanager = "1.1.0"
+material = "1.9.0"
+orbit-viewmodel = "6.0.0"
+recyclerview = "1.3.1"
+retrofit = "2.9.0"
+androidGradlePlugin = "8.1.1"
+firebase = "28.0.1"
+ksp = "1.9.10-1.0.13"
+[libraries]
+
+#kotlin
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kodein = { module = "org.kodein.di:kodein-di-framework-android-x", version.ref = "kodein" }
+orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit-viewmodel" }
+orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit-viewmodel" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+
+#database
+sqldelight-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
+
+#google
+material = { module = "com.google.android.material:material", version.ref = "material" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+play-core = { module = "com.google.android.play:core", version.ref = "play-core" }
+play-core-ktx = { module = "com.google.android.play:core-ktx", version.ref = "play-core-ktx" }
+
+#firebase
+firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-database = { module = "com.google.firebase:firebase-database-ktx" }
+firebase-storage = { module = "com.google.firebase:firebase-storage" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
+
+#android
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
+constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorlayout" }
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
+work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work-runtime-ktx" }
+recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle" }
+androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+
+#analytics
+facebook-android-sdk = { module = "com.facebook.android:facebook-android-sdk", version.ref = "facebook-android-sdk" }
+appmetrica = { module = "com.yandex.android:mobmetricalib", version.ref = "appmetrica" }
+
+#ui
+circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+
+#time
+prettytime = { module = "org.ocpsoft.prettytime:prettytime", version.ref = "prettytime" }
+joda-time = { module = "net.danlew:android.joda", version.ref = "joda-time" }
+
+#tests
+junit = { module = "junit:junit", version.ref = "junit" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core" }
+
+# Dependencies of the included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+firebase-crashlytics-gradlePlugin = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "crashlytics" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+
+[plugins]
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
+sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
+google-services = { id = "com.google.gms:google-services", version.ref = "google-services" }

@@ -1,8 +1,8 @@
 package com.djavid.smartsubs.db
 
 import com.djavid.smartsubs.NotificationEntityQueries
-import com.djavid.smartsubs.mappers.NotificationEntityMapper
-import com.djavid.smartsubs.models.Notification
+import com.djavid.smartsubs.data.mappers.NotificationEntityMapper
+import com.djavid.smartsubs.data.models.Notification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

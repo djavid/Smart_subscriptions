@@ -1,5 +1,6 @@
 package com.djavid.smartsubs
 
+import com.djavid.data.storage.RealTimeRepository
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -10,6 +11,12 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
+	@Test
+	fun test() {
+		println(listOf("rub", "usd", "rub").map { it }.groupBy { it }.mapValues { it })
+	}
+
 	@Test
 	fun addition_isCorrect() {
 		assertEquals(4, 2 + 2)

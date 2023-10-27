@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.databinding.ActivityRootBinding
-import com.djavid.smartsubs.utils.KEY_SUBSCRIPTION_ID
+import com.djavid.smartsubs.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.DI
@@ -29,7 +29,7 @@ class RootActivity : AppCompatActivity(), DIAware {
         di = (application as Application).rootComponent(this, binding)
         lifecycle.addObserver(authHelper)
 
-        val subId = intent.getStringExtra(KEY_SUBSCRIPTION_ID)
+        val subId = intent.getStringExtra(Constants.KEY_SUBSCRIPTION_ID)
         presenter.init(subId)
     }
 

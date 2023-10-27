@@ -4,13 +4,14 @@ import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import androidx.work.Configuration
 import com.djavid.smartsubs.analytics.FirebaseLogger
-import com.djavid.smartsubs.coroutines.CoroutineModule
+import com.djavid.smartsubs.common.coroutines.CoroutineModule
 import com.djavid.smartsubs.create.CreateModule
 import com.djavid.smartsubs.create.CreateNavigatorModule
-import com.djavid.smartsubs.currencyList.CurrencyListModule
-import com.djavid.smartsubs.currencyList.CurrencyListNavigatorModule
+import com.djavid.smartsubs.currency_list.CurrencyListModule
+import com.djavid.smartsubs.currency_list.CurrencyListNavigatorModule
 import com.djavid.smartsubs.databinding.ActivityRootBinding
 import com.djavid.smartsubs.databinding.DialogSubscribeMediaBinding
 import com.djavid.smartsubs.databinding.FragmentCreateBinding
@@ -24,8 +25,8 @@ import com.djavid.smartsubs.databinding.FragmentSubscriptionBinding
 import com.djavid.smartsubs.db.DatabaseModule
 import com.djavid.smartsubs.home.HomeModule
 import com.djavid.smartsubs.home.HomeNavigatorModule
-import com.djavid.smartsubs.interactors.CommonInteractorsModule
-import com.djavid.smartsubs.mappers.MappersModule
+import com.djavid.smartsubs.data.interactors.CommonInteractorsModule
+import com.djavid.smartsubs.data.mappers.MappersModule
 import com.djavid.smartsubs.notification.AlarmNotifierModule
 import com.djavid.smartsubs.notification.NotificationModule
 import com.djavid.smartsubs.notification.NotificationNavigatorModule
@@ -35,10 +36,10 @@ import com.djavid.smartsubs.root.FirebaseAuthHelper
 import com.djavid.smartsubs.root.RootModule
 import com.djavid.smartsubs.sort.SortModule
 import com.djavid.smartsubs.sort.SortNavigationModule
-import com.djavid.smartsubs.subList.SubListModule
-import com.djavid.smartsubs.subList.SubListNavigatorModule
-import com.djavid.smartsubs.subscribe.SubscribeMediaModule
-import com.djavid.smartsubs.subscribe.SubscribeMediaNavigationModule
+import com.djavid.smartsubs.sub_list.SubListModule
+import com.djavid.smartsubs.sub_list.SubListNavigatorModule
+import com.djavid.smartsubs.subscribe_media.SubscribeMediaModule
+import com.djavid.smartsubs.subscribe_media.SubscribeMediaNavigationModule
 import com.djavid.smartsubs.subscription.SubscriptionModule
 import com.djavid.smartsubs.subscription.SubscriptionNavigatorModule
 import com.djavid.smartsubs.worker.NotificationWorkerModule
@@ -67,7 +68,7 @@ class Application : Application(), Configuration.Provider, DIAware {
 
     private fun initAppMetrica() {
         if (!BuildConfig.DEBUG) {
-            val apiKey = applicationContext.getString(R.string.yandex_metrica_api_key)
+            val apiKey = applicationContext.getString(com.djavid.core.ui.R.string.yandex_metrica_api_key)
             val config = YandexMetricaConfig.newConfigBuilder(apiKey).build()
             YandexMetrica.activate(applicationContext, config)
             YandexMetrica.enableActivityAutoTracking(this)
@@ -95,7 +96,7 @@ class Application : Application(), Configuration.Provider, DIAware {
         import(SubscriptionNavigatorModule().di)
     }
 
-    fun homeComponent(fragment: Fragment, binding: FragmentHomeBinding) = DI.lazy {
+    fun homeComponent(fragment: Fragment, binding: ViewBinding) = DI.lazy {
         extend(di)
         import(HomeModule(fragment, binding).di)
         import(CreateNavigatorModule().di)
@@ -104,7 +105,7 @@ class Application : Application(), Configuration.Provider, DIAware {
         import(SubscribeMediaNavigationModule().di)
     }
 
-    fun createComponent(fragment: Fragment, binding: FragmentCreateBinding) = DI.lazy {
+    fun createComponent(fragment: Fragment, binding: ViewBinding) = DI.lazy {
         extend(di)
         import(CreateModule(fragment, binding).di)
         import(SubListNavigatorModule().di)
