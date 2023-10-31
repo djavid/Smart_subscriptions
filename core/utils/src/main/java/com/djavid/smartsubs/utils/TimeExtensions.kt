@@ -1,7 +1,7 @@
 package com.djavid.smartsubs.utils
 
-import com.djavid.smartsubs.data.models.SubscriptionPeriod
-import com.djavid.smartsubs.data.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.models.SubscriptionPeriod
+import com.djavid.smartsubs.common.models.SubscriptionPeriodType
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 import java.util.*
@@ -18,6 +18,7 @@ fun LocalDate.addPeriod(period: SubscriptionPeriod): LocalDate = when (period.ty
             plusMonths(period.quantity)
         }
     }
+
     SubscriptionPeriodType.YEAR -> plusYears(period.quantity)
 }
 

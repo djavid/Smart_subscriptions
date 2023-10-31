@@ -1,10 +1,10 @@
 package com.djavid.smartsubs.data.mappers
 
 import com.djavid.smartsubs.SubscriptionEntity
-import com.djavid.smartsubs.models.SubscriptionDao
-import com.djavid.smartsubs.models.SubscriptionFirebaseEntity
-import com.djavid.smartsubs.models.SubscriptionPeriod
-import com.djavid.smartsubs.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.models.SubscriptionDao
+import com.djavid.smartsubs.common.models.SubscriptionFirebaseEntity
+import com.djavid.smartsubs.common.models.SubscriptionPeriod
+import com.djavid.smartsubs.common.models.SubscriptionPeriodType
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate

@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.djavid.smartsubs.Application
-import com.djavid.common.BaseBottomSheetFragment
-import com.djavid.smartsubs.databinding.FragmentSortBinding
-import com.djavid.common.KEY_SORT_SCREEN_TYPE
+import com.djavid.core.ui.databinding.FragmentSortBinding
+import com.djavid.smartsubs.common.BaseBottomSheetFragment
+import com.djavid.smartsubs.common.SmartSubsApplication
+import com.djavid.smartsubs.utils.Constants.KEY_SORT_SCREEN_TYPE
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 
-class SortFragment : com.djavid.common.BaseBottomSheetFragment(), DIAware {
+class SortFragment : BaseBottomSheetFragment(), DIAware {
 
     private val presenter: SortContract.Presenter by instance()
     private lateinit var binding: FragmentSortBinding
@@ -21,7 +21,7 @@ class SortFragment : com.djavid.common.BaseBottomSheetFragment(), DIAware {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentSortBinding.inflate(inflater, container, false).apply {
             binding = this
-            di = (requireActivity().application as Application).sortComponent(this@SortFragment, binding)
+            di = (requireActivity().application as SmartSubsApplication).sortComponent(this@SortFragment, binding)
         }.root
     }
 
@@ -36,9 +36,8 @@ class SortFragment : com.djavid.common.BaseBottomSheetFragment(), DIAware {
     }
 
     private fun getScreenType(action: (SortContract.ScreenType) -> Unit) {
-        requireArguments().getString(com.djavid.common.KEY_SORT_SCREEN_TYPE)?.let {
+        requireArguments().getString(KEY_SORT_SCREEN_TYPE)?.let {
             action.invoke(SortContract.ScreenType.valueOf(it))
         }
     }
-
 }

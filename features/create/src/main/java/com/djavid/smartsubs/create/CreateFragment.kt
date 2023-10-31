@@ -5,17 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import com.djavid.smartsubs.Application
-import com.djavid.common.BackPressListener
-import com.djavid.common.BaseFragment
-import com.djavid.smartsubs.databinding.FragmentCreateBinding
-import com.djavid.smartsubs.models.PredefinedSuggestionItem
-import com.djavid.smartsubs.subList.SubListContract
-import com.djavid.common.KEY_SUBSCRIPTION_ID
-import com.djavid.common.serializable
+import com.djavid.features.create.databinding.FragmentCreateBinding
+import com.djavid.smartsubs.common.BackPressListener
+import com.djavid.smartsubs.common.BaseFragment
+import com.djavid.smartsubs.common.SmartSubsApplication
+import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.utils.serializable
 import org.kodein.di.instance
 
-class CreateFragment : com.djavid.common.BaseFragment(), com.djavid.common.BackPressListener {
+class CreateFragment : BaseFragment(), BackPressListener {
 
     private val presenter: CreateContract.Presenter by instance()
     private lateinit var binding: FragmentCreateBinding
@@ -23,7 +22,7 @@ class CreateFragment : com.djavid.common.BaseFragment(), com.djavid.common.BackP
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentCreateBinding.inflate(inflater).apply {
             binding = this
-            di = (requireActivity().application as Application).createComponent(this@CreateFragment, binding)
+            di = (requireActivity().application as SmartSubsApplication).createComponent(this@CreateFragment, binding)
         }.root
     }
 
@@ -31,14 +30,14 @@ class CreateFragment : com.djavid.common.BaseFragment(), com.djavid.common.BackP
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         arguments?.let {
-            val subId = it.getString(com.djavid.common.KEY_SUBSCRIPTION_ID)
+            val subId = it.getString(Constants.KEY_SUBSCRIPTION_ID)
             presenter.init(subId)
         }
 
         requireActivity().supportFragmentManager.setFragmentResultListener(
-            SubListContract.REQUEST_KEY, viewLifecycleOwner
+            Constants.REQUEST_KEY, viewLifecycleOwner
         ) { _, result ->
-            result.serializable<PredefinedSuggestionItem>(SubListContract.FRAGMENT_RESULT_KEY)?.let {
+            result.serializable<PredefinedSuggestionItem>(Constants.FRAGMENT_RESULT_KEY)?.let {
                 presenter.onSuggestionItemClick(it)
             }
         }

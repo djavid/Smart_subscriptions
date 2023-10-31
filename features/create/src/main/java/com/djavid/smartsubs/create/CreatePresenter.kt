@@ -1,18 +1,16 @@
 package com.djavid.smartsubs.create
 
 import com.djavid.smartsubs.analytics.FirebaseLogger
-import com.djavid.common.BasePipeline
-import com.djavid.common.CommonFragmentNavigator
-import com.djavid.smartsubs.currencyList.CurrencyListContract
-import com.djavid.smartsubs.models.PredefinedSuggestionItem
-import com.djavid.smartsubs.models.SubscriptionDao
-import com.djavid.smartsubs.models.SubscriptionPeriod
-import com.djavid.smartsubs.models.SubscriptionPeriodType
-import com.djavid.data.storage.RealTimeRepository
-import com.djavid.smartsubs.subList.SubListContract
-import com.djavid.common.ACTION_REFRESH
-import com.djavid.common.DATE_TIME_FORMAT
-import com.djavid.common.SLIDE_DURATION
+import com.djavid.smartsubs.common.BasePipeline
+import com.djavid.smartsubs.common.CommonFragmentNavigator
+import com.djavid.smartsubs.common.CurrencyListNavigator
+import com.djavid.smartsubs.common.SubListNavigator
+import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.common.models.SubscriptionDao
+import com.djavid.smartsubs.common.models.SubscriptionPeriod
+import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.data.storage.RealTimeRepository
+import com.djavid.smartsubs.utils.Constants
 import kotlinx.coroutines.*
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
@@ -20,13 +18,13 @@ import java.util.*
 
 class CreatePresenter(
     private val view: CreateContract.View,
-    private val repository: com.djavid.data.storage.RealTimeRepository,
-    private val fragmentNavigator: com.djavid.common.CommonFragmentNavigator,
-    private val subListNavigator: SubListContract.Navigator,
-    private val currencyListNavigator: CurrencyListContract.Navigator,
+    private val repository: RealTimeRepository,
+    private val fragmentNavigator: CommonFragmentNavigator,
+    private val subListNavigator: SubListNavigator,
+    private val currencyListNavigator: CurrencyListNavigator,
     private val logger: FirebaseLogger,
-    private val pipelineString: com.djavid.common.BasePipeline<Pair<String, String>>,
-    private val realTimeRepository: com.djavid.data.storage.RealTimeRepository,
+    private val pipelineString: BasePipeline<Pair<String, String>>,
+    private val realTimeRepository: RealTimeRepository,
     coroutineScope: CoroutineScope
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -41,8 +39,8 @@ class CreatePresenter(
         view.init(this)
 
         view.enableInputs(false)
-        view.setBackgroundTransparent(false, com.djavid.common.SLIDE_DURATION)
-        view.showToolbar(true, com.djavid.common.SLIDE_DURATION)
+        view.setBackgroundTransparent(false, Constants.SLIDE_DURATION)
+        view.showToolbar(true, Constants.SLIDE_DURATION)
         view.expandPanel()
 
         launch {
@@ -150,7 +148,7 @@ class CreatePresenter(
     override fun onPaymentDateInputChanged(input: LocalDate) {
         model = model.copy(paymentDate = input, trialPaymentDate = if (isTrialSub) input else null)
         view.showPaymentDateError(false)
-        view.setDateInput(input.toString(com.djavid.common.DATE_TIME_FORMAT))
+        view.setDateInput(input.toString(Constants.DATE_TIME_FORMAT))
     }
 
     override fun onCategoryInputChanged(input: String?) {
@@ -203,7 +201,7 @@ class CreatePresenter(
         view.setCurrencySymbol(model.currency)
         view.setQuantity(model.period.quantity)
         model.paymentDate?.let {
-            view.setDateInput(it.toString(com.djavid.common.DATE_TIME_FORMAT))
+            view.setDateInput(it.toString(Constants.DATE_TIME_FORMAT))
         }
         view.setTrialPeriodCheckbox(model.trialPaymentDate != null)
         model.category?.let {
@@ -226,13 +224,13 @@ class CreatePresenter(
         launch {
             view.hideKeyboard()
             view.collapsePanel()
-            view.showToolbar(false, com.djavid.common.SLIDE_DURATION)
-            view.setBackgroundTransparent(true, com.djavid.common.SLIDE_DURATION)
-            withContext(Dispatchers.Default) { delay(com.djavid.common.SLIDE_DURATION) }
+            view.showToolbar(false, Constants.SLIDE_DURATION)
+            view.setBackgroundTransparent(true, Constants.SLIDE_DURATION)
+            withContext(Dispatchers.Default) { delay(Constants.SLIDE_DURATION) }
 //            fragmentNavigator.setFragmentResult(CreateContract.REQUEST_GUID, Bundle().apply {
 //                putSerializable("", )
 //            })
-            pipelineString.postValue(com.djavid.common.ACTION_REFRESH to "")
+            pipelineString.postValue(Constants.ACTION_REFRESH to "")
             fragmentNavigator.goBack()
         }
     }

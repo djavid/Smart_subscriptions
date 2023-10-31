@@ -1,33 +1,32 @@
 package com.djavid.smartsubs.subscription
 
 import com.djavid.smartsubs.analytics.FirebaseLogger
-import com.djavid.common.BasePipeline
-import com.djavid.common.CommonFragmentNavigator
-import com.djavid.smartsubs.create.CreateContract
-import com.djavid.smartsubs.db.NotificationsRepository
-import com.djavid.smartsubs.home.HomeNavigator
-import com.djavid.data.mappers.SubscriptionModelMapper
-import com.djavid.smartsubs.models.Subscription
-import com.djavid.smartsubs.models.SubscriptionPrice
-import com.djavid.smartsubs.notifications.NotificationsContract
-import com.djavid.data.storage.RealTimeRepository
-import com.djavid.common.ACTION_REFRESH
-import com.djavid.common.SLIDE_DURATION
+import com.djavid.smartsubs.common.BasePipeline
+import com.djavid.smartsubs.common.CommonFragmentNavigator
+import com.djavid.smartsubs.common.models.Subscription
+import com.djavid.smartsubs.common.models.SubscriptionPrice
+import com.djavid.smartsubs.common.CreateNavigator
+import com.djavid.smartsubs.common.HomeNavigator
+import com.djavid.smartsubs.common.NotificationsNavigator
+import com.djavid.smartsubs.data.db.NotificationsRepository
+import com.djavid.smartsubs.data.mappers.SubscriptionModelMapper
+import com.djavid.smartsubs.data.storage.RealTimeRepository
+import com.djavid.smartsubs.utils.Constants
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
 class SubscriptionPresenter(
     private val view: SubscriptionContract.View,
-    private val fragmentNavigator: com.djavid.common.CommonFragmentNavigator,
+    private val fragmentNavigator: CommonFragmentNavigator,
     private val homeNavigator: HomeNavigator,
-    private val subscriptionsRepository: com.djavid.data.storage.RealTimeRepository,
+    private val subscriptionsRepository: RealTimeRepository,
     private val notificationsRepository: NotificationsRepository,
-    private val modelMapper: com.djavid.data.mappers.SubscriptionModelMapper,
-    private val createNavigator: CreateContract.Navigator,
-    private val notificationsNavigator: NotificationsContract.Navigator,
+    private val modelMapper: SubscriptionModelMapper,
+    private val createNavigator: CreateNavigator,
+    private val notificationsNavigator: NotificationsNavigator,
     private val logger: FirebaseLogger,
-    private val pipeline: com.djavid.common.BasePipeline<Pair<String, String>>,
+    private val pipeline: BasePipeline<Pair<String, String>>,
     coroutineScope: CoroutineScope
 ) : SubscriptionContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -41,8 +40,8 @@ class SubscriptionPresenter(
         this.id = id ?: return
         this.isRoot = isRoot
 
-        view.setBackgroundTransparent(false, com.djavid.common.SLIDE_DURATION)
-        view.showToolbar(true, com.djavid.common.SLIDE_DURATION)
+        view.setBackgroundTransparent(false, Constants.SLIDE_DURATION)
+        view.showToolbar(true, Constants.SLIDE_DURATION)
 
         listenPipeline()
         reload(true)
@@ -61,7 +60,7 @@ class SubscriptionPresenter(
         launch {
             pipeline.getFlow().onEach {
                 when (it.first) {
-                    com.djavid.common.ACTION_REFRESH -> reload(false)
+                    Constants.ACTION_REFRESH -> reload(false)
                 }
             }.collect()
         }
@@ -134,10 +133,10 @@ class SubscriptionPresenter(
         launch {
             view.hideKeyboard()
             view.collapsePanel()
-            view.showToolbar(false, com.djavid.common.SLIDE_DURATION)
-            view.setBackgroundTransparent(true, com.djavid.common.SLIDE_DURATION)
-            withContext(Dispatchers.Default) { delay(com.djavid.common.SLIDE_DURATION) }
-            pipeline.postValue(com.djavid.common.ACTION_REFRESH to "")
+            view.showToolbar(false, Constants.SLIDE_DURATION)
+            view.setBackgroundTransparent(true, Constants.SLIDE_DURATION)
+            withContext(Dispatchers.Default) { delay(Constants.SLIDE_DURATION) }
+            pipeline.postValue(Constants.ACTION_REFRESH to "")
 
             fragmentNavigator.goBack()
 

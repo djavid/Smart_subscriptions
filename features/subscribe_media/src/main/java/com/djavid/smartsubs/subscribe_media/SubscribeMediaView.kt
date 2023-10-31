@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
-import com.djavid.smartsubs.databinding.DialogSubscribeMediaBinding
+import com.djavid.core.ui.databinding.DialogSubscribeMediaBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SubscribeMediaView(

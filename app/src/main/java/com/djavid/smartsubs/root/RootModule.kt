@@ -2,18 +2,21 @@ package com.djavid.smartsubs.root
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import com.djavid.smartsubs.databinding.ActivityRootBinding
+import androidx.viewbinding.ViewBinding
+import com.djavid.core.ui.databinding.ActivityRootBinding
+import com.google.firebase.ktx.Firebase
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 
-class RootModule(activity: AppCompatActivity, binding: ActivityRootBinding) {
+class RootModule(activity: AppCompatActivity, binding: ViewBinding) {
     val di = DI.Module("root_module") {
-        bind<ActivityRootBinding>() with singleton { binding }
+        bind<ActivityRootBinding>() with singleton { binding as ActivityRootBinding }
         bind<RootContract.View>() with singleton {
             RootView(instance())
         }
+        Firebase
         bind<RootContract.Presenter>() with singleton {
             RootPresenter(
                 instance(), instance(), instance(), instance(), instance(), instance()

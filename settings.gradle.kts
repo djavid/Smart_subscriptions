@@ -1,7 +1,6 @@
 rootProject.name = "Умные подписки"
 
 pluginManagement {
-    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()

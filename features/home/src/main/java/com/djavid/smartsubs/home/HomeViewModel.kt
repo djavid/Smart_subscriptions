@@ -4,13 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.BasePipeline
+import com.djavid.smartsubs.common.CreateNavigator
+import com.djavid.smartsubs.common.SortNavigator
+import com.djavid.smartsubs.common.SubscriptionNavigator
 import com.djavid.smartsubs.create.CreateContract
-import com.djavid.smartsubs.interactors.GetSortedSubsInteractor
+import com.djavid.smartsubs.data.interactors.GetSortedSubsInteractor
+import com.djavid.smartsubs.data.storage.RealTimeRepository
+import com.djavid.smartsubs.data.storage.SharedRepository
 import com.djavid.smartsubs.sort.SortContract
-import com.djavid.smartsubs.storage.RealTimeRepository
-import com.djavid.smartsubs.storage.SharedRepository
 import com.djavid.smartsubs.subscription.SubscriptionContract
-import com.djavid.smartsubs.utils.ACTION_REFRESH
+import com.djavid.smartsubs.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -22,9 +25,9 @@ import org.orbitmvi.orbit.viewmodel.container
 
 class HomeViewModel(
     private val repository: RealTimeRepository,
-    private val createNavigator: CreateContract.Navigator,
-    private val sortNavigator: SortContract.Navigator,
-    private val subNavigator: SubscriptionContract.Navigator,
+    private val createNavigator: CreateNavigator,
+    private val sortNavigator: SortNavigator,
+    private val subNavigator: SubscriptionNavigator,
     private val sharedPrefs: SharedRepository,
     private val pipeline: BasePipeline<Pair<String, String>>,
     private val logger: FirebaseLogger,
@@ -84,7 +87,7 @@ class HomeViewModel(
     private fun listenPipeline() = viewModelScope.launch(Dispatchers.IO) {
         pipeline.getFlow().collect {
             when (it.first) {
-                ACTION_REFRESH -> {
+                Constants.ACTION_REFRESH -> {
                     refreshSubs()
 
                     if (sharedPrefs.inAppReviewTimesShown < 2) {

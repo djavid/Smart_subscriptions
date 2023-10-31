@@ -1,13 +1,14 @@
 package com.djavid.smartsubs.notification
 
-import com.djavid.common.BasePipeline
-import com.djavid.smartsubs.db.NotificationsRepository
-import com.djavid.data.mappers.SubscriptionModelMapper
-import com.djavid.smartsubs.models.Notification
-import com.djavid.smartsubs.models.SubscriptionDao
-import com.djavid.common.ACTION_REFRESH
 import com.djavid.smartsubs.analytics.FirebaseLogger
-import com.djavid.common.getFirstPeriodAfterNow
+import com.djavid.smartsubs.common.BasePipeline
+import com.djavid.smartsubs.common.models.Notification
+import com.djavid.smartsubs.common.models.SubscriptionDao
+import com.djavid.smartsubs.data.db.NotificationsRepository
+import com.djavid.smartsubs.data.interactors.AlarmInteractor
+import com.djavid.smartsubs.data.mappers.SubscriptionModelMapper
+import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.utils.getFirstPeriodAfterNow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,10 +19,10 @@ import org.joda.time.LocalTime
 class NotificationPresenter(
     private val view: NotificationContract.View,
     private val repository: NotificationsRepository,
-    private val alarmNotifier: AlarmNotifier,
-    private val pipeline: com.djavid.common.BasePipeline<Pair<String, String>>,
+    private val alarmNotifier: AlarmInteractor,
+    private val pipeline: BasePipeline<Pair<String, String>>,
     private val logger: FirebaseLogger,
-    private val subMapper: com.djavid.data.mappers.SubscriptionModelMapper,
+    private val subMapper: SubscriptionModelMapper,
     coroutineScope: CoroutineScope
 ) : NotificationContract.Presenter, CoroutineScope by coroutineScope {
 
@@ -95,7 +96,7 @@ class NotificationPresenter(
                     saveNotification()
                 }
 
-                pipeline.postValue(com.djavid.common.ACTION_REFRESH to "")
+                pipeline.postValue(Constants.ACTION_REFRESH to "")
                 alarmNotifier.setAlarm(model)
                 view.finish()
             }
@@ -122,7 +123,7 @@ class NotificationPresenter(
         launch {
             alarmNotifier.cancelAlarm(model.id)
             repository.deleteNotificationById(model.id)
-            pipeline.postValue(com.djavid.common.ACTION_REFRESH to "")
+            pipeline.postValue(Constants.ACTION_REFRESH to "")
             subModel?.let {
                 logger.subDelete(subMapper.fromDao(it))
             }

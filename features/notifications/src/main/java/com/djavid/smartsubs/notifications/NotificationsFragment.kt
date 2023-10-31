@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.djavid.smartsubs.Application
-import com.djavid.smartsubs.databinding.FragmentNotificationsBinding
-import com.djavid.common.KEY_SUBSCRIPTION_ID
-import com.djavid.common.setWhiteNavigationBar
+import com.djavid.features.notifications.databinding.FragmentNotificationsBinding
+import com.djavid.smartsubs.common.SmartSubsApplication
+import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.utils.setWhiteNavigationBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.kodein.di.DI
@@ -24,7 +24,7 @@ class NotificationsFragment : BottomSheetDialogFragment(), DIAware {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentNotificationsBinding.inflate(inflater).apply {
             binding = this
-            di = (requireActivity().application as Application).notificationsComponent(this@NotificationsFragment, binding)
+            di = (requireActivity().application as SmartSubsApplication).notificationsComponent(this@NotificationsFragment, binding)
         }.root
     }
 
@@ -33,7 +33,7 @@ class NotificationsFragment : BottomSheetDialogFragment(), DIAware {
         expandSheet()
 
         arguments?.let {
-            val subId = it.getString(com.djavid.common.KEY_SUBSCRIPTION_ID)
+            val subId = it.getString(Constants.KEY_SUBSCRIPTION_ID)
             presenter.init(subId)
         }
     }

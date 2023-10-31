@@ -1,6 +1,6 @@
 package com.djavid.smartsubs
 
-import retrofit2.http.GET
+//import retrofit2.http.GET
 
 //interface Api {
 //

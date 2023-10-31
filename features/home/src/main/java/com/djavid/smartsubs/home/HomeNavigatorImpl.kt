@@ -1,7 +1,8 @@
 package com.djavid.smartsubs.home
 
 import androidx.fragment.app.FragmentManager
-import com.djavid.smartsubs.R
+import com.djavid.core.ui.R
+import com.djavid.smartsubs.common.HomeNavigator
 
 class HomeNavigatorImpl(
     private val fragmentManager: FragmentManager

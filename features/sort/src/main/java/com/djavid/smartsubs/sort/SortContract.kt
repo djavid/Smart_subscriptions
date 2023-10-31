@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.sort
 
-import com.djavid.smartsubs.models.SortBy
+import com.djavid.smartsubs.common.models.SortBy
 
 interface SortContract {
 
@@ -24,11 +24,6 @@ interface SortContract {
         fun showSortDelimiter(show: Boolean)
         fun setActiveSortType(asc: Boolean)
         fun finish()
-    }
-
-    interface Navigator {
-        fun openSortScreen()
-        fun openSortByScreen()
     }
 
 }

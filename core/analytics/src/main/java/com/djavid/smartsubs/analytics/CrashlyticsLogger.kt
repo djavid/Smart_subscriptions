@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.analytics
 
-import com.djavid.smartsubs.BuildConfig
+import com.djavid.core.analytics.BuildConfig
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 object CrashlyticsLogger {

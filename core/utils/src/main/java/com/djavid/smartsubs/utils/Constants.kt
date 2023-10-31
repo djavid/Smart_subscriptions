@@ -19,4 +19,7 @@ object Constants {
     const val CONST_ORANGE_PROGRESS_MIN_PERCENT = 0.1
     const val CONST_RED_PROGRESS_MIN_PERCENT = 0.0
     const val SLIDE_DURATION = 256L // ms
+
+    const val REQUEST_KEY = "sublist_request_key"
+    const val FRAGMENT_RESULT_KEY = "sublist_fragment_result_key"
 }

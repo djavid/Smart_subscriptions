@@ -1,8 +1,8 @@
 package com.djavid.smartsubs.home
 
-import com.djavid.smartsubs.models.Subscription
-import com.djavid.smartsubs.models.SubscriptionPeriodType
-import com.djavid.smartsubs.models.SubscriptionPrice
+import com.djavid.smartsubs.common.models.Subscription
+import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.models.SubscriptionPrice
 
 data class HomeState(
     val subsList: List<Subscription> = listOf(),
@@ -13,8 +13,4 @@ data class HomeState(
 
 sealed class HomeSideEffect {
     data object SlidePanelToTop : HomeSideEffect()
-}
-
-interface HomeNavigator {
-    fun goToHome()
 }

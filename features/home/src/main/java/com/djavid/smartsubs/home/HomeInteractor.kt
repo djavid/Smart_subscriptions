@@ -3,12 +3,12 @@ package com.djavid.smartsubs.home
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.data.interactors.GetSelectedCurrencyInteractor
 import com.djavid.smartsubs.data.interactors.GetSubsInteractor
-import com.djavid.smartsubs.data.models.SubscriptionPeriodType
-import com.djavid.smartsubs.data.models.SubscriptionPrice
-import com.djavid.smartsubs.data.models.getPriceInPeriod
+import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.models.SubscriptionPrice
+import com.djavid.smartsubs.common.models.getPriceInPeriod
 import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.data.storage.SharedRepository
-import com.djavid.smartsubs.utils.InAppReview
+import com.djavid.smartsubs.data.InAppReview
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 

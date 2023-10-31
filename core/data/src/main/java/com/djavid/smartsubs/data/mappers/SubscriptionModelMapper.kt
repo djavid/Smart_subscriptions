@@ -1,14 +1,14 @@
 package com.djavid.smartsubs.data.mappers
 
-import com.djavid.smartsubs.models.Subscription
-import com.djavid.smartsubs.models.SubscriptionDao
-import com.djavid.smartsubs.models.SubscriptionPrice
-import com.djavid.smartsubs.models.SubscriptionProgress
+import com.djavid.smartsubs.common.models.Subscription
+import com.djavid.smartsubs.common.models.SubscriptionPrice
+import com.djavid.smartsubs.common.models.SubscriptionProgress
+import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.data.storage.CloudStorageRepository
 import com.djavid.smartsubs.data.storage.RealTimeRepository
-import com.djavid.common.addPeriod
-import com.djavid.common.getFirstPeriodBeforeNow
-import com.djavid.common.getPeriodsCountBeforeNow
+import com.djavid.smartsubs.utils.addPeriod
+import com.djavid.smartsubs.utils.getFirstPeriodBeforeNow
+import com.djavid.smartsubs.utils.getPeriodsCountBeforeNow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
@@ -42,8 +42,10 @@ class SubscriptionModelMapper(
     }
 
     private fun getProgressForSub(dao: SubscriptionDao): SubscriptionProgress? {
-        return if (dao.paymentDate != null) {
-            val currentPeriodStart = dao.paymentDate.getFirstPeriodBeforeNow(dao.period)
+        val paymentDate = dao.paymentDate
+
+        return if (paymentDate != null) {
+            val currentPeriodStart = paymentDate.getFirstPeriodBeforeNow(dao.period) //todo fix nullable
             val currentPeriodEnd = currentPeriodStart.addPeriod(dao.period)
             val dateNow = LocalDate.now(DateTimeZone.forTimeZone(TimeZone.getDefault()))
 

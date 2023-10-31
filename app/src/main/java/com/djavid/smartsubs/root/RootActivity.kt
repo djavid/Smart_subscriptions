@@ -2,10 +2,11 @@ package com.djavid.smartsubs.root
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.djavid.core.ui.databinding.ActivityRootBinding
 import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.common.BackPressListener
-import com.djavid.smartsubs.databinding.ActivityRootBinding
 import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.data.FirebaseAuthHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.DI

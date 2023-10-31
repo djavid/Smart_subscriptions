@@ -2,14 +2,12 @@ package com.djavid.smartsubs.currency_list
 
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.djavid.smartsubs.R
-import com.djavid.smartsubs.databinding.FragmentCurrencyListBinding
-import com.djavid.smartsubs.models.PredefinedSuggestionItem
-import com.djavid.common.animateAlpha
-import com.djavid.common.hideKeyboard
-import com.djavid.common.show
-import com.djavid.smartsubs.currency_list.CurrencyListAdapter
-import com.djavid.smartsubs.currency_list.CurrencyListContract
+import com.djavid.core.ui.R
+import com.djavid.features.currency_list.databinding.FragmentCurrencyListBinding
+import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.utils.animateAlpha
+import com.djavid.smartsubs.utils.hideKeyboard
+import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class CurrencyListView(

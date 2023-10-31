@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import com.djavid.smartsubs.Application
-import com.djavid.common.BackPressListener
-import com.djavid.common.BaseFragment
-import com.djavid.smartsubs.currency_list.CurrencyListContract
-import com.djavid.smartsubs.databinding.FragmentCurrencyListBinding
+import com.djavid.features.currency_list.databinding.FragmentCurrencyListBinding
+import com.djavid.smartsubs.common.BackPressListener
+import com.djavid.smartsubs.common.BaseFragment
+import com.djavid.smartsubs.common.SmartSubsApplication
 import org.kodein.di.instance
 
-class CurrencyListFragment : com.djavid.common.BaseFragment(), com.djavid.common.BackPressListener {
+class CurrencyListFragment : BaseFragment(), BackPressListener {
 
     private lateinit var binding: FragmentCurrencyListBinding
     private val presenter: CurrencyListContract.Presenter by instance()
@@ -20,7 +19,7 @@ class CurrencyListFragment : com.djavid.common.BaseFragment(), com.djavid.common
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentCurrencyListBinding.inflate(inflater).apply {
             binding = this
-            di = (requireActivity().application as Application)
+            di = (requireActivity().application as SmartSubsApplication)
                 .currencyListComponent(this@CurrencyListFragment, binding)
         }.root
     }

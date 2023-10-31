@@ -1,14 +1,14 @@
 package com.djavid.smartsubs.subscribe_media
 
 import com.djavid.smartsubs.analytics.FirebaseLogger
-import com.djavid.data.storage.SharedRepository
+import com.djavid.smartsubs.data.storage.SharedRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SubscribeMediaPresenter(
     private val view: SubscribeMediaContract.View,
-    private val sharedPrefs: com.djavid.data.storage.SharedRepository,
+    private val sharedPrefs: SharedRepository,
     private val firebaseLogger: FirebaseLogger,
     coroutineScope: CoroutineScope
 ) : SubscribeMediaContract.Presenter, CoroutineScope by coroutineScope {

@@ -2,16 +2,16 @@ package com.djavid.smartsubs.sub_list
 
 import android.os.Bundle
 import androidx.lifecycle.LifecycleCoroutineScope
-import com.djavid.common.CommonFragmentNavigator
-import com.djavid.smartsubs.models.PredefinedSuggestionItem
-import com.djavid.data.storage.RealTimeRepository
-import com.djavid.common.SLIDE_DURATION
+import com.djavid.smartsubs.common.CommonFragmentNavigator
+import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.data.storage.RealTimeRepository
+import com.djavid.smartsubs.utils.Constants
 import kotlinx.coroutines.*
 
 class SubListPresenter(
     private val view: SubListContract.View,
-    private val realTimeRepository: com.djavid.data.storage.RealTimeRepository,
-    private val fragmentNavigator: com.djavid.common.CommonFragmentNavigator,
+    private val realTimeRepository: RealTimeRepository,
+    private val fragmentNavigator: CommonFragmentNavigator,
     lifecycleCoroutineScope: LifecycleCoroutineScope
 ) : SubListContract.Presenter, CoroutineScope by lifecycleCoroutineScope {
 
@@ -20,8 +20,8 @@ class SubListPresenter(
     override fun init() {
         view.init(this)
 
-        view.setBackgroundTransparent(false, com.djavid.common.SLIDE_DURATION)
-        view.showToolbar(true, com.djavid.common.SLIDE_DURATION)
+        view.setBackgroundTransparent(false, Constants.SLIDE_DURATION)
+        view.showToolbar(true, Constants.SLIDE_DURATION)
         view.expandPanel()
 
         launch {
@@ -51,9 +51,9 @@ class SubListPresenter(
         launch(Dispatchers.Main) {
             view.hideKeyboard()
             view.collapsePanel()
-            view.showToolbar(false, com.djavid.common.SLIDE_DURATION)
-            view.setBackgroundTransparent(true, com.djavid.common.SLIDE_DURATION)
-            withContext(Dispatchers.Default) { delay(com.djavid.common.SLIDE_DURATION) }
+            view.showToolbar(false, Constants.SLIDE_DURATION)
+            view.setBackgroundTransparent(true, Constants.SLIDE_DURATION)
+            withContext(Dispatchers.Default) { delay(Constants.SLIDE_DURATION) }
             fragmentNavigator.goBack()
         }
     }

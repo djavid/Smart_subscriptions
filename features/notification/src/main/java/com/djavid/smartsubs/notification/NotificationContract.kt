@@ -39,8 +39,4 @@ interface NotificationContract {
         fun onDeleteClicked()
     }
 
-    interface Navigator {
-        fun showNotificationDialog(subscriptionId: String, id: Long? = null)
-    }
-
 }

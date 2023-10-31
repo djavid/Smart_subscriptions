@@ -1,11 +1,11 @@
 package com.djavid.smartsubs.home
 
 import androidx.lifecycle.LifecycleOwner
-import com.djavid.smartsubs.R
-import com.djavid.smartsubs.databinding.FragmentHomeBinding
-import com.djavid.smartsubs.models.*
+import com.djavid.core.ui.R
+import com.djavid.features.home.databinding.FragmentHomeBinding
 import com.djavid.smartsubs.utils.getSymbolString
 import com.djavid.smartsubs.utils.show
+import com.djavid.ui.getSubPeriodString
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.orbitmvi.orbit.viewmodel.observe
 import kotlin.math.roundToInt

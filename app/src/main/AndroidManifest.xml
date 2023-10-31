@@ -44,7 +44,7 @@
         </activity>
 
         <receiver
-            android:name=".notification.AlarmBroadcastReceiver"
+            android:name=".alarm.AlarmBroadcastReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.WAKE_LOCK">

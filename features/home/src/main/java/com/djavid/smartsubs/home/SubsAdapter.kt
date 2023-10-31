@@ -9,11 +9,11 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.djavid.smartsubs.R
-import com.djavid.smartsubs.databinding.SubscriptionItemBinding
-import com.djavid.smartsubs.models.Subscription
-import com.djavid.smartsubs.models.SubscriptionPeriodType
-import com.djavid.smartsubs.models.getPriceInPeriod
+import com.djavid.core.ui.R
+import com.djavid.core.ui.databinding.SubscriptionItemBinding
+import com.djavid.smartsubs.common.models.Subscription
+import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.models.getPriceInPeriod
 import com.djavid.smartsubs.utils.*
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlin.math.roundToInt
@@ -98,13 +98,13 @@ class SubsAdapter(
 
     private fun ProgressBar.setProgressColor(leftProgress: Double) {
         when {
-            leftProgress >= CONST_GREEN_PROGRESS_MIN_PERCENT -> {
+            leftProgress >= Constants.CONST_GREEN_PROGRESS_MIN_PERCENT -> {
                 progressDrawable = ContextCompat.getDrawable(context, R.drawable.progress_green_drawable)
             }
-            leftProgress >= CONST_ORANGE_PROGRESS_MIN_PERCENT -> {
+            leftProgress >= Constants.CONST_ORANGE_PROGRESS_MIN_PERCENT -> {
                 progressDrawable = ContextCompat.getDrawable(context, R.drawable.progress_orange_drawable)
             }
-            leftProgress >= CONST_RED_PROGRESS_MIN_PERCENT -> {
+            leftProgress >= Constants.CONST_RED_PROGRESS_MIN_PERCENT -> {
                 progressDrawable = ContextCompat.getDrawable(context, R.drawable.progress_red_drawable)
             }
         }

@@ -2,16 +2,17 @@ package com.djavid.smartsubs.subscription
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.djavid.common.CommonFragmentNavigator
-import com.djavid.smartsubs.databinding.FragmentSubscriptionBinding
+import androidx.viewbinding.ViewBinding
+import com.djavid.features.subscription.databinding.FragmentSubscriptionBinding
+import com.djavid.smartsubs.common.CommonFragmentNavigator
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 
-class SubscriptionModule(fragment: Fragment, binding: FragmentSubscriptionBinding) {
+class SubscriptionModule(fragment: Fragment, binding: ViewBinding) {
     val di = DI.Module("subscription_module") {
-        bind<FragmentSubscriptionBinding>() with singleton { binding }
+        bind<FragmentSubscriptionBinding>() with singleton { binding as FragmentSubscriptionBinding }
         bind<SubscriptionContract.Presenter>() with singleton {
             SubscriptionPresenter(
                 instance(), instance(), instance(), instance(), instance(), instance(),
@@ -20,8 +21,8 @@ class SubscriptionModule(fragment: Fragment, binding: FragmentSubscriptionBindin
         }
         bind<SubscriptionContract.View>() with singleton { SubscriptionView(instance()) }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
-        bind<com.djavid.common.CommonFragmentNavigator>() with singleton {
-            com.djavid.common.CommonFragmentNavigator(instance())
+        bind<CommonFragmentNavigator>() with singleton {
+            CommonFragmentNavigator(instance())
         }
     }
 }

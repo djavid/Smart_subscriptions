@@ -1,16 +1,16 @@
 package com.djavid.smartsubs.root
 
-import com.djavid.smartsubs.db.SubscriptionsRepository
-import com.djavid.smartsubs.home.HomeNavigator
+import com.djavid.smartsubs.common.HomeNavigator
+import com.djavid.smartsubs.common.SubscriptionNavigator
+import com.djavid.smartsubs.data.db.SubscriptionsRepository
 import com.djavid.smartsubs.data.storage.RealTimeRepository
-import com.djavid.smartsubs.subscription.SubscriptionContract
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class RootPresenter(
     private val view: RootContract.View,
     private val homeNavigator: HomeNavigator,
-    private val subNavigator: SubscriptionContract.Navigator,
+    private val subNavigator: SubscriptionNavigator,
     private val subsRepository: SubscriptionsRepository,
     private val realTimeRepository: RealTimeRepository,
     coroutineScope: CoroutineScope

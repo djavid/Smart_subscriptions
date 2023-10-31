@@ -1,24 +1,20 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+}
+
+apply {
+    from("${rootDir}/gradle/common_config.gradle")
 }
 
 android {
     namespace = "com.djavid.core.utils"
-
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 34
-        compileSdk = 33
-    }
-
 }
 
 dependencies {
-    implementation(project(":core:data"))
+    implementation(project(":core:common"))
 
-    implementation(libs.play.core)
     implementation(libs.kodein)
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

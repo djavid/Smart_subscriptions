@@ -1,8 +1,8 @@
 package com.djavid.smartsubs.subscription
 
-import com.djavid.smartsubs.models.SubscriptionPeriod
-import com.djavid.smartsubs.models.SubscriptionPrice
-import com.djavid.smartsubs.models.SubscriptionProgress
+import com.djavid.smartsubs.common.models.SubscriptionPeriod
+import com.djavid.smartsubs.common.models.SubscriptionPrice
+import com.djavid.smartsubs.common.models.SubscriptionProgress
 
 interface SubscriptionContract {
 
@@ -34,10 +34,6 @@ interface SubscriptionContract {
         fun onDeleteClicked()
         fun onDeletionPrompted()
         fun onNotifsClicked()
-    }
-
-    interface Navigator {
-        fun goToSubscription(id: String, isRoot: Boolean = false) //isRoot means that homeFragment doesn't exist in backstack
     }
 
 }

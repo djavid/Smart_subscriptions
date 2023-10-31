@@ -1,9 +1,8 @@
 package com.djavid.smartsubs.notifications
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.djavid.smartsubs.databinding.FragmentNotificationsBinding
-import com.djavid.smartsubs.models.Notification
-import com.djavid.smartsubs.subscription.NotificationsAdapter
+import com.djavid.features.notifications.databinding.FragmentNotificationsBinding
+import com.djavid.smartsubs.common.models.Notification
 
 class NotificationsView(
     private val binding: FragmentNotificationsBinding

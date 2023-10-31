@@ -12,18 +12,20 @@ import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.djavid.common.addPeriod
-import com.djavid.common.getFirstPeriodAfterNow
+import com.djavid.core.ui.R
 import com.djavid.smartsubs.Application
-import com.djavid.smartsubs.R
-import com.djavid.smartsubs.db.NotificationsRepository
-import com.djavid.smartsubs.models.Notification
-import com.djavid.smartsubs.models.SubscriptionDao
-import com.djavid.smartsubs.notification.AlarmNotifier
+import com.djavid.smartsubs.alarm.AlarmNotifierImpl
+import com.djavid.smartsubs.data.db.NotificationsRepository
 import com.djavid.smartsubs.root.RootActivity
-import com.djavid.data.storage.RealTimeRepository
-import com.djavid.data.storage.SharedRepository
+import com.djavid.smartsubs.common.models.Notification
+import com.djavid.smartsubs.common.models.SubscriptionDao
+import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.data.storage.RealTimeRepository
+import com.djavid.smartsubs.data.storage.SharedRepository
 import com.djavid.smartsubs.utils.*
+import com.djavid.smartsubs.utils.Constants.ACTION_REFRESH
+import com.djavid.smartsubs.utils.Constants.KEY_NOTIFICATION_ID
+import com.djavid.smartsubs.utils.Constants.SUBSCRIPTION_NOTIF_CHANNEL_ID
 import kotlinx.coroutines.runBlocking
 import org.kodein.di.DI
 import org.kodein.di.DIAware
@@ -37,16 +39,16 @@ class NotificationWorker(
         get() = (context.applicationContext as Application).notificationWorkerComponent(context)
 
     private val notifRepository: NotificationsRepository by instance()
-    private val subRepository: com.djavid.data.storage.RealTimeRepository by instance()
+    private val subRepository: RealTimeRepository by instance()
     private val notificationManager: NotificationManager by instance()
-    private val sharedRepository: com.djavid.data.storage.SharedRepository by instance()
-    private val alarmNotifier: com.djavid.smartsubs.notification.AlarmNotifier by instance()
+    private val sharedRepository: SharedRepository by instance()
+    private val alarmNotifier: AlarmNotifierImpl by instance()
 
     private var model: Notification? = null
     private var subModel: SubscriptionDao? = null
 
     override fun doWork(): Result {
-        val id = workerParams.inputData.getLong(com.djavid.common.KEY_NOTIFICATION_ID, -1)
+        val id = workerParams.inputData.getLong(KEY_NOTIFICATION_ID, -1)
         if (id == -1L) return Result.failure()
 
         loadNotification(id)
@@ -89,7 +91,8 @@ class NotificationWorker(
             val period = subModel?.period
 
             if (paymentDate != null && period != null) {
-                val atDateTime = paymentDate.getFirstPeriodAfterNow(period).addPeriod(period).toDateTime(model.atDateTime.toLocalTime()).minusDays(model.daysBefore.toInt())
+                val atDateTime = paymentDate.getFirstPeriodAfterNow(period).addPeriod(period)
+                    .toDateTime(model.atDateTime.toLocalTime()).minusDays(model.daysBefore.toInt())
 
                 return model.copy(atDateTime = atDateTime)
             }
@@ -99,7 +102,7 @@ class NotificationWorker(
     }
 
     private fun sendRefreshBroadcast() {
-        val intent = Intent(com.djavid.common.ACTION_REFRESH)
+        val intent = Intent(ACTION_REFRESH)
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
     }
 
@@ -143,7 +146,7 @@ class NotificationWorker(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelName = context.getString(R.string.subscription_channel_name)
             val channel = NotificationChannel(
-                com.djavid.common.SUBSCRIPTION_NOTIF_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_DEFAULT
+                SUBSCRIPTION_NOTIF_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_DEFAULT
             )
             channel.enableLights(false)
             channel.enableVibration(false)
@@ -153,19 +156,26 @@ class NotificationWorker(
     }
 
     private fun showSubExpiresNotification(model: Notification, subTitle: String, notifId: Int, content: String) {
-        val builder = NotificationCompat.Builder(context, com.djavid.common.SUBSCRIPTION_NOTIF_CHANNEL_ID).setSmallIcon(R.mipmap.ic_launcher_round).setColor(ContextCompat.getColor(context, R.color.colorAccent)).setContentTitle(subTitle).setContentText(content).setPriority(NotificationCompat.PRIORITY_HIGH).setStyle(NotificationCompat.BigTextStyle()).setAutoCancel(false).apply {
-            val intent = createSubscriptionPendingIntent(model.subId)
-            if (intent != null) {
-                setContentIntent(intent)
+        val builder = NotificationCompat.Builder(context, SUBSCRIPTION_NOTIF_CHANNEL_ID)
+            .setSmallIcon(com.djavid.smartsubs.R.mipmap.ic_launcher_round)
+            .setColor(ContextCompat.getColor(context, R.color.colorAccent))
+            .setContentTitle(subTitle)
+            .setContentText(content)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setStyle(NotificationCompat.BigTextStyle())
+            .setAutoCancel(false).apply {
+                val intent = createSubscriptionPendingIntent(model.subId)
+                if (intent != null) {
+                    setContentIntent(intent)
+                }
             }
-        }
 
         notificationManager.notify(null, notifId, builder.build())
     }
 
     private fun createSubscriptionPendingIntent(subId: Long): PendingIntent? {
         val intent = Intent(context, RootActivity::class.java).apply {
-            putExtra(com.djavid.common.KEY_SUBSCRIPTION_ID, subId)
+            putExtra(Constants.KEY_SUBSCRIPTION_ID, subId)
         }
 
         val stackBuilder = TaskStackBuilder.create(context).apply {
@@ -196,5 +206,4 @@ class NotificationWorker(
             else -> ""
         }
     }
-
 }

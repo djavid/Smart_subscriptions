@@ -2,9 +2,13 @@ package com.djavid.smartsubs.analytics
 
 import android.content.Context
 import android.os.Bundle
-import com.djavid.smartsubs.BuildConfig
-import com.djavid.smartsubs.data.models.*
-import com.djavid.smartsubs.common.EventParam
+import com.djavid.core.analytics.BuildConfig
+import com.djavid.smartsubs.common.models.Notification
+import com.djavid.smartsubs.common.models.SortBy
+import com.djavid.smartsubs.common.models.SortType
+import com.djavid.smartsubs.common.models.Subscription
+import com.djavid.smartsubs.common.models.SubscriptionDao
+import com.djavid.smartsubs.common.models.SubscriptionPeriodType
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.gson.Gson
@@ -15,7 +19,7 @@ class FirebaseLogger(
     context: Context
 ) {
 
-    private val analytics = FirebaseAnalytics.getInstance(context)
+    private val analytics = FirebaseAnalytics.getInstance(context) //todo permission
 
     init {
         analytics.setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
@@ -33,36 +37,36 @@ class FirebaseLogger(
 
     suspend fun onActivateNotifClicked(notif: Notification) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(notif))
+            putString(EventParam.JSON.value, Gson().toJson(notif))
         }
         analytics.logEvent(Event.ACTIVATE_NOTIF_CLICKED.value, bundle)
     }
 
     suspend fun onNotifEdited(notif: Notification) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(notif))
+            putString(EventParam.JSON.value, Gson().toJson(notif))
         }
         analytics.logEvent(Event.NOTIF_EDITED.value, bundle)
     }
 
     suspend fun onNotifCreated(notif: Notification) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(notif))
+            putString(EventParam.JSON.value, Gson().toJson(notif))
         }
         analytics.logEvent(Event.NOTIF_CREATED.value, bundle)
     }
 
     suspend fun onNotifCheckClicked(model: Notification, checked: Boolean) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(model))
-            putBoolean(com.djavid.common.EventParam.CHECKBOX_CHANGE.value, checked)
+            putString(EventParam.JSON.value, Gson().toJson(model))
+            putBoolean(EventParam.CHECKBOX_CHANGE.value, checked)
         }
         analytics.logEvent(Event.NOTIF_CHECK_CHANGED.value, bundle)
     }
 
     suspend fun onEditNotifClicked(model: Notification) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(model))
+            putString(EventParam.JSON.value, Gson().toJson(model))
         }
         analytics.logEvent(Event.EDIT_NOTIF_CLICKED.value, bundle)
     }
@@ -81,14 +85,14 @@ class FirebaseLogger(
 
     suspend fun onSortByChanged(sortBy: SortBy) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(sortBy))
+            putString(EventParam.JSON.value, Gson().toJson(sortBy))
         }
         analytics.logEvent(Event.SORT_BY_CHANGED.value, bundle)
     }
 
     suspend fun onSortTypeChanged(sortType: SortType) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(sortType))
+            putString(EventParam.JSON.value, Gson().toJson(sortType))
         }
         analytics.logEvent(Event.SORT_TYPE_CHANGED.value, bundle)
     }
@@ -99,28 +103,28 @@ class FirebaseLogger(
 
     suspend fun onPeriodChangeClicked(period: SubscriptionPeriodType) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(period))
+            putString(EventParam.JSON.value, Gson().toJson(period))
         }
         analytics.logEvent(Event.PERIOD_CHANGE_CLICKED.value, bundle)
     }
 
     suspend fun subItemClicked(sub: Subscription) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(sub))
+            putString(EventParam.JSON.value, Gson().toJson(sub))
         }
         analytics.logEvent(Event.SUB_ITEM_CLICKED.value, bundle)
     }
 
     suspend fun onSubItemSwipedLeft(position: Int) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putInt(com.djavid.common.EventParam.POSITION.value, position)
+            putInt(EventParam.POSITION.value, position)
         }
         analytics.logEvent(Event.SUB_SWIPED_LEFT.value, bundle)
     }
 
     suspend fun subDelete(sub: Subscription) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(sub))
+            putString(EventParam.JSON.value, Gson().toJson(sub))
         }
         analytics.logEvent(Event.SUB_DELETED.value, bundle)
     }
@@ -131,14 +135,14 @@ class FirebaseLogger(
 
     suspend fun subCreated(sub: SubscriptionDao) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(sub))
+            putString(EventParam.JSON.value, Gson().toJson(sub))
         }
         analytics.logEvent(Event.SUB_CREATED.value, bundle)
     }
 
     suspend fun subEdited(sub: SubscriptionDao) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
-            putString(com.djavid.common.EventParam.JSON.value, Gson().toJson(sub))
+            putString(EventParam.JSON.value, Gson().toJson(sub))
         }
         analytics.logEvent(Event.SUB_EDITED.value, bundle)
     }

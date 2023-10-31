@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import com.bumptech.glide.Glide
-import com.djavid.smartsubs.R
-import com.djavid.smartsubs.databinding.SuggestionItemBinding
-import com.djavid.smartsubs.models.PredefinedSuggestionItem
+import com.djavid.core.ui.R
+import com.djavid.core.ui.databinding.SuggestionItemBinding
+import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
 import java.util.*
 
 class SuggestionsAdapter(

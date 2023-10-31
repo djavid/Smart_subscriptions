@@ -6,11 +6,11 @@ import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import com.djavid.smartsubs.R
-import com.djavid.smartsubs.databinding.FragmentNotificationBinding
-import com.djavid.common.setColor
-import com.djavid.common.setTintColor
-import com.djavid.common.show
+import com.djavid.core.ui.R
+import com.djavid.features.notification.databinding.FragmentNotificationBinding
+import com.djavid.smartsubs.utils.setColor
+import com.djavid.smartsubs.utils.setTintColor
+import com.djavid.smartsubs.utils.show
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.joda.time.LocalTime
 

@@ -1,13 +1,13 @@
 package com.djavid.smartsubs.data.storage
 
-import com.djavid.smartsubs.data.models.PredefinedSubFirebaseEntity
-import com.djavid.smartsubs.data.models.SubscriptionDao
+import com.djavid.smartsubs.common.coroutines.CancelableCoroutineScope
+import com.djavid.smartsubs.data.mappers.SubscriptionEntityMapper
+import com.djavid.smartsubs.common.models.PredefinedSubFirebaseEntity
+import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.analytics.CrashlyticsLogger
-import com.djavid.smartsubs.coroutines.CancelableCoroutineScope
-import com.djavid.smartsubs.mappers.SubscriptionEntityMapper
-import com.djavid.smartsubs.models.PredefinedSuggestionItem
-import com.djavid.smartsubs.models.SubscriptionFirebaseEntity
-import com.djavid.smartsubs.root.FirebaseAuthHelper
+import com.djavid.smartsubs.common.models.SubscriptionFirebaseEntity
+import com.djavid.smartsubs.data.FirebaseAuthHelper
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers

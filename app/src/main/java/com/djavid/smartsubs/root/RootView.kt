@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.root
 
-import com.djavid.smartsubs.databinding.ActivityRootBinding
+import com.djavid.core.ui.databinding.ActivityRootBinding
 
 class RootView(
     val binding: ActivityRootBinding

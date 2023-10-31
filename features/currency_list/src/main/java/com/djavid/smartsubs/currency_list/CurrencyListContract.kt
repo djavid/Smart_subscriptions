@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.currency_list
 
-import com.djavid.smartsubs.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
 
 class CurrencyListContract {
     interface View {
@@ -18,10 +18,6 @@ class CurrencyListContract {
         fun init()
         fun onBackPressed()
         fun onItemClick(item: PredefinedSuggestionItem)
-    }
-
-    interface Navigator {
-        fun goToCurrencyListScreen()
     }
 
     companion object {

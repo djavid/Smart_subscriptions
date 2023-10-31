@@ -4,10 +4,11 @@ import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.djavid.smartsubs.R
-import com.djavid.smartsubs.databinding.FragmentSortBinding
-import com.djavid.smartsubs.models.SortBy
-import com.djavid.common.show
+import com.djavid.core.ui.R
+import com.djavid.core.ui.databinding.FragmentSortBinding
+import com.djavid.smartsubs.common.models.SortBy
+import com.djavid.smartsubs.utils.show
+import com.djavid.ui.getTitle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SortView(

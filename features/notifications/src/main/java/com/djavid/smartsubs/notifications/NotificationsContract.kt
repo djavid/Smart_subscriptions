@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.notifications
 
-import com.djavid.smartsubs.models.Notification
+import com.djavid.smartsubs.common.models.Notification
 
 interface NotificationsContract {
 
@@ -14,10 +14,6 @@ interface NotificationsContract {
         fun onEditNotification(model: Notification)
         fun onNotifCheckChanged(notif: Notification, checked: Boolean)
         fun onAddNotification()
-    }
-
-    interface Navigator {
-        fun showNotificationsDialog(subId: String)
     }
 
 }

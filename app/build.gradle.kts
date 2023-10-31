@@ -3,8 +3,12 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 //    alias(libs.plugins.google.services)
-    alias(libs.plugins.sqldelight)
+//    alias(libs.plugins.sqldelight)
     alias(libs.plugins.crashlytics)
+}
+
+apply {
+    from("${rootDir}/gradle/common_config.gradle")
 }
 
 android {
@@ -42,24 +46,16 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = "18"
+        jvmTarget = "1.8"
     }
 
     lint {
         abortOnError = false
-    }
-
-//    kotlin {
-//        jvmToolchain(18)
-//    }
-
-    buildFeatures {
-        viewBinding = true
     }
 }
 
@@ -111,7 +107,7 @@ dependencies {
     implementation(libs.orbit.compose)
     implementation(libs.kodein)
     implementation(libs.retrofit)
-    implementation(libs.sqldelight.android.driver)
+//    implementation(libs.sqldelight.android.driver)
 
     //coroutines
     implementation(libs.coroutines)

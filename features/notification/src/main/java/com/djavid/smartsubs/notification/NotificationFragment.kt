@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.djavid.smartsubs.Application
-import com.djavid.smartsubs.databinding.FragmentNotificationBinding
-import com.djavid.common.KEY_NOTIFICATION_ID
-import com.djavid.common.KEY_SUBSCRIPTION_ID
-import com.djavid.common.setWhiteNavigationBar
+import com.djavid.features.notification.databinding.FragmentNotificationBinding
+import com.djavid.smartsubs.common.SmartSubsApplication
+import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.utils.setWhiteNavigationBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.kodein.di.DI
@@ -25,7 +24,8 @@ class NotificationFragment : BottomSheetDialogFragment(), DIAware {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentNotificationBinding.inflate(inflater).apply {
             binding = this
-            di = (requireActivity().application as Application).notificationComponent(this@NotificationFragment, binding)
+            di = (requireActivity().application as SmartSubsApplication)
+                .notificationComponent(this@NotificationFragment, binding)
         }.root
     }
 
@@ -34,8 +34,8 @@ class NotificationFragment : BottomSheetDialogFragment(), DIAware {
         expandSheet()
 
         arguments?.let {
-            val subId = it.getString(com.djavid.common.KEY_SUBSCRIPTION_ID)
-            val id = it.getLong(com.djavid.common.KEY_NOTIFICATION_ID, -1)
+            val subId = it.getString(Constants.KEY_SUBSCRIPTION_ID)
+            val id = it.getLong(Constants.KEY_NOTIFICATION_ID, -1)
             presenter.init(subId, if (id == -1L) null else id)
         }
     }

@@ -2,17 +2,18 @@ package com.djavid.smartsubs.create
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
-import com.djavid.smartsubs.R
-import com.djavid.common.KEY_SUBSCRIPTION_ID
+import com.djavid.core.ui.R
+import com.djavid.smartsubs.common.CreateNavigator
+import com.djavid.smartsubs.utils.Constants
 
 class CreateNavigator(
     private val fragmentManager: FragmentManager
-) : CreateContract.Navigator {
+) : CreateNavigator {
 
     override fun goToCreateScreen(id: String?) {
         val intent = Bundle().apply {
             if (id != null) {
-                putString(com.djavid.common.KEY_SUBSCRIPTION_ID, id)
+                putString(Constants.KEY_SUBSCRIPTION_ID, id)
             }
         }
 

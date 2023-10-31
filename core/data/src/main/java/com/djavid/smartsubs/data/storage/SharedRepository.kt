@@ -1,10 +1,9 @@
 package com.djavid.smartsubs.data.storage
 
 import android.content.SharedPreferences
-import com.djavid.smartsubs.data.models.SortBy
-import com.djavid.smartsubs.data.models.SortType
-import com.djavid.smartsubs.data.models.SubscriptionPeriodType
-import java.util.*
+import com.djavid.smartsubs.common.models.SortBy
+import com.djavid.smartsubs.common.models.SortType
+import com.djavid.smartsubs.common.models.SubscriptionPeriodType
 
 class SharedRepository(
     private val repository: SharedPreferences

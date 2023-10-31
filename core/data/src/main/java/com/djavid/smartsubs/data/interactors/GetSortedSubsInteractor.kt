@@ -1,9 +1,9 @@
 package com.djavid.smartsubs.data.interactors
 
-import com.djavid.smartsubs.data.models.Subscription
-import com.djavid.smartsubs.data.models.SortBy
-import com.djavid.smartsubs.data.models.SortType
-import com.djavid.smartsubs.data.models.getPriceInPeriod
+import com.djavid.smartsubs.common.models.Subscription
+import com.djavid.smartsubs.common.models.SortBy
+import com.djavid.smartsubs.common.models.SortType
+import com.djavid.smartsubs.common.models.getPriceInPeriod
 import com.djavid.smartsubs.data.storage.SharedRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

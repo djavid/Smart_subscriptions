@@ -1,26 +1,34 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.sqldelight)
+}
+
+apply {
+    from("${rootDir}/gradle/common_config.gradle")
 }
 
 android {
     namespace = "com.djavid.core.data"
+}
 
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 34
-        compileSdk = 33
+sqldelight {
+    database("Database") {
+        packageName = "com.djavid.smartsubs.db"
     }
-
 }
 
 dependencies {
-    implementation(project(":core:ui"))
+    implementation(project(":core:common"))
+    implementation(project(":core:analytics"))
+    implementation(project(":core:utils"))
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.storage)
-    implementation(libs.coroutines)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.auth)
 
     implementation(libs.kodein)
     implementation(libs.core.ktx)
@@ -28,4 +36,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.junit)
     implementation(libs.joda.time)
+    implementation(libs.coroutines)
+    implementation(libs.play.core)
+    implementation(libs.sqldelight.android.driver)
 }

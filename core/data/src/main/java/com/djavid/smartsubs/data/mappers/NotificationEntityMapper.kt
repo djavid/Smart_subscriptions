@@ -1,6 +1,7 @@
 package com.djavid.smartsubs.data.mappers
 
-import com.djavid.smartsubs.data.models.Notification
+import com.djavid.smartsubs.NotificationEntity
+import com.djavid.smartsubs.common.models.Notification
 import org.joda.time.DateTime
 
 class NotificationEntityMapper {

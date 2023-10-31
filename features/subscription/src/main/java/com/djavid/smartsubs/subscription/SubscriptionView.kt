@@ -10,14 +10,18 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.djavid.smartsubs.R
-import com.djavid.smartsubs.databinding.FragmentSubscriptionBinding
-import com.djavid.smartsubs.models.*
-import com.djavid.common.DECIMAL_FORMAT
-import com.djavid.common.animateAlpha
-import com.djavid.common.getSymbolString
-import com.djavid.common.hideKeyboard
-import com.djavid.common.show
+import com.djavid.core.ui.R
+import com.djavid.features.subscription.databinding.FragmentSubscriptionBinding
+import com.djavid.smartsubs.common.models.SubscriptionPeriod
+import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.models.SubscriptionPrice
+import com.djavid.smartsubs.common.models.SubscriptionProgress
+import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.utils.animateAlpha
+import com.djavid.smartsubs.utils.getSymbolString
+import com.djavid.smartsubs.utils.hideKeyboard
+import com.djavid.smartsubs.utils.show
+import com.djavid.ui.getSubPeriodString
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.text.DecimalFormat
 
@@ -122,7 +126,7 @@ class SubscriptionView(
         val everyPlural = binding.root.context.resources.getQuantityString(R.plurals.plural_every, period.quantity)
 
         val periodPlural = binding.root.context.getSubPeriodString(period.type, period.quantity)
-        val priceFormatted = DecimalFormat(com.djavid.common.DECIMAL_FORMAT).format(price.value)
+        val priceFormatted = DecimalFormat(Constants.DECIMAL_FORMAT).format(price.value)
 
 
         val text = if (period.quantity == 1) {
@@ -168,7 +172,7 @@ class SubscriptionView(
 
     override fun setOverallSpent(spent: SubscriptionPrice) = with(binding) {
         val currSymbol = spent.currency.getSymbolString()
-        val spentFormatted = DecimalFormat(com.djavid.common.DECIMAL_FORMAT).format(spent.value)
+        val spentFormatted = DecimalFormat(Constants.DECIMAL_FORMAT).format(spent.value)
         val text = binding.root.context.getString(R.string.mask_overall_spent, spentFormatted, currSymbol)
 
         subOverallSpent.text = text.toPinkSpannable()
