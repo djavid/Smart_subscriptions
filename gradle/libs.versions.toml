@@ -114,4 +114,4 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
-google-services = { id = "com.google.gms:google-services", version.ref = "google-services" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
