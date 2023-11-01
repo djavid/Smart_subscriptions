@@ -6,9 +6,9 @@ import com.djavid.smartsubs.common.models.SubscriptionProgress
 import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.data.storage.CloudStorageRepository
 import com.djavid.smartsubs.data.storage.RealTimeRepository
-import com.djavid.smartsubs.utils.addPeriod
-import com.djavid.smartsubs.utils.getFirstPeriodBeforeNow
-import com.djavid.smartsubs.utils.getPeriodsCountBeforeNow
+import com.djavid.smartsubs.common.utils.addPeriod
+import com.djavid.smartsubs.common.utils.getFirstPeriodBeforeNow
+import com.djavid.smartsubs.common.utils.getPeriodsCountBeforeNow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime

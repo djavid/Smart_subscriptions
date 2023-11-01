@@ -10,7 +10,7 @@ import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.common.models.SubscriptionPeriod
 import com.djavid.smartsubs.common.models.SubscriptionPeriodType
 import com.djavid.smartsubs.data.storage.RealTimeRepository
-import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.*
 import org.joda.time.DateTime
 import org.joda.time.LocalDate

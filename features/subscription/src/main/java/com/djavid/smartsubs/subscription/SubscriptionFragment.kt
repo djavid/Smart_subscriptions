@@ -13,7 +13,7 @@ import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.common.BroadcastHandler
 import com.djavid.smartsubs.common.SmartSubsApplication
 import com.djavid.smartsubs.common.subscribeApplicationReceiver
-import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.instance

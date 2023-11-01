@@ -6,8 +6,8 @@ import com.djavid.smartsubs.common.SortNavigator
 import com.djavid.smartsubs.common.models.SortBy
 import com.djavid.smartsubs.common.models.SortType
 import com.djavid.smartsubs.data.storage.SharedRepository
-import com.djavid.smartsubs.utils.Constants.ACTION_REFRESH
-import com.djavid.smartsubs.utils.Constants.KEY_SORT_BY
+import com.djavid.smartsubs.common.utils.Constants.ACTION_REFRESH
+import com.djavid.smartsubs.common.utils.Constants.KEY_SORT_BY
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach

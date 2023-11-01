@@ -6,7 +6,7 @@ import com.djavid.smartsubs.common.NotificationNavigator
 import com.djavid.smartsubs.common.models.Notification
 import com.djavid.smartsubs.data.db.NotificationsRepository
 import com.djavid.smartsubs.data.interactors.AlarmInteractor
-import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach

@@ -13,7 +13,7 @@ import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.common.BroadcastHandler
 import com.djavid.smartsubs.common.SmartSubsApplication
 import com.djavid.smartsubs.common.subscribeApplicationReceiver
-import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.instance
@@ -39,7 +39,7 @@ class HomeFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentHomeBinding.inflate(inflater).apply {
             binding = this
-            di = (activity?.application as SmartSubsApplication).homeComponent(this@HomeFragment, binding)
+            di = (requireActivity().application as SmartSubsApplication).homeComponent(this@HomeFragment, binding)
         }.root
     }
 

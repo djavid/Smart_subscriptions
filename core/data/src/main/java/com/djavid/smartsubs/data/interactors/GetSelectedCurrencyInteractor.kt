@@ -1,6 +1,7 @@
 package com.djavid.smartsubs.data.interactors
 
 import com.djavid.smartsubs.data.storage.SharedRepository
+import com.djavid.smartsubs.common.utils.defaultCurrency
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Currency
@@ -17,10 +18,9 @@ class GetSelectedCurrencyInteractor(
 
         if (currCode == null) {
             if (firstTimeOpened) {
-                Currency.getInstance(Locale.getDefault())
+                defaultCurrency()
             } else {
-                getMostUsedCurrencyInteractor.execute()
-                    ?: Currency.getInstance(Locale.getDefault())
+                getMostUsedCurrencyInteractor.execute() ?: defaultCurrency()
             }
         } else {
             Currency.getInstance(currCode)

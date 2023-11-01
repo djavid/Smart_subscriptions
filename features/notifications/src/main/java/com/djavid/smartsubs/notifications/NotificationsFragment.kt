@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.djavid.features.notifications.databinding.FragmentNotificationsBinding
 import com.djavid.smartsubs.common.SmartSubsApplication
-import com.djavid.smartsubs.utils.Constants
-import com.djavid.smartsubs.utils.setWhiteNavigationBar
+import com.djavid.smartsubs.common.utils.Constants
+import com.djavid.smartsubs.common.utils.setWhiteNavigationBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.kodein.di.DI

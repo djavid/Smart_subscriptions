@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.djavid.core.ui.databinding.FragmentSortBinding
 import com.djavid.smartsubs.common.BaseBottomSheetFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
-import com.djavid.smartsubs.utils.Constants.KEY_SORT_SCREEN_TYPE
+import com.djavid.smartsubs.common.utils.Constants.KEY_SORT_SCREEN_TYPE
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import org.kodein.di.DIAware

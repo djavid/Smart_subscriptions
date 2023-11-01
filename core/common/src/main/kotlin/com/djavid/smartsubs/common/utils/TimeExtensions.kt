@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.utils
+package com.djavid.smartsubs.common.utils
 
 import com.djavid.smartsubs.common.models.SubscriptionPeriod
 import com.djavid.smartsubs.common.models.SubscriptionPeriodType
@@ -79,3 +79,13 @@ fun LocalDate.getPeriodsCountBeforeNow(period: SubscriptionPeriod): Int {
         count
     }
 }
+
+fun LocalDate.atStartOfDayWithDefaultTimeZoneMillis(): Long {
+    val timeZone = DateTimeZone.forTimeZone(TimeZone.getDefault())
+
+    return this.toDateTimeAtStartOfDay(timeZone).millis
+}
+
+fun localNow(): LocalDate = LocalDate.now()
+
+fun Long.toLocalDate(): LocalDate = LocalDate(this)

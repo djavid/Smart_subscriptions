@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.djavid.core.ui.R
 import com.djavid.core.ui.databinding.NotificationItemBinding
 import com.djavid.smartsubs.common.models.Notification
-import com.djavid.smartsubs.utils.show
+import com.djavid.smartsubs.common.utils.show
 
 class NotificationsAdapter(
     private val context: Context,

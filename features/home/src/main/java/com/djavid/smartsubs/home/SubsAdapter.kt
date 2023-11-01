@@ -14,7 +14,10 @@ import com.djavid.core.ui.databinding.SubscriptionItemBinding
 import com.djavid.smartsubs.common.models.Subscription
 import com.djavid.smartsubs.common.models.SubscriptionPeriodType
 import com.djavid.smartsubs.common.models.getPriceInPeriod
-import com.djavid.smartsubs.utils.*
+import com.djavid.smartsubs.common.utils.Constants
+import com.djavid.smartsubs.common.utils.getCurrentLocale
+import com.djavid.smartsubs.common.utils.getSymbolString
+import com.djavid.smartsubs.common.utils.show
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlin.math.roundToInt
 

@@ -133,9 +133,9 @@ class RealTimeRepository(
                     val subs = data.children
                         .mapNotNull { it.getValue(SubscriptionFirebaseEntity::class.java) }
                         .map { entity -> subscriptionEntityMapper.fromFirebaseEntity(entity) }
+                        .map { if (it.hasTrialEnded()) it.copy(trialPaymentDate = null) else it }
 
-                    subsCache.clear()
-                    subsCache.addAll(subs)
+                    subsCache.apply { clear(); addAll(subs) }
                     cont.resume(subs)
                 }
                 .addOnFailureListener {
@@ -218,19 +218,6 @@ class RealTimeRepository(
         }
     }
 
-    /**
-     * Save trial payment date as a payment date if trial ended
-     */
-    suspend fun updateTrialSubs(): Unit = withContext(Dispatchers.IO) {
-        getSubs().forEach {
-            val isTrialEnded = it.trialPaymentDate != null && LocalDate.now().isAfter(it.trialPaymentDate)
-
-            if (isTrialEnded) {
-                editSub(it.copy(paymentDate = it.trialPaymentDate, trialPaymentDate = null))
-            }
-        }
-    }
-
 //    suspend fun isEmpty(): Boolean? = withContext(Dispatchers.IO) {
 //        val uid = authHelper.getUid() ?: return@withContext false
 //
@@ -257,5 +244,4 @@ class RealTimeRepository(
         const val DB_SUBS_AUTH_ROOT = "subs_auth"
         const val DB_PREDEFINED_SUBS_ROOT = "predefined_subs"
     }
-
 }

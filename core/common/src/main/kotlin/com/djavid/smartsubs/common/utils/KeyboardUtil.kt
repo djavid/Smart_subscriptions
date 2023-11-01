@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.utils
+package com.djavid.smartsubs.common.utils
 
 import android.app.Activity
 import android.graphics.Rect

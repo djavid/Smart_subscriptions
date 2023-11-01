@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import com.djavid.smartsubs.common.CommonFragmentNavigator
 import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.data.storage.RealTimeRepository
-import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.*
 
 class SubListPresenter(

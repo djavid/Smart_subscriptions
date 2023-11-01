@@ -71,7 +71,6 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:common"))
     implementation(project(":core:analytics"))
-    implementation(project(":core:utils"))
 
     implementation(project(":features:notification"))
     implementation(project(":features:notifications"))

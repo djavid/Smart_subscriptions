@@ -15,7 +15,6 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
-    implementation(project(":core:utils"))
     implementation(project(":core:data"))
     implementation(project(":core:analytics"))
 

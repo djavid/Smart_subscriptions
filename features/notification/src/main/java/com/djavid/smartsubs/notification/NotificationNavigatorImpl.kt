@@ -3,7 +3,7 @@ package com.djavid.smartsubs.notification
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 import com.djavid.smartsubs.common.NotificationNavigator
-import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.common.utils.Constants
 
 class NotificationNavigatorImpl(
     private val fm: FragmentManager

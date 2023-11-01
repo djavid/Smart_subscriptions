@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.djavid.core.ui.R
 import com.djavid.core.ui.databinding.FragmentSubListBinding
 import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
-import com.djavid.smartsubs.utils.animateAlpha
-import com.djavid.smartsubs.utils.hideKeyboard
-import com.djavid.smartsubs.utils.show
+import com.djavid.smartsubs.common.utils.animateAlpha
+import com.djavid.smartsubs.common.utils.hideKeyboard
+import com.djavid.smartsubs.common.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class SubListView(

@@ -22,7 +22,6 @@ include(":app")
 // core
 include(":core:ui")
 include(":core:common")
-include(":core:utils")
 include(":core:data")
 include(":core:analytics")
 include(":core:network")

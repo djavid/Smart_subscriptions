@@ -8,9 +8,9 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import com.djavid.core.ui.R
 import com.djavid.features.notification.databinding.FragmentNotificationBinding
-import com.djavid.smartsubs.utils.setColor
-import com.djavid.smartsubs.utils.setTintColor
-import com.djavid.smartsubs.utils.show
+import com.djavid.smartsubs.common.utils.setColor
+import com.djavid.smartsubs.common.utils.setTintColor
+import com.djavid.smartsubs.common.utils.show
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.joda.time.LocalTime
 

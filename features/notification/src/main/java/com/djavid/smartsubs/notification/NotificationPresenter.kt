@@ -7,8 +7,8 @@ import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.data.db.NotificationsRepository
 import com.djavid.smartsubs.data.interactors.AlarmInteractor
 import com.djavid.smartsubs.data.mappers.SubscriptionModelMapper
-import com.djavid.smartsubs.utils.Constants
-import com.djavid.smartsubs.utils.getFirstPeriodAfterNow
+import com.djavid.smartsubs.common.utils.Constants
+import com.djavid.smartsubs.common.utils.getFirstPeriodAfterNow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.utils
+package com.djavid.smartsubs.common.utils
 
 enum class SupportedCurrencies {
     RUB, USD, EUR, GBP, JPY, CHF, CNY

@@ -5,67 +5,70 @@ import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.common.models.SubscriptionFirebaseEntity
 import com.djavid.smartsubs.common.models.SubscriptionPeriod
 import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.utils.atStartOfDayWithDefaultTimeZoneMillis
+import com.djavid.smartsubs.common.utils.localNow
+import com.djavid.smartsubs.common.utils.toLocalDate
 import org.joda.time.DateTime
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDate
 import java.util.*
 
 class SubscriptionEntityMapper {
 
-    fun fromEntity(entity: SubscriptionEntity): SubscriptionDao {
-        return SubscriptionDao(
-            entity.id.toString(),
-            DateTime(entity.creationDate),
-            entity.title,
-            entity.price,
-            Currency.getInstance(entity.currencyCode),
-            SubscriptionPeriod(
-                SubscriptionPeriodType.valueOf(entity.period), entity.periodQuantity.toInt()
-            ),
-            entity.paymentDate?.let { LocalDate(it) },
-            entity.category,
-            entity.comment,
-            entity.trialPaymentDate?.let { LocalDate(it) },
-            null
-        )
-    }
-
     fun toFirebaseEntity(model: SubscriptionDao): SubscriptionFirebaseEntity {
-        val timeZone = DateTimeZone.forTimeZone(TimeZone.getDefault())
-
         return SubscriptionFirebaseEntity(
-            model.id,
-            model.creationDate.millis,
-            model.title,
-            model.price,
-            model.currency.currencyCode,
-            model.period.quantity.toLong(),
-            model.period.type.name,
-            model.paymentDate?.toDateTimeAtStartOfDay(timeZone)?.millis,
-            model.category,
-            model.comment,
-            model.trialPaymentDate?.toDateTimeAtStartOfDay(timeZone)?.millis,
-            true,
-            model.predefinedSubId
+            id = model.id,
+            creationDate = model.creationDate.millis,
+            title = model.title,
+            price = model.price,
+            currencyCode = model.currency.currencyCode,
+            periodQuantity = model.period.quantity.toLong(),
+            period = model.period.type.name,
+            category = model.category,
+            comment = model.comment,
+            paymentDate = model.paymentDate?.atStartOfDayWithDefaultTimeZoneMillis(),
+            trialPaymentDate = if (model.hasTrialEnded()) null else model.trialPaymentDate?.atStartOfDayWithDefaultTimeZoneMillis(),
+            loaded = true,
+            predefinedSubId = model.predefinedSubId
         )
     }
 
     fun fromFirebaseEntity(entity: SubscriptionFirebaseEntity): SubscriptionDao {
         return SubscriptionDao(
-            entity.id,
-            DateTime(entity.creationDate),
-            entity.title,
-            entity.price,
-            Currency.getInstance(entity.currencyCode),
-            SubscriptionPeriod(
-                SubscriptionPeriodType.valueOf(entity.period), entity.periodQuantity.toInt()
+            id = entity.id,
+            creationDate = DateTime(entity.creationDate),
+            title = entity.title,
+            price = entity.price,
+            currency = Currency.getInstance(entity.currencyCode),
+            period = SubscriptionPeriod(
+                type = SubscriptionPeriodType.valueOf(entity.period),
+                quantity = entity.periodQuantity.toInt()
             ),
-            entity.paymentDate?.let { LocalDate(it) },
-            entity.category,
-            entity.comment,
-            entity.trialPaymentDate?.let { LocalDate(it) },
-            entity.predefinedSubId
+            category = entity.category,
+            comment = entity.comment,
+            paymentDate = entity.paymentDate?.toLocalDate(),
+            trialPaymentDate = if (entity.hasTrialEnded()) null else entity.trialPaymentDate?.toLocalDate(),
+            predefinedSubId = entity.predefinedSubId
         )
     }
 
+    fun fromEntity(entity: SubscriptionEntity): SubscriptionDao {
+        return SubscriptionDao(
+            id = entity.id.toString(),
+            creationDate = DateTime(entity.creationDate),
+            title = entity.title,
+            price = entity.price,
+            currency = Currency.getInstance(entity.currencyCode),
+            period = SubscriptionPeriod(
+                SubscriptionPeriodType.valueOf(entity.period), entity.periodQuantity.toInt()
+            ),
+            category = entity.category,
+            comment = entity.comment,
+            paymentDate = entity.paymentDate?.toLocalDate(),
+            trialPaymentDate = if (entity.hasTrialEnded()) null else entity.trialPaymentDate?.toLocalDate(),
+            predefinedSubId = null
+        )
+    }
+
+
+    private fun SubscriptionEntity.hasTrialEnded(): Boolean =
+        trialPaymentDate != null && trialPaymentDate.let { localNow().isAfter(it.toLocalDate()) }
 }

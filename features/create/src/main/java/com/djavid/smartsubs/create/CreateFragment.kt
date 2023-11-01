@@ -10,8 +10,8 @@ import com.djavid.smartsubs.common.BackPressListener
 import com.djavid.smartsubs.common.BaseFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
 import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
-import com.djavid.smartsubs.utils.Constants
-import com.djavid.smartsubs.utils.serializable
+import com.djavid.smartsubs.common.utils.Constants
+import com.djavid.smartsubs.common.utils.serializable
 import org.kodein.di.instance
 
 class CreateFragment : BaseFragment(), BackPressListener {

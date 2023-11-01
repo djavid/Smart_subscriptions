@@ -14,10 +14,10 @@ import com.djavid.core.ui.R
 import com.djavid.features.create.databinding.FragmentCreateBinding
 import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.common.models.SubscriptionPeriodType
-import com.djavid.smartsubs.utils.animateAlpha
-import com.djavid.smartsubs.utils.getSymbolString
-import com.djavid.smartsubs.utils.hideKeyboard
-import com.djavid.smartsubs.utils.show
+import com.djavid.smartsubs.common.utils.animateAlpha
+import com.djavid.smartsubs.common.utils.getSymbolString
+import com.djavid.smartsubs.common.utils.hideKeyboard
+import com.djavid.smartsubs.common.utils.show
 import com.djavid.ui.getSubPeriodString
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.joda.time.DateTimeZone

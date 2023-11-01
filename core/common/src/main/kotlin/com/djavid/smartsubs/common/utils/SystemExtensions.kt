@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.utils
+package com.djavid.smartsubs.common.utils
 
 import android.content.Context
 import android.content.Intent

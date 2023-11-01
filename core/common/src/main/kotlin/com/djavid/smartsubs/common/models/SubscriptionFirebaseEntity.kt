@@ -1,5 +1,8 @@
 package com.djavid.smartsubs.common.models
 
+import com.djavid.smartsubs.common.utils.localNow
+import com.djavid.smartsubs.common.utils.toLocalDate
+
 data class SubscriptionFirebaseEntity(
     val id: String = "",
     val creationDate: Long = 0,
@@ -14,4 +17,9 @@ data class SubscriptionFirebaseEntity(
     val trialPaymentDate: Long? = null,
     val loaded: Boolean = false,
     val predefinedSubId: String? = null
-)
+) {
+
+    fun hasTrialEnded(): Boolean =
+        trialPaymentDate != null && trialPaymentDate.let { localNow().isAfter(it.toLocalDate()) }
+
+}

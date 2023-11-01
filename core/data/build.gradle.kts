@@ -22,7 +22,6 @@ sqldelight {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:analytics"))
-    implementation(project(":core:utils"))
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.storage)

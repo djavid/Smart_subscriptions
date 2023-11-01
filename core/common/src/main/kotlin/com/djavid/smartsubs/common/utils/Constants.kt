@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.utils
+package com.djavid.smartsubs.common.utils
 
 object Constants {
     const val ACTION_REFRESH = "com.djavid.smartsubs.action.refresh"
