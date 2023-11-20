@@ -8,7 +8,7 @@ import com.djavid.smartsubs.data.db.NotificationsRepository
 import com.djavid.smartsubs.data.interactors.AlarmInteractor
 import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
@@ -40,13 +40,11 @@ class NotificationsPresenter(
     }
 
     private fun listenPipeline() {
-        launch {
-            pipeline.getFlow().onEach {
-                when (it.first) {
-                    Constants.ACTION_REFRESH -> reloadNotifs()
-                }
-            }.collect()
-        }
+        pipeline.getFlow().onEach {
+            when (it.first) {
+                Constants.ACTION_REFRESH -> reloadNotifs()
+            }
+        }.launchIn(this)
     }
 
     private suspend fun loadNotifications(id: String): List<Notification> {
@@ -82,5 +80,4 @@ class NotificationsPresenter(
             }
         }
     }
-
 }

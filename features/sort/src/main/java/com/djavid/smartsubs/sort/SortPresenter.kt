@@ -5,11 +5,10 @@ import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.SortNavigator
 import com.djavid.smartsubs.common.models.SortBy
 import com.djavid.smartsubs.common.models.SortType
+import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.data.storage.SharedRepository
-import com.djavid.smartsubs.common.utils.Constants.ACTION_REFRESH
-import com.djavid.smartsubs.common.utils.Constants.KEY_SORT_BY
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
@@ -35,16 +34,14 @@ class SortPresenter(
     }
 
     private fun listenPipeline() {
-        launch {
-            pipeline.getFlow().onEach {
-                when (it.first) {
-                    KEY_SORT_BY -> {
-                        loadSortBy()
-                        pipeline.postValue(Pair(ACTION_REFRESH, ""))
-                    }
+        pipeline.getFlow().onEach {
+            when (it.first) {
+                Constants.KEY_SORT_BY -> {
+                    loadSortBy()
+                    pipeline.postValue(Pair(Constants.ACTION_REFRESH, ""))
                 }
-            }.collect()
-        }
+            }
+        }.launchIn(this)
     }
 
     private fun showSortScreen() {
@@ -62,7 +59,7 @@ class SortPresenter(
     override fun onSortItemClicked(item: SortBy) {
         launch {
             sharedRepository.selectedSortBy = item
-            pipeline.postValue(Pair(KEY_SORT_BY, item.name))
+            pipeline.value(Constants.KEY_SORT_BY to item.name) //todo барахлит
             logger.onSortByChanged(item)
             view.finish()
         }
@@ -77,7 +74,7 @@ class SortPresenter(
             if (sharedRepository.selectedSortType != SortType.ASC) {
                 val sortType = SortType.ASC
                 updateSortType(sortType)
-                pipeline.postValue(Pair(ACTION_REFRESH, ""))
+                pipeline.postValue(Constants.ACTION_REFRESH to "")
                 logger.onSortTypeChanged(sortType)
             }
         }
@@ -88,7 +85,7 @@ class SortPresenter(
             if (sharedRepository.selectedSortType != SortType.DESC) {
                 val sortType = SortType.DESC
                 updateSortType(sortType)
-                pipeline.postValue(Pair(ACTION_REFRESH, ""))
+                pipeline.postValue(Constants.ACTION_REFRESH to "") //todo remove
                 logger.onSortTypeChanged(sortType)
             }
         }
@@ -106,5 +103,4 @@ class SortPresenter(
     private fun loadSortBy() {
         view.setSortBySelection(sharedRepository.selectedSortBy)
     }
-
 }

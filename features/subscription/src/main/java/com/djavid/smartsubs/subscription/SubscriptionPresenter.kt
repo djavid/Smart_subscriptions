@@ -11,9 +11,9 @@ import com.djavid.smartsubs.common.NotificationsNavigator
 import com.djavid.smartsubs.data.db.NotificationsRepository
 import com.djavid.smartsubs.data.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.data.storage.RealTimeRepository
-import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class SubscriptionPresenter(
@@ -57,13 +57,11 @@ class SubscriptionPresenter(
     }
 
     private fun listenPipeline() {
-        launch {
-            pipeline.getFlow().onEach {
-                when (it.first) {
-                    Constants.ACTION_REFRESH -> reload(false)
-                }
-            }.collect()
-        }
+        pipeline.getFlow().onEach {
+            when (it.first) {
+                Constants.ACTION_REFRESH -> reload(false)
+            }
+        }.launchIn(this)
     }
 
     private fun showContent(notifsCount: Int) {
@@ -129,7 +127,7 @@ class SubscriptionPresenter(
         finish()
     }
 
-    private fun finish() {
+    private fun finish() { //todo шо за жесть
         launch {
             view.hideKeyboard()
             view.collapsePanel()
@@ -145,5 +143,4 @@ class SubscriptionPresenter(
             }
         }
     }
-
 }

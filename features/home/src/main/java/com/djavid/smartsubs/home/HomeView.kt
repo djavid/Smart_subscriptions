@@ -41,6 +41,7 @@ class HomeView(
 
     private fun render(state: HomeState) {
         binding.homeEmptyPlaceholder.show(state.subsList.isEmpty())
+        binding.homeSheetProgressBar.show(state.isProgress)
         binding.homeProgressBar.show(state.isProgress)
 
         adapter.showSubs(state.subsList)
@@ -49,11 +50,13 @@ class HomeView(
         val currencySymbol = state.price.currency.getSymbolString()
         val priceToShow = state.price.value.roundToInt().toString()
         binding.homeSubsPrice.text = context.getString(R.string.mask_price, priceToShow, currencySymbol)
+        binding.homeSubsPrice.show(true)
 
         val plural = context.resources.getQuantityString(R.plurals.plural_sub, state.subsList.size)
         binding.homeSubsCount.text = context.getString(R.string.mask_subs_count, state.subsList.size, plural)
 
         binding.homePeriodSelector.text = context.getSubPeriodString(state.pricePeriod)
+        binding.homePeriodSelector.show(true)
     }
 
     private fun setupRecycler() {

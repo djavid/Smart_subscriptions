@@ -6,11 +6,13 @@ import com.djavid.smartsubs.data.interactors.GetSubsInteractor
 import com.djavid.smartsubs.common.models.SubscriptionPeriodType
 import com.djavid.smartsubs.common.models.SubscriptionPrice
 import com.djavid.smartsubs.common.models.getPriceInPeriod
+import com.djavid.smartsubs.common.utils.defaultCurrency
 import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.data.storage.SharedRepository
 import com.djavid.smartsubs.data.InAppReview
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.util.Currency
 
 class HomeInteractor(
     private val repository: RealTimeRepository,
@@ -22,10 +24,10 @@ class HomeInteractor(
     private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend fun getInitialState(): HomeState = withContext(ioDispatcher) {
-        HomeState(
+    fun getInitialState(): HomeState {
+        return HomeState(
             pricePeriod = sharedRepository.selectedSubsPeriod,
-            price = SubscriptionPrice(0.0, getSelectedCurrencyInteractor.execute() ),
+            price = SubscriptionPrice(0.0, defaultCurrency() ),
             isProgress = true,
             subsList = emptyList()
         )
@@ -44,7 +46,8 @@ class HomeInteractor(
     suspend fun calculateSubsPrice(): SubscriptionPrice = withContext(ioDispatcher) {
         val pricePeriod = sharedRepository.selectedSubsPeriod
         val subsPriceSum = getSubsInteractor.execute()
-            .filter { !it.isTrial() }.sumOf { it.getPriceInPeriod(pricePeriod) }
+            .filter { !it.isTrial() }
+            .sumOf { it.getPriceInPeriod(pricePeriod) }
 
         SubscriptionPrice(subsPriceSum, getSelectedCurrencyInteractor.execute())
     }

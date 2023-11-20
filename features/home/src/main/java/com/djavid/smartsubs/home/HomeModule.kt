@@ -26,7 +26,7 @@ class HomeModule(fragment: Fragment, binding: ViewBinding) {
         bind<HomeViewModel>() with singleton {
             HomeViewModel(
                 instance(), instance(), instance(), instance(), instance(), instance(),
-                instance(), instance(), instance()
+                instance(), instance()
             )
         }
         bind<HomeInteractor>() with singleton {

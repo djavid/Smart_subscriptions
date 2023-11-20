@@ -26,9 +26,11 @@
             android:maxLines="1"
             android:textColor="@color/colorNightRider"
             android:textSize="28sp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="1868 ₽" />
+            tools:text="1868 ₽"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/home_periodSelector"
@@ -39,10 +41,12 @@
             android:fontFamily="@font/helvetica_medium"
             android:textColor="@android:color/white"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/home_subsPrice"
             app:layout_constraintStart_toEndOf="@id/home_subsPrice"
             app:layout_constraintTop_toTopOf="@id/home_subsPrice"
-            tools:text="месяц" />
+            tools:text="месяц"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/home_addBtn"
@@ -58,6 +62,24 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/homeProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_bottom_sheet"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </FrameLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/home_sheetContainer"
         android:layout_width="match_parent"
@@ -67,7 +89,8 @@
         app:behavior_hideable="false"
         app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        tools:behavior_peekHeight="800dp">
+        tools:behavior_peekHeight="800dp"
+        tools:visibility="gone">
 
         <TextView
             android:id="@+id/home_subsCount"
@@ -135,7 +158,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
-            android:id="@+id/home_progressBar"
+            android:id="@+id/homeSheetProgressBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_bottom_sheet"

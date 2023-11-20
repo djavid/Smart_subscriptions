@@ -7,16 +7,14 @@ import com.djavid.smartsubs.common.BasePipeline
 import com.djavid.smartsubs.common.CreateNavigator
 import com.djavid.smartsubs.common.SortNavigator
 import com.djavid.smartsubs.common.SubscriptionNavigator
-import com.djavid.smartsubs.create.CreateContract
 import com.djavid.smartsubs.data.interactors.GetSortedSubsInteractor
-import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.data.storage.SharedRepository
-import com.djavid.smartsubs.sort.SortContract
-import com.djavid.smartsubs.subscription.SubscriptionContract
-import com.djavid.smartsubs.utils.Constants
+import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -24,7 +22,6 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class HomeViewModel(
-    private val repository: RealTimeRepository,
     private val createNavigator: CreateNavigator,
     private val sortNavigator: SortNavigator,
     private val subNavigator: SubscriptionNavigator,
@@ -35,21 +32,17 @@ class HomeViewModel(
     private val getSortedSubsInteractor: GetSortedSubsInteractor,
 ) : ContainerHost<HomeState, HomeSideEffect>, ViewModel() {
 
-    override val container = container<HomeState, HomeSideEffect>(
-        runBlocking {
-            homeInteractor.getInitialState()
-        }
-    )
+    override val container = container<HomeState, HomeSideEffect>(homeInteractor.getInitialState())
 
     init {
-        intent { postSideEffect(HomeSideEffect.SlidePanelToTop) }
-
         viewModelScope.launch {
-            listenPipeline()
-
             if (sharedPrefs.firstTimeOpened) {
                 homeInteractor.onFirstOpen()
             }
+
+            listenPipeline()
+            refreshSubs()
+            intent { postSideEffect(HomeSideEffect.SlidePanelToTop) }
         }
     }
 
@@ -84,31 +77,34 @@ class HomeViewModel(
         refreshSubs()
     }
 
-    private fun listenPipeline() = viewModelScope.launch(Dispatchers.IO) {
-        pipeline.getFlow().collect {
+    private fun listenPipeline() = pipeline.getFlow().onEach {
+        withContext(Dispatchers.IO) {
             when (it.first) {
                 Constants.ACTION_REFRESH -> {
                     refreshSubs()
 
-                    if (sharedPrefs.inAppReviewTimesShown < 2) {
+                    if (sharedPrefs.inAppReviewTimesShown <= 1) {
                         homeInteractor.showInAppReview()
                     }
                 }
             }
         }
-    }
+    }.launchIn(viewModelScope)
 
-    private suspend fun refreshSubs() = intent {
-        repository.updateTrialSubs()
+    private suspend fun refreshSubs() {
         val subs = getSortedSubsInteractor.execute()
         val price = homeInteractor.calculateSubsPrice()
         val pricePeriod = sharedPrefs.selectedSubsPeriod
 
-        reduce {
-            state.copy(
-                isProgress = false, price = price, pricePeriod = pricePeriod, subsList = subs
-            )
+        intent {
+            reduce {
+                state.copy(
+                    isProgress = false,
+                    price = price,
+                    pricePeriod = pricePeriod,
+                    subsList = subs
+                )
+            }
         }
     }
-
 }

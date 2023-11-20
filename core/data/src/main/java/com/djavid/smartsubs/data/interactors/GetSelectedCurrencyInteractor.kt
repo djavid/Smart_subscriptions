@@ -17,11 +17,14 @@ class GetSelectedCurrencyInteractor(
         val firstTimeOpened = sharedRepository.firstTimeOpened
 
         if (currCode == null) {
-            if (firstTimeOpened) {
+            val currency = if (firstTimeOpened) {
                 defaultCurrency()
             } else {
                 getMostUsedCurrencyInteractor.execute() ?: defaultCurrency()
             }
+            sharedRepository.selectedCurrencyCode = currency.currencyCode
+
+            currency
         } else {
             Currency.getInstance(currCode)
         }
