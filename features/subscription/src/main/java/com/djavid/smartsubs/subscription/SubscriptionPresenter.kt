@@ -83,7 +83,7 @@ class SubscriptionPresenter(
         view.setSubLogo(subscription.logoBytes)
 
         //notifs
-        view.showNotifsSection(false) //too much bugs, better to make notifs through server
+        view.showNotifsSection(false) //todo AlarmManager or WorkManager release 1.1-1.2
         view.showNotifsSection(subscription.progress != null)
         if (subscription.progress != null) {
             view.setNotifsCount(notifsCount)

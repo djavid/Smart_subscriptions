@@ -12,7 +12,7 @@ import org.kodein.di.singleton
 class SortModule(fragment: Fragment, binding: ViewBinding) {
     val di = DI.Module("sort_module") {
         bind<Fragment>() with singleton { fragment }
-        bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
+        bind<FragmentManager>() with singleton { fragment.childFragmentManager }
         bind<SortContract.Presenter>() with singleton {
             SortPresenter(
                 instance(), instance(), instance(), instance(), instance(), instance()

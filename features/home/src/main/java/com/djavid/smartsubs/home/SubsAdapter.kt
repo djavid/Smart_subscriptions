@@ -16,7 +16,7 @@ import com.djavid.smartsubs.common.models.SubscriptionPeriodType
 import com.djavid.smartsubs.common.models.getPriceInPeriod
 import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.common.utils.getCurrentLocale
-import com.djavid.smartsubs.common.utils.getSymbolString
+import com.djavid.smartsubs.common.utils.getCurrencySymbol
 import com.djavid.smartsubs.common.utils.show
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlin.math.roundToInt
@@ -63,7 +63,7 @@ class SubsAdapter(
     }
 
     private fun setupPrice(holder: ViewHolder, sub: Subscription) {
-        val currencySymbol = sub.price.currency.getSymbolString()
+        val currencySymbol = sub.price.currency.getCurrencySymbol()
         val priceForPeriod = sub.getPriceInPeriod(pricePeriod).roundToInt().toString()
         val priceColor = ContextCompat.getColor(
             context, if (sub.isTrial()) R.color.colorPinkishOrange else R.color.colorNero

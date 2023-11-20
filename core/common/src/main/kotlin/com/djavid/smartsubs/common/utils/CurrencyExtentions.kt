@@ -3,9 +3,10 @@ package com.djavid.smartsubs.common.utils
 import java.util.Currency
 import java.util.Locale
 
-fun Currency.getSymbolString(): String {
+fun Currency.getCurrencySymbol(): String {
     return when(currencyCode) {
         "RUB" -> "₽"
+        "USD" -> "$"
         else -> symbol
     }
 }

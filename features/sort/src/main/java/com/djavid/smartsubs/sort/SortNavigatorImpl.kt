@@ -16,7 +16,7 @@ class SortNavigatorImpl(
             }
         }
 
-        fragment.show(fm, "sortScreen")
+        fragment.show(fm, fragment::class.java.name)
     }
 
     override fun openSortByScreen() {
@@ -26,7 +26,7 @@ class SortNavigatorImpl(
             }
         }
 
-        fragment.show(fm, "sortByScreen")
+        fragment.show(fm, fragment::class.java.name)
     }
 
 }

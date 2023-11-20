@@ -69,7 +69,8 @@ class CreatePresenter(
     }
 
     override fun onCurrencyClicked() {
-        currencyListNavigator.goToCurrencyListScreen()
+        //todo release 1.1
+        //currencyListNavigator.goToCurrencyListScreen()
     }
 
     private suspend fun loadPredefinedSubs() = withContext(Dispatchers.Main) {

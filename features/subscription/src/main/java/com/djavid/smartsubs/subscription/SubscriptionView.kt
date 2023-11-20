@@ -18,7 +18,7 @@ import com.djavid.smartsubs.common.models.SubscriptionPrice
 import com.djavid.smartsubs.common.models.SubscriptionProgress
 import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.common.utils.animateAlpha
-import com.djavid.smartsubs.common.utils.getSymbolString
+import com.djavid.smartsubs.common.utils.getCurrencySymbol
 import com.djavid.smartsubs.common.utils.hideKeyboard
 import com.djavid.smartsubs.common.utils.show
 import com.djavid.ui.getSubPeriodString
@@ -122,7 +122,7 @@ class SubscriptionView(
     }
 
     override fun setPrice(period: SubscriptionPeriod, price: SubscriptionPrice) = with(binding) {
-        val currSymbol = price.currency.getSymbolString()
+        val currSymbol = price.currency.getCurrencySymbol()
         val everyPlural = binding.root.context.resources.getQuantityString(R.plurals.plural_every, period.quantity)
 
         val periodPlural = binding.root.context.getSubPeriodString(period.type, period.quantity)
@@ -171,7 +171,7 @@ class SubscriptionView(
     }
 
     override fun setOverallSpent(spent: SubscriptionPrice) = with(binding) {
-        val currSymbol = spent.currency.getSymbolString()
+        val currSymbol = spent.currency.getCurrencySymbol()
         val spentFormatted = DecimalFormat(Constants.DECIMAL_FORMAT).format(spent.value)
         val text = binding.root.context.getString(R.string.mask_overall_spent, spentFormatted, currSymbol)
 

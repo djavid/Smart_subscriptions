@@ -3,7 +3,7 @@ package com.djavid.smartsubs.home
 import androidx.lifecycle.LifecycleOwner
 import com.djavid.core.ui.R
 import com.djavid.features.home.databinding.FragmentHomeBinding
-import com.djavid.smartsubs.common.utils.getSymbolString
+import com.djavid.smartsubs.common.utils.getCurrencySymbol
 import com.djavid.smartsubs.common.utils.show
 import com.djavid.ui.getSubPeriodString
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -47,7 +47,7 @@ class HomeView(
         adapter.showSubs(state.subsList)
         adapter.updatePricePeriod(state.pricePeriod)
 
-        val currencySymbol = state.price.currency.getSymbolString()
+        val currencySymbol = state.price.currency.getCurrencySymbol()
         val priceToShow = state.price.value.roundToInt().toString()
         binding.homeSubsPrice.text = context.getString(R.string.mask_price, priceToShow, currencySymbol)
         binding.homeSubsPrice.show(true)
