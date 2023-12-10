@@ -5,7 +5,7 @@ import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.djavid.core.ui.R
-import com.djavid.core.ui.databinding.FragmentSortBinding
+import com.djavid.features.sort.databinding.FragmentSortBinding
 import com.djavid.smartsubs.common.models.SortBy
 import com.djavid.smartsubs.common.utils.show
 import com.djavid.ui.getTitle
