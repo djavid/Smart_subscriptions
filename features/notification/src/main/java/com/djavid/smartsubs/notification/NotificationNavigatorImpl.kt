@@ -2,7 +2,7 @@ package com.djavid.smartsubs.notification
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
-import com.djavid.smartsubs.common.NotificationNavigator
+import com.djavid.smartsubs.common.navigation.NotificationNavigator
 import com.djavid.smartsubs.common.utils.Constants
 
 class NotificationNavigatorImpl(

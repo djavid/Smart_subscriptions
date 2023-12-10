@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.subscription
 
-import com.djavid.smartsubs.common.SubscriptionNavigator
+import com.djavid.smartsubs.common.navigation.SubscriptionNavigator
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance

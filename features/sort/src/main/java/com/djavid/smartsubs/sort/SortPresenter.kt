@@ -1,8 +1,8 @@
 package com.djavid.smartsubs.sort
 
 import com.djavid.smartsubs.analytics.FirebaseLogger
-import com.djavid.smartsubs.common.BasePipeline
-import com.djavid.smartsubs.common.SortNavigator
+import com.djavid.smartsubs.common.base.BasePipeline
+import com.djavid.smartsubs.common.navigation.SortNavigator
 import com.djavid.smartsubs.common.models.SortBy
 import com.djavid.smartsubs.common.models.SortType
 import com.djavid.smartsubs.common.utils.Constants

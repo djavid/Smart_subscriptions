@@ -1,7 +1,7 @@
 package com.djavid.smartsubs.notification
 
 import com.djavid.smartsubs.analytics.FirebaseLogger
-import com.djavid.smartsubs.common.BasePipeline
+import com.djavid.smartsubs.common.base.BasePipeline
 import com.djavid.smartsubs.common.models.Notification
 import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.data.db.NotificationsRepository

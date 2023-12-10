@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.common
+package com.djavid.smartsubs.common.navigation
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager

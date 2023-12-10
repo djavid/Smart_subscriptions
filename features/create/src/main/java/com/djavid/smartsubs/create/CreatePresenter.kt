@@ -1,10 +1,10 @@
 package com.djavid.smartsubs.create
 
 import com.djavid.smartsubs.analytics.FirebaseLogger
-import com.djavid.smartsubs.common.BasePipeline
-import com.djavid.smartsubs.common.CommonFragmentNavigator
-import com.djavid.smartsubs.common.CurrencyListNavigator
-import com.djavid.smartsubs.common.SubListNavigator
+import com.djavid.smartsubs.common.base.BasePipeline
+import com.djavid.smartsubs.common.navigation.CommonFragmentNavigator
+import com.djavid.smartsubs.common.navigation.CurrencyListNavigator
+import com.djavid.smartsubs.common.navigation.SubListNavigator
 import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.common.models.SubscriptionPeriod

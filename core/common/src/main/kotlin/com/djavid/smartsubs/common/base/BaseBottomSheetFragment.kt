@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.common
+package com.djavid.smartsubs.common.base
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.kodein.di.DI

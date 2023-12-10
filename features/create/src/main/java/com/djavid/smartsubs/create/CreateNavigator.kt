@@ -3,7 +3,7 @@ package com.djavid.smartsubs.create
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 import com.djavid.core.ui.R
-import com.djavid.smartsubs.common.CreateNavigator
+import com.djavid.smartsubs.common.navigation.CreateNavigator
 import com.djavid.smartsubs.common.utils.Constants
 
 class CreateNavigator(

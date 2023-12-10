@@ -1,7 +1,10 @@
-package com.djavid.smartsubs.common
+package com.djavid.smartsubs.common.base
 
 import android.content.BroadcastReceiver
 import androidx.fragment.app.Fragment
+import com.djavid.smartsubs.common.utils.BroadcastHandler
+import com.djavid.smartsubs.common.utils.clearReceiver
+import com.djavid.smartsubs.common.utils.clearReceivers
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 

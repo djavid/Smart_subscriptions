@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.sort
 
-import com.djavid.smartsubs.common.SortNavigator
+import com.djavid.smartsubs.common.navigation.SortNavigator
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance

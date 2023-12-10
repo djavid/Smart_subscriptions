@@ -2,7 +2,7 @@ package com.djavid.smartsubs.currency_list
 
 import androidx.fragment.app.FragmentManager
 import com.djavid.core.ui.R
-import com.djavid.smartsubs.common.CurrencyListNavigator
+import com.djavid.smartsubs.common.navigation.CurrencyListNavigator
 
 class CurrencyListNavigatorImpl(
     private val fm: FragmentManager

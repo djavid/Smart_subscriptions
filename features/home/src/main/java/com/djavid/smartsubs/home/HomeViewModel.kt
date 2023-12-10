@@ -3,10 +3,10 @@ package com.djavid.smartsubs.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.djavid.smartsubs.analytics.FirebaseLogger
-import com.djavid.smartsubs.common.BasePipeline
-import com.djavid.smartsubs.common.CreateNavigator
-import com.djavid.smartsubs.common.SortNavigator
-import com.djavid.smartsubs.common.SubscriptionNavigator
+import com.djavid.smartsubs.common.base.BasePipeline
+import com.djavid.smartsubs.common.navigation.CreateNavigator
+import com.djavid.smartsubs.common.navigation.SortNavigator
+import com.djavid.smartsubs.common.navigation.SubscriptionNavigator
 import com.djavid.smartsubs.data.interactors.GetSortedSubsInteractor
 import com.djavid.smartsubs.data.storage.SharedRepository
 import com.djavid.smartsubs.common.utils.Constants

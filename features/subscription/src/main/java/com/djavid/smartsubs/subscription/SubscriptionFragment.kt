@@ -8,11 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.djavid.features.subscription.databinding.FragmentSubscriptionBinding
-import com.djavid.smartsubs.common.BackPressListener
-import com.djavid.smartsubs.common.BaseFragment
-import com.djavid.smartsubs.common.BroadcastHandler
+import com.djavid.smartsubs.common.base.BackPressListener
+import com.djavid.smartsubs.common.base.BaseFragment
+import com.djavid.smartsubs.common.utils.BroadcastHandler
 import com.djavid.smartsubs.common.SmartSubsApplication
-import com.djavid.smartsubs.common.subscribeApplicationReceiver
+import com.djavid.smartsubs.common.utils.subscribeApplicationReceiver
 import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel

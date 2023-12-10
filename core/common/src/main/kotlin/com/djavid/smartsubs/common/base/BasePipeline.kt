@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.common
+package com.djavid.smartsubs.common.base
 
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow

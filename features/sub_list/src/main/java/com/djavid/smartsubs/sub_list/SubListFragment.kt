@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.djavid.core.ui.databinding.FragmentSubListBinding
-import com.djavid.smartsubs.common.BackPressListener
-import com.djavid.smartsubs.common.BaseFragment
+import com.djavid.smartsubs.common.base.BackPressListener
+import com.djavid.smartsubs.common.base.BaseFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
 import org.kodein.di.instance
 
@@ -16,7 +16,7 @@ class SubListFragment : BaseFragment(), BackPressListener {
     private lateinit var binding: FragmentSubListBinding
     private val presenter: SubListContract.Presenter by instance()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragmentSubListBinding.inflate(inflater).apply {
             binding = this
             di = (requireActivity().application as SmartSubsApplication).subListComponent(this@SubListFragment, binding)

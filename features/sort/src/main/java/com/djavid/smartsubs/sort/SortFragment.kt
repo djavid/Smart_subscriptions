@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.djavid.core.ui.databinding.FragmentSortBinding
-import com.djavid.smartsubs.common.BaseBottomSheetFragment
+import com.djavid.smartsubs.common.base.BaseBottomSheetFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
 import com.djavid.smartsubs.common.utils.Constants.KEY_SORT_SCREEN_TYPE
 import com.google.android.material.bottomsheet.BottomSheetBehavior

@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.common
+package com.djavid.smartsubs.common.utils
 
 import android.app.Activity
 import android.content.BroadcastReceiver

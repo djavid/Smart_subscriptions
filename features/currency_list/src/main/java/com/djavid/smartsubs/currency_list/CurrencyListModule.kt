@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.djavid.features.currency_list.databinding.FragmentCurrencyListBinding
-import com.djavid.smartsubs.common.CommonFragmentNavigator
+import com.djavid.smartsubs.common.navigation.CommonFragmentNavigator
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance

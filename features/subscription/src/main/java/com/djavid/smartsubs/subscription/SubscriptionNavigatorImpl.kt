@@ -3,7 +3,7 @@ package com.djavid.smartsubs.subscription
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 import com.djavid.core.ui.R
-import com.djavid.smartsubs.common.SubscriptionNavigator
+import com.djavid.smartsubs.common.navigation.SubscriptionNavigator
 import com.djavid.smartsubs.common.utils.Constants
 
 class SubscriptionNavigatorImpl(

@@ -9,16 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.djavid.features.home.databinding.FragmentHomeBinding
-import com.djavid.smartsubs.common.BaseFragment
-import com.djavid.smartsubs.common.BroadcastHandler
+import com.djavid.smartsubs.common.base.BaseFragment
+import com.djavid.smartsubs.common.utils.BroadcastHandler
 import com.djavid.smartsubs.common.SmartSubsApplication
-import com.djavid.smartsubs.common.subscribeApplicationReceiver
+import com.djavid.smartsubs.common.base.RefreshableFragment
+import com.djavid.smartsubs.common.utils.subscribeApplicationReceiver
 import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.instance
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), RefreshableFragment {
 
     private val coroutineScope: CoroutineScope by instance()
     private val viewModel: HomeViewModel by instance()
@@ -45,6 +46,10 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         homeView.onViewCreated(viewLifecycleOwner)
+    }
+
+    override fun refresh() {
+        viewModel.onRefreshAction()
     }
 
     override fun onResume() {

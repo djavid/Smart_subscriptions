@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.djavid.core.ui.databinding.DialogSubscribeMediaBinding
-import com.djavid.smartsubs.common.BaseBottomSheetFragment
+import com.djavid.smartsubs.common.base.BaseBottomSheetFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
 import com.djavid.smartsubs.common.utils.setWhiteNavigationBar
 import org.kodein.di.instance

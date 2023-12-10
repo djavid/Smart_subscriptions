@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.sub_list
 
-import com.djavid.smartsubs.common.SubListNavigator
+import com.djavid.smartsubs.common.navigation.SubListNavigator
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance

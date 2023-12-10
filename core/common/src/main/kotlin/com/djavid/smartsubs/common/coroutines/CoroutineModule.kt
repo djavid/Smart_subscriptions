@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.common.coroutines
 
-import com.djavid.smartsubs.common.BasePipeline
+import com.djavid.smartsubs.common.base.BasePipeline
 import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

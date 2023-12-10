@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.currency_list
 
-import com.djavid.smartsubs.common.CurrencyListNavigator
+import com.djavid.smartsubs.common.navigation.CurrencyListNavigator
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance

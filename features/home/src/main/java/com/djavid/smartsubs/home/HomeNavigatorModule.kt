@@ -4,7 +4,7 @@ import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
-import com.djavid.smartsubs.common.HomeNavigator
+import com.djavid.smartsubs.common.navigation.HomeNavigator
 
 class HomeNavigatorModule {
     val di = DI.Module("home_navigator_module") {

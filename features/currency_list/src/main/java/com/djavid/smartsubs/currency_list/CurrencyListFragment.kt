@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.djavid.features.currency_list.databinding.FragmentCurrencyListBinding
-import com.djavid.smartsubs.common.BackPressListener
-import com.djavid.smartsubs.common.BaseFragment
+import com.djavid.smartsubs.common.base.BackPressListener
+import com.djavid.smartsubs.common.base.BaseFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
 import org.kodein.di.instance
 

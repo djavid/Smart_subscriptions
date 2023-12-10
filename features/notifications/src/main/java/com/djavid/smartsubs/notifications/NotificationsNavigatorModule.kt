@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.notifications
 
-import com.djavid.smartsubs.common.NotificationsNavigator
+import com.djavid.smartsubs.common.navigation.NotificationsNavigator
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance

@@ -1,13 +1,13 @@
 package com.djavid.smartsubs.subscription
 
 import com.djavid.smartsubs.analytics.FirebaseLogger
-import com.djavid.smartsubs.common.BasePipeline
-import com.djavid.smartsubs.common.CommonFragmentNavigator
+import com.djavid.smartsubs.common.base.BasePipeline
+import com.djavid.smartsubs.common.navigation.CommonFragmentNavigator
 import com.djavid.smartsubs.common.models.Subscription
 import com.djavid.smartsubs.common.models.SubscriptionPrice
-import com.djavid.smartsubs.common.CreateNavigator
-import com.djavid.smartsubs.common.HomeNavigator
-import com.djavid.smartsubs.common.NotificationsNavigator
+import com.djavid.smartsubs.common.navigation.CreateNavigator
+import com.djavid.smartsubs.common.navigation.HomeNavigator
+import com.djavid.smartsubs.common.navigation.NotificationsNavigator
 import com.djavid.smartsubs.data.db.NotificationsRepository
 import com.djavid.smartsubs.data.mappers.SubscriptionModelMapper
 import com.djavid.smartsubs.data.storage.RealTimeRepository

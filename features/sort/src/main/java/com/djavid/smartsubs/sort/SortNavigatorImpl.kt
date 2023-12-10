@@ -2,7 +2,7 @@ package com.djavid.smartsubs.sort
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
-import com.djavid.smartsubs.common.SortNavigator
+import com.djavid.smartsubs.common.navigation.SortNavigator
 import com.djavid.smartsubs.common.utils.Constants.KEY_SORT_SCREEN_TYPE
 
 class SortNavigatorImpl(

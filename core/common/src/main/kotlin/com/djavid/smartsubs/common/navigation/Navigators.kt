@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.common
+package com.djavid.smartsubs.common.navigation
 
 interface HomeNavigator {
     fun goToHome()
