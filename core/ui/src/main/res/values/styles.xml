@@ -5,10 +5,17 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorOrange</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+        <item name="bottomSheetDragHandleStyle">@style/Widget.MaterialComponents.BottomSheet.DragHandle</item>
     </style>
 
     <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
-        <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+    </style>
+
+    <style name="Widget.MaterialComponents.BottomSheet.DragHandle" parent="Widget.Material3.BottomSheet.DragHandle">
+        <item name="tint">?colorOnSurface</item>
+        <!--Alpha can be added optionally to achieve nice color blend-->
+        <item name="android:alpha">1</item>
     </style>
 
     <style name="InputStyle">

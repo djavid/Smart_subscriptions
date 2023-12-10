@@ -11,6 +11,7 @@
         android:id="@+id/sortBottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bg_bottom_sheet"
         app:behavior_saveFlags="all"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -24,12 +25,12 @@
             android:id="@+id/sortBy_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sortDragHandle" />
+            app:layout_constraintTop_toBottomOf="@id/sortDragHandle"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/sort_title"
@@ -104,20 +105,20 @@
             app:layout_constraintTop_toBottomOf="@id/sortBy_Btn"
             tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/sortBy_ascSelector"
-        style="@style/ButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/title_by_increase"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@id/sortBy_descSelector"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sortBy_delimiter"
-        tools:visibility="visible" />
+        <TextView
+            android:id="@+id/sortBy_ascSelector"
+            style="@style/ButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/title_by_increase"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/sortBy_descSelector"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sortBy_delimiter"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/sortBy_descSelector"
