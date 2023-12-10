@@ -84,7 +84,7 @@ class SubscriptionPresenter(
 
         //notifs
         view.showNotifsSection(false) //todo AlarmManager or WorkManager release 1.1-1.2
-        view.showNotifsSection(subscription.progress != null)
+        //view.showNotifsSection(subscription.progress != null)
         if (subscription.progress != null) {
             view.setNotifsCount(notifsCount)
         }
