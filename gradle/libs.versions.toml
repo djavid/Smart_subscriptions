@@ -26,11 +26,12 @@ work-runtime-ktx = "2.8.1"
 appmetrica = "3.16.1" # https://appmetrica.yandex.ru/docs/mobile-sdk-dg/concepts/android-history.html
 sqldelight = "1.5.5" # https://github.com/cashapp/sqldelight/releases
 appcompat = "1.6.1"
-androidx-activity = "1.6.1"
+androidx-activity = "1.7.2"
 cardview = "1.0.0"
 constraintlayout = "2.1.4"
 coordinatorlayout = "1.2.0"
 core-ktx = "1.10.1"
+fragment-ktx = "1.6.2"
 google-services = "4.3.15"
 kodein = "7.16.0"
 coroutines = "1.7.1"
@@ -77,6 +78,7 @@ cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorlayout" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment-ktx" }
 localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
 work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work-runtime-ktx" }
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }

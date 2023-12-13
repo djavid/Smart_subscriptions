@@ -19,11 +19,4 @@ dependencies {
     implementation(project(":core:analytics"))
 
     implementation(libs.coroutines)
-    implementation(libs.joda.time)
-    implementation(libs.recyclerview)
-    implementation(libs.kodein)
-    implementation(libs.glide)
-    implementation(libs.material)
-    implementation(libs.circleimageview)
-    implementation(libs.appcompat)
 }

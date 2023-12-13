@@ -18,13 +18,6 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:analytics"))
 
-    implementation(libs.kodein)
     implementation(libs.coroutines)
     implementation(libs.androidx.lifecycle.common)
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.glide)
-    implementation(libs.circleimageview)
-    implementation(libs.junit)
 }

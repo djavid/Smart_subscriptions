@@ -92,21 +92,15 @@ dependencies {
 
     //android
     implementation(libs.recyclerview)
-    implementation(libs.appcompat)
-    implementation(libs.core.ktx)
     implementation(libs.constraintlayout)
     implementation(libs.cardview)
     implementation(libs.coordinatorlayout)
-    implementation(libs.material)
     implementation(libs.localbroadcastmanager)
-    implementation(libs.androidx.activity)
 
     //core
     implementation(libs.orbit.viewmodel)
     implementation(libs.orbit.compose)
-    implementation(libs.kodein)
     implementation(libs.retrofit)
-//    implementation(libs.sqldelight.android.driver)
 
     //coroutines
     implementation(libs.coroutines)
@@ -118,7 +112,6 @@ dependencies {
 
     //time
     implementation(libs.prettytime)
-    implementation(libs.joda.time)
 
     //firebase
     implementation(platform(libs.firebase.bom))
@@ -130,9 +123,7 @@ dependencies {
     implementation(libs.firebase.storage)
 
     //images
-    implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
-    implementation(libs.circleimageview)
 
     //google
     implementation(libs.play.core)

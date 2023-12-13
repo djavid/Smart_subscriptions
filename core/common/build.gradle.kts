@@ -13,10 +13,11 @@ android {
 }
 
 dependencies {
-    implementation(libs.kodein)
+    api(libs.kodein)
+    testApi(libs.junit)
+
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.junit)
     implementation(libs.joda.time)
 }

@@ -18,11 +18,4 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:analytics"))
     implementation(project(":features:notification"))
-
-    implementation(libs.kodein)
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.junit)
-    implementation(libs.joda.time)
 }

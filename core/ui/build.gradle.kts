@@ -15,10 +15,12 @@ android {
 dependencies {
     implementation(project(":core:common"))
 
-    implementation(libs.kodein)
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.junit)
-    implementation(libs.circleimageview)
+    api(libs.material)
+    api(libs.circleimageview)
+    api(libs.androidx.activity)
+    api(libs.glide)
+    api(libs.appcompat)
+    api(libs.recyclerview)
+    api(libs.core.ktx)
+    api(libs.fragment.ktx)
 }

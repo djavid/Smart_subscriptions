@@ -22,14 +22,7 @@ dependencies {
     implementation(project(":features:sort"))
     implementation(project(":features:subscription"))
 
-    implementation(libs.kodein)
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.lifecycle.common)
     implementation(libs.androidx.lifecycle.viewmodel)
-    implementation(libs.glide)
-    implementation(libs.circleimageview)
-    implementation(libs.junit)
     implementation(libs.orbit.viewmodel)
 }
