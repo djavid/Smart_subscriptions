@@ -142,6 +142,5 @@ dependencies {
     implementation(libs.work.runtime.ktx)
 
     //analytics
-    implementation(libs.facebook.android.sdk)
     implementation(libs.appmetrica)
 }

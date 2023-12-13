@@ -2,7 +2,6 @@
 
     <!--region common-->
     <string name="app_name">Smart subs</string>
-    <string name="facebook_app_id" translatable="false">2681721465409338</string>
     <string name="yandex_metrica_api_key" translatable="false">dd7914d9-76a1-400d-9976-82861f58865a</string>
     <!--endregion-->
 

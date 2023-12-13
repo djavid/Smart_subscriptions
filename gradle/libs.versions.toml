@@ -23,7 +23,6 @@ gson = "2.10" # https://github.com/google/gson
 prettytime = "4.0.1.Final" # https://developer.android.com/topic/libraries/architecture/workmanager/basics
 runner = "1.5.2"
 work-runtime-ktx = "2.8.1"
-facebook-android-sdk = "6.1.0"
 appmetrica = "3.16.1" # https://appmetrica.yandex.ru/docs/mobile-sdk-dg/concepts/android-history.html
 sqldelight = "1.5.5" # https://github.com/cashapp/sqldelight/releases
 appcompat = "1.6.1"
@@ -84,7 +83,6 @@ androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-kt
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 
 #analytics
-facebook-android-sdk = { module = "com.facebook.android:facebook-android-sdk", version.ref = "facebook-android-sdk" }
 appmetrica = { module = "com.yandex.android:mobmetricalib", version.ref = "appmetrica" }
 
 #ui
