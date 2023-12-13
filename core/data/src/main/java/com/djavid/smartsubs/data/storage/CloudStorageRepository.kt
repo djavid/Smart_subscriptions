@@ -23,12 +23,12 @@ class CloudStorageRepository {
         }
     }
 
-    suspend fun getSubLogoBytes(storageUrl: String): ByteArray? {
-        iconsCache.find { it.first == storageUrl }?.let {
-            return it.second
-        }
+    suspend fun getSubLogoBytes(storageUrl: String): ByteArray? = suspendCoroutine { cont ->
+        val icon = iconsCache.find { it.first == storageUrl }
 
-        return suspendCoroutine { cont ->
+        if (icon != null) {
+            cont.resume(icon.second)
+        } else {
             val gsReference = storage.getReferenceFromUrl(storageUrl)
 
             gsReference.getBytes(ONE_MEGABYTE)

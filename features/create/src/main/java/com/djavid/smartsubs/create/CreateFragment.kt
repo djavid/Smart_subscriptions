@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.activity.addCallback
 import com.djavid.features.create.databinding.FragmentCreateBinding
 import com.djavid.smartsubs.common.base.BackPressListener
 import com.djavid.smartsubs.common.base.BaseFragment
@@ -41,6 +42,9 @@ class CreateFragment : BaseFragment(), BackPressListener {
                 presenter.onSuggestionItemClick(it)
             }
         }
+
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner) { presenter.onBackPressed() }
     }
 
     override fun onBackPressed() {

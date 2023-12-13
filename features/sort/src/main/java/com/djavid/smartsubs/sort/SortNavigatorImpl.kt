@@ -11,8 +11,7 @@ class SortNavigatorImpl(
         val fragment = SortFragment()
 
         fm.beginTransaction()
-            .add(fragment, null)
-            .addToBackStack(fragment::class.java.name)
+            .add(fragment, fragment::class.java.name)
             .commit()
     }
 
@@ -20,8 +19,9 @@ class SortNavigatorImpl(
         val fragment = SortByFragment()
 
         fm.beginTransaction()
-            .add(fragment, null)
             .addToBackStack(fragment::class.java.name)
+            .setReorderingAllowed(true)
+            .add(fragment, null)
             .commit()
     }
 

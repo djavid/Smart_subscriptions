@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-class BasePipeline<T> {
+class BasePipeline<T> { //todo deprecate
 
     private val flow = MutableSharedFlow<T>(
         replay = 0,

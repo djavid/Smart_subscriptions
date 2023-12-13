@@ -15,7 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDE
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 
-class SortByFragment : BaseBottomSheetFragment(), DIAware {
+class SortByFragment : BaseBottomSheetFragment() {
 
     private lateinit var binding: FragmentSortByBinding
 
@@ -24,16 +24,17 @@ class SortByFragment : BaseBottomSheetFragment(), DIAware {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragmentSortByBinding.inflate(inflater, container, false).apply {
             binding = this
-            di = (requireParentFragment() as DIAware).di
+            val sortFragment = (requireActivity().supportFragmentManager.fragments.find {
+                it.tag == SortFragment::class.java.name
+            })
+            di = (sortFragment as DIAware).di
         }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        BottomSheetBehavior.from(binding.sortByBottomSheet).apply { this.state = STATE_EXPANDED }
 
         viewModel.sortByValues.observe(viewLifecycleOwner) { showSortByList(it) }
-        requireParentFragment()
     }
 
     private fun showSortByList(items: List<SortBy>) {

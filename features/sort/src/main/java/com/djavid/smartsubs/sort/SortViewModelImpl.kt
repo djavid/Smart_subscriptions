@@ -32,6 +32,7 @@ class SortViewModelImpl(
         viewModelScope.launch {
             sharedRepository.selectedSortBy = item
             _selectedSortBy.postValue(item)
+            pipeline.postValue(Constants.ACTION_REFRESH to "")
 
             logger.onSortByChanged(item)
             sortNavigator.goBack()
@@ -45,7 +46,7 @@ class SortViewModelImpl(
                 _selectedSortType.postValue(sortType)
 
                 logger.onSortTypeChanged(sortType)
-                pipeline.postValue(Constants.ACTION_REFRESH to "") //todo избавиться
+                pipeline.postValue(Constants.ACTION_REFRESH to "")
             }
         }
     }
@@ -53,4 +54,5 @@ class SortViewModelImpl(
     override fun openSortByScreen() {
         sortNavigator.openSortByScreen()
     }
+
 }

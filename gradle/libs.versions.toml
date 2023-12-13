@@ -1,7 +1,7 @@
 [versions]
 
 #essentials
-compileSdk = "33"
+compileSdk = "34"
 targetSdk = "34"
 minSdk = "21"
 

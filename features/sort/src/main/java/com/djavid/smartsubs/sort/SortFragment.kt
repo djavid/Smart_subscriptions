@@ -15,10 +15,9 @@ import com.djavid.smartsubs.common.utils.show
 import com.djavid.ui.getTitle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
-import org.kodein.di.DIAware
 import org.kodein.di.instance
 
-class SortFragment : BaseBottomSheetFragment(), DIAware {
+class SortFragment : BaseBottomSheetFragment() {
 
     private val viewModel: SortViewModel by instance()
 
