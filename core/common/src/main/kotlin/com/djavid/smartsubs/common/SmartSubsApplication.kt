@@ -14,7 +14,7 @@ abstract class SmartSubsApplication: Application() {
     abstract fun subscriptionComponent(fragment: Fragment, binding: ViewBinding): DI
     abstract fun notificationComponent(fragment: Fragment, binding: ViewBinding): DI
     abstract fun notificationsComponent(fragment: Fragment, binding: ViewBinding): DI
-    abstract fun sortComponent(fragment: Fragment, binding: ViewBinding): DI
+    abstract fun sortComponent(fragment: Fragment): DI
     abstract fun subscribeMediaComponent(fragment: Fragment, binding: ViewBinding): DI
     abstract fun subListComponent(fragment: Fragment, binding: ViewBinding): DI
     abstract fun currencyListComponent(fragment: Fragment, binding: ViewBinding): DI

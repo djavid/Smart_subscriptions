@@ -10,16 +10,9 @@ import com.djavid.smartsubs.common.models.SortBy
 import com.djavid.ui.getTitle
 
 class SortByAdapter(
+    private val data: List<SortBy>,
     private val onClick: (SortBy) -> Unit
 ) : RecyclerView.Adapter<SortByAdapter.ViewHolder>() {
-
-    private val data = mutableListOf<SortBy>()
-
-    fun showData(data: List<SortBy>) {
-        this.data.clear()
-        this.data.addAll(data)
-        notifyDataSetChanged()
-    }
 
     override fun getItemCount() = data.size
 

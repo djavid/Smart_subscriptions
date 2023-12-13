@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sort_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="contentDescription">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sortByBottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_sheet"
+        app:behavior_saveFlags="all"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+            android:id="@+id/sortByDragHandle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/sortByRecycler"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sortByRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sortByDragHandle" />
+
+        <Space
+            android:id="@+id/sortByBottomSpace"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sortByRecycler" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -21,30 +21,18 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sortBy_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sortDragHandle"
-            tools:visibility="gone" />
-
         <TextView
             android:id="@+id/sort_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/helvetica_bold"
             android:text="@string/title_sort"
             android:textColor="@color/colorNero"
             android:textSize="21sp"
-            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sortDragHandle"
-            tools:visibility="gone" />
+            app:layout_constraintTop_toBottomOf="@id/sortDragHandle" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sortBy_Btn"
@@ -54,11 +42,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sort_title"
-            tools:visibility="visible">
+            app:layout_constraintTop_toBottomOf="@id/sort_title">
 
             <TextView
                 android:id="@+id/sortBy_title"
@@ -99,11 +85,9 @@
             android:text="@string/title_by"
             android:textColor="@color/colorNero"
             android:textSize="17sp"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sortBy_Btn"
-            tools:visibility="visible" />
+            app:layout_constraintTop_toBottomOf="@id/sortBy_Btn" />
 
         <TextView
             android:id="@+id/sortBy_ascSelector"
@@ -114,11 +98,9 @@
             android:layout_marginTop="21dp"
             android:layout_marginEnd="8dp"
             android:text="@string/title_by_increase"
-            android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@id/sortBy_descSelector"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sortBy_delimiter"
-            tools:visibility="visible" />
+            app:layout_constraintTop_toBottomOf="@id/sortBy_delimiter" />
 
         <TextView
             android:id="@+id/sortBy_descSelector"
@@ -129,11 +111,9 @@
             android:layout_marginTop="21dp"
             android:layout_marginEnd="16dp"
             android:text="@string/title_by_decrease"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/sortBy_ascSelector"
-            app:layout_constraintTop_toBottomOf="@id/sortBy_delimiter"
-            tools:visibility="visible" />
+            app:layout_constraintTop_toBottomOf="@id/sortBy_delimiter" />
 
         <Space
             android:id="@+id/sort_bottomSpace"

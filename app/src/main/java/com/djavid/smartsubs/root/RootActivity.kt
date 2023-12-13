@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.djavid.core.ui.databinding.ActivityRootBinding
 import com.djavid.smartsubs.Application
-import com.djavid.smartsubs.common.base.BackPressListener
 import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.data.FirebaseAuthHelper
 import kotlinx.coroutines.CoroutineScope
@@ -37,18 +36,6 @@ class RootActivity : AppCompatActivity(), DIAware {
     override fun onDestroy() {
         super.onDestroy()
         coroutineScope.cancel()
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.fragments
-                .filterIsInstance(BackPressListener::class.java)
-                .last()
-                .onBackPressed()
-        } else {
-            super.onBackPressed()
-        }
     }
 
 }

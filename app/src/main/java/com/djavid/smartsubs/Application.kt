@@ -125,9 +125,9 @@ class Application : SmartSubsApplication(), Configuration.Provider, DIAware {
         import(AlarmNotifierModule().di)
     }
 
-    override fun sortComponent(fragment: Fragment, binding: ViewBinding) = DI.lazy {
+    override fun sortComponent(fragment: Fragment) = DI.lazy {
         extend(di)
-        import(SortModule(fragment, binding).di)
+        import(SortModule(fragment).di)
         import(SortNavigationModule().di)
     }
 

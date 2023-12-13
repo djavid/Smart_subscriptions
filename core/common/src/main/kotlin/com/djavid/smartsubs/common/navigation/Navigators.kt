@@ -15,6 +15,7 @@ interface NotificationsNavigator {
 interface SortNavigator {
     fun openSortScreen()
     fun openSortByScreen()
+    fun goBack()
 }
 
 interface SubscriptionNavigator {

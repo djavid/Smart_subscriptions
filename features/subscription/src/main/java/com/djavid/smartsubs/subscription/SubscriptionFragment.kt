@@ -3,12 +3,12 @@ package com.djavid.smartsubs.subscription
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import androidx.activity.addCallback
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.djavid.features.subscription.databinding.FragmentSubscriptionBinding
-import com.djavid.smartsubs.common.base.BackPressListener
 import com.djavid.smartsubs.common.base.BaseFragment
 import com.djavid.smartsubs.common.utils.BroadcastHandler
 import com.djavid.smartsubs.common.SmartSubsApplication
@@ -18,7 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.instance
 
-class SubscriptionFragment : BaseFragment(), BackPressListener {
+class SubscriptionFragment : BaseFragment() {
 
     private val coroutineScope: CoroutineScope by instance()
 
@@ -35,7 +35,7 @@ class SubscriptionFragment : BaseFragment(), BackPressListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragmentSubscriptionBinding.inflate(inflater).apply {
             binding = this
             di = (requireActivity().application as SmartSubsApplication).subscriptionComponent(
@@ -52,6 +52,9 @@ class SubscriptionFragment : BaseFragment(), BackPressListener {
 
             presenter.init(id, isRoot)
         }
+
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner) { presenter.onBackPressed() }
     }
 
     override fun onResume() {
@@ -61,10 +64,6 @@ class SubscriptionFragment : BaseFragment(), BackPressListener {
             broadcastReceiver,
             listOf(Constants.ACTION_REFRESH), BroadcastHandler.Unsubscribe.ON_PAUSE
         )
-    }
-
-    override fun onBackPressed() {
-        presenter.onBackPressed()
     }
 
     override fun onStop() {

@@ -3,6 +3,7 @@ package com.djavid.smartsubs.common.base
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 class BasePipeline<T> {
 
@@ -16,6 +17,6 @@ class BasePipeline<T> {
 
     suspend fun value(value: T) = flow.emit(value)
 
-    fun getFlow(): SharedFlow<T> = flow
+    fun getFlow(): SharedFlow<T> = flow.asSharedFlow()
 
 }
