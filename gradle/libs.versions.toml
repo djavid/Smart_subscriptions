@@ -26,6 +26,7 @@ work-runtime-ktx = "2.8.1"
 appmetrica = "3.16.1" # https://appmetrica.yandex.ru/docs/mobile-sdk-dg/concepts/android-history.html
 sqldelight = "1.5.5" # https://github.com/cashapp/sqldelight/releases
 appcompat = "1.6.1"
+androidx-activity = "1.6.1"
 cardview = "1.0.0"
 constraintlayout = "2.1.4"
 coordinatorlayout = "1.2.0"
@@ -69,8 +70,9 @@ firebase-database = { module = "com.google.firebase:firebase-database-ktx" }
 firebase-storage = { module = "com.google.firebase:firebase-storage" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
 
-#android
+#androidx
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
 cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorlayout" }

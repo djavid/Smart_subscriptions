@@ -99,6 +99,7 @@ dependencies {
     implementation(libs.coordinatorlayout)
     implementation(libs.material)
     implementation(libs.localbroadcastmanager)
+    implementation(libs.androidx.activity)
 
     //core
     implementation(libs.orbit.viewmodel)

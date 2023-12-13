@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.djavid.smartsubs.Application"
@@ -21,19 +21,21 @@
 
         <meta-data
             android:name="firebase_analytics_collection_deactivated"
-            android:value="@bool/FIREBASE_ANALYTICS_DEACTIVATED"/>
+            android:value="@bool/FIREBASE_ANALYTICS_DEACTIVATED" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8811059368487009~9878349709"/>
+            android:value="ca-app-pub-8811059368487009~9878349709" />
 
         <activity
             android:name=".root.RootActivity"
+            android:enableOnBackInvokedCallback="true"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustNothing"
             tools:ignore="LockedOrientationActivity"
-            android:exported="true">
+            tools:targetApi="tiramisu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
