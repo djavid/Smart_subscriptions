@@ -1,7 +1,7 @@
 <resources>
 
     <!--region common-->
-    <string name="app_name">Smart subs</string>
+    <string name="app_name">Smart Subs</string>
     <string name="yandex_metrica_api_key" translatable="false">dd7914d9-76a1-400d-9976-82861f58865a</string>
     <!--endregion-->
 
