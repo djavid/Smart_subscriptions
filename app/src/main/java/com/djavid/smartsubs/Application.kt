@@ -51,11 +51,10 @@ class Application : SmartSubsApplication(), Configuration.Provider, DIAware {
         initAppMetrica()
     }
 
-    override fun getWorkManagerConfiguration(): Configuration {
-        return Configuration.Builder()
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
             .setMinimumLoggingLevel(android.util.Log.INFO)
             .build()
-    }
 
     private fun initAppMetrica() {
         if (!BuildConfig.DEBUG) {
