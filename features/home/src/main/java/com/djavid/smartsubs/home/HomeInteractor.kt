@@ -12,7 +12,6 @@ import com.djavid.smartsubs.data.storage.SharedRepository
 import com.djavid.smartsubs.data.InAppReview
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import java.util.Currency
 
 class HomeInteractor(
     private val repository: RealTimeRepository,
