@@ -27,7 +27,7 @@ class HomeInteractor(
     fun getInitialState(): HomeState {
         return HomeState(
             pricePeriod = sharedRepository.selectedSubsPeriod,
-            price = SubscriptionPrice(0.0, defaultCurrency() ),
+            price = SubscriptionPrice(0.0, defaultCurrency()),
             isProgress = true,
             subsList = emptyList()
         )
