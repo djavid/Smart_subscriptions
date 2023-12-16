@@ -61,8 +61,7 @@ interface CreateContract {
         fun setPaymentDateTrialDescription()
         fun setPaymentDateDefaultDescription()
         fun setTrialPeriodCheckbox(checked: Boolean)
-        fun setSubLogo(bytes: ByteArray?)
-        fun setupSuggestions(items: List<PredefinedSuggestionItem>)
+        fun setSubLogo(logoUrl: String?)
     }
 
     companion object {

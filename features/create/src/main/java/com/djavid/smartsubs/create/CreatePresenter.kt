@@ -82,7 +82,7 @@ class CreatePresenter(
     override fun onSuggestionItemClick(item: PredefinedSuggestionItem) {
         model = model.copy(predefinedSubId = item.subId, title = item.title)
         view.setTitle(item.title)
-        view.setSubLogo(item.imageBytes)
+        view.setSubLogo(item.logoUrl)
     }
 
     override fun onPredefinedBtnPressed() {
@@ -212,7 +212,7 @@ class CreatePresenter(
             view.setComment(it)
         }
 
-        view.setSubLogo(predefinedSub?.imageBytes)
+        view.setSubLogo(predefinedSub?.logoUrl)
     }
 
     private fun updateSpinner() {

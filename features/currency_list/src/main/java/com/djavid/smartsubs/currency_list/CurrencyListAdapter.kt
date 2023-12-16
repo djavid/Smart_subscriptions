@@ -3,12 +3,13 @@ package com.djavid.smartsubs.currency_list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
 import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
-import de.hdodenhof.circleimageview.CircleImageView
 
 class CurrencyListAdapter(
     private val onClick: (PredefinedSuggestionItem) -> Unit
@@ -30,7 +31,11 @@ class CurrencyListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
 
-        Glide.with(holder.itemView.context).load(item.imageBytes).into(holder.suggestionLogo)
+        Glide.with(holder.itemView.context)
+            .load(item.logoUrl)
+            .circleCrop()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(holder.suggestionLogo)
         holder.title.text = item.title
         holder.itemView.setOnClickListener { onClick.invoke(item) }
     }
@@ -38,7 +43,7 @@ class CurrencyListAdapter(
     override fun getItemCount() = data.size
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val suggestionLogo = itemView.findViewById<CircleImageView>(R.id.suggestionLogo)
+        val suggestionLogo = itemView.findViewById<ImageView>(R.id.suggestionLogo)
         val title = itemView.findViewById<TextView>(R.id.text1)
     }
 }

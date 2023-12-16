@@ -13,24 +13,30 @@ import org.kodein.di.instance
 
 class SubListFragment : BaseFragment(), BackPressListener {
 
-    private lateinit var binding: FragmentSubListBinding
+    private var _binding: FragmentSubListBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
     private val presenter: SubListContract.Presenter by instance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragmentSubListBinding.inflate(inflater).apply {
-            binding = this
+            _binding = this
             di = (requireActivity().application as SmartSubsApplication).subListComponent(this@SubListFragment, binding)
         }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
         presenter.init()
     }
 
     override fun onBackPressed() {
         presenter.onBackPressed()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

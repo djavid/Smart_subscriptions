@@ -12,7 +12,6 @@ versionName = "1.1.1"
 espresso-core = "3.5.1"
 crashlytics = "2.9.9"
 joda-time = "2.10.9.1"
-circleimageview = "3.1.0" # https://github.com/hdodenhof/CircleImageView
 glide = "4.12.0" # https://github.com/bumptech/glide
 junit = "4.13.2"
 kotlin = "1.9.0"
@@ -89,7 +88,6 @@ androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmode
 appmetrica = { module = "com.yandex.android:mobmetricalib", version.ref = "appmetrica" }
 
 #ui
-circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 

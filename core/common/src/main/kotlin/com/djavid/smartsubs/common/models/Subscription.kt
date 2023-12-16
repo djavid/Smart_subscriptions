@@ -16,11 +16,10 @@ data class Subscription(
     val overallSpent: Double?,
     val comment: String?,
     val trialPaymentDate: LocalDate?,
-    val logoBytes: ByteArray?
+    val logoUrl: String?
 ) {
 
     fun isTrial() = trialPaymentDate != null
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -36,12 +35,7 @@ data class Subscription(
         if (overallSpent != other.overallSpent) return false
         if (comment != other.comment) return false
         if (trialPaymentDate != other.trialPaymentDate) return false
-        if (logoBytes != null) {
-            if (other.logoBytes == null) return false
-            if (!logoBytes.contentEquals(other.logoBytes)) return false
-        } else if (other.logoBytes != null) return false
-
-        return true
+        return logoUrl == other.logoUrl
     }
 
     override fun hashCode(): Int {
@@ -54,7 +48,7 @@ data class Subscription(
         result = 31 * result + (overallSpent?.hashCode() ?: 0)
         result = 31 * result + (comment?.hashCode() ?: 0)
         result = 31 * result + (trialPaymentDate?.hashCode() ?: 0)
-        result = 31 * result + (logoBytes?.contentHashCode() ?: 0)
+        result = 31 * result + (logoUrl?.hashCode() ?: 0)
         return result
     }
 }

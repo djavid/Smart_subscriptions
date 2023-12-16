@@ -80,7 +80,7 @@ class SubscriptionPresenter(
         subscription.overallSpent?.let {
             view.setOverallSpent(SubscriptionPrice(it, subscription.price.currency))
         }
-        view.setSubLogo(subscription.logoBytes)
+        view.setSubLogo(subscription.logoUrl)
 
         //notifs
         view.showNotifsSection(false) //todo AlarmManager or WorkManager release 1.1-1.2

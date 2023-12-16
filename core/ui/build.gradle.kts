@@ -16,7 +16,6 @@ dependencies {
     implementation(project(":core:common"))
 
     api(libs.material)
-    api(libs.circleimageview)
     api(libs.androidx.activity)
     api(libs.glide)
     api(libs.appcompat)

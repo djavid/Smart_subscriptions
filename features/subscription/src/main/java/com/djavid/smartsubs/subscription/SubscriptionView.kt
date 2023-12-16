@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
 import com.djavid.features.subscription.databinding.FragmentSubscriptionBinding
 import com.djavid.smartsubs.common.models.SubscriptionPeriod
@@ -49,13 +50,15 @@ class SubscriptionView(
         bottomSheet = BottomSheetBehavior.from(binding.subBottomSheet)
     }
 
-    override fun setSubLogo(bytes: ByteArray?) {
-        if (bytes != null) {
+    override fun setSubLogo(logoUrl: String?) {
+        if (logoUrl != null) {
             Glide.with(binding.root.context)
-                .load(bytes)
+                .load(logoUrl)
+                .circleCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.subLogo)
         }
-        binding.subLogo.show(bytes != null)
+        binding.subLogo.show(logoUrl != null)
     }
 
     override fun showDeletionPromptDialog() {

@@ -19,13 +19,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import org.kodein.di.instance
 
-class HomeFragment : BaseFragment(), RefreshableFragment {
+class HomeFragment : BaseFragment() {
 
-    private val coroutineScope: CoroutineScope by instance()
     private val viewModel: HomeViewModel by instance()
     private val homeView: HomeView by instance()
 
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -39,17 +39,13 @@ class HomeFragment : BaseFragment(), RefreshableFragment {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentHomeBinding.inflate(inflater).apply {
-            binding = this
+            _binding = this
             di = (requireActivity().application as SmartSubsApplication).homeComponent(this@HomeFragment, binding)
         }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         homeView.onViewCreated(viewLifecycleOwner)
-    }
-
-    override fun refresh() {
-        viewModel.onRefreshAction()
     }
 
     override fun onResume() {
@@ -63,9 +59,9 @@ class HomeFragment : BaseFragment(), RefreshableFragment {
         )
     }
 
-    override fun onStop() {
-        super.onStop()
-        coroutineScope.cancel()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

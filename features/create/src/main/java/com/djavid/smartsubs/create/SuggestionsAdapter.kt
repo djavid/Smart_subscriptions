@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
 import com.djavid.core.ui.databinding.SuggestionItemBinding
 import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
@@ -28,7 +29,8 @@ class SuggestionsAdapter(
         val binding = SuggestionItemBinding.inflate(LayoutInflater.from(context), parent, false)
 
         Glide.with(parent.context)
-            .load(item?.imageBytes)
+            .load(item?.logoUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(binding.suggestionLogo)
         binding.text1.text = item?.title
 

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
 import com.djavid.core.ui.databinding.ActivityRootBinding
-import com.google.firebase.ktx.Firebase
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
@@ -16,7 +15,6 @@ class RootModule(activity: AppCompatActivity, binding: ViewBinding) {
         bind<RootContract.View>() with singleton {
             RootView(instance())
         }
-        Firebase
         bind<RootContract.Presenter>() with singleton {
             RootPresenter(
                 instance(), instance(), instance(), instance(), instance(), instance()

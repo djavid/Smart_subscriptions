@@ -20,10 +20,9 @@ import org.kodein.di.instance
 
 class SubscriptionFragment : BaseFragment() {
 
-    private val coroutineScope: CoroutineScope by instance()
-
     private val presenter: SubscriptionContract.Presenter by instance()
-    private lateinit var binding: FragmentSubscriptionBinding
+    private var _binding: FragmentSubscriptionBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -37,7 +36,7 @@ class SubscriptionFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragmentSubscriptionBinding.inflate(inflater).apply {
-            binding = this
+            _binding = this
             di = (requireActivity().application as SmartSubsApplication).subscriptionComponent(
                 this@SubscriptionFragment,
                 binding
@@ -66,8 +65,8 @@ class SubscriptionFragment : BaseFragment() {
         )
     }
 
-    override fun onStop() {
-        super.onStop()
-        coroutineScope.cancel()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

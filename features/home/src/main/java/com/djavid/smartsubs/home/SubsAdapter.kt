@@ -3,12 +3,14 @@ package com.djavid.smartsubs.home
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Space
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
 import com.djavid.core.ui.databinding.SubscriptionItemBinding
 import com.djavid.smartsubs.common.models.Subscription
@@ -18,7 +20,6 @@ import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.common.utils.getCurrentLocale
 import com.djavid.smartsubs.common.utils.getCurrencySymbol
 import com.djavid.smartsubs.common.utils.show
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlin.math.roundToInt
 
 class SubsAdapter(
@@ -51,9 +52,11 @@ class SubsAdapter(
         val sub = data[position]
 
         Glide.with(holder.itemView.context)
-            .load(sub.logoBytes)
+            .load(sub.logoUrl)
+            .circleCrop()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.logo)
-        holder.logo.show(sub.logoBytes != null)
+        holder.logo.show(sub.logoUrl != null)
         holder.title.text = sub.title
         holder.itemView.setOnClickListener { onClick(sub.id) }
 
@@ -114,7 +117,7 @@ class SubsAdapter(
     }
 
     class ViewHolder(binding: SubscriptionItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val logo: CircleImageView = binding.subLogo
+        val logo: ImageView = binding.subLogo
         val title: TextView = binding.subTitle
         val price: TextView = binding.subPrice
         val progressBar: ProgressBar = binding.subProgressBar

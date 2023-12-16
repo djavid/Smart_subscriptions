@@ -14,17 +14,17 @@ import org.kodein.di.instance
 
 class RootActivity : AppCompatActivity(), DIAware {
 
-    private val coroutineScope: CoroutineScope by instance()
     private val presenter: RootContract.Presenter by instance()
     private val authHelper: FirebaseAuthHelper by instance()
 
-    private lateinit var binding: ActivityRootBinding
+    private var _binding: ActivityRootBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override lateinit var di: DI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRootBinding.inflate(layoutInflater)
+        _binding = ActivityRootBinding.inflate(layoutInflater)
         setContentView(binding.root)
         di = (application as Application).rootComponent(this, binding)
         lifecycle.addObserver(authHelper)
@@ -35,7 +35,6 @@ class RootActivity : AppCompatActivity(), DIAware {
 
     override fun onDestroy() {
         super.onDestroy()
-        coroutineScope.cancel()
+        _binding = null
     }
-
 }

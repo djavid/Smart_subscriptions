@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
 import com.djavid.features.create.databinding.FragmentCreateBinding
 import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
@@ -81,15 +82,18 @@ class CreateView(
         }
     }
 
-    override fun setSubLogo(bytes: ByteArray?) {
-        if (bytes == null) {
+    override fun setSubLogo(logoUrl: String?) {
+        if (logoUrl == null) {
             binding.createPredefinedBtn.show(true)
             binding.createLogoBtn.show(false)
         } else {
             binding.createPredefinedBtn.show(false)
             binding.createLogoBtn.show(true)
+
             Glide.with(binding.root.context)
-                .load(bytes)
+                .load(logoUrl)
+                .circleCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.createLogoBtn)
         }
     }
@@ -237,5 +241,4 @@ class CreateView(
         binding.createSubmitBtn.text = binding.root.context.getString(R.string.title_save)
         binding.createTitle.text = binding.root.context.getString(R.string.title_edit)
     }
-
 }

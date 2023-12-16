@@ -18,11 +18,12 @@ import org.kodein.di.instance
 class CreateFragment : BaseFragment(), BackPressListener {
 
     private val presenter: CreateContract.Presenter by instance()
-    private lateinit var binding: FragmentCreateBinding
+    private var _binding: FragmentCreateBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentCreateBinding.inflate(inflater).apply {
-            binding = this
+            _binding = this
             di = (requireActivity().application as SmartSubsApplication).createComponent(this@CreateFragment, binding)
         }.root
     }
@@ -49,6 +50,11 @@ class CreateFragment : BaseFragment(), BackPressListener {
 
     override fun onBackPressed() {
         presenter.onBackPressed()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

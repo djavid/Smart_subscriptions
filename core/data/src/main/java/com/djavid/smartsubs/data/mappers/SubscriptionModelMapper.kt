@@ -81,9 +81,9 @@ class SubscriptionModelMapper(
         }
 
         val subscriptionPrice = SubscriptionPrice(dao.price, dao.currency)
-        val logoBytes = dao.predefinedSubId?.let {
+        val logoUrl = dao.predefinedSubId?.let {
             repository.getPredefinedSub(it)?.logoUrl?.let { logoUrl ->
-                storageRepository.getSubLogoBytes(logoUrl)
+                storageRepository.getSubLogoUrl(logoUrl)
             }
         }
 
@@ -97,7 +97,7 @@ class SubscriptionModelMapper(
             overallSpent,
             dao.comment,
             dao.trialPaymentDate,
-            logoBytes
+            logoUrl
         )
     }
 

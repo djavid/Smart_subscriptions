@@ -13,12 +13,14 @@ import org.kodein.di.instance
 
 class CurrencyListFragment : BaseFragment(), BackPressListener {
 
-    private lateinit var binding: FragmentCurrencyListBinding
+    private var _binding: FragmentCurrencyListBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
     private val presenter: CurrencyListContract.Presenter by instance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentCurrencyListBinding.inflate(inflater).apply {
-            binding = this
+            _binding = this
             di = (requireActivity().application as SmartSubsApplication)
                 .currencyListComponent(this@CurrencyListFragment, binding)
         }.root
@@ -33,5 +35,4 @@ class CurrencyListFragment : BaseFragment(), BackPressListener {
     override fun onBackPressed() {
         presenter.onBackPressed()
     }
-
 }

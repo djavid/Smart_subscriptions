@@ -9,22 +9,20 @@ class CloudStorageRepository {
     private val storage = FirebaseStorage.getInstance()
     private val iconsCache = mutableListOf<Pair<String, ByteArray>>()
 
-    suspend fun getSubLogoUrl(storageUrl: String): String? {
-        return suspendCoroutine { cont ->
-            val gsReference = storage.getReferenceFromUrl(storageUrl)
+    suspend fun getSubLogoUrl(storageUrl: String): String? = suspendCoroutine { cont ->
+        val gsReference = storage.getReferenceFromUrl(storageUrl)
 
-            gsReference.downloadUrl
-                .addOnSuccessListener {
-                    cont.resume(it.toString())
-                }
-                .addOnFailureListener {
-                    cont.resume(null)
-                }
-        }
+        gsReference.downloadUrl
+            .addOnSuccessListener {
+                cont.resume(it.toString())
+            }
+            .addOnFailureListener {
+                cont.resume(null)
+            }
     }
 
     suspend fun getSubLogoBytes(storageUrl: String): ByteArray? = suspendCoroutine { cont ->
-        val icon = iconsCache.find { it.first == storageUrl }
+        val icon = iconsCache.toMutableList().find { it.first == storageUrl }
 
         if (icon != null) {
             cont.resume(icon.second)
@@ -45,6 +43,4 @@ class CloudStorageRepository {
     companion object {
         private const val ONE_MEGABYTE = 1_000_000L
     }
-
-
 }

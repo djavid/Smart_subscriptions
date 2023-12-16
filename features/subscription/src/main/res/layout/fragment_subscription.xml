@@ -16,11 +16,12 @@
         android:layout_height="@dimen/subscription_toolbar_height"
         app:layout_constraintTop_toTopOf="parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/sub_logo"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
+            android:contentDescription="@null"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/sub_category"
             app:layout_constraintStart_toStartOf="parent"
