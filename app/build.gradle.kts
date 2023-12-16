@@ -135,4 +135,6 @@ dependencies {
 
     //analytics
     implementation(libs.appmetrica)
+
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
 }
