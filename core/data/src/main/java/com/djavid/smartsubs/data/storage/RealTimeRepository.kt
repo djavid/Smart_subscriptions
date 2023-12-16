@@ -8,12 +8,12 @@ import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.analytics.CrashlyticsLogger
 import com.djavid.smartsubs.common.models.SubscriptionFirebaseEntity
 import com.djavid.smartsubs.data.FirebaseAuthHelper
+import com.djavid.smartsubs.data.interactors.GetPredefinedSubsRootInteractor
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.joda.time.LocalDate
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -21,8 +21,12 @@ class RealTimeRepository(
     private val entityMapper: SubscriptionEntityMapper,
     private val authHelper: FirebaseAuthHelper,
     private val subscriptionEntityMapper: SubscriptionEntityMapper,
-    private val storageRepository: CloudStorageRepository
+    private val storageRepository: CloudStorageRepository,
+    private val getPredefinedSubsRootInteractor: GetPredefinedSubsRootInteractor,
 ) {
+
+    private val predefinedSubsRoot
+        get() = getPredefinedSubsRootInteractor.execute()
 
     init {
         CancelableCoroutineScope(Dispatchers.IO).launch {
@@ -80,7 +84,7 @@ class RealTimeRepository(
 
             return@withContext suspendCoroutine { cont ->
                 Firebase.database.reference
-                    .child(DB_PREDEFINED_SUBS_ROOT)
+                    .child(predefinedSubsRoot)
                     .get()
                     .addOnSuccessListener { data ->
                         val subs = data.children
@@ -101,7 +105,7 @@ class RealTimeRepository(
         withContext(Dispatchers.IO) {
             return@withContext suspendCoroutine { cont ->
                 Firebase.database.reference
-                    .child(DB_PREDEFINED_SUBS_ROOT)
+                    .child(predefinedSubsRoot)
                     .orderByChild("id")
                     .equalTo(id)
                     .get()
@@ -242,6 +246,5 @@ class RealTimeRepository(
 
     companion object {
         const val DB_SUBS_AUTH_ROOT = "subs_auth"
-        const val DB_PREDEFINED_SUBS_ROOT = "predefined_subs"
     }
 }
