@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.djavid.core.ui.databinding.DialogSubscribeMediaBinding
 import com.djavid.smartsubs.common.base.BaseBottomSheetFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
-import com.djavid.smartsubs.common.utils.setWhiteNavigationBar
 import org.kodein.di.instance
 
 class SubscribeMediaDialog : BaseBottomSheetFragment() {
@@ -26,7 +25,6 @@ class SubscribeMediaDialog : BaseBottomSheetFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         presenter.init()
-        dialog?.window?.setWhiteNavigationBar()
     }
 
 }

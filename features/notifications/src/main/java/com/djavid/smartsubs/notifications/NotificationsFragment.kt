@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.djavid.features.notifications.databinding.FragmentNotificationsBinding
 import com.djavid.smartsubs.common.SmartSubsApplication
 import com.djavid.smartsubs.common.utils.Constants
-import com.djavid.smartsubs.common.utils.setWhiteNavigationBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.kodein.di.DI
@@ -29,7 +28,6 @@ class NotificationsFragment : BottomSheetDialogFragment(), DIAware {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        dialog?.window?.setWhiteNavigationBar()
         expandSheet()
 
         arguments?.let {

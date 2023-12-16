@@ -3,15 +3,8 @@ package com.djavid.smartsubs.common.utils
 import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
-import android.os.Build
-import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
-import android.view.Window
 import android.view.animation.AlphaAnimation
 import android.view.animation.Interpolator
 import android.view.inputmethod.InputMethodManager
@@ -46,26 +39,6 @@ fun Activity?.hideKeyboard() {
     if (this != null && this.currentFocus != null) {
         val inputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(this.currentFocus!!.windowToken, 0)
-    }
-}
-
-fun Window.setWhiteNavigationBar() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-        val metrics = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(metrics)
-
-        val dimDrawable = GradientDrawable()
-        val navigationBarDrawable = GradientDrawable().apply {
-            shape = GradientDrawable.RECTANGLE
-            setColor(Color.WHITE)
-        }
-        val layers = arrayOf<Drawable>(dimDrawable, navigationBarDrawable)
-
-        val windowBackground = LayerDrawable(layers).apply {
-            setLayerInsetTop(1, metrics.heightPixels)
-        }
-
-        setBackgroundDrawable(windowBackground)
     }
 }
 
