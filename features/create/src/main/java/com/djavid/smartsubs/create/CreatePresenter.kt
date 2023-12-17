@@ -167,11 +167,7 @@ class CreatePresenter(
         model = model.copy(comment = input ?: "")
     }
 
-    override fun onCancelPressed() {
-        finish()
-    }
-
-    override fun onBackPressed() {
+    override fun goBack() {
         finish()
     }
 

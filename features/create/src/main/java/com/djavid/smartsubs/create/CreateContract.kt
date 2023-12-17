@@ -9,8 +9,7 @@ interface CreateContract {
 
     interface Presenter {
         fun init(id: String?)
-        fun onCancelPressed()
-        fun onBackPressed()
+        fun goBack()
 
         //form
         fun onTitleInputChanged(input: String?)

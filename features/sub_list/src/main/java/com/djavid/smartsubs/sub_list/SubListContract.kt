@@ -15,7 +15,7 @@ class SubListContract {
     }
 
     interface Presenter {
-        fun onBackPressed()
+        fun goBack()
         fun onItemClick(item: PredefinedSubscription)
     }
 

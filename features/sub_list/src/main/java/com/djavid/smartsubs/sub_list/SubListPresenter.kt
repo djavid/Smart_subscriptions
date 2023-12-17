@@ -20,7 +20,7 @@ class SubListPresenter(
         finish()
     }
 
-    override fun onBackPressed() {
+    override fun goBack() {
         finish()
     }
 

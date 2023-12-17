@@ -10,7 +10,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.djavid.features.create.databinding.FragmentCreateBinding
-import com.djavid.smartsubs.common.base.BackPressListener
 import com.djavid.smartsubs.common.base.BaseFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
 import com.djavid.smartsubs.common.domain.PredefinedSubscription
@@ -19,7 +18,7 @@ import kotlinx.coroutines.launch
 import org.kodein.di.direct
 import org.kodein.di.instance
 
-class CreateFragment : BaseFragment(), BackPressListener {
+class CreateFragment : BaseFragment() {
 
     private var presenter: CreateContract.Presenter? = null
     private val viewModel: CreateViewModel by instance()
@@ -52,11 +51,7 @@ class CreateFragment : BaseFragment(), BackPressListener {
         }
 
         requireActivity().onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner) { presenter?.onBackPressed() }
-    }
-
-    override fun onBackPressed() {
-        presenter?.onBackPressed()
+            .addCallback(viewLifecycleOwner) { presenter?.goBack() }
     }
 
     override fun onDestroyView() {

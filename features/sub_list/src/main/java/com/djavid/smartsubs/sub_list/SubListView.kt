@@ -37,7 +37,7 @@ class SubListView(
 
     private fun setupListeners() {
         binding.subListRecycler.adapter = SubsListAdapter(presenter::onItemClick)
-        binding.subListCloseBtn.setOnClickListener { presenter.onBackPressed() }
+        binding.subListCloseBtn.setOnClickListener { presenter.goBack() }
     }
 
     override fun showToolbar(show: Boolean, duration: Long) {

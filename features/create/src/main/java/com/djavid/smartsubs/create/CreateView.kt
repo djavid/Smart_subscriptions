@@ -38,7 +38,7 @@ class CreateView(
         setupBottomSheet()
         setupFormInputs()
 
-        binding.createCloseBtn.setOnClickListener { presenter.onCancelPressed() }
+        binding.createCloseBtn.setOnClickListener { presenter.goBack() }
         binding.createLogoBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
         binding.createPredefinedBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
     }

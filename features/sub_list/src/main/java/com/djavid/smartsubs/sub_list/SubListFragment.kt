@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.activity.addCallback
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.djavid.core.ui.databinding.FragmentSubListBinding
-import com.djavid.smartsubs.common.base.BackPressListener
 import com.djavid.smartsubs.common.base.BaseFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
 import com.djavid.smartsubs.common.utils.show
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 
-class SubListFragment : BaseFragment(), BackPressListener {
+class SubListFragment : BaseFragment() {
 
     private var _binding: FragmentSubListBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -37,10 +37,10 @@ class SubListFragment : BaseFragment(), BackPressListener {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         subListView.init(presenter)
         setupObservers()
-    }
 
-    override fun onBackPressed() {
-        presenter.onBackPressed()
+        requireActivity().onBackPressedDispatcher.addCallback {
+            presenter.goBack()
+        }
     }
 
     override fun onDestroyView() {
