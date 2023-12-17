@@ -72,7 +72,7 @@ class CreateFragment : BaseFragment(), BackPressListener {
     }
 
     private fun setupSuggestions(items: List<PredefinedSubscription>) {
-        val adapter = SuggestionsAdapter(items, binding.root.context)
+        val adapter = SuggestionsAdapter(items.toMutableList(), binding.root.context)
         binding.createTitleInput.setAdapter(adapter)
         binding.createTitleInput.setOnItemClickListener { _, _, position, _ ->
             presenter?.onSuggestionItemClick(items[position])
