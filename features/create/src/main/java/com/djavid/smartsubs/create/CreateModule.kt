@@ -27,7 +27,7 @@ class CreateModule(
         bind<LifecycleCoroutineScope>() with singleton { fragment.viewLifecycleOwner.lifecycleScope }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
         bind<CreateViewModel>() with singleton { CreateViewModelImpl(instance()) }
-        bind<CreateContract.View>() with singleton { CreateView(instance(), instance(), instance()) }
+        bind<CreateContract.View>() with singleton { CreateView(instance()) }
         bind<CommonFragmentNavigator>() with singleton {
             CommonFragmentNavigator(instance())
         }

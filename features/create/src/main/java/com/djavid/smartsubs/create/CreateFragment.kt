@@ -6,17 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.activity.addCallback
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.djavid.features.create.databinding.FragmentCreateBinding
 import com.djavid.smartsubs.common.base.BackPressListener
 import com.djavid.smartsubs.common.base.BaseFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
+import com.djavid.smartsubs.common.domain.PredefinedSubscription
 import com.djavid.smartsubs.common.utils.Constants
+import kotlinx.coroutines.launch
 import org.kodein.di.direct
 import org.kodein.di.instance
 
 class CreateFragment : BaseFragment(), BackPressListener {
 
     private var presenter: CreateContract.Presenter? = null
+    private val viewModel: CreateViewModel by instance()
     private var _binding: FragmentCreateBinding? = null
     private val binding get() = requireNotNull(_binding)
 
@@ -30,6 +36,7 @@ class CreateFragment : BaseFragment(), BackPressListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        setupObservers()
 
         arguments?.let {
             val subId = it.getString(Constants.KEY_SUBSCRIPTION_ID)
@@ -56,6 +63,20 @@ class CreateFragment : BaseFragment(), BackPressListener {
         super.onDestroyView()
         presenter = null
         _binding = null
+    }
+
+    private fun setupObservers() = lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.predefinedSubsFlow.collect { setupSuggestions(it) }
+        }
+    }
+
+    private fun setupSuggestions(items: List<PredefinedSubscription>) {
+        val adapter = SuggestionsAdapter(items, binding.root.context)
+        binding.createTitleInput.setAdapter(adapter)
+        binding.createTitleInput.setOnItemClickListener { _, _, position, _ ->
+            presenter?.onSuggestionItemClick(items[position])
+        }
     }
 
 }

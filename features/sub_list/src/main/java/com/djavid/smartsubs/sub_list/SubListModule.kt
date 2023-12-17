@@ -20,7 +20,7 @@ class SubListModule(fragment: Fragment, binding: ViewBinding) {
         bind<LifecycleCoroutineScope>() with singleton { fragment.viewLifecycleOwner.lifecycleScope }
         bind<SubListViewModel>() with singleton { SubListViewModelImpl(instance()) }
         bind<SubListContract.View>() with singleton {
-            SubListView(instance(), instance(), instance())
+            SubListView(instance())
         }
         bind<CommonFragmentNavigator>() with singleton {
             CommonFragmentNavigator(fragment.requireActivity().supportFragmentManager)
