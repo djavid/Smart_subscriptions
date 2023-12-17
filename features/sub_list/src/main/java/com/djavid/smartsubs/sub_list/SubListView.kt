@@ -38,6 +38,7 @@ class SubListView(
     }
 
     override fun destroy() {
+        _binding = null
     }
 
     private fun setupListeners() {
