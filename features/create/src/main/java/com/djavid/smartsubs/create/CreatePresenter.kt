@@ -14,8 +14,6 @@ import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.data.storage.PredefinedSubscriptionRepository
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.util.*
@@ -58,9 +56,13 @@ class CreatePresenter(
                 editMode = true
                 view.switchTitlesToEditMode()
 
-                predefinedSubscriptionRepository.predefinedSubsWithLogoFlow.onEach { predefinedSubs ->
-                    fillForm(predefinedSubs.find { it.subId == model.predefinedSubId })
-                }.collect()
+                val predefinedSub = model.predefinedSubId?.let { id ->
+                    predefinedSubscriptionRepository.getPredefinedSub(id)
+                }
+
+                if (predefinedSub != null) {
+                    fillForm(predefinedSub)
+                }
             } else {
                 view.setSubLogo(null)
             }
@@ -80,6 +82,14 @@ class CreatePresenter(
         model = model.copy(predefinedSubId = item.subId, title = item.title)
         view.setTitle(item.title)
         view.setSubLogo(item.logoUrl)
+    }
+
+    override fun onPredefinedSubChosen(id: String) {
+        launch {
+            predefinedSubscriptionRepository.getPredefinedSub(id)?.let {
+                onSuggestionItemClick(it)
+            }
+        }
     }
 
     override fun onPredefinedBtnPressed() {

@@ -14,8 +14,8 @@ class SubListPresenter(
 ) : SubListContract.Presenter, CoroutineScope by lifecycleCoroutineScope {
 
     override fun onItemClick(item: PredefinedSubscription) {
-        fragmentNavigator.setFragmentResult(SubListContract.REQUEST_KEY, Bundle().apply {
-            putSerializable(SubListContract.FRAGMENT_RESULT_KEY, item)
+        fragmentNavigator.setFragmentResult(Constants.SUBLIST_REQUEST_KEY, Bundle().apply {
+            putString(Constants.SUBLIST_FRAGMENT_RESULT_KEY, item.subId)
         })
         finish()
     }

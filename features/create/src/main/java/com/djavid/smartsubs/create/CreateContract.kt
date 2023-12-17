@@ -28,6 +28,7 @@ interface CreateContract {
         fun onCommentInputChanged(input: String?)
 
         fun onPredefinedBtnPressed()
+        fun onPredefinedSubChosen(id: String)
         fun onSuggestionItemClick(item: PredefinedSubscription)
         fun onSubmitPressed()
         fun onCurrencyClicked()

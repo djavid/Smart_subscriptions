@@ -10,21 +10,21 @@ import com.djavid.features.create.databinding.FragmentCreateBinding
 import com.djavid.smartsubs.common.base.BackPressListener
 import com.djavid.smartsubs.common.base.BaseFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
-import com.djavid.smartsubs.common.domain.PredefinedSubscription
 import com.djavid.smartsubs.common.utils.Constants
-import com.djavid.smartsubs.common.utils.serializable
+import org.kodein.di.direct
 import org.kodein.di.instance
 
 class CreateFragment : BaseFragment(), BackPressListener {
 
-    private val presenter: CreateContract.Presenter by instance()
+    private var presenter: CreateContract.Presenter? = null
     private var _binding: FragmentCreateBinding? = null
     private val binding get() = requireNotNull(_binding)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragmentCreateBinding.inflate(inflater).apply {
             _binding = this
             di = (requireActivity().application as SmartSubsApplication).createComponent(this@CreateFragment, binding)
+            presenter = di.direct.instance()
         }.root
     }
 
@@ -33,27 +33,28 @@ class CreateFragment : BaseFragment(), BackPressListener {
 
         arguments?.let {
             val subId = it.getString(Constants.KEY_SUBSCRIPTION_ID)
-            presenter.init(subId)
+            presenter?.init(subId)
         }
 
         requireActivity().supportFragmentManager.setFragmentResultListener(
-            Constants.REQUEST_KEY, viewLifecycleOwner
+            Constants.SUBLIST_REQUEST_KEY, viewLifecycleOwner
         ) { _, result ->
-            result.serializable<PredefinedSubscription>(Constants.FRAGMENT_RESULT_KEY)?.let {
-                presenter.onSuggestionItemClick(it)
+            result.getString(Constants.SUBLIST_FRAGMENT_RESULT_KEY)?.let {
+                presenter?.onPredefinedSubChosen(it)
             }
         }
 
         requireActivity().onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner) { presenter.onBackPressed() }
+            .addCallback(viewLifecycleOwner) { presenter?.onBackPressed() }
     }
 
     override fun onBackPressed() {
-        presenter.onBackPressed()
+        presenter?.onBackPressed()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        presenter = null
         _binding = null
     }
 
