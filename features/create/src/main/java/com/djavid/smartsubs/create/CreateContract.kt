@@ -35,6 +35,7 @@ interface CreateContract {
 
     interface View {
         fun init(presenter: Presenter)
+        fun destroy()
         fun getPeriodString(period: SubscriptionPeriodType, quantity: Int): String
         fun setupSpinner(periods: List<String>)
         fun expandPanel()

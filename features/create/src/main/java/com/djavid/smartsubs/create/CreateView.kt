@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
@@ -21,13 +22,19 @@ import com.djavid.smartsubs.common.utils.hideKeyboard
 import com.djavid.smartsubs.common.utils.show
 import com.djavid.ui.getSubPeriodString
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 import java.util.*
 
 class CreateView(
-    private val binding: FragmentCreateBinding
+    private var _binding: FragmentCreateBinding?,
+    private val viewModel: CreateViewModel,
+    private val coroutineScope: LifecycleCoroutineScope
 ) : CreateContract.View {
+
+    private val binding get() = requireNotNull(_binding)
 
     private lateinit var presenter: CreateContract.Presenter
     private lateinit var bottomSheet: BottomSheetBehavior<FrameLayout>
@@ -40,6 +47,16 @@ class CreateView(
         binding.createCloseBtn.setOnClickListener { presenter.onCancelPressed() }
         binding.createLogoBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
         binding.createPredefinedBtn.setOnClickListener { presenter.onPredefinedBtnPressed() }
+
+        setupObservers()
+    }
+
+    override fun destroy() {
+        _binding = null
+    }
+
+    private fun setupObservers() {
+        viewModel.predefinedSubsFlow.onEach { setupSuggestions(it) }.launchIn(coroutineScope)
     }
 
     private val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -74,7 +91,7 @@ class CreateView(
         }
     }
 
-    override fun setupSuggestions(items: List<PredefinedSuggestionItem>) {
+    private fun setupSuggestions(items: List<PredefinedSuggestionItem>) {
         val adapter = SuggestionsAdapter(items, binding.root.context)
         binding.createTitleInput.setAdapter(adapter)
         binding.createTitleInput.setOnItemClickListener { _, _, position, _ ->

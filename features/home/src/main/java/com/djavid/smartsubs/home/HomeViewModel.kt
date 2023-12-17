@@ -46,9 +46,11 @@ class HomeViewModel(
         }
     }
 
-    fun onItemClick(id: String) = viewModelScope.launch {
-        subNavigator.goToSubscription(id)
-        homeInteractor.onSubItemClicked(id)
+    fun onItemClick(id: String){
+        viewModelScope.launch {
+            subNavigator.goToSubscription(id)
+            homeInteractor.onSubItemClicked(id)
+        }
     }
 
     fun onAddSubPressed() = viewModelScope.launch {

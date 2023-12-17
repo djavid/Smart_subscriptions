@@ -12,11 +12,8 @@ import com.djavid.features.home.databinding.FragmentHomeBinding
 import com.djavid.smartsubs.common.base.BaseFragment
 import com.djavid.smartsubs.common.utils.BroadcastHandler
 import com.djavid.smartsubs.common.SmartSubsApplication
-import com.djavid.smartsubs.common.base.RefreshableFragment
 import com.djavid.smartsubs.common.utils.subscribeApplicationReceiver
 import com.djavid.smartsubs.common.utils.Constants
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.cancel
 import org.kodein.di.instance
 
 class HomeFragment : BaseFragment() {
@@ -37,7 +34,7 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragmentHomeBinding.inflate(inflater).apply {
             _binding = this
             di = (requireActivity().application as SmartSubsApplication).homeComponent(this@HomeFragment, binding)
@@ -45,7 +42,7 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        homeView.onViewCreated(viewLifecycleOwner)
+        homeView.onViewCreate(viewLifecycleOwner)
     }
 
     override fun onResume() {
@@ -61,6 +58,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        homeView.onViewDestroy()
         _binding = null
     }
 

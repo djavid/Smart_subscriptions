@@ -19,7 +19,7 @@ class SubsListAdapter(
 
     fun showSubs(subs: List<PredefinedSuggestionItem>) {
         data = subs
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0, subs.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

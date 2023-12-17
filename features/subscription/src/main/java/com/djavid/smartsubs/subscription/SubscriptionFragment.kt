@@ -14,13 +14,12 @@ import com.djavid.smartsubs.common.utils.BroadcastHandler
 import com.djavid.smartsubs.common.SmartSubsApplication
 import com.djavid.smartsubs.common.utils.subscribeApplicationReceiver
 import com.djavid.smartsubs.common.utils.Constants
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.cancel
 import org.kodein.di.instance
 
 class SubscriptionFragment : BaseFragment() {
 
     private val presenter: SubscriptionContract.Presenter by instance()
+    private val view: SubscriptionContract.View by instance()
     private var _binding: FragmentSubscriptionBinding? = null
     private val binding get() = requireNotNull(_binding)
 
@@ -53,7 +52,7 @@ class SubscriptionFragment : BaseFragment() {
         }
 
         requireActivity().onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner) { presenter.onBackPressed() }
+            .addCallback(viewLifecycleOwner) { presenter.goBack() }
     }
 
     override fun onResume() {
@@ -67,6 +66,7 @@ class SubscriptionFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        view.destroy()
         _binding = null
     }
 }

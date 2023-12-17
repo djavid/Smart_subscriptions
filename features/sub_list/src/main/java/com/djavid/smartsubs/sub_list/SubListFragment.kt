@@ -16,6 +16,8 @@ class SubListFragment : BaseFragment(), BackPressListener {
     private var _binding: FragmentSubListBinding? = null
     private val binding get() = requireNotNull(_binding)
 
+    private val subListView: SubListContract.View by instance()
+
     private val presenter: SubListContract.Presenter by instance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -27,7 +29,7 @@ class SubListFragment : BaseFragment(), BackPressListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        presenter.init()
+        subListView.init(presenter)
     }
 
     override fun onBackPressed() {
@@ -36,6 +38,7 @@ class SubListFragment : BaseFragment(), BackPressListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        subListView.destroy()
         _binding = null
     }
 

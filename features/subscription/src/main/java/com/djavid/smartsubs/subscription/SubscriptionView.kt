@@ -27,8 +27,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.text.DecimalFormat
 
 class SubscriptionView(
-    private val binding: FragmentSubscriptionBinding
+    private var _binding: FragmentSubscriptionBinding? = null
 ) : SubscriptionContract.View {
+
+    private val binding get() = requireNotNull(_binding)
 
     private lateinit var bottomSheet: BottomSheetBehavior<FrameLayout>
     private lateinit var presenter: SubscriptionContract.Presenter
@@ -39,8 +41,12 @@ class SubscriptionView(
         setupBottomSheet()
     }
 
+    override fun destroy() {
+        _binding = null
+    }
+
     private fun setupView() {
-        binding.subCloseBtn.setOnClickListener { presenter.onCloseBtnClicked() }
+        binding.subCloseBtn.setOnClickListener { presenter.goBack() }
         binding.subEditBtn.setOnClickListener { presenter.onEditClicked() }
         binding.subDeleteBtn.setOnClickListener { presenter.onDeleteClicked() }
         binding.subNotifsBtn.setOnClickListener { presenter.onNotifsClicked() }
@@ -67,6 +73,7 @@ class SubscriptionView(
                 DialogInterface.BUTTON_POSITIVE -> {
                     presenter.onDeletionPrompted()
                 }
+
                 DialogInterface.BUTTON_NEGATIVE -> {
                     dialog.dismiss()
                 }
@@ -131,7 +138,6 @@ class SubscriptionView(
         val periodPlural = binding.root.context.getSubPeriodString(period.type, period.quantity)
         val priceFormatted = DecimalFormat(Constants.DECIMAL_FORMAT).format(price.value)
 
-
         val text = if (period.quantity == 1) {
             if (period.type == SubscriptionPeriodType.WEEK) {
                 binding.root.context.getString(
@@ -150,7 +156,7 @@ class SubscriptionView(
                 currSymbol, everyPlural, period.quantity, periodPlural
             )
         }
-        subPrice.text = text.toPriceSpannable()
+        binding.subPrice.text = text.toPriceSpannable()
     }
 
     override fun setComment(comment: String) {
@@ -218,5 +224,4 @@ class SubscriptionView(
     override fun showNotifsSection(show: Boolean) {
         binding.subNotifsBtn.show(show)
     }
-
 }

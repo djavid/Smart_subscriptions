@@ -12,6 +12,8 @@ import com.djavid.smartsubs.common.models.SubscriptionPeriodType
 import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.util.*
@@ -24,16 +26,14 @@ class CreatePresenter(
     private val currencyListNavigator: CurrencyListNavigator,
     private val logger: FirebaseLogger,
     private val pipelineString: BasePipeline<Pair<String, String>>,
-    private val realTimeRepository: RealTimeRepository,
     coroutineScope: CoroutineScope
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var model: SubscriptionDao
 
     private var editMode = false
-    private val periodItems = SubscriptionPeriodType.values().toList()
+    private val periodItems = SubscriptionPeriodType.entries
     private var isTrialSub: Boolean = false
-    private val predefinedSubs = mutableListOf<PredefinedSuggestionItem>()
 
     override fun init(id: String?) {
         view.init(this)
@@ -50,14 +50,14 @@ class CreatePresenter(
                 null, null, null, null
             )
 
-            loadPredefinedSubs()
-
             if (id != null) {
                 repository.getSubById(id)?.let { model = it }
                 editMode = true
-
                 view.switchTitlesToEditMode()
-                fillForm(predefinedSubs.find { it.subId == model.predefinedSubId })
+
+                repository.predefinedSubsWithLogoFlow.onEach { predefinedSubs ->
+                    fillForm(predefinedSubs.find { it.subId == model.predefinedSubId })
+                }.collect()
             } else {
                 view.setSubLogo(null)
             }
@@ -71,12 +71,6 @@ class CreatePresenter(
     override fun onCurrencyClicked() {
         //todo release 1.1
         //currencyListNavigator.goToCurrencyListScreen()
-    }
-
-    private suspend fun loadPredefinedSubs() = withContext(Dispatchers.Main) {
-        predefinedSubs.clear()
-        predefinedSubs.addAll(realTimeRepository.getAllPredefinedSubsWithLogo(allowCache = true))
-        view.setupSuggestions(predefinedSubs)
     }
 
     override fun onSuggestionItemClick(item: PredefinedSuggestionItem) {
@@ -241,5 +235,4 @@ class CreatePresenter(
         private const val MAX_PRICE_VALUE = 100000000
         private const val MAX_PERIOD_QUANTITY_VALUE = 10000
     }
-
 }

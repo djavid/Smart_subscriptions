@@ -16,12 +16,7 @@ class FirebaseAuthHelper(
     private val coroutineScope: CoroutineScope
 ) : DefaultLifecycleObserver, CoroutineScope by coroutineScope {
 
-    private lateinit var auth: FirebaseAuth
-
-    override fun onCreate(owner: LifecycleOwner) {
-        super.onCreate(owner)
-        auth = FirebaseAuth.getInstance()
-    }
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)

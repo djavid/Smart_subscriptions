@@ -8,6 +8,7 @@ interface SubscriptionContract {
 
     interface View {
         fun init(presenter: Presenter)
+        fun destroy()
         fun setSubLogo(logoUrl: String?)
         fun expandPanel(biggerToolbar: Boolean)
         fun collapsePanel()
@@ -28,8 +29,7 @@ interface SubscriptionContract {
     interface Presenter {
         fun init(id: String?, isRoot: Boolean)
         fun reload(allowCache: Boolean)
-        fun onBackPressed()
-        fun onCloseBtnClicked()
+        fun goBack()
         fun onEditClicked()
         fun onDeleteClicked()
         fun onDeletionPrompted()

@@ -119,21 +119,17 @@ class SubscriptionPresenter(
         }
     }
 
-    override fun onCloseBtnClicked() {
+    override fun goBack() {
         finish()
     }
 
-    override fun onBackPressed() {
-        finish()
-    }
-
-    private fun finish() { //todo шо за жесть
+    private fun finish() {
         launch {
             view.hideKeyboard()
             view.collapsePanel()
             view.showToolbar(false, Constants.SLIDE_DURATION)
             view.setBackgroundTransparent(true, Constants.SLIDE_DURATION)
-            withContext(Dispatchers.Default) { delay(Constants.SLIDE_DURATION) }
+            delay(Constants.SLIDE_DURATION)
             pipeline.postValue(Constants.ACTION_REFRESH to "")
 
             fragmentNavigator.goBack()

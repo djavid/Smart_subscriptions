@@ -32,7 +32,7 @@ class SubsAdapter(
 
     fun showSubs(subs: List<Subscription>) {
         data = subs
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0, subs.size)
     }
 
     fun updatePricePeriod(pricePeriod: SubscriptionPeriodType) {

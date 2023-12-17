@@ -15,10 +15,13 @@ class SubListModule(fragment: Fragment, binding: ViewBinding) {
     val di = DI.Module("sub_list_module") {
         bind<FragmentSubListBinding>() with singleton { binding as FragmentSubListBinding }
         bind<SubListContract.Presenter>() with singleton {
-            SubListPresenter(instance(), instance(), instance(), instance())
+            SubListPresenter(instance(), instance(), instance())
         }
-        bind<LifecycleCoroutineScope>() with singleton { fragment.lifecycleScope }
-        bind<SubListContract.View>() with singleton { SubListView(instance()) }
+        bind<LifecycleCoroutineScope>() with singleton { fragment.viewLifecycleOwner.lifecycleScope }
+        bind<SubListViewModel>() with singleton { SubListViewModelImpl(instance()) }
+        bind<SubListContract.View>() with singleton {
+            SubListView(instance(), instance(), instance())
+        }
         bind<CommonFragmentNavigator>() with singleton {
             CommonFragmentNavigator(fragment.requireActivity().supportFragmentManager)
         }

@@ -2,32 +2,54 @@ package com.djavid.smartsubs.sub_list
 
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.djavid.core.ui.R
 import com.djavid.core.ui.databinding.FragmentSubListBinding
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.common.utils.animateAlpha
 import com.djavid.smartsubs.common.utils.hideKeyboard
 import com.djavid.smartsubs.common.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class SubListView(
-    private val binding: FragmentSubListBinding
+    private var _binding: FragmentSubListBinding?,
+    private val viewModel: SubListViewModel,
+    private val coroutineScope: LifecycleCoroutineScope
 ) : SubListContract.View {
 
+    private val binding get() = requireNotNull(_binding)
+
     private lateinit var presenter: SubListContract.Presenter
-    private lateinit var bottomSheet: BottomSheetBehavior<FrameLayout>
+    private val bottomSheet: BottomSheetBehavior<FrameLayout>
+        get() = BottomSheetBehavior.from(binding.subListBottomSheet)
     private val context = binding.root.context
 
     override fun init(presenter: SubListContract.Presenter) {
         this.presenter = presenter
-        setupBottomSheet()
-        binding.subListRecycler.adapter = SubsListAdapter(presenter::onItemClick)
 
+        setBackgroundTransparent(false, Constants.SLIDE_DURATION)
+        showToolbar(true, Constants.SLIDE_DURATION)
+        expandPanel()
+
+        setupListeners()
+        setupObservers()
+    }
+
+    override fun destroy() {
+    }
+
+    private fun setupListeners() {
+        binding.subListRecycler.adapter = SubsListAdapter(presenter::onItemClick)
         binding.subListCloseBtn.setOnClickListener { presenter.onBackPressed() }
     }
 
-    private fun setupBottomSheet() {
-        bottomSheet = BottomSheetBehavior.from(binding.subListBottomSheet)
+    private fun setupObservers() {
+        viewModel.predefinedSubsFlow.onEach {
+            showProgress(false)
+            (binding.subListRecycler.adapter as? SubsListAdapter)?.showSubs(it)
+        }.launchIn(coroutineScope)
     }
 
     override fun showToolbar(show: Boolean, duration: Long) {
@@ -59,12 +81,7 @@ class SubListView(
         }
     }
 
-    override fun showPredefinedSubs(list: List<PredefinedSuggestionItem>) {
-        (binding.subListRecycler.adapter as? SubsListAdapter)?.showSubs(list)
-    }
-
     override fun showProgress(show: Boolean) {
         binding.subListProgress.show(show)
     }
-
 }
