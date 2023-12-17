@@ -57,15 +57,6 @@
         tools:behavior_peekHeight="800dp"
         tools:layout_marginTop="@dimen/toolbar_height">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/create_scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:overScrollMode="never"
-            android:scrollbarThumbVertical="@null"
-            tools:ignore="UselessParent">
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -84,18 +75,17 @@
                     android:id="@+id/subList_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:clipToPadding="false"
+                    android:clipToPadding="true"
                     android:orientation="vertical"
                     android:overScrollMode="never"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/subList_subs" />
+                    app:layout_constraintTop_toBottomOf="@id/subList_subs"
+                    tools:listitem="@layout/suggestion_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.core.widget.NestedScrollView>
 
         <FrameLayout
             android:id="@+id/subList_progress"
@@ -110,7 +100,6 @@
                 android:layout_gravity="center" />
 
         </FrameLayout>
-
 
     </FrameLayout>
 
