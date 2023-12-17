@@ -2,7 +2,7 @@ package com.djavid.smartsubs.data.db
 
 import com.djavid.smartsubs.NotificationEntityQueries
 import com.djavid.smartsubs.data.mappers.NotificationEntityMapper
-import com.djavid.smartsubs.common.models.Notification
+import com.djavid.smartsubs.common.domain.Notification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

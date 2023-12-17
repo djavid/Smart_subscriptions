@@ -1,9 +1,9 @@
 package com.djavid.smartsubs.data.interactors
 
-import com.djavid.smartsubs.common.models.Subscription
-import com.djavid.smartsubs.common.models.SortBy
-import com.djavid.smartsubs.common.models.SortType
-import com.djavid.smartsubs.common.models.getPriceInPeriod
+import com.djavid.smartsubs.common.domain.SubscriptionUIModel
+import com.djavid.smartsubs.common.domain.SortBy
+import com.djavid.smartsubs.common.domain.SortType
+import com.djavid.smartsubs.common.domain.getPriceInPeriod
 import com.djavid.smartsubs.data.storage.SharedRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,7 +14,7 @@ class GetSortedSubsInteractor(
     private val getSubsInteractor: GetSubsInteractor
 ) {
 
-    suspend fun execute(): List<Subscription> = withContext(Dispatchers.IO) {
+    suspend fun execute(): List<SubscriptionUIModel> = withContext(Dispatchers.IO) {
         val subs = getSubsInteractor.execute()
         val asc = sharedRepository.selectedSortType == SortType.ASC
 

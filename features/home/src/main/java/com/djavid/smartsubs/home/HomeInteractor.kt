@@ -3,9 +3,9 @@ package com.djavid.smartsubs.home
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.data.interactors.GetSelectedCurrencyInteractor
 import com.djavid.smartsubs.data.interactors.GetSubsInteractor
-import com.djavid.smartsubs.common.models.SubscriptionPeriodType
-import com.djavid.smartsubs.common.models.SubscriptionPrice
-import com.djavid.smartsubs.common.models.getPriceInPeriod
+import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
+import com.djavid.smartsubs.common.domain.SubscriptionPrice
+import com.djavid.smartsubs.common.domain.getPriceInPeriod
 import com.djavid.smartsubs.common.utils.defaultCurrency
 import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.data.storage.SharedRepository
@@ -59,7 +59,7 @@ class HomeInteractor(
     }
 
     suspend fun togglePeriod(): SubscriptionPeriodType = withContext(ioDispatcher) {
-        val types = SubscriptionPeriodType.values()
+        val types = SubscriptionPeriodType.entries.toTypedArray()
         val index = (types.indexOf(sharedRepository.selectedSubsPeriod) + 1).rem(types.size)
         val period = types[index]
         sharedRepository.selectedSubsPeriod = period

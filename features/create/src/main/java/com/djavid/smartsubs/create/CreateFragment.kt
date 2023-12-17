@@ -10,7 +10,7 @@ import com.djavid.features.create.databinding.FragmentCreateBinding
 import com.djavid.smartsubs.common.base.BackPressListener
 import com.djavid.smartsubs.common.base.BaseFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.common.domain.PredefinedSubscription
 import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.common.utils.serializable
 import org.kodein.di.instance
@@ -39,7 +39,7 @@ class CreateFragment : BaseFragment(), BackPressListener {
         requireActivity().supportFragmentManager.setFragmentResultListener(
             Constants.REQUEST_KEY, viewLifecycleOwner
         ) { _, result ->
-            result.serializable<PredefinedSuggestionItem>(Constants.FRAGMENT_RESULT_KEY)?.let {
+            result.serializable<PredefinedSubscription>(Constants.FRAGMENT_RESULT_KEY)?.let {
                 presenter.onSuggestionItemClick(it)
             }
         }

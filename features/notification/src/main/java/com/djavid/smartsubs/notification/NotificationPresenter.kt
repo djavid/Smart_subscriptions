@@ -2,8 +2,8 @@ package com.djavid.smartsubs.notification
 
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.base.BasePipeline
-import com.djavid.smartsubs.common.models.Notification
-import com.djavid.smartsubs.common.models.SubscriptionDao
+import com.djavid.smartsubs.common.domain.Notification
+import com.djavid.smartsubs.common.domain.Subscription
 import com.djavid.smartsubs.data.db.NotificationsRepository
 import com.djavid.smartsubs.data.interactors.AlarmInteractor
 import com.djavid.smartsubs.data.mappers.SubscriptionModelMapper
@@ -27,7 +27,7 @@ class NotificationPresenter(
 ) : NotificationContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var model: Notification
-    private var subModel: SubscriptionDao? = null
+    private var subModel: Subscription? = null
     private var editMode = false
     private var chosenTime: LocalTime? = null
     private var daysInput = 1L

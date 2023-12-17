@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.djavid.core.ui.R
 import com.djavid.features.sort.databinding.FragmentSortByBinding
 import com.djavid.smartsubs.common.base.BaseBottomSheetFragment
-import com.djavid.smartsubs.common.models.SortBy
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.djavid.smartsubs.common.domain.SortBy
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 

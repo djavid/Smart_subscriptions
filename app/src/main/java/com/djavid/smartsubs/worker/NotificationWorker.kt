@@ -17,8 +17,8 @@ import com.djavid.smartsubs.Application
 import com.djavid.smartsubs.alarm.AlarmNotifierImpl
 import com.djavid.smartsubs.data.db.NotificationsRepository
 import com.djavid.smartsubs.root.RootActivity
-import com.djavid.smartsubs.common.models.Notification
-import com.djavid.smartsubs.common.models.SubscriptionDao
+import com.djavid.smartsubs.common.domain.Notification
+import com.djavid.smartsubs.common.domain.Subscription
 import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.data.storage.SharedRepository
@@ -46,7 +46,7 @@ class NotificationWorker(
     private val alarmNotifier: AlarmNotifierImpl by instance()
 
     private var model: Notification? = null
-    private var subModel: SubscriptionDao? = null
+    private var subModel: Subscription? = null
 
     override fun doWork(): Result {
         val id = workerParams.inputData.getLong(KEY_NOTIFICATION_ID, -1)
@@ -71,7 +71,7 @@ class NotificationWorker(
         } ?: Result.failure()
     }
 
-    private fun showNotif(model: Notification, subModel: SubscriptionDao) {
+    private fun showNotif(model: Notification, subModel: Subscription) {
         val content = generateNotifContent(model.daysBefore)
         setupNotificationChannel()
         showSubExpiresNotification(model, subModel.title, sharedRepository.nextNotifId(), content)

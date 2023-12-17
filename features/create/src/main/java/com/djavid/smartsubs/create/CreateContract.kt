@@ -1,7 +1,7 @@
 package com.djavid.smartsubs.create
 
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
-import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.domain.PredefinedSubscription
+import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
 import org.joda.time.LocalDate
 import java.util.*
 
@@ -28,7 +28,7 @@ interface CreateContract {
         fun onCommentInputChanged(input: String?)
 
         fun onPredefinedBtnPressed()
-        fun onSuggestionItemClick(item: PredefinedSuggestionItem)
+        fun onSuggestionItemClick(item: PredefinedSubscription)
         fun onSubmitPressed()
         fun onCurrencyClicked()
     }
@@ -63,11 +63,6 @@ interface CreateContract {
         fun setPaymentDateDefaultDescription()
         fun setTrialPeriodCheckbox(checked: Boolean)
         fun setSubLogo(logoUrl: String?)
-    }
-
-    companion object {
-        const val REQUEST_GUID = "create_request_guid"
-        const val RESULT_KEY_ = "create_request_guid"
     }
 
 }

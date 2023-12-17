@@ -1,9 +1,9 @@
 package com.djavid.smartsubs.data.mappers
 
-import com.djavid.smartsubs.common.models.Subscription
-import com.djavid.smartsubs.common.models.SubscriptionPrice
-import com.djavid.smartsubs.common.models.SubscriptionProgress
-import com.djavid.smartsubs.common.models.SubscriptionDao
+import com.djavid.smartsubs.common.domain.SubscriptionUIModel
+import com.djavid.smartsubs.common.domain.SubscriptionPrice
+import com.djavid.smartsubs.common.domain.SubscriptionProgress
+import com.djavid.smartsubs.common.domain.Subscription
 import com.djavid.smartsubs.data.storage.CloudStorageRepository
 import com.djavid.smartsubs.common.utils.addPeriod
 import com.djavid.smartsubs.common.utils.getFirstPeriodBeforeNow
@@ -22,7 +22,7 @@ class SubscriptionModelMapper(
     private val repository: PredefinedSubRepository
 ) {
 
-    private fun getProgressForTrialSub(dao: SubscriptionDao): SubscriptionProgress? {
+    private fun getProgressForTrialSub(dao: Subscription): SubscriptionProgress? {
         return if (dao.trialPaymentDate != null) {
             val dateNow = LocalDate.now()
 
@@ -41,7 +41,7 @@ class SubscriptionModelMapper(
         }
     }
 
-    private fun getProgressForSub(dao: SubscriptionDao): SubscriptionProgress? {
+    private fun getProgressForSub(dao: Subscription): SubscriptionProgress? {
         val paymentDate = dao.paymentDate
 
         return if (paymentDate != null) {
@@ -63,7 +63,7 @@ class SubscriptionModelMapper(
         }
     }
 
-    suspend fun fromDao(dao: SubscriptionDao): Subscription = withContext(Dispatchers.IO) {
+    suspend fun fromDao(dao: Subscription): SubscriptionUIModel = withContext(Dispatchers.IO) {
         val subscriptionProgress = when {
             dao.trialPaymentDate != null -> getProgressForTrialSub(dao)
             dao.paymentDate != null -> getProgressForSub(dao)
@@ -87,7 +87,7 @@ class SubscriptionModelMapper(
             }
         }
 
-        Subscription(
+        SubscriptionUIModel(
             dao.id,
             dao.title,
             subscriptionPrice,

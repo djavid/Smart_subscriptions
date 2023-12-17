@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.common.domain.PredefinedSubscription
 
 class CurrencyListAdapter(
-    private val onClick: (PredefinedSuggestionItem) -> Unit
+    private val onClick: (PredefinedSubscription) -> Unit
 ) : RecyclerView.Adapter<CurrencyListAdapter.ViewHolder>() {
 
-    private var data = listOf<PredefinedSuggestionItem>()
+    private var data = listOf<PredefinedSubscription>()
 
-    fun showSubs(subs: List<PredefinedSuggestionItem>) {
+    fun showSubs(subs: List<PredefinedSubscription>) {
         data = subs
         notifyDataSetChanged()
     }

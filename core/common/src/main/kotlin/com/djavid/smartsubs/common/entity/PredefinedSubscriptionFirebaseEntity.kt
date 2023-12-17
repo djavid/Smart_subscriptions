@@ -1,6 +1,6 @@
-package com.djavid.smartsubs.common.models
+package com.djavid.smartsubs.common.entity
 
-data class PredefinedSubFirebaseEntity(
+data class PredefinedSubscriptionFirebaseEntity(
     val id: String = "",
     val title: String = "",
     val logoUrl: String = "",

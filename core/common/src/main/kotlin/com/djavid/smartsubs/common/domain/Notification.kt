@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.common.models
+package com.djavid.smartsubs.common.domain
 
 import org.joda.time.DateTime
 

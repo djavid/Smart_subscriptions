@@ -14,8 +14,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
 import com.djavid.features.create.databinding.FragmentCreateBinding
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
-import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.domain.PredefinedSubscription
+import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
 import com.djavid.smartsubs.common.utils.animateAlpha
 import com.djavid.smartsubs.common.utils.getCurrencySymbol
 import com.djavid.smartsubs.common.utils.hideKeyboard
@@ -91,7 +91,7 @@ class CreateView(
         }
     }
 
-    private fun setupSuggestions(items: List<PredefinedSuggestionItem>) {
+    private fun setupSuggestions(items: List<PredefinedSubscription>) {
         val adapter = SuggestionsAdapter(items, binding.root.context)
         binding.createTitleInput.setAdapter(adapter)
         binding.createTitleInput.setOnItemClickListener { _, _, position, _ ->

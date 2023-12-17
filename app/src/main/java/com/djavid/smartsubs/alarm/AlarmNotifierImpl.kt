@@ -5,7 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.AlarmManagerCompat
-import com.djavid.smartsubs.common.models.Notification
+import com.djavid.smartsubs.common.domain.Notification
 import com.djavid.smartsubs.data.interactors.AlarmInteractor
 import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.CoroutineScope

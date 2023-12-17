@@ -11,15 +11,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
 import com.djavid.core.ui.databinding.SuggestionItemBinding
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.common.domain.PredefinedSubscription
 import java.util.*
 
 class SuggestionsAdapter(
-    private val suggestions: List<PredefinedSuggestionItem>,
+    private val suggestions: List<PredefinedSubscription>,
     context: Context
-) : ArrayAdapter<PredefinedSuggestionItem>(context, R.layout.suggestion_item, suggestions) {
+) : ArrayAdapter<PredefinedSubscription>(context, R.layout.suggestion_item, suggestions) {
 
-    private val suggestionsSource = mutableListOf<PredefinedSuggestionItem>().apply {
+    private val suggestionsSource = mutableListOf<PredefinedSubscription>().apply {
         addAll(suggestions)
     }
 
@@ -42,7 +42,7 @@ class SuggestionsAdapter(
 
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filterResults = FilterResults()
-                val subsSuggestion = mutableListOf<PredefinedSuggestionItem>()
+                val subsSuggestion = mutableListOf<PredefinedSubscription>()
 
                 for (suggestion in suggestionsSource) {
                     suggestion.abbreviations.find { abbr ->
@@ -62,7 +62,7 @@ class SuggestionsAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 val res = (results?.values as? MutableList<*>)?.mapNotNull {
-                    it as? PredefinedSuggestionItem
+                    it as? PredefinedSubscription
                 }
 
                 res?.let {

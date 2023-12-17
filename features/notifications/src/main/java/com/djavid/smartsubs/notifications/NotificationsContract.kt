@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.notifications
 
-import com.djavid.smartsubs.common.models.Notification
+import com.djavid.smartsubs.common.domain.Notification
 
 interface NotificationsContract {
 

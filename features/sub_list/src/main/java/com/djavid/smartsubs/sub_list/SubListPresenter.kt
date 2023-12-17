@@ -3,7 +3,7 @@ package com.djavid.smartsubs.sub_list
 import android.os.Bundle
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.djavid.smartsubs.common.navigation.CommonFragmentNavigator
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.common.domain.PredefinedSubscription
 import com.djavid.smartsubs.common.utils.Constants
 import kotlinx.coroutines.*
 
@@ -13,7 +13,7 @@ class SubListPresenter(
     lifecycleCoroutineScope: LifecycleCoroutineScope
 ) : SubListContract.Presenter, CoroutineScope by lifecycleCoroutineScope {
 
-    override fun onItemClick(item: PredefinedSuggestionItem) {
+    override fun onItemClick(item: PredefinedSubscription) {
         fragmentNavigator.setFragmentResult(SubListContract.REQUEST_KEY, Bundle().apply {
             putSerializable(SubListContract.FRAGMENT_RESULT_KEY, item)
         })

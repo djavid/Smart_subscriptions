@@ -9,8 +9,8 @@ import com.djavid.core.ui.R
 import com.djavid.features.sort.databinding.FragmentSortBinding
 import com.djavid.smartsubs.common.base.BaseBottomSheetFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
-import com.djavid.smartsubs.common.models.SortBy
-import com.djavid.smartsubs.common.models.SortType
+import com.djavid.smartsubs.common.domain.SortBy
+import com.djavid.smartsubs.common.domain.SortType
 import com.djavid.smartsubs.common.utils.show
 import com.djavid.ui.getTitle
 import com.google.android.material.bottomsheet.BottomSheetBehavior

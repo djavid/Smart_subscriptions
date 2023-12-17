@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.common.models
+package com.djavid.smartsubs.common.entity
 
 import com.djavid.smartsubs.common.utils.localNow
 import com.djavid.smartsubs.common.utils.toLocalDate

@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.currency_list
 
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.common.domain.PredefinedSubscription
 
 class CurrencyListContract {
     interface View {
@@ -10,14 +10,14 @@ class CurrencyListContract {
         fun collapsePanel()
         fun showToolbar(show: Boolean, duration: Long)
         fun setBackgroundTransparent(transparent: Boolean, duration: Long)
-        fun showPredefinedSubs(list: List<PredefinedSuggestionItem>)
+        fun showPredefinedSubs(list: List<PredefinedSubscription>)
         fun showProgress(show: Boolean)
     }
 
     interface Presenter {
         fun init()
         fun onBackPressed()
-        fun onItemClick(item: PredefinedSuggestionItem)
+        fun onItemClick(item: PredefinedSubscription)
     }
 
     companion object {

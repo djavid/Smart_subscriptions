@@ -10,5 +10,6 @@ class MappersModule {
         bind<SubscriptionEntityMapper>() with singleton { SubscriptionEntityMapper() }
         bind<SubscriptionModelMapper>() with singleton { SubscriptionModelMapper(instance(), instance()) }
         bind<NotificationEntityMapper>() with singleton { NotificationEntityMapper() }
+        bind<PredefinedSubscriptionMapper>() with singleton { PredefinedSubscriptionMapper(instance()) }
     }
 }

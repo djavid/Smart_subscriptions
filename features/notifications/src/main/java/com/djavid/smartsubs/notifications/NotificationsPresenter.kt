@@ -3,7 +3,7 @@ package com.djavid.smartsubs.notifications
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.base.BasePipeline
 import com.djavid.smartsubs.common.navigation.NotificationNavigator
-import com.djavid.smartsubs.common.models.Notification
+import com.djavid.smartsubs.common.domain.Notification
 import com.djavid.smartsubs.data.db.NotificationsRepository
 import com.djavid.smartsubs.data.interactors.AlarmInteractor
 import com.djavid.smartsubs.common.utils.Constants

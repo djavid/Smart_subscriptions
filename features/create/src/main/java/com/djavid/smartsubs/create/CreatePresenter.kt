@@ -5,10 +5,10 @@ import com.djavid.smartsubs.common.base.BasePipeline
 import com.djavid.smartsubs.common.navigation.CommonFragmentNavigator
 import com.djavid.smartsubs.common.navigation.CurrencyListNavigator
 import com.djavid.smartsubs.common.navigation.SubListNavigator
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
-import com.djavid.smartsubs.common.models.SubscriptionDao
-import com.djavid.smartsubs.common.models.SubscriptionPeriod
-import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.domain.PredefinedSubscription
+import com.djavid.smartsubs.common.domain.Subscription
+import com.djavid.smartsubs.common.domain.SubscriptionPeriod
+import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
 import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.data.storage.PredefinedSubRepository
@@ -31,7 +31,7 @@ class CreatePresenter(
     coroutineScope: CoroutineScope
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
-    private lateinit var model: SubscriptionDao
+    private lateinit var model: Subscription
 
     private var editMode = false
     private val periodItems = SubscriptionPeriodType.entries
@@ -46,7 +46,7 @@ class CreatePresenter(
         view.expandPanel()
 
         launch {
-            model = SubscriptionDao(
+            model = Subscription(
                 "", DateTime(), "", 0.0, Currency.getInstance("RUB"),
                 SubscriptionPeriod(SubscriptionPeriodType.MONTH, 1), null,
                 null, null, null, null
@@ -75,7 +75,7 @@ class CreatePresenter(
         //currencyListNavigator.goToCurrencyListScreen()
     }
 
-    override fun onSuggestionItemClick(item: PredefinedSuggestionItem) {
+    override fun onSuggestionItemClick(item: PredefinedSubscription) {
         model = model.copy(predefinedSubId = item.subId, title = item.title)
         view.setTitle(item.title)
         view.setSubLogo(item.logoUrl)
@@ -192,7 +192,7 @@ class CreatePresenter(
         return isValid
     }
 
-    private fun fillForm(predefinedSub: PredefinedSuggestionItem?) {
+    private fun fillForm(predefinedSub: PredefinedSubscription?) {
         view.setTitle(model.title)
         view.setPrice(model.price)
         view.setCurrencySymbol(model.currency)

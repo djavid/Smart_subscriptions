@@ -1,8 +1,8 @@
 package com.djavid.smartsubs.subscription
 
-import com.djavid.smartsubs.common.models.SubscriptionPeriod
-import com.djavid.smartsubs.common.models.SubscriptionPrice
-import com.djavid.smartsubs.common.models.SubscriptionProgress
+import com.djavid.smartsubs.common.domain.SubscriptionPeriod
+import com.djavid.smartsubs.common.domain.SubscriptionPrice
+import com.djavid.smartsubs.common.domain.SubscriptionProgress
 
 interface SubscriptionContract {
 

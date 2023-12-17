@@ -13,10 +13,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
 import com.djavid.features.subscription.databinding.FragmentSubscriptionBinding
-import com.djavid.smartsubs.common.models.SubscriptionPeriod
-import com.djavid.smartsubs.common.models.SubscriptionPeriodType
-import com.djavid.smartsubs.common.models.SubscriptionPrice
-import com.djavid.smartsubs.common.models.SubscriptionProgress
+import com.djavid.smartsubs.common.domain.SubscriptionPeriod
+import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
+import com.djavid.smartsubs.common.domain.SubscriptionPrice
+import com.djavid.smartsubs.common.domain.SubscriptionProgress
 import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.common.utils.animateAlpha
 import com.djavid.smartsubs.common.utils.getCurrencySymbol

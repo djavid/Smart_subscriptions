@@ -2,8 +2,8 @@ package com.djavid.ui
 
 import android.content.Context
 import com.djavid.core.ui.R
-import com.djavid.smartsubs.common.models.SortBy
-import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.domain.SortBy
+import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
 
 fun Context.getSubPeriodString(type: SubscriptionPeriodType, quantity: Int = 1) = when (type) {
     SubscriptionPeriodType.DAY -> resources.getQuantityString(R.plurals.plural_day, quantity)

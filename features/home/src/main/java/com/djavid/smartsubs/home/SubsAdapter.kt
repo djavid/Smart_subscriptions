@@ -13,9 +13,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.djavid.core.ui.R
 import com.djavid.core.ui.databinding.SubscriptionItemBinding
-import com.djavid.smartsubs.common.models.Subscription
-import com.djavid.smartsubs.common.models.SubscriptionPeriodType
-import com.djavid.smartsubs.common.models.getPriceInPeriod
+import com.djavid.smartsubs.common.domain.SubscriptionUIModel
+import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
+import com.djavid.smartsubs.common.domain.getPriceInPeriod
 import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.common.utils.getCurrentLocale
 import com.djavid.smartsubs.common.utils.getCurrencySymbol
@@ -27,10 +27,10 @@ class SubsAdapter(
     private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<SubsAdapter.ViewHolder>() {
 
-    private var data = listOf<Subscription>()
+    private var data = listOf<SubscriptionUIModel>()
     private lateinit var pricePeriod: SubscriptionPeriodType
 
-    fun showSubs(subs: List<Subscription>) {
+    fun showSubs(subs: List<SubscriptionUIModel>) {
         data = subs
         notifyItemRangeInserted(0, subs.size)
     }
@@ -65,7 +65,7 @@ class SubsAdapter(
         setupProgress(holder, sub)
     }
 
-    private fun setupPrice(holder: ViewHolder, sub: Subscription) {
+    private fun setupPrice(holder: ViewHolder, sub: SubscriptionUIModel) {
         val currencySymbol = sub.price.currency.getCurrencySymbol()
         val priceForPeriod = sub.getPriceInPeriod(pricePeriod).roundToInt().toString()
         val priceColor = ContextCompat.getColor(
@@ -76,7 +76,7 @@ class SubsAdapter(
         holder.price.setTextColor(priceColor)
     }
 
-    private fun setupProgress(holder: ViewHolder, sub: Subscription) {
+    private fun setupProgress(holder: ViewHolder, sub: SubscriptionUIModel) {
         holder.progressBar.show(sub.progress != null)
         holder.periodLeft.show(sub.progress != null)
 
@@ -93,7 +93,7 @@ class SubsAdapter(
         }
     }
 
-    private fun setupCategory(holder: ViewHolder, sub: Subscription) {
+    private fun setupCategory(holder: ViewHolder, sub: SubscriptionUIModel) {
         holder.category.show(sub.category != null)
         holder.categorySpace.show(sub.category != null)
         sub.category?.let {

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.djavid.core.ui.R
-import com.djavid.smartsubs.common.models.SortBy
+import com.djavid.smartsubs.common.domain.SortBy
 import com.djavid.ui.getTitle
 
 class SortByAdapter(

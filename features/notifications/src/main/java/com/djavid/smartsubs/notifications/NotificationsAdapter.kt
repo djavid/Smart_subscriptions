@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.djavid.core.ui.R
 import com.djavid.core.ui.databinding.NotificationItemBinding
-import com.djavid.smartsubs.common.models.Notification
+import com.djavid.smartsubs.common.domain.Notification
 import com.djavid.smartsubs.common.utils.show
 
 class NotificationsAdapter(

@@ -3,8 +3,8 @@ package com.djavid.smartsubs.subscription
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.base.BasePipeline
 import com.djavid.smartsubs.common.navigation.CommonFragmentNavigator
-import com.djavid.smartsubs.common.models.Subscription
-import com.djavid.smartsubs.common.models.SubscriptionPrice
+import com.djavid.smartsubs.common.domain.SubscriptionUIModel
+import com.djavid.smartsubs.common.domain.SubscriptionPrice
 import com.djavid.smartsubs.common.navigation.CreateNavigator
 import com.djavid.smartsubs.common.navigation.HomeNavigator
 import com.djavid.smartsubs.common.navigation.NotificationsNavigator
@@ -30,7 +30,7 @@ class SubscriptionPresenter(
     coroutineScope: CoroutineScope
 ) : SubscriptionContract.Presenter, CoroutineScope by coroutineScope {
 
-    private lateinit var subscription: Subscription
+    private lateinit var subscriptionUIModel: SubscriptionUIModel
 
     private var id: String = ""
     private var isRoot: Boolean = false
@@ -49,7 +49,7 @@ class SubscriptionPresenter(
 
     override fun reload(allowCache: Boolean) {
         launch {
-            subscription = loadSub(id, allowCache) ?: return@launch
+            subscriptionUIModel = loadSub(id, allowCache) ?: return@launch
             val notifsCount = notificationsRepository.getNotificationsBySubId(id).count()
 
             showContent(notifsCount)
@@ -65,27 +65,27 @@ class SubscriptionPresenter(
     }
 
     private fun showContent(notifsCount: Int) {
-        view.expandPanel(subscription.category != null)
-        view.setTitle(subscription.title)
-        subscription.category?.let {
+        view.expandPanel(subscriptionUIModel.category != null)
+        view.setTitle(subscriptionUIModel.title)
+        subscriptionUIModel.category?.let {
             view.setCategory(it)
         }
-        view.setPrice(subscription.period, subscription.price)
-        subscription.comment?.let {
+        view.setPrice(subscriptionUIModel.period, subscriptionUIModel.price)
+        subscriptionUIModel.comment?.let {
             view.setComment(it)
         }
-        subscription.progress?.let {
+        subscriptionUIModel.progress?.let {
             view.setNextPayment(it)
         }
-        subscription.overallSpent?.let {
-            view.setOverallSpent(SubscriptionPrice(it, subscription.price.currency))
+        subscriptionUIModel.overallSpent?.let {
+            view.setOverallSpent(SubscriptionPrice(it, subscriptionUIModel.price.currency))
         }
-        view.setSubLogo(subscription.logoUrl)
+        view.setSubLogo(subscriptionUIModel.logoUrl)
 
         //notifs
         view.showNotifsSection(false) //todo AlarmManager or WorkManager release 1.1-1.2
         //view.showNotifsSection(subscription.progress != null)
-        if (subscription.progress != null) {
+        if (subscriptionUIModel.progress != null) {
             view.setNotifsCount(notifsCount)
         }
     }
@@ -95,7 +95,7 @@ class SubscriptionPresenter(
         launch { logger.onNotifsClicked() }
     }
 
-    private suspend fun loadSub(id: String, allowCache: Boolean): Subscription? =
+    private suspend fun loadSub(id: String, allowCache: Boolean): SubscriptionUIModel? =
         withContext(Dispatchers.IO) {
             subscriptionsRepository.getSubById(id, allowCache)?.let {
                 modelMapper.fromDao(it)
@@ -103,7 +103,7 @@ class SubscriptionPresenter(
         }
 
     override fun onEditClicked() {
-        createNavigator.goToCreateScreen(subscription.id)
+        createNavigator.goToCreateScreen(subscriptionUIModel.id)
         launch { logger.onSubEditClicked() }
     }
 
@@ -113,8 +113,8 @@ class SubscriptionPresenter(
 
     override fun onDeletionPrompted() {
         launch {
-            subscriptionsRepository.deleteSubById(subscription.id)
-            logger.subDelete(subscription)
+            subscriptionsRepository.deleteSubById(subscriptionUIModel.id)
+            logger.subDelete(subscriptionUIModel)
             finish()
         }
     }

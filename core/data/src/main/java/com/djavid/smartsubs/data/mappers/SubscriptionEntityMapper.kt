@@ -1,10 +1,10 @@
 package com.djavid.smartsubs.data.mappers
 
 import com.djavid.smartsubs.SubscriptionEntity
-import com.djavid.smartsubs.common.models.SubscriptionDao
-import com.djavid.smartsubs.common.models.SubscriptionFirebaseEntity
-import com.djavid.smartsubs.common.models.SubscriptionPeriod
-import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.domain.Subscription
+import com.djavid.smartsubs.common.entity.SubscriptionFirebaseEntity
+import com.djavid.smartsubs.common.domain.SubscriptionPeriod
+import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
 import com.djavid.smartsubs.common.utils.atStartOfDayWithDefaultTimeZoneMillis
 import com.djavid.smartsubs.common.utils.localNow
 import com.djavid.smartsubs.common.utils.toLocalDate
@@ -13,7 +13,7 @@ import java.util.*
 
 class SubscriptionEntityMapper {
 
-    fun toFirebaseEntity(model: SubscriptionDao): SubscriptionFirebaseEntity {
+    fun toFirebaseEntity(model: Subscription): SubscriptionFirebaseEntity {
         return SubscriptionFirebaseEntity(
             id = model.id,
             creationDate = model.creationDate.millis,
@@ -31,8 +31,8 @@ class SubscriptionEntityMapper {
         )
     }
 
-    fun fromFirebaseEntity(entity: SubscriptionFirebaseEntity): SubscriptionDao {
-        return SubscriptionDao(
+    fun fromFirebaseEntity(entity: SubscriptionFirebaseEntity): Subscription {
+        return Subscription(
             id = entity.id,
             creationDate = DateTime(entity.creationDate),
             title = entity.title,
@@ -50,8 +50,8 @@ class SubscriptionEntityMapper {
         )
     }
 
-    fun fromEntity(entity: SubscriptionEntity): SubscriptionDao {
-        return SubscriptionDao(
+    fun fromEntity(entity: SubscriptionEntity): Subscription {
+        return Subscription(
             id = entity.id.toString(),
             creationDate = DateTime(entity.creationDate),
             title = entity.title,

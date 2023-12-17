@@ -2,9 +2,9 @@ package com.djavid.smartsubs.data.storage
 
 import com.djavid.smartsubs.common.coroutines.CancelableCoroutineScope
 import com.djavid.smartsubs.data.mappers.SubscriptionEntityMapper
-import com.djavid.smartsubs.common.models.SubscriptionDao
+import com.djavid.smartsubs.common.domain.Subscription
 import com.djavid.smartsubs.analytics.CrashlyticsLogger
-import com.djavid.smartsubs.common.models.SubscriptionFirebaseEntity
+import com.djavid.smartsubs.common.entity.SubscriptionFirebaseEntity
 import com.djavid.smartsubs.data.FirebaseAuthHelper
 import com.djavid.smartsubs.data.interactors.GetAuthSubsRootInteractor
 import com.google.firebase.database.DatabaseReference
@@ -23,7 +23,7 @@ class RealTimeRepository(
     private val getAuthSubsRootInteractor: GetAuthSubsRootInteractor,
 ) {
 
-    private val subsCache = mutableListOf<SubscriptionDao>()
+    private val subsCache = mutableListOf<Subscription>()
     private val coroutineScope = CancelableCoroutineScope(Dispatchers.IO)
 
     init {
@@ -32,7 +32,7 @@ class RealTimeRepository(
         }
     }
 
-    suspend fun getSubById(id: String, allowCache: Boolean = false): SubscriptionDao? =
+    suspend fun getSubById(id: String, allowCache: Boolean = false): Subscription? =
         withContext(Dispatchers.IO) {
             if (allowCache) {
                 return@withContext subsCache.find { it.id == id }
@@ -62,7 +62,7 @@ class RealTimeRepository(
             }
         }
 
-    suspend fun getSubs(allowCache: Boolean = false): List<SubscriptionDao> = withContext(Dispatchers.IO) {
+    suspend fun getSubs(allowCache: Boolean = false): List<Subscription> = withContext(Dispatchers.IO) {
         val uid = authHelper.getUid() ?: return@withContext emptyList()
 
         if (allowCache && subsCache.isNotEmpty()) return@withContext subsCache
@@ -87,7 +87,7 @@ class RealTimeRepository(
         }
     }
 
-    suspend fun editSub(sub: SubscriptionDao): Boolean = withContext(Dispatchers.IO) {
+    suspend fun editSub(sub: Subscription): Boolean = withContext(Dispatchers.IO) {
         val uid = authHelper.getUid() ?: return@withContext false
 
         return@withContext suspendCoroutine { cont ->
@@ -105,7 +105,7 @@ class RealTimeRepository(
         }
     }
 
-    suspend fun pushSubs(subs: List<SubscriptionDao>): Boolean = withContext(Dispatchers.IO) {
+    suspend fun pushSubs(subs: List<Subscription>): Boolean = withContext(Dispatchers.IO) {
         var success = true
 
         subs.forEach {
@@ -115,7 +115,7 @@ class RealTimeRepository(
         return@withContext success
     }
 
-    suspend fun pushSub(sub: SubscriptionDao): Boolean = withContext(Dispatchers.IO) {
+    suspend fun pushSub(sub: Subscription): Boolean = withContext(Dispatchers.IO) {
         val uid = authHelper.getUid() ?: return@withContext false
 
         return@withContext suspendCoroutine { cont ->

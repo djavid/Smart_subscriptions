@@ -1,8 +1,8 @@
 package com.djavid.smartsubs.sort
 
 import androidx.lifecycle.LiveData
-import com.djavid.smartsubs.common.models.SortBy
-import com.djavid.smartsubs.common.models.SortType
+import com.djavid.smartsubs.common.domain.SortBy
+import com.djavid.smartsubs.common.domain.SortType
 
 interface SortViewModel {
     val sortByValues: LiveData<List<SortBy>>

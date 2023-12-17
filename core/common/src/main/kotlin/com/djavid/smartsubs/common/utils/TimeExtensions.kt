@@ -1,7 +1,7 @@
 package com.djavid.smartsubs.common.utils
 
-import com.djavid.smartsubs.common.models.SubscriptionPeriod
-import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.domain.SubscriptionPeriod
+import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDate
 import java.util.*

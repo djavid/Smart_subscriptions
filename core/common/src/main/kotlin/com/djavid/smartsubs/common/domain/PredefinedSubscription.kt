@@ -1,8 +1,8 @@
-package com.djavid.smartsubs.common.models
+package com.djavid.smartsubs.common.domain
 
 import java.io.Serializable
 
-data class PredefinedSuggestionItem(
+data class PredefinedSubscription(
     val subId: String,
     val title: String,
     val logoUrl: String,
@@ -16,7 +16,7 @@ data class PredefinedSuggestionItem(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as PredefinedSuggestionItem
+        other as PredefinedSubscription
 
         if (subId != other.subId) return false
         if (title != other.title) return false

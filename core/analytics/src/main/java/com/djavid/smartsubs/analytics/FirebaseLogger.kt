@@ -3,12 +3,12 @@ package com.djavid.smartsubs.analytics
 import android.content.Context
 import android.os.Bundle
 import com.djavid.core.analytics.BuildConfig
-import com.djavid.smartsubs.common.models.Notification
-import com.djavid.smartsubs.common.models.SortBy
-import com.djavid.smartsubs.common.models.SortType
-import com.djavid.smartsubs.common.models.Subscription
-import com.djavid.smartsubs.common.models.SubscriptionDao
-import com.djavid.smartsubs.common.models.SubscriptionPeriodType
+import com.djavid.smartsubs.common.domain.Notification
+import com.djavid.smartsubs.common.domain.SortBy
+import com.djavid.smartsubs.common.domain.SortType
+import com.djavid.smartsubs.common.domain.SubscriptionUIModel
+import com.djavid.smartsubs.common.domain.Subscription
+import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.gson.Gson
@@ -108,7 +108,7 @@ class FirebaseLogger(
         analytics.logEvent(Event.PERIOD_CHANGE_CLICKED.value, bundle)
     }
 
-    suspend fun subItemClicked(sub: Subscription) = withContext(Dispatchers.IO) {
+    suspend fun subItemClicked(sub: SubscriptionUIModel) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(sub))
         }
@@ -122,7 +122,7 @@ class FirebaseLogger(
         analytics.logEvent(Event.SUB_SWIPED_LEFT.value, bundle)
     }
 
-    suspend fun subDelete(sub: Subscription) = withContext(Dispatchers.IO) {
+    suspend fun subDelete(sub: SubscriptionUIModel) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(sub))
         }
@@ -133,14 +133,14 @@ class FirebaseLogger(
         analytics.logEvent(Event.SORT_BTN_CLICKED.value, Bundle())
     }
 
-    suspend fun subCreated(sub: SubscriptionDao) = withContext(Dispatchers.IO) {
+    suspend fun subCreated(sub: Subscription) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(sub))
         }
         analytics.logEvent(Event.SUB_CREATED.value, bundle)
     }
 
-    suspend fun subEdited(sub: SubscriptionDao) = withContext(Dispatchers.IO) {
+    suspend fun subEdited(sub: Subscription) = withContext(Dispatchers.IO) {
         val bundle = Bundle().apply {
             putString(EventParam.JSON.value, Gson().toJson(sub))
         }

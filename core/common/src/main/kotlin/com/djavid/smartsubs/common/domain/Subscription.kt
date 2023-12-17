@@ -1,11 +1,11 @@
-package com.djavid.smartsubs.common.models
+package com.djavid.smartsubs.common.domain
 
 import com.djavid.smartsubs.common.utils.localNow
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.util.*
 
-data class SubscriptionDao(
+data class Subscription(
     val id: String,
     val creationDate: DateTime,
     val title: String,

@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.base.BasePipeline
-import com.djavid.smartsubs.common.models.SortBy
-import com.djavid.smartsubs.common.models.SortType
+import com.djavid.smartsubs.common.domain.SortBy
+import com.djavid.smartsubs.common.domain.SortType
 import com.djavid.smartsubs.common.navigation.SortNavigator
 import com.djavid.smartsubs.common.utils.Constants
 import com.djavid.smartsubs.data.storage.SharedRepository

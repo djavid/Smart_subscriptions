@@ -1,4 +1,4 @@
-package com.djavid.smartsubs.common.models
+package com.djavid.smartsubs.common.domain
 
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
@@ -6,7 +6,7 @@ import java.util.*
 
 const val DAYS_IN_WEEK = 7
 
-data class Subscription(
+data class SubscriptionUIModel(
     val id: String,
     val title: String,
     val price: SubscriptionPrice,
@@ -24,7 +24,7 @@ data class Subscription(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Subscription
+        other as SubscriptionUIModel
 
         if (id != other.id) return false
         if (title != other.title) return false
@@ -72,7 +72,7 @@ enum class SubscriptionPeriodType {
     DAY, WEEK, MONTH, YEAR
 }
 
-fun Subscription.getPriceInPeriod(pricePeriod: SubscriptionPeriodType): Double {
+fun SubscriptionUIModel.getPriceInPeriod(pricePeriod: SubscriptionPeriodType): Double {
     val daysInWeek = DAYS_IN_WEEK
     val daysInMonth = DateTime().dayOfMonth().maximumValue
     val daysInYear = DateTime().dayOfYear().maximumValue

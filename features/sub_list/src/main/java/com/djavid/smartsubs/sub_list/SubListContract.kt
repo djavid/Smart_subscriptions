@@ -1,6 +1,6 @@
 package com.djavid.smartsubs.sub_list
 
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
+import com.djavid.smartsubs.common.domain.PredefinedSubscription
 
 class SubListContract {
     interface View {
@@ -16,7 +16,7 @@ class SubListContract {
 
     interface Presenter {
         fun onBackPressed()
-        fun onItemClick(item: PredefinedSuggestionItem)
+        fun onItemClick(item: PredefinedSubscription)
     }
 
     companion object {
