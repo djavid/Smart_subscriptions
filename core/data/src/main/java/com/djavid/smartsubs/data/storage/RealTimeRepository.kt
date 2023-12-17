@@ -2,13 +2,12 @@ package com.djavid.smartsubs.data.storage
 
 import com.djavid.smartsubs.common.coroutines.CancelableCoroutineScope
 import com.djavid.smartsubs.data.mappers.SubscriptionEntityMapper
-import com.djavid.smartsubs.common.models.PredefinedSubFirebaseEntity
-import com.djavid.smartsubs.common.models.PredefinedSuggestionItem
 import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.analytics.CrashlyticsLogger
 import com.djavid.smartsubs.common.models.SubscriptionFirebaseEntity
 import com.djavid.smartsubs.data.FirebaseAuthHelper
-import com.djavid.smartsubs.data.interactors.GetPredefinedSubsRootInteractor
+import com.djavid.smartsubs.data.interactors.GetAuthSubsRootInteractor
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -21,22 +20,17 @@ class RealTimeRepository(
     private val entityMapper: SubscriptionEntityMapper,
     private val authHelper: FirebaseAuthHelper,
     private val subscriptionEntityMapper: SubscriptionEntityMapper,
-    private val storageRepository: CloudStorageRepository,
-    private val getPredefinedSubsRootInteractor: GetPredefinedSubsRootInteractor,
+    private val getAuthSubsRootInteractor: GetAuthSubsRootInteractor,
 ) {
 
-    private val predefinedSubsRoot
-        get() = getPredefinedSubsRootInteractor.execute()
+    private val subsCache = mutableListOf<SubscriptionDao>()
+    private val coroutineScope = CancelableCoroutineScope(Dispatchers.IO)
 
     init {
-        CancelableCoroutineScope(Dispatchers.IO).launch {
-            getAllPredefinedSubsWithLogo()
-            getSubs(allowCache = false)
+        coroutineScope.launch {
+            getSubs(allowCache = false) //todo flow
         }
     }
-
-    private val predefinedSubsCache = mutableListOf<PredefinedSubFirebaseEntity>()
-    private val subsCache = mutableListOf<SubscriptionDao>()
 
     suspend fun getSubById(id: String, allowCache: Boolean = false): SubscriptionDao? =
         withContext(Dispatchers.IO) {
@@ -68,30 +62,6 @@ class RealTimeRepository(
             }
         }
 
-    /**
-     * Should be called only one time
-     */
-    private suspend fun fetchPredefinedSubs(): List<PredefinedSubFirebaseEntity> {
-        return suspendCoroutine { cont ->
-            getAuthSubsRoot()
-                .get()
-                .addOnSuccessListener { data ->
-                    val subs = data.children.mapNotNull { it.getValue(PredefinedSubFirebaseEntity::class.java) }
-                    cont.resume(subs)
-                }
-                .addOnFailureListener {
-                    CrashlyticsLogger.logException(it)
-                    cont.resume(listOf())
-                }
-        }
-    }
-
-    suspend fun getPredefinedSub(id: String): PredefinedSubFirebaseEntity? = suspendCoroutine { cont ->
-        predefinedSubEntitiesFlow.onEach { subs ->
-            cont.resume(subs.find { it.id == id })
-        }.launchIn(coroutineScope)
-    }
-
     suspend fun getSubs(allowCache: Boolean = false): List<SubscriptionDao> = withContext(Dispatchers.IO) {
         val uid = authHelper.getUid() ?: return@withContext emptyList()
 
@@ -117,16 +87,6 @@ class RealTimeRepository(
         }
     }
 
-    suspend fun saveSubs(subs: List<SubscriptionDao>): Boolean = withContext(Dispatchers.IO) {
-        var success = true
-
-        subs.forEach {
-            success = success && pushSub(it)
-        }
-
-        return@withContext success
-    }
-
     suspend fun editSub(sub: SubscriptionDao): Boolean = withContext(Dispatchers.IO) {
         val uid = authHelper.getUid() ?: return@withContext false
 
@@ -143,6 +103,16 @@ class RealTimeRepository(
                     cont.resume(false)
                 }
         }
+    }
+
+    suspend fun pushSubs(subs: List<SubscriptionDao>): Boolean = withContext(Dispatchers.IO) {
+        var success = true
+
+        subs.forEach {
+            success = success && pushSub(it)
+        }
+
+        return@withContext success
     }
 
     suspend fun pushSub(sub: SubscriptionDao): Boolean = withContext(Dispatchers.IO) {
@@ -187,27 +157,4 @@ class RealTimeRepository(
 
     private fun getAuthSubsRoot(): DatabaseReference =
         Firebase.database.reference.child(getAuthSubsRootInteractor.execute())
-
-//    suspend fun isEmpty(): Boolean? = withContext(Dispatchers.IO) {
-//        val uid = authHelper.getUid() ?: return@withContext false
-//
-//        return@withContext suspendCoroutine { cont ->
-//            Firebase.database.reference
-//                .child(DB_SUBS_AUTH_ROOT)
-//                .child(uid)
-//                .get()
-//                .addOnSuccessListener { data ->
-//                    cont.resume(!data.hasChildren())
-//                }
-//                .addOnFailureListener {
-//                    CrashlyticsLogger.logException(it)
-//                    cont.resume(null)
-//                }
-//        }
-//    }
-
-//    suspend fun getCategories(): List<String> = withContext(Dispatchers.IO) { //todo use this to show suggestions
-//        queries.getCategories().executeAsList().mapNotNull { it.category }
-//    }
-
 }

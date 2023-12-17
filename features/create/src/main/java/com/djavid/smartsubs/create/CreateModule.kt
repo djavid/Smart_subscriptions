@@ -21,7 +21,7 @@ class CreateModule(
         bind<CreateContract.Presenter>() with singleton {
             CreatePresenter(
                 instance(), instance(), instance(), instance(), instance(), instance(),
-                instance(), instance()
+                instance(), instance(), instance()
             )
         }
         bind<LifecycleCoroutineScope>() with singleton { fragment.viewLifecycleOwner.lifecycleScope }

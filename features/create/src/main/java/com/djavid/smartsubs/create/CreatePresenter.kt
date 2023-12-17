@@ -11,6 +11,7 @@ import com.djavid.smartsubs.common.models.SubscriptionPeriod
 import com.djavid.smartsubs.common.models.SubscriptionPeriodType
 import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.common.utils.Constants
+import com.djavid.smartsubs.data.storage.PredefinedSubRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -20,7 +21,8 @@ import java.util.*
 
 class CreatePresenter(
     private val view: CreateContract.View,
-    private val repository: RealTimeRepository,
+    private val realTimeRepository: RealTimeRepository,
+    private val predefinedSubRepository: PredefinedSubRepository,
     private val fragmentNavigator: CommonFragmentNavigator,
     private val subListNavigator: SubListNavigator,
     private val currencyListNavigator: CurrencyListNavigator,
@@ -51,11 +53,11 @@ class CreatePresenter(
             )
 
             if (id != null) {
-                repository.getSubById(id)?.let { model = it }
+                realTimeRepository.getSubById(id)?.let { model = it }
                 editMode = true
                 view.switchTitlesToEditMode()
 
-                repository.predefinedSubsWithLogoFlow.onEach { predefinedSubs ->
+                predefinedSubRepository.predefinedSubsWithLogoFlow.onEach { predefinedSubs ->
                     fillForm(predefinedSubs.find { it.subId == model.predefinedSubId })
                 }.collect()
             } else {
@@ -87,10 +89,10 @@ class CreatePresenter(
         if (validateForm()) {
             launch {
                 if (editMode) {
-                    repository.editSub(model)
+                    realTimeRepository.editSub(model)
                     logger.subEdited(model)
                 } else {
-                    repository.pushSub(model)
+                    realTimeRepository.pushSub(model)
                     logger.subCreated(model)
                 }
 

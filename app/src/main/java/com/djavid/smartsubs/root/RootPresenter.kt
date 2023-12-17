@@ -29,7 +29,7 @@ class RootPresenter(
         val subsInDb = subsRepository.getSubs()
 
         if (subsInDb.isNotEmpty()) {
-            if (realTimeRepository.saveSubs(subsInDb)) {
+            if (realTimeRepository.pushSubs(subsInDb)) {
                 subsRepository.deleteAllSubs()
             }
         }

@@ -5,10 +5,10 @@ import com.djavid.smartsubs.common.models.SubscriptionPrice
 import com.djavid.smartsubs.common.models.SubscriptionProgress
 import com.djavid.smartsubs.common.models.SubscriptionDao
 import com.djavid.smartsubs.data.storage.CloudStorageRepository
-import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.common.utils.addPeriod
 import com.djavid.smartsubs.common.utils.getFirstPeriodBeforeNow
 import com.djavid.smartsubs.common.utils.getPeriodsCountBeforeNow
+import com.djavid.smartsubs.data.storage.PredefinedSubRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
@@ -19,7 +19,7 @@ import java.util.*
 
 class SubscriptionModelMapper(
     private val storageRepository: CloudStorageRepository,
-    private val repository: RealTimeRepository
+    private val repository: PredefinedSubRepository
 ) {
 
     private fun getProgressForTrialSub(dao: SubscriptionDao): SubscriptionProgress? {
