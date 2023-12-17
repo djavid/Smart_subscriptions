@@ -50,7 +50,7 @@ class DatabaseModule(
             NotificationsRepository(instance(), instance(), instance())
         }
         bind<RealTimeRepository>() with singleton {
-            RealTimeRepository(instance(), instance(), instance(), instance(), instance())
+            RealTimeRepository(instance(), instance(), instance(), instance(), instance(), instance())
         }
         bind<CloudStorageRepository>() with singleton {
             CloudStorageRepository()

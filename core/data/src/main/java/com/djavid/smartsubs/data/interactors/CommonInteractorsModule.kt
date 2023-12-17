@@ -13,5 +13,6 @@ class CommonInteractorsModule {
         bind<GetMostUsedCurrencyInteractor>() with provider { GetMostUsedCurrencyInteractor(instance()) }
         bind<GetPremiumSubscriptionStatusInteractor>() with provider { GetPremiumSubscriptionStatusInteractor() }
         bind<GetPredefinedSubsRootInteractor>() with provider { GetPredefinedSubsRootInteractor() }
+        bind<GetAuthSubsRootInteractor>() with provider { GetAuthSubsRootInteractor() }
     }
 }

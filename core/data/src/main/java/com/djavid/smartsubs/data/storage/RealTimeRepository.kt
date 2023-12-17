@@ -47,7 +47,7 @@ class RealTimeRepository(
 
             return@withContext suspendCoroutine { cont ->
                 Firebase.database.reference
-                    .child(DB_SUBS_AUTH_ROOT)
+                    .child(getAuthSubsRootInteractor.execute())
                     .child(uid)
                     .child(id)
                     .get()
@@ -68,60 +68,29 @@ class RealTimeRepository(
             }
         }
 
-    suspend fun getAllPredefinedSubsWithLogo(allowCache: Boolean = false): List<PredefinedSuggestionItem> =
-        withContext(Dispatchers.IO) {
-            getAllPredefinedSubs(allowCache).mapNotNull {
-                val bytes = storageRepository.getSubLogoBytes(it.logoUrl) ?: return@mapNotNull null
-                PredefinedSuggestionItem(it.id, it.title, bytes, it.abbreviations)
-            }
+    /**
+     * Should be called only one time
+     */
+    private suspend fun fetchPredefinedSubs(): List<PredefinedSubFirebaseEntity> {
+        return suspendCoroutine { cont ->
+            getAuthSubsRoot()
+                .get()
+                .addOnSuccessListener { data ->
+                    val subs = data.children.mapNotNull { it.getValue(PredefinedSubFirebaseEntity::class.java) }
+                    cont.resume(subs)
+                }
+                .addOnFailureListener {
+                    CrashlyticsLogger.logException(it)
+                    cont.resume(listOf())
+                }
         }
+    }
 
-    private suspend fun getAllPredefinedSubs(allowCache: Boolean = false): List<PredefinedSubFirebaseEntity> =
-        withContext(Dispatchers.IO) {
-            if (allowCache && predefinedSubsCache.isNotEmpty()) {
-                return@withContext predefinedSubsCache
-            }
-
-            return@withContext suspendCoroutine { cont ->
-                Firebase.database.reference
-                    .child(predefinedSubsRoot)
-                    .get()
-                    .addOnSuccessListener { data ->
-                        val subs = data.children
-                            .mapNotNull { it.getValue(PredefinedSubFirebaseEntity::class.java) }
-
-                        predefinedSubsCache.clear()
-                        predefinedSubsCache.addAll(subs)
-                        cont.resume(subs.toMutableList())
-                    }
-                    .addOnFailureListener {
-                        CrashlyticsLogger.logException(it)
-                        cont.resume(mutableListOf())
-                    }
-            }
-        }
-
-    suspend fun getPredefinedSub(id: String): PredefinedSubFirebaseEntity? =
-        withContext(Dispatchers.IO) {
-            return@withContext suspendCoroutine { cont ->
-                Firebase.database.reference
-                    .child(predefinedSubsRoot)
-                    .orderByChild("id")
-                    .equalTo(id)
-                    .get()
-                    .addOnSuccessListener { data ->
-                        val subs = data.children.mapNotNull {
-                            it.getValue(PredefinedSubFirebaseEntity::class.java)
-                        }
-
-                        cont.resume(subs.firstOrNull())
-                    }
-                    .addOnFailureListener {
-                        CrashlyticsLogger.logException(it)
-                        cont.resume(null)
-                    }
-            }
-        }
+    suspend fun getPredefinedSub(id: String): PredefinedSubFirebaseEntity? = suspendCoroutine { cont ->
+        predefinedSubEntitiesFlow.onEach { subs ->
+            cont.resume(subs.find { it.id == id })
+        }.launchIn(coroutineScope)
+    }
 
     suspend fun getSubs(allowCache: Boolean = false): List<SubscriptionDao> = withContext(Dispatchers.IO) {
         val uid = authHelper.getUid() ?: return@withContext emptyList()
@@ -129,8 +98,7 @@ class RealTimeRepository(
         if (allowCache && subsCache.isNotEmpty()) return@withContext subsCache
 
         return@withContext suspendCoroutine { cont ->
-            Firebase.database.reference
-                .child(DB_SUBS_AUTH_ROOT)
+            getAuthSubsRoot()
                 .child(uid)
                 .get()
                 .addOnSuccessListener { data ->
@@ -163,8 +131,7 @@ class RealTimeRepository(
         val uid = authHelper.getUid() ?: return@withContext false
 
         return@withContext suspendCoroutine { cont ->
-            Firebase.database.reference
-                .child(DB_SUBS_AUTH_ROOT)
+            getAuthSubsRoot()
                 .child(uid)
                 .child(sub.id)
                 .setValue(entityMapper.toFirebaseEntity(sub))
@@ -182,10 +149,7 @@ class RealTimeRepository(
         val uid = authHelper.getUid() ?: return@withContext false
 
         return@withContext suspendCoroutine { cont ->
-            val ref = Firebase.database.reference
-                .child(DB_SUBS_AUTH_ROOT)
-                .child(uid)
-                .push()
+            val ref = getAuthSubsRoot().child(uid).push()
             val key = ref.key
 
             if (key != null) {
@@ -207,8 +171,7 @@ class RealTimeRepository(
         val uid = authHelper.getUid() ?: return@withContext false
 
         return@withContext suspendCoroutine { cont ->
-            Firebase.database.reference
-                .child(DB_SUBS_AUTH_ROOT)
+            getAuthSubsRoot()
                 .child(uid)
                 .child(id)
                 .removeValue()
@@ -221,6 +184,9 @@ class RealTimeRepository(
                 }
         }
     }
+
+    private fun getAuthSubsRoot(): DatabaseReference =
+        Firebase.database.reference.child(getAuthSubsRootInteractor.execute())
 
 //    suspend fun isEmpty(): Boolean? = withContext(Dispatchers.IO) {
 //        val uid = authHelper.getUid() ?: return@withContext false
@@ -244,7 +210,4 @@ class RealTimeRepository(
 //        queries.getCategories().executeAsList().mapNotNull { it.category }
 //    }
 
-    companion object {
-        const val DB_SUBS_AUTH_ROOT = "subs_auth"
-    }
 }
