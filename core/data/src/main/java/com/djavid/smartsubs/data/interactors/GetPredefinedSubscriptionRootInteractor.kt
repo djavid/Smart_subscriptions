@@ -2,7 +2,7 @@ package com.djavid.smartsubs.data.interactors
 
 import com.djavid.core.data.BuildConfig
 
-class GetPredefinedSubsRootInteractor {
+class GetPredefinedSubscriptionRootInteractor {
 
     fun execute(): String {
         val isDebug = BuildConfig.DEBUG

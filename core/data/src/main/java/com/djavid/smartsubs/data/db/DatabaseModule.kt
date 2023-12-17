@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.djavid.smartsubs.NotificationEntityQueries
 import com.djavid.smartsubs.SubscriptionEntityQueries
 import com.djavid.smartsubs.data.storage.CloudStorageRepository
-import com.djavid.smartsubs.data.storage.PredefinedSubRepository
+import com.djavid.smartsubs.data.storage.PredefinedSubscriptionRepository
 import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.data.storage.SharedRepository
 import com.djavid.smartsubs.db.Database
@@ -50,8 +50,8 @@ class DatabaseModule(
         bind<NotificationsRepository>() with singleton {
             NotificationsRepository(instance(), instance(), instance())
         }
-        bind<PredefinedSubRepository>() with singleton {
-            PredefinedSubRepository(instance(), instance())
+        bind<PredefinedSubscriptionRepository>() with singleton {
+            PredefinedSubscriptionRepository(instance(), instance())
         }
         bind<RealTimeRepository>() with singleton {
             RealTimeRepository(instance(), instance(), instance(), instance())

@@ -2,6 +2,8 @@ package com.djavid.smartsubs.root
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.djavid.core.ui.databinding.ActivityRootBinding
 import org.kodein.di.DI
@@ -21,5 +23,6 @@ class RootModule(activity: AppCompatActivity, binding: ViewBinding) {
             )
         }
         bind<FragmentManager>() with singleton { activity.supportFragmentManager }
+        bind<LifecycleCoroutineScope>() with singleton { activity.lifecycleScope }
     }
 }

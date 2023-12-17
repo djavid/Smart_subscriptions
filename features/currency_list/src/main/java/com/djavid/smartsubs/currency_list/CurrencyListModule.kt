@@ -17,7 +17,7 @@ class CurrencyListModule(fragment: Fragment, binding: ViewBinding) {
         bind<CurrencyListContract.Presenter>() with singleton {
             CurrencyListPresenter(instance(), instance(), instance(), instance())
         }
-        bind<LifecycleCoroutineScope>() with singleton { fragment.lifecycleScope }
+        bind<LifecycleCoroutineScope>() with singleton { fragment.viewLifecycleOwner.lifecycleScope }
         bind<CurrencyListContract.View>() with singleton { CurrencyListView(instance()) }
         bind<CommonFragmentNavigator>() with singleton {
             CommonFragmentNavigator(fragment.requireActivity().supportFragmentManager)

@@ -2,6 +2,8 @@ package com.djavid.smartsubs.subscription
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.djavid.features.subscription.databinding.FragmentSubscriptionBinding
 import com.djavid.smartsubs.common.navigation.CommonFragmentNavigator
@@ -19,6 +21,7 @@ class SubscriptionModule(fragment: Fragment, binding: ViewBinding) {
                 instance(), instance(), instance(), instance() ,instance()
             )
         }
+        bind<LifecycleCoroutineScope>() with singleton { fragment.viewLifecycleOwner.lifecycleScope }
         bind<SubscriptionContract.View>() with singleton { SubscriptionView(instance()) }
         bind<FragmentManager>() with singleton { fragment.requireActivity().supportFragmentManager }
         bind<CommonFragmentNavigator>() with singleton {

@@ -22,7 +22,7 @@ class HomeModule(fragment: Fragment, binding: ViewBinding) {
         }
         bind<Activity>() with singleton { fragment.requireActivity() }
         bind<FragmentHomeBinding>() with singleton { binding as FragmentHomeBinding }
-        bind<LifecycleCoroutineScope>() with singleton { fragment.lifecycleScope }
+        bind<LifecycleCoroutineScope>() with singleton { fragment.viewLifecycleOwner.lifecycleScope }
         bind<HomeViewModel>() with singleton {
             HomeViewModel(
                 instance(), instance(), instance(), instance(), instance(), instance(),

@@ -1,5 +1,6 @@
 package com.djavid.smartsubs.subscription
 
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.base.BasePipeline
 import com.djavid.smartsubs.common.navigation.CommonFragmentNavigator
@@ -27,7 +28,7 @@ class SubscriptionPresenter(
     private val notificationsNavigator: NotificationsNavigator,
     private val logger: FirebaseLogger,
     private val pipeline: BasePipeline<Pair<String, String>>,
-    coroutineScope: CoroutineScope
+    coroutineScope: LifecycleCoroutineScope
 ) : SubscriptionContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var subscriptionUIModel: SubscriptionUIModel

@@ -1,5 +1,6 @@
 package com.djavid.smartsubs.create
 
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.djavid.smartsubs.analytics.FirebaseLogger
 import com.djavid.smartsubs.common.base.BasePipeline
 import com.djavid.smartsubs.common.navigation.CommonFragmentNavigator
@@ -11,7 +12,7 @@ import com.djavid.smartsubs.common.domain.SubscriptionPeriod
 import com.djavid.smartsubs.common.domain.SubscriptionPeriodType
 import com.djavid.smartsubs.data.storage.RealTimeRepository
 import com.djavid.smartsubs.common.utils.Constants
-import com.djavid.smartsubs.data.storage.PredefinedSubRepository
+import com.djavid.smartsubs.data.storage.PredefinedSubscriptionRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -22,13 +23,13 @@ import java.util.*
 class CreatePresenter(
     private val view: CreateContract.View,
     private val realTimeRepository: RealTimeRepository,
-    private val predefinedSubRepository: PredefinedSubRepository,
+    private val predefinedSubscriptionRepository: PredefinedSubscriptionRepository,
     private val fragmentNavigator: CommonFragmentNavigator,
     private val subListNavigator: SubListNavigator,
     private val currencyListNavigator: CurrencyListNavigator,
     private val logger: FirebaseLogger,
     private val pipelineString: BasePipeline<Pair<String, String>>,
-    coroutineScope: CoroutineScope
+    coroutineScope: LifecycleCoroutineScope
 ) : CreateContract.Presenter, CoroutineScope by coroutineScope {
 
     private lateinit var model: Subscription
@@ -57,7 +58,7 @@ class CreatePresenter(
                 editMode = true
                 view.switchTitlesToEditMode()
 
-                predefinedSubRepository.predefinedSubsWithLogoFlow.onEach { predefinedSubs ->
+                predefinedSubscriptionRepository.predefinedSubsWithLogoFlow.onEach { predefinedSubs ->
                     fillForm(predefinedSubs.find { it.subId == model.predefinedSubId })
                 }.collect()
             } else {
