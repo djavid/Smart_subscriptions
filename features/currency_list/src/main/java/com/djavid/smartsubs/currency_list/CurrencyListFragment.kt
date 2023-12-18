@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.activity.addCallback
 import com.djavid.features.currency_list.databinding.FragmentCurrencyListBinding
-import com.djavid.smartsubs.common.base.BackPressListener
 import com.djavid.smartsubs.common.base.BaseFragment
 import com.djavid.smartsubs.common.SmartSubsApplication
 import org.kodein.di.instance
 
-class CurrencyListFragment : BaseFragment(), BackPressListener {
+class CurrencyListFragment : BaseFragment() {
 
     private var _binding: FragmentCurrencyListBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -30,9 +30,9 @@ class CurrencyListFragment : BaseFragment(), BackPressListener {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         presenter.init()
-    }
 
-    override fun onBackPressed() {
-        presenter.onBackPressed()
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            presenter.goBack()
+        }
     }
 }

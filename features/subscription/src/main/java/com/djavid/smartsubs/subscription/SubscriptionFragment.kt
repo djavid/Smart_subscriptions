@@ -51,8 +51,7 @@ class SubscriptionFragment : BaseFragment() {
             presenter.init(id, isRoot)
         }
 
-        requireActivity().onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner) { presenter.goBack() }
+        requireActivity().onBackPressedDispatcher.addCallback(this) { presenter.goBack() }
     }
 
     override fun onResume() {

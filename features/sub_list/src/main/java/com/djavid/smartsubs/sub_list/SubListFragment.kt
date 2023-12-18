@@ -38,7 +38,7 @@ class SubListFragment : BaseFragment() {
         subListView.init(presenter)
         setupObservers()
 
-        requireActivity().onBackPressedDispatcher.addCallback {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
             presenter.goBack()
         }
     }

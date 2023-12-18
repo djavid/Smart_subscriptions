@@ -50,8 +50,7 @@ class CreateFragment : BaseFragment() {
             }
         }
 
-        requireActivity().onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner) { presenter?.goBack() }
+        requireActivity().onBackPressedDispatcher.addCallback(this) { presenter?.goBack() }
     }
 
     override fun onDestroyView() {
