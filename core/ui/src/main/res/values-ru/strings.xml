@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--region common-->
-    <string name="app_name">Умные подписки</string>
+    <string name="app_name">SmartSubs</string>
     <!--endregion-->
 
     <!--region common-->
