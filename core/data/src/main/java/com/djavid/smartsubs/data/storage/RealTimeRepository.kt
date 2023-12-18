@@ -241,7 +241,7 @@ class RealTimeRepository(
 //    }
 
     companion object {
-        const val DB_SUBS_AUTH_ROOT = "subs_auth"
+        const val DB_SUBS_AUTH_ROOT = "subs_auth_test"
         const val DB_PREDEFINED_SUBS_ROOT = "predefined_subs_test"
     }
 }
